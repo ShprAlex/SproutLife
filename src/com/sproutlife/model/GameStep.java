@@ -16,6 +16,8 @@ public class GameStep extends Step {
     SproutStep sproutStep;
     
     MutationStep mutationStep;
+    
+    RetireAndPruneStep retireAndPruneStep;
        
     public GameStep(GameModel gameModel) {
         super(gameModel);
@@ -23,6 +25,7 @@ public class GameStep extends Step {
         lifeStep = new LifeStep(gameModel);
         sproutStep = new SproutStep(gameModel);
         mutationStep = new MutationStep(gameModel);
+        retireAndPruneStep = new RetireAndPruneStep(gameModel);
         
         //Mutation m = new Mutation(new Point(1,-2),5);
         //gameModel.getEchosystem().getOrganisms().iterator().next().getGenetics().addMutation(m);
@@ -37,7 +40,10 @@ public class GameStep extends Step {
         
        // initStats();
         
-        getGameModel().incrementClock();
+        getEchosystem().incrementClock();
+        
+        retireAndPruneStep.perform();
+        
         
         splitColors();
         
@@ -63,7 +69,8 @@ public class GameStep extends Step {
         */
     
         
-        lifeStep.setOrgLifeSpan(lifespan);
+        getEchosystem().setOrgLifespan(lifespan);
+        
         lifeStep.perform();
         
         mutationStep.perform();
@@ -72,20 +79,8 @@ public class GameStep extends Step {
         sproutStep.setSproutEnergy(15);
         sproutStep.setSeedBorder(1);
         sproutStep.perform();
-        
-   
-        
+                 
 
-        getEchosystem().pruneOrganisms();   
-        for (Organism o : getEchosystem().getOrganisms()) {
-            while (o.getParent()!=null) {
-                o=o.getParent();
-                if (getGameModel().getAge(o)>1000) {
-                    o.setParent(null);
-                }
-            }
-            
-        }
         
         int lifeSum = 0;
         if (getClock()%100==0) {

@@ -18,6 +18,7 @@ public class Organism {
     
     
     public int born;    
+    public int timeOfDeath;
     public Point position;
     public int x;
     public int y;
@@ -199,10 +200,14 @@ public class Organism {
         return alive;
     }
     
-    public void die() {
-        alive = false;
-    }
-       
+    public int getTimeOfDeath() {
+		return timeOfDeath;
+	}
+    
+    public void setTimeOfDeath(int timeOfDeath) {
+		this.timeOfDeath = timeOfDeath;
+	}
+    
     public boolean equals(Organism t) {
         // TODO Auto-generated method stub
         return this.id == t.id;

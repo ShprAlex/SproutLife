@@ -12,26 +12,9 @@ import com.sproutlife.model.seed.SeedFactory.SeedType;
 
 
 public class LifeStep extends Step {   
-    
-    int orgLifeSpan;
-    
+        
     public LifeStep(GameModel gameModel) {
         super(gameModel);                    
-    }
-    
-    public void setOrgLifeSpan(int orgLifeSpan) {
-        this.orgLifeSpan = orgLifeSpan;
-    }
-    
-    public int getOrgLifespan(Organism org) {
-        if (org.lifespan==0) {
-            org.lifespan=orgLifeSpan;
-        }
-        if (org.getKind()==0 ) {
-            //return org.lifespan + 50;
-        }
-        return org.lifespan;//-org.x/100;
-        //return orgLifeSpan; 
     }
     
     public void perform() {
@@ -97,13 +80,7 @@ public class LifeStep extends Step {
                 friendCount++;
             }
         }                              
-        */ 
-        
-
-        if(getGameModel().getAge(me.getOrganism())>getOrgLifespan(me.getOrganism())) {
-            //getEchosystem().removeCell(me);
-            return null;
-        }
+        */        
         
         if (neighbors.size() == 2) { 
             me.age+=1;

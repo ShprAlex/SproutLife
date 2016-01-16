@@ -143,7 +143,7 @@ public class SproutStep extends Step {
                        o.energy=0;
                        
                        if(childCount>=0&&getClock()>100) { //sproutSeed() above may have failed
-                           getStats().childEnergy[childCount]+=getGameModel().getAge(o);
+                           getStats().childEnergy[childCount]+=getAge(o);
                            getStats().sproutNumber[childCount]++;
                        }
                        else {
@@ -239,7 +239,7 @@ public class SproutStep extends Step {
         randomSeed.setSeedBorder(border);
         randomSeed.setParentPosition(new Point(x+1,y+1));
         
-        sproutSeed(randomSeed,null,getGameModel().getClock());
+        sproutSeed(randomSeed,null,getClock());
         
         
     }

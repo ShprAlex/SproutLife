@@ -38,10 +38,25 @@ public class BoardRenderer {
 	        ((Graphics2D) g).setTransform(t);
 		 */
 
+        paintBackground(g);
+        
+		paintCells(g);
+
+        paintOrgHeads(g);
+        
+        paintOrgLines(g);
+
+        paintMutations(g);
+	}
+	
+	private void paintBackground(Graphics g) {
 		g.setColor(new Color(248,248,248));
 		g.fillRect(0,0,getGamePanel().getWidth(),getGamePanel().getHeight());
 
-
+	}
+	
+	
+	private void paintCells(Graphics g) {
 		ArrayList<Cell> cells = getGameModel().getEchosystem().getCells();
 		for (Cell newCell : cells) {
 			// Draw new point
@@ -50,7 +65,7 @@ public class BoardRenderer {
 			int green = 0;
 			int blue = 0;
 
-			int age = getGameModel().getClock()-newCell.getOrganism().born;
+			int age = getGameModel().getEchosystem().getClock()-newCell.getOrganism().born;
 			if(newCell.getOrganism()!=null) {
 				red = newCell.getOrganism().getKind()%3==0?255:120;
 				green = newCell.getOrganism().getKind()%3==1?255:120;
@@ -61,14 +76,11 @@ public class BoardRenderer {
 			g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*newCell.x), BLOCK_SIZE + (BLOCK_SIZE*newCell.y), BLOCK_SIZE, BLOCK_SIZE);
 		} 
 
+	}
+	
+	public void paintOrgHeads(Graphics g) {
 
 		Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
-		/*
-	            Collection<Organism> orgs = new ArrayList<Organism>();            
-	            Organism firstOrg = getGameModel().getEchosystem().getOrganisms().iterator().next();
-	            orgs.add(firstOrg);
-	            orgs.addAll(firstOrg.getChildren());
-		 */
 
 		for (Organism o : orgs) {
 
@@ -101,15 +113,14 @@ public class BoardRenderer {
 				//g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)-rectSize/2, BLOCK_SIZE + (BLOCK_SIZE*o.y)-rectSize/2, rectSize, rectSize);
 				g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*(o.x-1)), BLOCK_SIZE + (BLOCK_SIZE*(o.y-1)), rectSize, rectSize);
 			}
+		}
+	}
+	
+	public void paintOrgLines(Graphics g) {
+		
+		Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
 
-
-
-			/*
-	                if (o.bornFromInfected) {
-	                    g.setColor(Color.black);
-	                    g.drawRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)-rectSize/2, BLOCK_SIZE + (BLOCK_SIZE*o.y)-rectSize/2, rectSize, rectSize);
-	                }
-			 */
+		for (Organism o : orgs) {
 
 			switch (o.getKind()) {
 			case 0:g.setColor(new Color(255,0,0, 80)); break;
@@ -144,6 +155,19 @@ public class BoardRenderer {
 	                }
 			 */
 			//}     
+		}		
+	}
+	
+	private void paintMutations(Graphics g) {
+		Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
+		/*
+	            Collection<Organism> orgs = new ArrayList<Organism>();            
+	            Organism firstOrg = getGameModel().getEchosystem().getOrganisms().iterator().next();
+	            orgs.add(firstOrg);
+	            orgs.addAll(firstOrg.getChildren());
+		 */
+
+		for (Organism o : orgs) {
 			ArrayList<Point> filteredMutationPoints = new ArrayList<Point>();
 			for (int age = 0;age<50;age++) {
 				ArrayList<Point> mutationPoints = o.getGenetics().getMutationPoints( age);
@@ -152,7 +176,7 @@ public class BoardRenderer {
 				for (int i = 0;i<mutationPoints.size();i++) {
 					Point p = mutationPoints.get(i);
 					//May be slow
-					int mutationAge = getGameModel().getClock()-o.getGenetics().getMutation(age, i).getGameTime();
+					int mutationAge = getGameModel().getEchosystem().getClock()-o.getGenetics().getMutation(age, i).getGameTime();
 					if(mutationAge<clockLimit) {
 						filteredMutationPoints.add(p);
 
@@ -182,14 +206,5 @@ public class BoardRenderer {
 				}
 			}
 		}
-
-		/*
-	            for (Organism o : orgs) {
-
-	                g.setColor(Color.black);
-	                int rectSize = BLOCK_SIZE;
-	                g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x), BLOCK_SIZE + (BLOCK_SIZE*o.y), rectSize, rectSize);               
-	            }
-		 */
 	}
 }

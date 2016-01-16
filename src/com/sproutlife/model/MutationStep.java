@@ -41,7 +41,7 @@ public class MutationStep extends Step {
                         
         for (Organism o : getEchosystem().getOrganisms()) {
            
-           int age = getGameModel().getAge(o);
+           int age = getAge(o);
                       
            ArrayList<Point> mutationPoints =  o.getMutationPoints(age);
            
@@ -150,7 +150,7 @@ public class MutationStep extends Step {
             
             if (c.getOrganism().getId()!=0) {            
                 Genetics g = org.getGenetics();
-                int age = getGameModel().getAge(org);
+                int age = getAge(org);
                 int x = c.x - org.x;
                 int y = c.y - org.y;
                 

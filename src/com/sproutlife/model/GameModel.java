@@ -10,9 +10,7 @@ public class GameModel {
     
     GameStep gameStep;
     
-    boolean mutationEnabled;
-    
-    int clock = 0; 
+    boolean mutationEnabled;   
     
     Stats stats;   
           
@@ -33,22 +31,10 @@ public class GameModel {
     
     public Board getBoard() {
         return echosystem.getBoard();
-    }      
+    }          
     
     public int getClock() {
-        return clock;
-    }
-
-    public void incrementClock() {
-        clock++;
-    }
-    
-    public void resetClock() {
-        this.clock = 0;
-    }
-        
-    public int getAge(Organism org) {
-        return getClock()-org.born; 
+    	return echosystem.getClock();
     }
     
     public Stats getStats() {

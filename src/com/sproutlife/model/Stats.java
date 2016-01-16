@@ -40,7 +40,7 @@ public class Stats {
     }
     
     private int getClock() {
-        return gameModel.getClock();
+        return getEchosystem().getClock();
     }
     
     public void printInfected() {

@@ -99,10 +99,10 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
        
         
         synchronized (getGameModel().getEchosystem()) {
-        try {
-        	getBoardRenderer().paint(g);
-        	
-        } catch (ConcurrentModificationException cme) {}
+        	try {
+        		getBoardRenderer().paint(g);
+
+        	} catch (ConcurrentModificationException cme) {}
         }
         // Setup grid
         /*
