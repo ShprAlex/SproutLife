@@ -1,4 +1,4 @@
 # SproutLife
-Evolving version of Conway's Game of Life with introduces organisms and mutations.
+Evolving version of Conway's Game of Life which introduces organisms and mutations.
 
 
