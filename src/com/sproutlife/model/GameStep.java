@@ -31,8 +31,6 @@ public class GameStep extends Step {
         //gameModel.getEchosystem().getOrganisms().iterator().next().getGenetics().addMutation(m);
     }
     
-  
-    boolean updated = false;
          
     int lifespan = 16;
     
@@ -45,14 +43,8 @@ public class GameStep extends Step {
         retireAndPruneStep.perform();        
         
         splitColors();
-        
-        if(!updated) {
-            getEchosystem().updateBoard() ;
-            updated = true;
-        }
-        
-        
-        
+
+                
         if(getEchosystem().getOrganisms().size()<40) {
             if (getClock()%200==0) {
                 lifespan+=1;

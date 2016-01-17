@@ -18,9 +18,7 @@ public class GameController {
     }
     
     public void start() {
-        frame.setVisible(true);  
-        
-        getGameModel().getEchosystem().resetCells();
+        frame.setVisible(true);          
     }
     
     public GameModel getGameModel() {

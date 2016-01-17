@@ -103,9 +103,16 @@ public class Echosystem {
     }   
     
     public boolean removeCell(Cell c) {
+    	return removeCell(c, true);
+    }
+    
+    private boolean removeCell(Cell c, boolean updateBoard) {
         boolean result = c.getOrganism().removeCell(c);
         
-        getBoard().removeCell(c);
+        if (updateBoard) {
+        	//We don't want to update the board if we just reset it.
+        	getBoard().removeCell(c);
+        }
         
         return result;
     }
@@ -231,7 +238,7 @@ public class Echosystem {
             }            
         }
         for (Cell r : removeList) {
-            removeCell(r);
+            removeCell(r, false);
         }        
     } 
     
@@ -258,8 +265,11 @@ public class Echosystem {
     } 
     
     public void setBoardSize(Dimension d) {
+    	
         getBoard().setBoardSize(d);
-        
+        updateBoard();
+        /*
+        getBoard().resetBoard();
         
         ArrayList<Cell> removeList = new ArrayList<Cell>(0);
         for (Cell current : getCells()) {
@@ -270,6 +280,7 @@ public class Echosystem {
         for (Cell r : removeList) {
             removeCell(r);
         }
+        */
         //cellList.removeAll(removeList);
     }
     

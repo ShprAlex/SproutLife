@@ -119,8 +119,9 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
     @Override
     public void componentResized(ComponentEvent e) {
         // Setup the game board size with proper boundries
-        getBoard().setBoardSize(new Dimension(getWidth()/BLOCK_SIZE-2, getHeight()/BLOCK_SIZE-2));
-        
+    	synchronized (getGameModel().getEchosystem()) {
+    		getGameModel().getEchosystem().setBoardSize(new Dimension(getWidth()/BLOCK_SIZE-2, getHeight()/BLOCK_SIZE-2));
+    	}
         //updateArraySize();
         
         repaint();
