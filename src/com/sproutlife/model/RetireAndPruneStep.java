@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.BitPattern;
@@ -31,13 +33,39 @@ public class RetireAndPruneStep extends Step {
         
     public void perform() {
     	
+    	pruneInitialSpinners(); 
     	retireOrganisms() ;    	
     	pruneRetiredOrganisms();    	
     	pruneEmptyOrganisms();
     	pruneParentTree();
     }
     
-    private void retireOrganisms() {
+    /*
+     * Prune early organisms that only go in circles without reproducing
+     */
+    private void pruneInitialSpinners() {
+    	if (getClock()>10000) {
+    		return;
+    	}
+      	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
+    	pruneOrgs.addAll(getEchosystem().getOrganisms());
+    	for (Organism org : pruneOrgs) {
+    		Organism parent = org.getParent();
+    		boolean hasCousins = false;
+    		for (int i=0;i<15 && parent!=null;i++) {    			
+    			if (parent.getChildren().size()>1) {
+    				hasCousins = true;
+    			}
+    			parent = parent.getParent();
+    		}
+    		if (!hasCousins && parent!=null) {
+    			getEchosystem().removeOrganism(org);
+    		}
+    	}
+    	
+    }
+    
+    public void retireOrganisms() {
     	HashSet<Organism> retireOrgs = new HashSet<Organism>();
     	retireOrgs.addAll(getOrganisms());
         for (Organism o : retireOrgs) {
@@ -49,7 +77,7 @@ public class RetireAndPruneStep extends Step {
     
     public void pruneRetiredOrganisms() {
     	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
-    	pruneOrgs.addAll(getOrganisms());
+    	pruneOrgs.addAll(getEchosystem().getRetiredOrganisms());
     	for (Organism org : pruneOrgs) {    	
             if (getAge(org)>getEchosystem().getOrgLifespan(org)+getEchosystem().getRetirementTimeSpan()) {
                 getEchosystem().removeRetired(org);
