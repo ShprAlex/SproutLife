@@ -78,7 +78,14 @@ public class SproutStep extends Step {
             sproutRandomSeed();
         }
     }
+        
+    private int seedDistSq(Seed s, Organism o) {
+    	return (s.getPosition().x-o.x)*(s.getPosition().x-o.x)+(s.getPosition().y-o.y)*(s.getPosition().y-o.y);
+    }
     
+    private int innerProduct(Seed s1, Seed s2, Organism o) {
+    	return (s1.getPosition().x-o.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-o.y)*(s1.getPosition().y-s2.getPosition().y);
+    }
     
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {
         //Math.max(10,getEchosystem().getOrganisms().size()/10);        
@@ -91,17 +98,31 @@ public class SproutStep extends Step {
                     @Override
                     public int compare(Seed s1, Seed s2) {
                         
-                        int d1 = (s1.getPosition().x-fo.x)*(s1.getPosition().x-fo.x)+(s1.getPosition().y-fo.y)*(s1.getPosition().y-fo.y);
-                        int d2 = (s2.getPosition().x-fo.x)*(s2.getPosition().x-fo.x)+(s2.getPosition().y-fo.y)*(s2.getPosition().y-fo.y);
+                        //int d1 = (s1.getPosition().x-fo.x)*(s1.getPosition().x-fo.x)+(s1.getPosition().y-fo.y)*(s1.getPosition().y-fo.y);
+                        //int d2 = (s2.getPosition().x-fo.x)*(s2.getPosition().x-fo.x)+(s2.getPosition().y-fo.y)*(s2.getPosition().y-fo.y);
+                        int d1 = seedDistSq(s1, fo);
+                        int d2 = seedDistSq(s2, fo);
                         //Sprout the seeds closer first, there might not be energy for all seeds to sprout.
                         //Smaller organisms look better
+                        if (d1==d2) {
+                        	int ip = innerProduct(s1,s2,fo);
+                        	//s1.getPosition().x-fo.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-fo.y)*(s1.getPosition().y-s2.getPosition().y);
+                        	return ip;                     
+                        }                        
                         return d1-d2;
                     }
                 });
-                int q = 1;
-            }
-            
-            
+                //int q = 1;
+                
+                Seed s1 = seedList.get(0);
+            	Seed s2 = seedList.get(1);
+            	if (seedDistSq(s1, fo)==seedDistSq(s2, fo)) {
+            		if (innerProduct(s1,s2,fo)==0) {
+            			continue;
+            		}
+            	}
+            }            
+
             for (Seed s : seedList) {
                Point seedOnPosition = s.getSeedOnPosition();
                 
@@ -321,8 +342,9 @@ public class SproutStep extends Step {
         int newOrgX = sproutX + seed.getSproutCenter().x;
         int newOrgY = sproutY + seed.getSproutCenter().y;
         
-        if(seedX<0 || seedX+sproutWidth>getBoard().getWidth()-1 ||
-           seedY<0 || seedY+sproutHeight>getBoard().getHeight()-1 ||
+        if(seedX<0 || seedY<0 || 
+           seedX+seedWidth>getBoard().getWidth()-1 || seedY+seedHeight>getBoard().getHeight()-1 ||
+           sproutX+sproutWidth>getBoard().getWidth()-1 || sproutY+sproutHeight>getBoard().getHeight()-1 ||
            sproutX<0 || sproutY<0 ) {
             return;
         }      
@@ -363,9 +385,7 @@ public class SproutStep extends Step {
                 if (seed.getSproutBit(si, sj)) {
                     
                     Cell newC = getEchosystem().addCell(i,j,newOrg); 
-                    if (newC!=null) { //Experiment
-                        //getBoard().setCell(newC);
-                    }
+
                 }
                 else {
                     //Should be ok
