@@ -41,6 +41,8 @@ public class BoardRenderer {
         paintBackground(g);
         
 		paintCells(g);
+		
+		//paintRetiredCells(g);
 
         paintOrgHeads(g);
         
@@ -76,6 +78,33 @@ public class BoardRenderer {
 			g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*newCell.x), BLOCK_SIZE + (BLOCK_SIZE*newCell.y), BLOCK_SIZE, BLOCK_SIZE);
 		} 
 
+	}
+	
+	private void paintRetiredCells(Graphics g) {
+		Collection<Organism> retiredOrgs = getGameModel().getEchosystem().getRetiredOrganisms();
+		g.setColor(Color.lightGray);
+
+		
+		for (Organism o: retiredOrgs) {			
+			for (Cell c: o.getCells()) {
+				
+				int age = getGameModel().getEchosystem().getClock()-c.getOrganism().getTimeOfDeath();
+				
+				int red = 0;
+				int green = 0;
+				int blue = 0;
+
+				if(c.getOrganism()!=null) {
+					red = Math.min(255,c.getOrganism().getKind()%3==0?255:120+age*10);
+					green = Math.min(255,c.getOrganism().getKind()%3==1?255:120+age*10);
+					blue = Math.min(255,c.getOrganism().getKind()%3==2?255:120+age*10);
+				}
+
+				g.setColor(new Color(red,green,blue));
+				
+				g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);
+			}
+		}
 	}
 	
 	public void paintOrgHeads(Graphics g) {
