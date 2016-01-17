@@ -34,7 +34,7 @@ public class GameStep extends Step {
   
     boolean updated = false;
          
-    int lifespan = 26;
+    int lifespan = 16;
     
     public void perform() {       
         
@@ -42,8 +42,7 @@ public class GameStep extends Step {
         
         getEchosystem().incrementClock();
         
-        retireAndPruneStep.perform();
-        
+        retireAndPruneStep.perform();        
         
         splitColors();
         
@@ -54,7 +53,7 @@ public class GameStep extends Step {
         
         
         
-        if(getEchosystem().getOrganisms().size()<35) {
+        if(getEchosystem().getOrganisms().size()<40) {
             if (getClock()%200==0) {
                 lifespan+=1;
             }            
@@ -73,14 +72,18 @@ public class GameStep extends Step {
         
         lifeStep.perform();
         
+        
+        
         mutationStep.perform();
+        
+        
         
         sproutStep.setSeedType(SeedType.Bentline1_RPentomino);
         sproutStep.setSproutEnergy(15);
-        sproutStep.setSeedBorder(1);
+        sproutStep.setSeedBorder(2);
         sproutStep.perform();
                  
-
+        
         
         int lifeSum = 0;
         if (getClock()%100==0) {

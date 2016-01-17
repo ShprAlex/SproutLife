@@ -151,7 +151,7 @@ public class Echosystem {
         }        
     }
     
-    public void setOrgLifespan(int orgLifeSpan) {
+    public void setOrgLifespan(int orgLifespan) {
         this.orgLifespan = orgLifespan;
     }
     
@@ -189,13 +189,20 @@ public class Echosystem {
     }
     
     public void removeOrganism(Organism o) {
+    	for (Cell c: o.getCells()) {
+    		getBoard().removeCell(c);
+    	}
     	organisms.remove(o);
     }
     
     public void retireOrganism(Organism o) {
+    	
     	for (Cell c: o.getCells()) {
+
     		getBoard().removeCell(c);
     	}
+    	
+   
     	o.setTimeOfDeath(getClock());
     	organisms.remove(o);
     	retiredOrganisms.add(o);

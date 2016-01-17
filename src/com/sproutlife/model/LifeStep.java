@@ -80,8 +80,13 @@ public class LifeStep extends Step {
                 friendCount++;
             }
         }                              
-        */        
-        
+        */ 
+        /*
+        if(getEchosystem().getAge(me.getOrganism())>getEchosystem().getOrgLifespan(me.getOrganism())) {
+            //getEchosystem().removeCell(me);
+            return null;
+        }
+        */
         if (neighbors.size() == 2) { 
             me.age+=1;
             

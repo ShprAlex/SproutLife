@@ -48,15 +48,15 @@ class GameThread extends Thread {
                 
                 boolean superSlowIntro = false;
               
-
-                if (getGameModel().getClock()<100 && superSlowIntro ) {
-                    sleep = 800 - (int) (Math.log10(getGameModel().getClock()/13.0+1)*800) ;
+                if (superSlowIntro) {
+	                if (getGameModel().getClock()<100 ) {
+	                    sleep = 800 - (int) (Math.log10(getGameModel().getClock()/13.0+1)*800) ;
+	                }
+	                else {
+	                    sleep = Math.max(1, 40-(int) Math.sqrt(getGameModel().getClock()/4));
+	                }
                 }
-                else {
-                    sleep = Math.max(1, 40-(int) Math.sqrt(getGameModel().getClock()/4));
-                }
-                 
-                boolean slowIntro = true;
+                boolean slowIntro = false;
                 
                 
                 if (slowIntro && !superSlowIntro) {                    
