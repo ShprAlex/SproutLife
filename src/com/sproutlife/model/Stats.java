@@ -58,8 +58,16 @@ public class Stats {
         System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Cell count " + cellCount);
         System.out.print(" Avg Life " + avgLife);
+        int allEnergy = 0;                     
+        int childSum = 0;
+        for (int i=0;i<5;i++) {
+        	childSum +=sproutNumber[i];
+        }
+        if (childSum>0) {
+        System.out.print(" AVC: "+avgLife*getEchosystem().getOrganisms().size()/childSum);
+        }
         System.out.print(" CE:");
-        for (int i=0;i<3;i++) {
+        for (int i=0;i<4;i++) {
             if (sproutNumber[i]== 0 ) {
                 System.out.print(" 0");
                 continue;
@@ -69,19 +77,34 @@ public class Stats {
             if (i>0 && sproutNumber[i-1]>0 ) {
                 e-=(childEnergy[i-1]*10/sproutNumber[i-1]);
             }
+            if(i==0) {
+            	allEnergy+=e;
+            }
+            else {
+            	if (sproutNumber[0]>0) {
+            		allEnergy+=e*sproutNumber[i]/sproutNumber[0];
+            	}
+            }
+            //childEnergy[0]*10/sproutNumber[0];
+            //childEnergy[1]*10/sproutNumber[0]
+            //childEnergy[0]*10*sproutNumber[1]/sproutNumber[0]/sproutNumber[0];
+            
+            //childEnergy[0]*10;
+            //childEnergy[1]*10]
+            //childEnergy[0]*10*sproutNumber[1]/sproutNumber[0];
+
+            
             System.out.print(" "+e);
         }
-
-        if (sproutNumber[0]>0) {
-            System.out.print(" 12R: "+sproutNumber[1]*1000/sproutNumber[0]);
-        }
-        if (sproutNumber[0]>0) {
-            System.out.print(" 13R: "+sproutNumber[2]*1000/sproutNumber[0]);
-        }
-        else {
-            System.out.print(" 13R: 00");
-        }
         
+        System.out.print(" All Energy2: "+allEnergy);
+
+        System.out.print(" Ratios: ");
+        if (sproutNumber[0]>0) {
+            System.out.print(" "+sproutNumber[1]*1000/sproutNumber[0]);
+            System.out.print(" "+sproutNumber[2]*1000/sproutNumber[0]);
+            System.out.print(" "+sproutNumber[3]*1000/sproutNumber[0]);
+        }        
 
         System.out.println();
         childEnergy = new int[20];
