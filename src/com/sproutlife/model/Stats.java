@@ -68,7 +68,7 @@ public class Stats {
         if (childSum>0) {
         	System.out.print(" AVC: "+avgLife*getEchosystem().getOrganisms().size()/childSum);
         }
-        System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
+        System.out.print(" RM count: "+getRecentMutationCount(getEchosystem().getClock(),5000));
         System.out.print(" CE:");
         for (int i=0;i<4;i++) {
             if (sproutNumber[i]== 0 ) {

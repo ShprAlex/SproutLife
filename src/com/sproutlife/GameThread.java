@@ -56,7 +56,7 @@ class GameThread extends Thread {
 	                    sleep = Math.max(1, 40-(int) Math.sqrt(getGameModel().getClock()/4));
 	                }
                 }
-                boolean slowIntro = false;
+                boolean slowIntro = true;
                 
                 
                 if (slowIntro && !superSlowIntro) {                    
@@ -78,7 +78,7 @@ class GameThread extends Thread {
                 if (getGameModel().getEchosystem().getOrganisms().size()>240) {
                     iterations = 8;
                 }
-                sleep = 1;
+                //sleep = 1;
                 //iterations = 32;
                 if (getGameModel().getClock()%iterations==0) {
 

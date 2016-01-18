@@ -41,7 +41,7 @@ public class GameFrame extends JFrame  {
 		setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
-		splitPane.setResizeWeight(0.95);
+		splitPane.setResizeWeight(1);
 		splitPane.setOneTouchExpandable(true);
 		add(splitPane);
 		

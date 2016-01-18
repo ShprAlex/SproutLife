@@ -23,7 +23,8 @@ public class ControlPanel extends JPanel {
 	
 	GameController gameController;
 	
-	public ControlPanel(GameController gameController) {		   
+	public ControlPanel(GameController gameController) {
+		setMinimumSize(new Dimension(220, 0));		   
 		this.gameController = gameController;
 		buildPanel();
 	}
