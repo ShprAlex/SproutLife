@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.GameStep;
 import com.sproutlife.model.LifeStep;
-import com.sproutlife.view.GamePanel;
+import com.sproutlife.panel.GamePanel;
 
 class GameThread extends Thread {
     boolean playGame = false;

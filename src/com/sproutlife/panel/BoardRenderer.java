@@ -1,4 +1,4 @@
-package com.sproutlife.view;
+package com.sproutlife.panel;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

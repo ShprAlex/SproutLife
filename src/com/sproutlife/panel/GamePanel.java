@@ -1,4 +1,4 @@
-package com.sproutlife.view;
+package com.sproutlife.panel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

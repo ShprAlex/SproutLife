@@ -1,7 +1,7 @@
 package com.sproutlife;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.view.GameFrame;
+import com.sproutlife.panel.GameFrame;
 
 public class GameController {
     GameFrame frame;

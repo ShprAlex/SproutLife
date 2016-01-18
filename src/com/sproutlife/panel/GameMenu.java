@@ -1,4 +1,4 @@
-package com.sproutlife.view;
+package com.sproutlife.panel;
 
 import java.awt.Desktop;
 import java.awt.Toolkit;
