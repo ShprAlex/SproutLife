@@ -30,7 +30,7 @@ public class GameModel {
     }
 
     public void performGameStep() {
-        getClock().increment();
+        incrementTime();
         gameStep.perform();
     }
     /*
@@ -54,7 +54,7 @@ public class GameModel {
         return clock;
     }
 
-    public void incrementTime() {
+    private void incrementTime() {
         clock.increment();
     }
 

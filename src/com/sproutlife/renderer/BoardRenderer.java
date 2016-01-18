@@ -9,7 +9,7 @@ import java.util.Collection;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.panel.GamePanel;
+import com.sproutlife.panel.gamepanel.GamePanel;
 
 public class BoardRenderer extends Renderer {
 

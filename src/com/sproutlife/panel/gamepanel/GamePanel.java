@@ -1,4 +1,4 @@
-package com.sproutlife.panel;
+package com.sproutlife.panel.gamepanel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,7 +15,6 @@ import com.sproutlife.GameController;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Cell;
-import com.sproutlife.model.step.GameStep;
 import com.sproutlife.model.step.GameStep.StepType;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;

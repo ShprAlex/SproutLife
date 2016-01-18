@@ -11,6 +11,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import com.sproutlife.GameController;
+import com.sproutlife.panel.gamepanel.GamePanel;
 
 /**
  * Conway's game of life is a cellular automaton devised by the
