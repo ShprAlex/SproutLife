@@ -43,7 +43,7 @@ public class ControlPanel extends JPanel {
 		JButton startButton = new JButton("Start");
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				gameController.setGameBeingPlayed(true);
+				gameController.getGameModel().setPlayGame(true);
 			}
 		});
 		
@@ -63,7 +63,7 @@ public class ControlPanel extends JPanel {
 		JButton pauseButton = new JButton("Pause");
 		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				gameController.setGameBeingPlayed(false);
+			    gameController.getGameModel().setPlayGame(false);
 			}
 		});
 		GridBagConstraints gbc_pauseButton = new GridBagConstraints();

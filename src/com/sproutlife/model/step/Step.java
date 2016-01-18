@@ -9,9 +9,8 @@ import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;
 
-public abstract class Step {
+public abstract class Step {   
     
-
     GameModel gameModel;
      
     public Step(GameModel gameModel) {

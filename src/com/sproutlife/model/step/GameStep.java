@@ -1,17 +1,22 @@
 package com.sproutlife.model.step;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
-import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
 
 public class GameStep extends Step {
+    
+    public static enum StepType { 
+        GAME_STEP, 
+        LIFE_STEP, 
+        SPROUT_STEP, 
+        MUTATION_STEP, 
+        PRUNE_STEP,
+        COLOR_STEP,
+        STEP_BUNDLE
+    }
+    
+    GameStepListener gameStepListener;
     
     LifeStep lifeStep;    
     SproutStep sproutStep;    
@@ -20,8 +25,8 @@ public class GameStep extends Step {
     ColorsStep colorsStep;
        
     public GameStep(GameModel gameModel) {
-        super(gameModel);
-             
+        super(gameModel);        
+                             
         lifeStep = new LifeStep(gameModel);
         sproutStep = new SproutStep(gameModel);
         mutationStep = new MutationStep(gameModel);
@@ -41,10 +46,11 @@ public class GameStep extends Step {
         
         getGameModel().incrementTime();
         
-        retireAndPruneStep.perform();        
+        retireAndPruneStep.perform();   
+        fireStepPerformed(StepType.PRUNE_STEP);
         
         colorsStep.perform();
-
+        fireStepPerformed(StepType.COLOR_STEP);
                 
         if(getEchosystem().getOrganisms().size()<40) {
             if (getTime()%200==0) {
@@ -61,22 +67,40 @@ public class GameStep extends Step {
         */
     
         
-        getEchosystem().setOrgLifespan(lifespan);
+        getEchosystem().setOrgLifespan(lifespan);        
         
         lifeStep.perform();
+        fireStepPerformed(StepType.LIFE_STEP);
         
         mutationStep.perform();
+        fireStepPerformed(StepType.MUTATION_STEP);
  
         sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);
         //Set child energy
         
         sproutStep.setSeedBorder(2);
-        sproutStep.perform();                       
+        sproutStep.perform();       
+        fireStepPerformed(StepType.SPROUT_STEP);
 
-        printStats();                  
+        printStats();  
+        fireStepPerformed(StepType.GAME_STEP);
+        
 
     }    
-
+    /*
+     * Only expecting one gameStepListener for now, therefore a "set" method
+     */
+    public void setGameStepListener(GameStepListener gameStepListener) {
+        this.gameStepListener = gameStepListener;
+    }
+    
+    private void fireStepPerformed(StepType stepType) {
+        if (gameStepListener!=null) {
+            GameStepEvent event = new GameStepEvent(stepType);
+            gameStepListener.stepPerformed(event);
+        }
+        
+    }
     
     private void printStats() {        
         

@@ -5,12 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Cell;
-import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.model.seed.SeedFactory.SeedType;
-
 
 public class LifeStep extends Step {   
         
@@ -21,7 +17,7 @@ public class LifeStep extends Step {
     public void perform() {
         initStats();
         
-        updateCells();
+        updateCells();                
     }
     
     public void updateCells() {

@@ -11,9 +11,6 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Genome;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.model.seed.Seed;
-import com.sproutlife.model.seed.SeedFactory;
-import com.sproutlife.model.seed.SeedFactory.SeedType;
 
 public class MutationStep extends Step {
     GameModel gameModel;    

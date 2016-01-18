@@ -5,9 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.JPanel;
@@ -17,24 +16,27 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.step.GameStep;
+import com.sproutlife.model.step.GameStep.StepType;
+import com.sproutlife.model.step.GameStepEvent;
+import com.sproutlife.model.step.GameStepListener;
 import com.sproutlife.renderer.BoardRenderer;
 
 
-public class GamePanel extends JPanel implements ComponentListener, MouseListener, MouseMotionListener {
+public class GamePanel extends JPanel implements ComponentListener {
     public static final int BLOCK_SIZE = 3;
   
     GameController controller;
-    BoardRenderer boardRenderer;
+    BoardRenderer boardRenderer;       
     
     public GamePanel(GameController controller) {
         // Add resizing listener
         this.controller = controller;
         this.boardRenderer = new BoardRenderer(getGameModel(), this);
         
-        addComponentListener(this);
-        addMouseListener(this);
-        addMouseMotionListener(this);
+        initListeners();
         
+
+               
     }
      
     private GameModel getGameModel() {
@@ -43,7 +45,7 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
     
     private GameStep getGameStep() {
         return getGameModel().getGameStep();
-    }
+    }       
     
     private Board getBoard() {
         return getGameModel().getBoard();
@@ -51,6 +53,38 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
     
     private BoardRenderer getBoardRenderer() {
     	return boardRenderer;
+    }
+    
+    private void initListeners() {
+        addComponentListener(this);
+        
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Mouse was released (user clicked)
+                addCell(e);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                // Mouse is being dragged, user wants multiple selections
+                addCell(e);
+            }
+            
+        };
+        addMouseListener(mouseAdapter);
+        addMouseMotionListener(mouseAdapter);
+        
+        GameStepListener gameStepListener = new GameStepListener() {
+            
+            @Override
+            public void stepPerformed(GameStepEvent event) {
+                if (event.getStepType()==StepType.STEP_BUNDLE) {
+                    repaint();
+                }                
+            }
+        };
+        getGameModel().setGameStepListener(gameStepListener);
     }
     
     /*
@@ -134,27 +168,6 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
     public void componentShown(ComponentEvent e) {}
     @Override
     public void componentHidden(ComponentEvent e) {}
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-    @Override
-    public void mousePressed(MouseEvent e) {}
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // Mouse was released (user clicked)
-        addCell(e);
-    }
-    @Override
-    public void mouseEntered(MouseEvent e) {}
 
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // Mouse is being dragged, user wants multiple selections
-        addCell(e);
-    }
-    @Override
-    public void mouseMoved(MouseEvent e) {}
     
 }

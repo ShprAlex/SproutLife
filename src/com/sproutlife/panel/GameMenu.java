@@ -99,10 +99,10 @@ public class GameMenu extends JMenuBar implements ActionListener {
         // Setup game board
     }
     
-    public void setGameBeingPlayed(boolean isBeingPlayed) {
-        controller.setGameBeingPlayed(isBeingPlayed);
+    public void setPlayGame(boolean playGame) {
+        getGameModel().setPlayGame(playGame);
         
-        if (isBeingPlayed) {
+        if (playGame) {
             mi_game_play.setEnabled(false);
             mi_game_stop.setEnabled(true);                        
  
@@ -171,12 +171,12 @@ public class GameMenu extends JMenuBar implements ActionListener {
             getGameModel().getBoard().resetBoard();
             getGamePanel().repaint();
         } else if (ae.getSource().equals(mi_game_play)) {
-            setGameBeingPlayed(true);
+            setPlayGame(true);
         } else if (ae.getSource().equals(mi_game_step)) {
             getGameStep().perform();
             getGamePanel().repaint();
         } else if (ae.getSource().equals(mi_game_stop)) {
-            setGameBeingPlayed(false);
+            setPlayGame(false);
         } else if (ae.getSource().equals(mi_help_source)) {
             Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
             try {
