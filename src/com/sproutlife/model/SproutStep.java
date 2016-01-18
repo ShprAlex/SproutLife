@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.BitPattern;
@@ -18,18 +19,15 @@ import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.seed.SeedSproutPattern;
 
 public class SproutStep extends Step {
-    GameModel gameModel;
     
     //LifeStep life;
     
     SeedType seedType;
     
-    int seedBorder = 1;
-    
-    int sproutEnergy;
+    int seedBorder = 1;   
     
     public SproutStep(GameModel gameModel) {
-        super(gameModel);
+        super(gameModel);       
     }
     
     public void setSeedType(SeedType seedType) {
@@ -47,23 +45,15 @@ public class SproutStep extends Step {
     public int getSeedBorder() {
         return seedBorder;
     }
-    
-    public void setSproutEnergy(int sproutEnergy) {
-        this.sproutEnergy = sproutEnergy;
-    }
-    
-    public int getSproutEnergy(Organism org) {
-        //if (org!=null && org.getKind()==0) {
-        //    return sproutEnergy-6;  
-        //}
-        if (org.getChildren()!=null && org.getChildren().size()<1) {
-            return sproutEnergy;
-        }
-        if (org.getChildren()!=null && org.getChildren().size()==1) {
-            return 5;
-        }
-        return 3;
-    }
+        
+    public int getChildEnergy(Organism org, int childNumber) {
+    	switch (childNumber) {
+    		case 1: return getSettings().getInt(Settings.CHILD_ONE_ENERGY);
+    		case 2: return getSettings().getInt(Settings.CHILD_TWO_ENERGY);
+    		case 3: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
+    		default: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
+    	}
+    }      
     
     public void perform() {
         for (Organism o : getEchosystem().getOrganisms()) {
@@ -132,7 +122,14 @@ public class SproutStep extends Step {
                    //Should almost never happen, only if seeds overlapped.
                    continue;
                }
-               int childEnergy = getSproutEnergy(o);
+               
+               int childEnergy;
+               if (o.getChildren()!=null) {
+            	   childEnergy = getChildEnergy(o, o.getChildren().size()+1);
+               }
+               else {
+            	   childEnergy = getChildEnergy(o, 1);
+               }
                /*
                if (o.getKind()==0) {
                    Organism infector = o;

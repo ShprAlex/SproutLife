@@ -1,10 +1,14 @@
 package com.sproutlife.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 
 import com.sproutlife.GameController;
 import com.sproutlife.model.LifeStep;
@@ -20,6 +24,7 @@ public class GameFrame extends JFrame  {
     GameController controller;
   
     private GamePanel gamePanel;
+    private ControlPanel controlPanel;
     
     public GameFrame(GameController controller) {
         
@@ -31,8 +36,23 @@ public class GameFrame extends JFrame  {
         setJMenuBar(menu);
         
         gamePanel = new GamePanel(controller);
+        controlPanel = new ControlPanel(controller);
         
-        add(gamePanel);       
+		setLayout(new BorderLayout(0, 0));
+		
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setResizeWeight(0.95);
+		splitPane.setOneTouchExpandable(true);
+		add(splitPane);
+		
+		JTabbedPane rightPane = new JTabbedPane();
+		rightPane.addTab("Controls", controlPanel);
+		rightPane.addTab("Stats", new JPanel());
+
+		splitPane.setLeftComponent(gamePanel);
+		splitPane.setRightComponent(rightPane);
+
+        //add(gamePanel);       
 
     }
     

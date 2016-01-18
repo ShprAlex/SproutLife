@@ -2,6 +2,7 @@ package com.sproutlife.model;
 
 import java.util.Collection;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;
@@ -41,6 +42,10 @@ public abstract class Step {
     
     public int getAge(Organism o) {
     	return getEchosystem().getAge(o);
+    }
+    
+    public Settings getSettings() {
+    	return getGameModel().getSettings();
     }
     
     public abstract void perform();

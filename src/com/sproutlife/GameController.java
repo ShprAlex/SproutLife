@@ -9,17 +9,22 @@ public class GameController {
     private GameModel gameModel;    
     private GameThread game;
     
+    private Settings settings;
+    
+    
     public GameController() {
-        gameModel = new GameModel();        
+    	settings = new Settings();
+    	
+    	gameModel = new GameModel(settings);        
      
         frame = new GameFrame(this);
-        
+                        
         //game = new GameThread(frame.getGamePanel());
     }
     
     public void start() {
         frame.setVisible(true);          
-    }
+    }        
     
     public GameModel getGameModel() {
         return gameModel;
@@ -28,7 +33,6 @@ public class GameController {
     public GameFrame getFrame() {
         return frame;
     }
-
     
     public void setGameBeingPlayed(boolean isBeingPlayed) {
         if (isBeingPlayed) {
@@ -41,5 +45,14 @@ public class GameController {
             game.setPlayGame(false);
             
         }
-    }           
+    }    
+    
+    public Settings getSettings() {
+		return settings;
+	}
+    
+    public void set(String s, Object o) {
+    	getSettings().set(s,o);
+    }    
+    
 }

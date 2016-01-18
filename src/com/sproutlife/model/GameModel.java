@@ -1,5 +1,8 @@
 package com.sproutlife.model;
 
+import java.util.HashMap;
+
+import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;
@@ -10,15 +13,15 @@ public class GameModel {
     
     GameStep gameStep;
     
-    boolean mutationEnabled;   
+    Settings settings;
     
     Stats stats;   
           
-    public GameModel() {
-        echosystem = new Echosystem();
+    public GameModel(Settings settings) {
+        this.settings = settings;
+    	echosystem = new Echosystem();
         gameStep = new GameStep(this);                        
-        stats = new Stats(this);      
-        mutationEnabled = true;
+        stats = new Stats(this);
     }
     
     public GameStep getGameStep() {
@@ -39,15 +42,14 @@ public class GameModel {
     
     public Stats getStats() {
         return stats;
-    }
+    }   
     
-    public void setMutationEnabled(boolean mutationEnabled) {
-        this.mutationEnabled = mutationEnabled;
-    }
+    public Settings getSettings() {
+		return settings;
+	}
     
-    public boolean isMutationEnabled() {
-        return mutationEnabled;
+    public void set(String s, Object o) {
+    	getSettings().set(s,o);
     }
-    
 
 }

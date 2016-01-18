@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Genetics;
 import com.sproutlife.model.echosystem.Mutation;
@@ -23,9 +24,8 @@ public class MutationStep extends Step {
     }
     
     public void perform() {
-
         doExistingMutations();
-        if (getGameModel().isMutationEnabled()) {
+        if (getGameModel().getSettings().getBoolean(Settings.MUTATION_ENABLED)) {
             addNewMutations();
         }
     } 

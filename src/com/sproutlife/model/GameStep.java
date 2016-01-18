@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
@@ -67,7 +68,8 @@ public class GameStep extends Step {
         mutationStep.perform();
  
         sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);
-        sproutStep.setSproutEnergy(14);
+        //Set child energy
+        
         sproutStep.setSeedBorder(1);
         sproutStep.perform();
                  

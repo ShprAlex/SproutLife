@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import com.sproutlife.GameController;
+import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.GameStep;
 import com.sproutlife.model.LifeStep;
@@ -142,7 +143,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
             });
             f_options.setVisible(true);
         } else if (ae.getSource().equals(mi_game_autofill)) {
-            final JFrame f_autoFill = new JFrame();
+            final JFrame f_autoFill = new JFrame();            
             f_autoFill.setTitle("Autofill");
             f_autoFill.setSize(360, 60);
             f_autoFill.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - f_autoFill.getWidth())/2, 
@@ -194,8 +195,8 @@ public class GameMenu extends JMenuBar implements ActionListener {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean enabled = getGameModel().isMutationEnabled();               
-                getGameModel().setMutationEnabled(!enabled);
+                boolean enabled = getGameModel().getSettings().getBoolean(Settings.MUTATION_ENABLED);               
+                getGameModel().set(Settings.MUTATION_ENABLED,!enabled);
                 enabled=!enabled;
                 if (enabled) {
                     this.putValue(NAME, "Disable Mutations");                    
