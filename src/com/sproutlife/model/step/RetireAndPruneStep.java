@@ -24,9 +24,7 @@ import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.seed.SeedSproutPattern;
 
 public class RetireAndPruneStep extends Step {
-    GameModel gameModel;
-    
-    int orgLifeSpan;
+    GameModel gameModel;    
        
     public RetireAndPruneStep(GameModel gameModel) {
         super(gameModel);
