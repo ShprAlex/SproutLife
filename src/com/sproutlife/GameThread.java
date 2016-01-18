@@ -1,10 +1,7 @@
 package com.sproutlife;
 
-import javax.swing.JPanel;
-
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.GameStep;
-import com.sproutlife.model.LifeStep;
+import com.sproutlife.model.step.GameStep;
 import com.sproutlife.panel.GamePanel;
 
 class GameThread extends Thread {

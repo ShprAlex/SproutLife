@@ -21,8 +21,7 @@ import javax.swing.JSeparator;
 import com.sproutlife.GameController;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.GameStep;
-import com.sproutlife.model.LifeStep;
+import com.sproutlife.model.step.GameStep;
 
 public class GameMenu extends JMenuBar implements ActionListener {
     GameController controller;

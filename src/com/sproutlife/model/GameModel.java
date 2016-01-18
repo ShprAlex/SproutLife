@@ -6,6 +6,7 @@ import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.model.step.GameStep;
 
 public class GameModel {
  

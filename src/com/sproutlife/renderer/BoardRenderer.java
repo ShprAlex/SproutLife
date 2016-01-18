@@ -48,7 +48,7 @@ public class BoardRenderer extends Renderer {
         
         paintOrgTails(g);
 
-        paintGenome(g);
+        paintGenomes(g);
 	}
 	
 	private void paintBackground(Graphics g) {
@@ -84,7 +84,7 @@ public class BoardRenderer extends Renderer {
 		}		
 	}
 	
-	private void paintGenome(Graphics2D g) {
+	private void paintGenomes(Graphics2D g) {
 		
 		Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
 

@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 
 import com.sproutlife.GameController;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.GameStep;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Cell;
+import com.sproutlife.model.step.GameStep;
 import com.sproutlife.renderer.BoardRenderer;
 
 

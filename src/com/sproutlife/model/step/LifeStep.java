@@ -1,9 +1,10 @@
-package com.sproutlife.model;
+package com.sproutlife.model.step;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Echosystem;

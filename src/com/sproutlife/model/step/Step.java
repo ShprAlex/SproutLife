@@ -1,8 +1,10 @@
-package com.sproutlife.model;
+package com.sproutlife.model.step;
 
 import java.util.Collection;
 
 import com.sproutlife.Settings;
+import com.sproutlife.model.GameModel;
+import com.sproutlife.model.Stats;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;

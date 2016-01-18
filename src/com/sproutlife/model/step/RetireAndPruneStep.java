@@ -1,4 +1,4 @@
-package com.sproutlife.model;
+package com.sproutlife.model.step;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import java.util.Random;
 
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
+import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.BitPattern;
