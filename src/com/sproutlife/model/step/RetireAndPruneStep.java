@@ -43,7 +43,7 @@ public class RetireAndPruneStep extends Step {
      * Prune early organisms that only go in circles without reproducing
      */
     private void pruneInitialSpinners() {
-    	if (getClock()>10000) {
+    	if (getTime()>10000) {
     		return;
     	}
       	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
@@ -68,7 +68,7 @@ public class RetireAndPruneStep extends Step {
     	HashSet<Organism> retireOrgs = new HashSet<Organism>();
     	retireOrgs.addAll(getOrganisms());
         for (Organism o : retireOrgs) {
-        	if (getAge(o)>getEchosystem().getOrgLifespan(o)) {
+        	if (o.getAge()>getEchosystem().getOrgLifespan(o)) {
         		getEchosystem().retireOrganism(o);
         	}
         }
@@ -78,7 +78,7 @@ public class RetireAndPruneStep extends Step {
     	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
     	pruneOrgs.addAll(getEchosystem().getRetiredOrganisms());
     	for (Organism org : pruneOrgs) {    	
-            if (getAge(org)>getEchosystem().getOrgLifespan(org)+getEchosystem().getRetirementTimeSpan()) {
+            if (org.getAge()>getEchosystem().getOrgLifespan(org)+getEchosystem().getRetirementTimeSpan()) {
                 getEchosystem().removeRetired(org);
             }
         }
@@ -100,7 +100,7 @@ public class RetireAndPruneStep extends Step {
         for (Organism o : getEchosystem().getOrganisms()) {
             while (o.getParent()!=null) {
                 o=o.getParent();
-                if (getAge(o)>1000) {
+                if (o.getAge()>1000) {
                     o.setParent(null);
                 }
             }

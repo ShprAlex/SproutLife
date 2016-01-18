@@ -3,70 +3,63 @@ package com.sproutlife.model.echosystem;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 
-import sun.security.action.GetLongAction;
-
+import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
 
 public class Echosystem {
-	HashSet<Organism> organisms ;
-    HashSet<Organism> retiredOrganisms ;       
-    
-    Board board;
-    
+    HashSet<Organism> organisms ;
+    HashSet<Organism> retiredOrganisms ;  
+        
+    Board board;      
+
     int orgLifespan; //Organism lifespan;
     int retirementTimeSpan;
-    
-    int clock; 
-    
+
+    GameClock clock; 
+
     //Organism gaya;
-    
+
     public int typeCount = 0;
-    
-    public Echosystem() {
-    	this.organisms = new HashSet<Organism>();
-    	this.retiredOrganisms = new HashSet<Organism>();
-    	this.board = new Board();                
-    	this.clock = 0;
-    	
+
+    public Echosystem(GameClock clock) {
+        this.organisms = new HashSet<Organism>();
+        this.retiredOrganisms = new HashSet<Organism>();
+        this.board = new Board();                
+        this.clock = clock;
+
         this.typeCount = 0;
-        
-        Organism gaya = new Organism(0,0,100,100, null, null);
-        
+
+        Organism gaya = new Organism(0,getClock(),100,100, null, null);
+
         this.organisms.add(gaya);
-        
+
         this.orgLifespan = 30;
         this.retirementTimeSpan = 10;
-        
+
     }  
-    
+
     public Collection<Organism> getOrganisms() {
         return organisms;
     }
-    
+
     public Collection<Organism> getRetiredOrganisms() {
         return retiredOrganisms;
     }
-    
+
     public Board getBoard() {
         return board;
     };
-    
-    public int getClock() {
+
+    public GameClock getClock() {
         return clock;
     }
+    
+    public int getTime() {
+        return clock.getTime();
+    }        
 
-    public void incrementClock() {
-        clock++;
-    }
-    
-    public void resetClock() {
-        this.clock = 0;
-    }         
-    
     public ArrayList<Cell> getCells() {
         ArrayList<Cell> cellList = new ArrayList<Cell>();
         for (Organism o : getOrganisms()) {
@@ -75,19 +68,19 @@ public class Echosystem {
         //System.out.println("Cellcount "+cellList.size());
         return cellList;        
     }    
-    
-    
+
+
     public void resetCells() {
         getBoard().resetBoard();
         organisms = new HashSet<Organism>();
-        Organism gaya = new Organism(0,0,100,100, null, null);
+        Organism gaya = new Organism(0,getClock(),100,100, null, null);
         organisms.add(gaya);
-        
+
     }
     public Cell addCell(int x, int y) {
         Organism gaya;
         if (getOrganisms().size()==0) {
-            gaya = new Organism(0,0,100,100, null, null);
+            gaya = new Organism(0,getClock(),100,100, null, null);
             organisms.add(gaya);
         }
         else {
@@ -101,27 +94,28 @@ public class Echosystem {
         } 
         return null;
     }   
-    
+
     public boolean removeCell(Cell c) {
-    	if (c==null) {
-    		return false;
-    	}
-    	return removeCell(c, true);
+        return removeCell(c, true);
     }
-    
+
     private boolean removeCell(Cell c, boolean updateBoard) {
-        boolean result = c.getOrganism().removeCell(c);
-        
-        if (updateBoard) {
-        	//We don't want to update the board if we just reset it.
-        	getBoard().removeCell(c);
+        if (c==null) {
+            return false;
         }
         
+        boolean result = c.getOrganism().removeCell(c);
+
+        if (updateBoard) {
+            //We don't want to update the board if we just reset it.
+            getBoard().removeCell(c);
+        }
+
         return result;
     }
-    
+
     //public boolean liftBarrier = false;
-    
+
     public Cell addCell(int x, int y, Organism org) {
         //if (x==getBoard().getWidth()/2 && !liftBarrier) {
         //    return null;
@@ -132,7 +126,7 @@ public class Echosystem {
         }
         return c;
     }
-    
+
     /*
      * Add a cell that's been created but not yet added
      */
@@ -140,7 +134,7 @@ public class Echosystem {
         c.getOrganism().addCell(c);
         getBoard().setCell(c);
     }
-    
+
     /*
      * Create a cell but don't add it
      */
@@ -150,9 +144,9 @@ public class Echosystem {
         //}
         return parents.get(0).getOrganism().createCell(x, y, parents);
     }
-    
+
     public void removeCell(int x, int y) {
-        
+
         Cell c = getBoard().getCell(x, y);
         if (c!=null) {
             removeCell(c);
@@ -160,11 +154,11 @@ public class Echosystem {
             //cellList.remove(c);
         }        
     }
-    
+
     public void setOrgLifespan(int orgLifespan) {
         this.orgLifespan = orgLifespan;
     }
-    
+
     public int getOrgLifespan(Organism org) {
         if (org.lifespan==0) {
             org.lifespan=this.orgLifespan;
@@ -175,60 +169,56 @@ public class Echosystem {
         return org.lifespan;//-org.x/100;
         //return orgLifeSpan; 
     }
-    
-    public int getAge(Organism org) {
-        return getClock()-org.born; 
-    }
-    
+
     public int getRetirementTimeSpan() {
-		return retirementTimeSpan;
-	}
-    
+        return retirementTimeSpan;
+    }
+
     public void setRetirementTimeSpan(int retirementTimeSpan) {
-		this.retirementTimeSpan = retirementTimeSpan;
-	}
-    
-    public Organism createOranism(int clock,int newOrgX,int newOrgY, Organism parent, Seed seed) {        
+        this.retirementTimeSpan = retirementTimeSpan;
+    }
+
+    public Organism createOranism(int x,int y, Organism parent, Seed seed) {        
         typeCount++;
         //                                        
-        Organism newOrg = new Organism(typeCount, clock,newOrgX,newOrgY, parent, seed);        
-        
+        Organism newOrg = new Organism(typeCount, getClock(), x, y, parent, seed);        
+
         organisms.add(newOrg);
         return newOrg;
 
     }
-    
+
     public void removeOrganism(Organism o) {
-    	for (Cell c: o.getCells()) {
-    		getBoard().removeCell(c);
-    	}
-    	organisms.remove(o);
+        for (Cell c: o.getCells()) {
+            getBoard().removeCell(c);
+        }
+        organisms.remove(o);
     }
-    
+
     public void retireOrganism(Organism o) {
-    	
-    	for (Cell c: o.getCells()) {
 
-    		getBoard().removeCell(c);
-    	}
-    	
-   
-    	o.setTimeOfDeath(getClock());
+        for (Cell c: o.getCells()) {
 
-    	organisms.remove(o);
-    	retiredOrganisms.add(o);
+            getBoard().removeCell(c);
+        }
+
+
+        o.setTimeOfDeath(getTime());
+
+        organisms.remove(o);
+        retiredOrganisms.add(o);
     }           
-    
+
     public void removeRetired(Organism o) {
-    	retiredOrganisms.remove(o);
+        retiredOrganisms.remove(o);
     }
-    
-    
+
+
     public void updateBoard() {
 
-       getBoard().resetBoard();
+        getBoard().resetBoard();
 
-       ArrayList<Cell> removeList = new ArrayList<Cell>(0);
+        ArrayList<Cell> removeList = new ArrayList<Cell>(0);
 
         for (Organism o : getOrganisms()) {
             for (Cell current : o.getCells()) {
@@ -245,7 +235,7 @@ public class Echosystem {
             removeCell(r, false);
         }        
     } 
-    
+
     protected boolean validateBoard() {
         for (Organism o : getOrganisms()) {
             for (Cell current : o.getCells()) {
@@ -264,17 +254,17 @@ public class Echosystem {
 
             }
         }
-        
+
         return true;
     } 
-    
+
     public void setBoardSize(Dimension d) {
-    	
+
         getBoard().setBoardSize(d);
         updateBoard();
         /*
         getBoard().resetBoard();
-        
+
         ArrayList<Cell> removeList = new ArrayList<Cell>(0);
         for (Cell current : getCells()) {
             if ((current.x > getBoard().getWidth()-1) || (current.y > getBoard().getHeight()-1)) {
@@ -284,11 +274,11 @@ public class Echosystem {
         for (Cell r : removeList) {
             removeCell(r);
         }
-        */
+         */
         //cellList.removeAll(removeList);
     }
-    
-    
+
+
     public void randomlyFillBoard(int percent) {
         for (int i=0; i<getBoard().getWidth(); i++) {
             for (int j=0; j<getBoard().getHeight(); j++) {
@@ -300,7 +290,7 @@ public class Echosystem {
                 }
             }
         }
-        
+
         for (int i=1; i<getBoard().getWidth()-2; i++) {         
             if(i%5==0) {
                 addCell(i,100);
@@ -313,5 +303,5 @@ public class Echosystem {
         }
     }       
 
-    
+
 }

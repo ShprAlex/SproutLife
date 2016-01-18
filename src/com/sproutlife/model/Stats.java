@@ -41,12 +41,12 @@ public class Stats {
         return gameModel.getEchosystem();
     }
     
-    private int getClock() {
-        return getEchosystem().getClock();
+    private int getTime() {
+        return gameModel.getTime();
     }
     
     public void printInfected() {
-        System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
+        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Avg Life  " + avgLife);
         System.out.println(" Infected born "+infectedCount);
         infectedCount = 0;
@@ -57,7 +57,7 @@ public class Stats {
         for (Organism o : getEchosystem().getOrganisms()) {
             cellCount +=o.getCells().size();
         }
-        System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
+        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Cell count " + cellCount);
         System.out.print(" Avg Life " + avgLife);        
         int allEnergy = 0;                     
@@ -68,7 +68,7 @@ public class Stats {
         if (childSum>0) {
         	System.out.print(" AVC: "+avgLife*getEchosystem().getOrganisms().size()/childSum);
         }
-        System.out.print(" RM count: "+getRecentMutationCount(getEchosystem().getClock(),5000));
+        System.out.print(" RM count: "+getRecentMutationCount(getEchosystem().getTime(),5000));
         System.out.print(" CE:");
         for (int i=0;i<4;i++) {
             if (sproutNumber[i]== 0 ) {
@@ -117,7 +117,7 @@ public class Stats {
     public void printMutations() {
               
         
-        System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
+        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Avg Life  " + avgLife);               
         System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
         System.out.print(" Mutations: " + mutationCount +" Hit: "+(mutationCount-mutationMiss) + " Percent "+(int) (mutationMiss*100/(mutationCount+0.1)));        
@@ -139,8 +139,8 @@ public class Stats {
     	HashSet<Mutation> recentMutations = new HashSet<Mutation>(); 
     	
         for (Organism o: getEchosystem().getOrganisms()) {
-        	int fromTime = getEchosystem().getClock()-fromAge;
-        	int toTime = getEchosystem().getClock()-toAge;
+        	int fromTime = getEchosystem().getTime()-fromAge;
+        	int toTime = getEchosystem().getTime()-toAge;
         	recentMutations.addAll(o.getGenome().getRecentMutations(fromTime, toTime));
         }
         return recentMutations.size();
@@ -148,24 +148,24 @@ public class Stats {
     
     
     public void printBDS() {
-        System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
+        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.println(" Grid: "+gridSize+" Born: "+born+" Die1: "+die1+" Die2: "+die2+" Stayed: "+stayed);
     }
     
     public void printGenerations() {
         HashSet<Organism> generation = new HashSet(getEchosystem().getOrganisms());
         
-        System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
+        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
            
         for (int i=1;i<60;i++) {
             HashSet<Organism> parents = new HashSet<Organism>();
             HashSet<Organism> remove = new HashSet<Organism>();
             for (Organism o: generation) {
 
-                if(getClock() - o.born < i*115 ) {
+                if(getTime() - o.born < i*115 ) {
                     remove.add(o);
                     Organism p = o.getParent();
-                    while (p!=null && (getClock() - p.born < i*115)) {
+                    while (p!=null && (getTime() - p.born < i*115)) {
                         p=p.getParent();
                     }
                     

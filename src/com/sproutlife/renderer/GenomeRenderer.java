@@ -48,13 +48,13 @@ public class GenomeRenderer extends Renderer {
 		ArrayList<Point> filteredMutationPoints = new ArrayList<Point>();
 		for (int age = 0;age<50;age++) {
 			ArrayList<Point> mutationPoints = o.getGenome().getMutationPoints( age);
-			int clockLimit = 15000;//Math.max(10000,getGameModel().getClock()/3);
+			int timeLimit = 15000;//Math.max(10000,getGameModel().getClock()/3);
 
 			for (int i = 0;i<mutationPoints.size();i++) {
 				Point p = mutationPoints.get(i);
 				//May be slow
-				int mutationAge = getGameModel().getEchosystem().getClock()-o.getGenome().getMutation(age, i).getGameTime();
-				if(mutationAge<clockLimit) {
+				int mutationAge = getGameModel().getEchosystem().getTime()-o.getGenome().getMutation(age, i).getGameTime();
+				if(mutationAge<timeLimit) {
 					filteredMutationPoints.add(p);
 
 					//g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(BLOCK_SIZE*p.x/2), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(BLOCK_SIZE*p.y/2), BLOCK_SIZE, BLOCK_SIZE);

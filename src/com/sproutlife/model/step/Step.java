@@ -38,13 +38,9 @@ public abstract class Step {
         return gameModel.getBoard();
     }
     
-    public int getClock() {
-        return getEchosystem().getClock();
-    }    
-    
-    public int getAge(Organism o) {
-    	return getEchosystem().getAge(o);
-    }
+    public int getTime() {
+        return getEchosystem().getTime();
+    }        
     
     public Settings getSettings() {
     	return getGameModel().getSettings();

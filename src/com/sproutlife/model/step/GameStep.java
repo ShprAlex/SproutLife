@@ -39,7 +39,7 @@ public class GameStep extends Step {
         
        // initStats();
         
-        getEchosystem().incrementClock();
+        getGameModel().incrementTime();
         
         retireAndPruneStep.perform();        
         
@@ -47,7 +47,7 @@ public class GameStep extends Step {
 
                 
         if(getEchosystem().getOrganisms().size()<40) {
-            if (getClock()%200==0) {
+            if (getTime()%200==0) {
                 lifespan+=1;
             }            
         }
@@ -71,25 +71,24 @@ public class GameStep extends Step {
         //Set child energy
         
         sproutStep.setSeedBorder(2);
-        sproutStep.perform();
-                 
-        
-        
-        int lifeSum = 0;
-        if (getClock()%100==0) {
-            for (Organism o : getEchosystem().getOrganisms()) {
-                lifeSum +=o.lifespan;
-            }
-            getStats().avgLife = lifeSum*10/ getEchosystem().getOrganisms().size();
-        }
+        sproutStep.perform();                       
 
         printStats();                  
 
     }    
 
     
-    private void printStats() {
-        if (getClock()%100==0) {
+    private void printStats() {        
+        
+        int lifeSum = 0;
+        if (getTime()%100==0) {
+            for (Organism o : getEchosystem().getOrganisms()) {
+                lifeSum +=o.lifespan;
+            }
+            getStats().avgLife = lifeSum*10/ getEchosystem().getOrganisms().size();
+        }
+        
+        if (getTime()%100==0) {
         	//getStats().printMutations();
             getStats().printChildEnergy();
 

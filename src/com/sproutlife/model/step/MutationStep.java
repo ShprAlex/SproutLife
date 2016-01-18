@@ -42,7 +42,7 @@ public class MutationStep extends Step {
                         
         for (Organism o : getEchosystem().getOrganisms()) {
            
-           int age = getAge(o);
+           int age = o.getAge();
                       
            ArrayList<Point> mutationPoints =  o.getMutationPoints(age);
            
@@ -150,9 +150,9 @@ public class MutationStep extends Step {
             */
             
             
-            if (c.getOrganism().getId()!=0) {            
+            if (org.getId()!=0) {            
                 Genome g = org.getGenome();
-                int age = getAge(org);
+                int age = org.getAge();
                 int x = c.x - org.x;
                 int y = c.y - org.y;
                 
@@ -167,7 +167,7 @@ public class MutationStep extends Step {
                             g.removeMutation(g.getMutation(age, removeIndex));                        
                         } 
                         */                   
-                        Mutation m = g.addMutation(x, y, age, getClock());                       
+                        Mutation m = org.addMutation(x, y);                       
                         
                         for (Organism childOrg : org.getChildren()) {
                             //Ok because, children are not yet old enough to have 

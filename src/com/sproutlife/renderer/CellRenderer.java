@@ -35,14 +35,14 @@ public class CellRenderer extends Renderer {
 		int age;
 		
 		if (c.getOrganism().isAlive()) {
-			age = getGameModel().getEchosystem().getClock()-c.getOrganism().born;
+			age = c.getOrganism().getAge();
 			
 			red = c.getOrganism().getKind()%3==0?255:120;
 			green = c.getOrganism().getKind()%3==1?255:120;
 			blue = c.getOrganism().getKind()%3==2?255:120;
 		}
 		else if (getPaintRetiredCells()) {
-			age = getGameModel().getEchosystem().getClock()-c.getOrganism().getTimeOfDeath();
+			age = getGameModel().getTime()-c.getOrganism().getTimeOfDeath();
 			
 			red = Math.min(255,c.getOrganism().getKind()%3==0?255:120+age*10);
 			green = Math.min(255,c.getOrganism().getKind()%3==1?255:120+age*10);

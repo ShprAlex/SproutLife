@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
 
 public class Organism {
@@ -15,6 +16,7 @@ public class Organism {
     ArrayList<Organism> children;
     Genome genome;
     private HashSet<Cell> cells;
+    public GameClock clock;
     
     
     public int born;    
@@ -34,10 +36,11 @@ public class Organism {
     boolean alive = true;
     int collisionCount = 0;
         
-    public Organism(int id, int born, int x, int y, Organism parent, Seed seed) {
+    public Organism(int id, GameClock clock, int x, int y, Organism parent, Seed seed) {
         
         this.id = id;
-        this.born = born;
+        this.clock = clock;
+        this.born = clock.getTime();
         this.parent = parent;
         this.children = new ArrayList<Organism>();
         this.x = x;
@@ -113,9 +116,21 @@ public class Organism {
         return seed;
     }
     
+    public GameClock getClock() {
+        return clock;
+    }
+    
+    public int getAge() {
+        return getClock().getTime() - this.born;
+    }
+    
     public Genome getGenome() {
         return genome;
     }
+    
+    public Mutation addMutation(int x, int y) {      
+        return getGenome().addMutation(x, y, getAge(), clock.getTime());        
+    }   
     
     public ArrayList<Point> getMutationPoints(int time) {
         ArrayList<Point> adjustOffsets = 

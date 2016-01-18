@@ -46,21 +46,21 @@ class GameThread extends Thread {
                 boolean superSlowIntro = false;
               
                 if (superSlowIntro) {
-	                if (getGameModel().getClock()<100 ) {
-	                    sleep = 800 - (int) (Math.log10(getGameModel().getClock()/13.0+1)*800) ;
+	                if (getGameModel().getTime()<100 ) {
+	                    sleep = 800 - (int) (Math.log10(getGameModel().getTime()/13.0+1)*800) ;
 	                }
 	                else {
-	                    sleep = Math.max(1, 40-(int) Math.sqrt(getGameModel().getClock()/4));
+	                    sleep = Math.max(1, 40-(int) Math.sqrt(getGameModel().getTime()/4));
 	                }
                 }
                 boolean slowIntro = true;
                 
                 
                 if (slowIntro && !superSlowIntro) {                    
-                    if (getGameModel().getClock()<2000 ) {
+                    if (getGameModel().getTime()<2000 ) {
                         sleep = 10;
                     }
-                    else if (getGameModel().getClock()<4000 ) {
+                    else if (getGameModel().getTime()<4000 ) {
                         sleep = 8;
                     }
                 }
@@ -77,7 +77,7 @@ class GameThread extends Thread {
                 }
                 //sleep = 1;
                 //iterations = 32;
-                if (getGameModel().getClock()%iterations==0) {
+                if (getGameModel().getTime()%iterations==0) {
 
                     getGamePanel().repaint();
                     Thread.sleep(sleep);

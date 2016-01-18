@@ -154,15 +154,15 @@ public class SproutStep extends Step {
                //if (o.getParent()==null || Math.abs(Math.abs(o.getParent().x-s.getPosition().x)-Math.abs(o.getParent().y-s.getPosition().y))>4) {
                    if (o.getId()==0 || o.energy>=childEnergy ) { 
                        
-                       sproutSeed(s, o, getClock());
+                       sproutSeed(s, o);
                        int childCount = o.getChildren().size()-1;
                        
                        
                        //o.energy-=childEnergy ;
                        o.energy=0;
                        
-                       if(childCount>=0&&getClock()>100) { //sproutSeed() above may have failed
-                           getStats().childEnergy[childCount]+=getAge(o);
+                       if(childCount>=0&&getTime()>100) { //sproutSeed() above may have failed
+                           getStats().childEnergy[childCount]+=o.getAge();
                            getStats().sproutNumber[childCount]++;
                        }
                        else {
@@ -258,7 +258,7 @@ public class SproutStep extends Step {
         randomSeed.setSeedBorder(border);
         randomSeed.setParentPosition(new Point(x+1,y+1));
         
-        sproutSeed(randomSeed,null,getClock());
+        sproutSeed(randomSeed,null);
         
         
     }
@@ -323,7 +323,7 @@ public class SproutStep extends Step {
         return true;
     }    
     
-    public void sproutSeed(Seed seed, Organism seedOrg, int clock) {  
+    public void sproutSeed(Seed seed, Organism seedOrg) {  
                         
         int seedX = seed.getPosition().x;
         int seedY = seed.getPosition().y;
@@ -351,7 +351,7 @@ public class SproutStep extends Step {
         if (seedOrg!=null && seedOrg.infectedBy!=null) {
             getStats().infectedCount++;
         }
-        Organism newOrg = getEchosystem().createOranism(clock, newOrgX, newOrgY, seedOrg, seed);
+        Organism newOrg = getEchosystem().createOranism(newOrgX, newOrgY, seedOrg, seed);
         
         //Remove old seed
         for (int x=0;x<seedWidth;x++) {

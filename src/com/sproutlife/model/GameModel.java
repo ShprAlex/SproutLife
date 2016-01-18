@@ -12,6 +12,8 @@ public class GameModel {
  
     Echosystem echosystem;  
     
+    GameClock clock;
+    
     GameStep gameStep;
     
     Settings settings;
@@ -20,7 +22,8 @@ public class GameModel {
           
     public GameModel(Settings settings) {
         this.settings = settings;
-    	echosystem = new Echosystem();
+        this.clock = new GameClock();
+    	echosystem = new Echosystem(clock);
         gameStep = new GameStep(this);                        
         stats = new Stats(this);
     }
@@ -37,8 +40,16 @@ public class GameModel {
         return echosystem.getBoard();
     }          
     
-    public int getClock() {
-    	return echosystem.getClock();
+    public int getTime() {
+    	return clock.getTime();
+    }
+    
+    public GameClock getClock() {
+        return clock;
+    }
+    
+    public void incrementTime() {
+        clock.increment();
     }
     
     public Stats getStats() {
