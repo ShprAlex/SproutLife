@@ -2,7 +2,7 @@ package com.sproutlife.model.echosystem;
 
 import java.awt.Point;
 
-public class Mutation {
+public class Mutation extends Object {
         
     private Point location;
     int organismAge;
@@ -27,4 +27,14 @@ public class Mutation {
         return gameTime;
     }
     
+    @Override
+    public int hashCode() {    	
+    	return location.hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object arg2) {
+    	Mutation m2 = (Mutation) arg2;
+    	return getLocation().equals(m2.getLocation()) && getOrganismAge()==m2.getOrganismAge();
+    }
 }
