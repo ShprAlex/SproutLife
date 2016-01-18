@@ -2,8 +2,10 @@ package com.sproutlife.model.echosystem;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import com.sproutlife.model.seed.Seed;
 
@@ -87,6 +89,19 @@ public class Genetics {
         }
         return false;
     }
+    
+    public Collection<Mutation> getRecentMutations(int fromTime, int toTime) {
+    	HashSet<Mutation> recentMutations = new HashSet<Mutation>();
+    	for (ArrayList<Mutation> mu : mutations.values()) {
+    		for (Mutation m : mu) {
+    			if (m.getGameTime()>=fromTime && m.getGameTime()<=toTime) {
+    				recentMutations.add(m);
+    			}
+    		}
+    	}
+    	return recentMutations;
+    }
+        
     
     public static Point rotatePoint(Point point, int rotation, boolean mirror) {
         if (mirror) {

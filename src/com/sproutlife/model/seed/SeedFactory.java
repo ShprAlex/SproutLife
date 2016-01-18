@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.sproutlife.model.seed.patterns.Bentline1RpPattern;
 import com.sproutlife.model.seed.patterns.Bentline1mRpPattern;
+import com.sproutlife.model.seed.patterns.BentlineMargin35Pattern;
 import com.sproutlife.model.seed.patterns.BoxhatRpPattern;
 import com.sproutlife.model.seed.patterns.Boxlid3RpPattern;
 import com.sproutlife.model.seed.patterns.BoxlidRpPattern;
@@ -31,14 +32,15 @@ public class SeedFactory {
         Boxhat_RPentomino,
         Bentline1_RPentomino,
         Bentline1m_RPentomino,
-        Onebit_RPentomino,
+        BentlineMargin35_RPentomino,
+        Onebit_RPentomino,        
         Test_Pattern;
         
         public boolean isSymmetric4() {
             switch(this) {
                 case Square2_RPentomino : return true; 
                 case Onebit_RPentomino : return true;
-                case Test_Pattern : return true;
+                //case Test_Pattern : return true;
                 default: return false;
             }                
         }
@@ -65,24 +67,26 @@ public class SeedFactory {
         patterns.put(SeedType.Boxhat_RPentomino, new BoxhatRpPattern());
         patterns.put(SeedType.Bentline1_RPentomino, new Bentline1RpPattern());
         patterns.put(SeedType.Bentline1m_RPentomino, new Bentline1mRpPattern());
+        patterns.put(SeedType.BentlineMargin35_RPentomino, new BentlineMargin35Pattern());
         patterns.put(SeedType.Onebit_RPentomino, new OnebitRpPattern());
         
         
         patterns.put(SeedType.Test_Pattern, 
             new SeedSproutPattern() {                
-                {
-                    
+                {                    
                     this.seedPattern = new BitPattern(new int[][]                                             
-                         {{1}},
+                    	   {{0,0,0,0,0},
+                            {0,1,1,0,0},                         
+                            {0,0,0,1,0}},
                           true);
 
                     this.sproutPattern = new BitPattern(new int[][]  
-                         {{0,1,0},
-                          {1,1,1},                         
-                          {1,0,0}},
+                         {{0,1,1},
+                          {1,1,0},                         
+                          {0,1,0}},
                           true);
 
-                    this.sproutOffset = new Point(-1,-1);
+                    this.sproutOffset = new Point(1,0);
                 }
             });  
     } 

@@ -60,7 +60,7 @@ public class SproutStep extends Step {
             return sproutEnergy;
         }
         if (org.getChildren()!=null && org.getChildren().size()==1) {
-            return 6;
+            return 5;
         }
         return 3;
     }

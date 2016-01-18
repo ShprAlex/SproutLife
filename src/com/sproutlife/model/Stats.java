@@ -1,5 +1,7 @@
 package com.sproutlife.model;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.sproutlife.model.echosystem.Echosystem;
@@ -57,15 +59,16 @@ public class Stats {
         }
         System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Cell count " + cellCount);
-        System.out.print(" Avg Life " + avgLife);
+        System.out.print(" Avg Life " + avgLife);        
         int allEnergy = 0;                     
         int childSum = 0;
         for (int i=0;i<5;i++) {
         	childSum +=sproutNumber[i];
         }
         if (childSum>0) {
-        System.out.print(" AVC: "+avgLife*getEchosystem().getOrganisms().size()/childSum);
+        	System.out.print(" AVC: "+avgLife*getEchosystem().getOrganisms().size()/childSum);
         }
+        System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
         System.out.print(" CE:");
         for (int i=0;i<4;i++) {
             if (sproutNumber[i]== 0 ) {
@@ -109,14 +112,14 @@ public class Stats {
         System.out.println();
         childEnergy = new int[20];
         sproutNumber = new int[20];
-    }
+    }    
     
     public void printMutations() {
-        
+              
         
         System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());
-        System.out.print(" Avg Life  " + avgLife);
-        
+        System.out.print(" Avg Life  " + avgLife);               
+        System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
         System.out.print(" Mutations: " + mutationCount +" Hit: "+(mutationCount-mutationMiss) + " Percent "+(int) (mutationMiss*100/(mutationCount+0.1)));        
         if (freqMutation!=null) {
             System.out.print(" MaxFreq "+freqMuteFreq+" x "+freqMutation.getLocation().x+" y "+freqMutation.getLocation().y+" time "+freqMutation.getOrganismAge());
@@ -131,6 +134,18 @@ public class Stats {
         freqMuteFreq = 0;
 
     }
+    
+    private int getRecentMutationCount(int fromAge, int toAge) {
+    	HashSet<Mutation> recentMutations = new HashSet<Mutation>(); 
+    	
+        for (Organism o: getEchosystem().getOrganisms()) {
+        	int fromTime = getEchosystem().getClock()-fromAge;
+        	int toTime = getEchosystem().getClock()-toAge;
+        	recentMutations.addAll(o.getGenetics().getRecentMutations(fromTime, toTime));
+        }
+        return recentMutations.size();
+    }
+    
     
     public void printBDS() {
         System.out.print(getClock() + " Org count "+getEchosystem().getOrganisms().size());

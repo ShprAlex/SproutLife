@@ -123,7 +123,7 @@ public class MutationStep extends Step {
             }
             
             int rand6 = random.nextInt(6);
-            if (rand6 <=1) {
+            if (rand6 <1) {
                 //do nothing;
             }
             else if (rand6<=3) {
@@ -165,14 +165,13 @@ public class MutationStep extends Step {
                             g.removeMutation(g.getMutation(age, removeIndex));                        
                         } 
                         */                   
-                        Mutation m = g.addMutation(x, y, age, getClock());
+                        Mutation m = g.addMutation(x, y, age, getClock());                       
                         
                         for (Organism childOrg : org.getChildren()) {
                             //Ok because, children are not yet old enough to have 
                             //encountered this mutation
                             
-                            childOrg.getGenetics().addMutation(m);
-                            
+                            childOrg.getGenetics().addMutation(m);                            
                         }
                         //experiment
                         if (org.getParent()!=null && random.nextInt(3)==0) {
@@ -195,7 +194,6 @@ public class MutationStep extends Step {
                             //if (childOrg.getGenetics().getMutationCount(age)<10) {
                                 
                             childOrg.getGenetics().removeMutation(removeM);
-                            
                             //}
                         }
                     }

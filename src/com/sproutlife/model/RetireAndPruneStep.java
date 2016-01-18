@@ -33,7 +33,7 @@ public class RetireAndPruneStep extends Step {
         
     public void perform() {
     	
-    	pruneInitialSpinners(); 
+    	//pruneInitialSpinners(); 
     	retireOrganisms() ;    	
     	pruneRetiredOrganisms();    	
     	pruneEmptyOrganisms();

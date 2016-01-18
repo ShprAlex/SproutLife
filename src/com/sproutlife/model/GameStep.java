@@ -64,15 +64,11 @@ public class GameStep extends Step {
         
         lifeStep.perform();
         
-        
-        
         mutationStep.perform();
-        
-        
-        
-        sproutStep.setSeedType(SeedType.Bentline1_RPentomino);
-        sproutStep.setSproutEnergy(15);
-        sproutStep.setSeedBorder(2);
+ 
+        sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);
+        sproutStep.setSproutEnergy(14);
+        sproutStep.setSeedBorder(1);
         sproutStep.perform();
                  
         
@@ -141,6 +137,7 @@ public class GameStep extends Step {
     
     private void printStats() {
         if (getClock()%100==0) {
+        	//getStats().printMutations();
             getStats().printChildEnergy();
 
         }             

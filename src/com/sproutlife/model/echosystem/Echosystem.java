@@ -103,6 +103,9 @@ public class Echosystem {
     }   
     
     public boolean removeCell(Cell c) {
+    	if (c==null) {
+    		return false;
+    	}
     	return removeCell(c, true);
     }
     

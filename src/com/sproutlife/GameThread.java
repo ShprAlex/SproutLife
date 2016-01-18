@@ -78,6 +78,8 @@ class GameThread extends Thread {
                 if (getGameModel().getEchosystem().getOrganisms().size()>240) {
                     iterations = 8;
                 }
+                sleep = 1;
+                //iterations = 32;
                 if (getGameModel().getClock()%iterations==0) {
 
                     getGamePanel().repaint();
