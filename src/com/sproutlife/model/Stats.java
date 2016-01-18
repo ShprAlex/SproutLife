@@ -141,7 +141,7 @@ public class Stats {
         for (Organism o: getEchosystem().getOrganisms()) {
         	int fromTime = getEchosystem().getClock()-fromAge;
         	int toTime = getEchosystem().getClock()-toAge;
-        	recentMutations.addAll(o.getGenetics().getRecentMutations(fromTime, toTime));
+        	recentMutations.addAll(o.getGenome().getRecentMutations(fromTime, toTime));
         }
         return recentMutations.size();
     }

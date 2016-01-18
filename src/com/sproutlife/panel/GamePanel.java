@@ -2,6 +2,7 @@ package com.sproutlife.panel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.model.GameStep;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Cell;
+import com.sproutlife.renderer.BoardRenderer;
 
 
 public class GamePanel extends JPanel implements ComponentListener, MouseListener, MouseMotionListener {
@@ -100,7 +102,7 @@ public class GamePanel extends JPanel implements ComponentListener, MouseListene
         
         synchronized (getGameModel().getEchosystem()) {
         	try {
-        		getBoardRenderer().paint(g);
+        		getBoardRenderer().paint((Graphics2D) g);
 
         	} catch (ConcurrentModificationException cme) {}
         }

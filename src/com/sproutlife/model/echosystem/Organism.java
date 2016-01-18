@@ -13,7 +13,7 @@ public class Organism {
     private Seed seed;
     Organism parent;
     ArrayList<Organism> children;
-    Genetics genetics;
+    Genome genome;
     private HashSet<Cell> cells;
     
     
@@ -44,9 +44,9 @@ public class Organism {
         this.y = y;
         this.position = new Point(x,y);
         this.seed = seed;
-        this.genetics = new Genetics();
+        this.genome = new Genome();
         this.cells = new HashSet<Cell>();
-  
+        this.timeOfDeath = -1;  
 
         
         if (parent!=null) {
@@ -57,10 +57,10 @@ public class Organism {
             }
             
             parent.addChild(this);
-            this.genetics = parent.getGenetics().clone();
+            this.genome = parent.getGenome().clone();
             this.lifespan = parent.lifespan;
         }
-        this.genetics.setSeed(this.seed);
+        this.genome.setSeed(this.seed);
         
         if (parent==null) {
             kind = (new Random()).nextInt(3); //kind = 0;
@@ -106,20 +106,20 @@ public class Organism {
     
     public void setSeed(Seed seed) {
         this.seed = seed;
-        this.genetics.setSeed(seed);
+        this.genome.setSeed(seed);
     }
     
     public Seed getSeed() {
         return seed;
     }
     
-    public Genetics getGenetics() {
-        return genetics;
+    public Genome getGenome() {
+        return genome;
     }
     
     public ArrayList<Point> getMutationPoints(int time) {
         ArrayList<Point> adjustOffsets = 
-                getGenetics().getMutationPoints(time);
+                getGenome().getMutationPoints(time);
         
         if (adjustOffsets==null) {
             return null;
@@ -197,7 +197,7 @@ public class Organism {
     }
     
     public boolean isAlive() {
-        return alive;
+        return alive && !(getTimeOfDeath()>0);
     }
     
     public int getTimeOfDeath() {

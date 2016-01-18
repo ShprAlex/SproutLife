@@ -67,7 +67,7 @@ public class GameStep extends Step {
         
         mutationStep.perform();
  
-        sproutStep.setSeedType(SeedType.L2_RPentomino);
+        sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);
         //Set child energy
         
         sproutStep.setSeedBorder(2);

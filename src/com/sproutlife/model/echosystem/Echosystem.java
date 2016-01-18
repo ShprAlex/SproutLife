@@ -214,6 +214,7 @@ public class Echosystem {
     	
    
     	o.setTimeOfDeath(getClock());
+
     	organisms.remove(o);
     	retiredOrganisms.add(o);
     }           

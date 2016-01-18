@@ -7,7 +7,7 @@ import java.util.Random;
 
 import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Cell;
-import com.sproutlife.model.echosystem.Genetics;
+import com.sproutlife.model.echosystem.Genome;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.Seed;
@@ -59,7 +59,7 @@ public class MutationStep extends Step {
                    if (c.getOrganism()==o) {
                        getEchosystem().removeCell(c);
                        //getBoard().removeCell(c);
-                       Mutation m = o.getGenetics().getMutation(age, pi);
+                       Mutation m = o.getGenome().getMutation(age, pi);
                        Integer freq = popularMutations.get(m);
                        if (freq==null) {
                            freq = 0;
@@ -123,11 +123,12 @@ public class MutationStep extends Step {
             }
             
             int rand6 = random.nextInt(6);
-            if (rand6 <1) {
+            if (rand6 <=1) {
+            	//0, 1 33%
                 //do nothing;
             }
             else if (rand6<=3) {
-                //1,2,3 50%
+                //2,3 33%
                 org.lifespan -=1;
                 if (random.nextInt(2)==1) {
                     continue;
@@ -149,7 +150,7 @@ public class MutationStep extends Step {
             
             
             if (c.getOrganism().getId()!=0) {            
-                Genetics g = org.getGenetics();
+                Genome g = org.getGenome();
                 int age = getAge(org);
                 int x = c.x - org.x;
                 int y = c.y - org.y;
@@ -171,11 +172,11 @@ public class MutationStep extends Step {
                             //Ok because, children are not yet old enough to have 
                             //encountered this mutation
                             
-                            childOrg.getGenetics().addMutation(m);                            
+                            childOrg.getGenome().addMutation(m);                            
                         }
                         //experiment
                         if (org.getParent()!=null && random.nextInt(3)==0) {
-                            org.getParent().getGenetics().addMutation(m);
+                            org.getParent().getGenome().addMutation(m);
                         }
             
                         getEchosystem().removeCell(c);
@@ -191,9 +192,9 @@ public class MutationStep extends Step {
                         for (Organism childOrg : org.getChildren()) {
                             //Ok because, children are not yet old enough to have 
                             //encountered this mutation
-                            //if (childOrg.getGenetics().getMutationCount(age)<10) {
+                            //if (childOrg.getGenome().getMutationCount(age)<10) {
                                 
-                            childOrg.getGenetics().removeMutation(removeM);
+                            childOrg.getGenome().removeMutation(removeM);
                             //}
                         }
                     }
