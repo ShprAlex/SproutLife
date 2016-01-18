@@ -43,10 +43,6 @@ public class GamePanel extends JPanel implements ComponentListener {
         return controller.getGameModel();
     }
     
-    private GameStep getGameStep() {
-        return getGameModel().getGameStep();
-    }       
-    
     private Board getBoard() {
         return getGameModel().getBoard();
     }

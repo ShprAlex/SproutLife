@@ -43,11 +43,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
     
     private GameModel getGameModel() {
         return controller.getGameModel();
-    }
-    
-    private GameStep getGameStep() {
-        return getGameModel().getGameStep();
-    }
+    }    
     
     public GamePanel getGamePanel() {
         return controller.getFrame().getGamePanel();
@@ -173,7 +169,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
         } else if (ae.getSource().equals(mi_game_play)) {
             setPlayGame(true);
         } else if (ae.getSource().equals(mi_game_step)) {
-            getGameStep().perform();
+            getGameModel().performGameStep();
             getGamePanel().repaint();
         } else if (ae.getSource().equals(mi_game_stop)) {
             setPlayGame(false);

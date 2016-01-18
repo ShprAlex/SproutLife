@@ -29,10 +29,15 @@ public class GameModel {
         stats = new Stats(this);
     }
 
+    public void performGameStep() {
+        getClock().increment();
+        gameStep.perform();
+    }
+    /*
     public GameStep getGameStep() {
         return gameStep;
     }
-
+    */
     public Echosystem getEchosystem() {
         return echosystem;
     }

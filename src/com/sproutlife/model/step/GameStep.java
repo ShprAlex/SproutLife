@@ -42,9 +42,7 @@ public class GameStep extends Step {
     
     public void perform() {       
         
-       // initStats();
-        
-        getGameModel().incrementTime();
+       // initStats();       
         
         retireAndPruneStep.perform();   
         fireStepPerformed(StepType.PRUNE_STEP);
