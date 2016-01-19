@@ -23,7 +23,10 @@ public class GameController {
     }
 
     public void start() {
-        frame.setVisible(true);          
+        frame.setVisible(true); 
+        //gameModel.getEchosystem().resetCells();
+        frame.getGamePanel().addHandlers();
+        frame.getGamePanel().updateBoardSizeFromPanelSize();
     }        
 
     public GameModel getGameModel() {
