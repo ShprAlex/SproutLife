@@ -14,6 +14,7 @@ public class HeadRenderer extends Renderer {
     }
 
     public void paintHead(Graphics2D g, Organism o) {
+        int BLOCK_SIZE = getBlockSize();
         g.setColor(getColor(o));
         /*
                 Point op = new Point(o.getPosition());

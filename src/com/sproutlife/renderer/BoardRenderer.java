@@ -3,21 +3,27 @@ package com.sproutlife.renderer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.panel.gamepanel.GamePanel;
+import com.sproutlife.panel.GamePanel;
 
 public class BoardRenderer extends Renderer {
+    
+    public static final int BLOCK_SIZE = 4;      
 
     private GamePanel gamePanel;
+    
     private CellRenderer cellRenderer;
     private HeadRenderer headRenderer;
     private TailRenderer tailRenderer;
     private GenomeRenderer genomeRenderer;
+    
+    private double zoom = 1;
 
     public BoardRenderer(GameModel gameModel, GamePanel gamePanel) {
         super(gameModel);
@@ -34,11 +40,23 @@ public class BoardRenderer extends Renderer {
     }
 
     public void paint(Graphics2D g) {		
-        /*
-	        AffineTransform t = new AffineTransform();
-	        t.setToScale(2, 2);
-	        ((Graphics2D) g).setTransform(t);
-         */
+        
+        if (getZoom()!=1) {
+                        
+            AffineTransform t = new AffineTransform();
+            int width = getGamePanel().getWidth();
+            int height = getGamePanel().getHeight();
+            double zoom = getZoom();
+            
+            double xoffset = (width - width * zoom)/2;
+            double yoffset = (height - height * zoom)/2;
+           
+            t.translate(xoffset, yoffset);
+            t.scale(getZoom(), getZoom());
+            
+            
+            g.setTransform(t);
+        }
 
         paintBackground(g);  		
 
@@ -49,6 +67,14 @@ public class BoardRenderer extends Renderer {
         paintCells(g);
 
         paintGenomes(g);
+    }
+    
+    public double getZoom() {
+        return zoom;
+    }
+    
+    public void setZoom(double zoom) {
+        this.zoom = zoom;
     }
 
     private void paintBackground(Graphics g) {

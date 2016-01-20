@@ -22,10 +22,9 @@ import com.sproutlife.GameController;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.step.GameStep;
-import com.sproutlife.panel.gamepanel.GamePanel;
 
 public class GameMenu extends JMenuBar implements ActionListener {
-    GameController controller;
+    PanelController controller;
     
     //private JMenuBar mb_menu;
     private JMenu m_file, m_game, m_help;
@@ -36,7 +35,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
     
     private int i_movesPerSecond = 200;
     
-    public GameMenu(GameController controller) {
+    public GameMenu(PanelController controller) {
         this.controller = controller;
         initActions();
         initMenu();
@@ -47,7 +46,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
     }    
     
     public GamePanel getGamePanel() {
-        return controller.getFrame().getGamePanel();
+        return controller.getGamePanel();
     }
 
     private void initMenu() {

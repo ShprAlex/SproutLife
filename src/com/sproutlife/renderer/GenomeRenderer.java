@@ -19,6 +19,8 @@ public class GenomeRenderer extends Renderer {
 		
 		ArrayList<Point> filteredMutationPoints = getFilteredMutationPoints(o);
 		
+		int BLOCK_SIZE = getBlockSize();
+		
 		double mbs = Math.max(1, BLOCK_SIZE/3.5);
 	    
 		//Paint white background under black mutation points

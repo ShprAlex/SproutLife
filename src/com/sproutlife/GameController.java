@@ -3,11 +3,13 @@ package com.sproutlife;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.GameThread;
 import com.sproutlife.panel.GameFrame;
+import com.sproutlife.panel.PanelController;
 
 public class GameController {
-    GameFrame frame;
-
-    private GameModel gameModel;        
+    
+    private GameModel gameModel;
+    
+    private PanelController panelController;
 
     private Settings settings;
 
@@ -15,26 +17,21 @@ public class GameController {
     public GameController() {
         settings = new Settings();
 
-        gameModel = new GameModel(settings);        
+        gameModel = new GameModel(settings);
+        
+        panelController = new PanelController(this);
 
-        frame = new GameFrame(this);
+        //frame = new GameFrame(this);
 
         //game = new GameThread(frame.getGamePanel());
     }
 
     public void start() {
-        frame.setVisible(true); 
-        //gameModel.getEchosystem().resetCells();
-        frame.getGamePanel().addHandlers();
-        frame.getGamePanel().updateBoardSizeFromPanelSize();
+        panelController.start();
     }        
 
     public GameModel getGameModel() {
         return gameModel;
-    }
-
-    public GameFrame getFrame() {
-        return frame;
     }
 
     public Settings getSettings() {

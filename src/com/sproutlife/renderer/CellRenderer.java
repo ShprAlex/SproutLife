@@ -24,6 +24,7 @@ public class CellRenderer extends Renderer {
 	
 	public void paintCell(Graphics2D g, Cell c) {
 		g.setColor(getColor(c));
+		int BLOCK_SIZE = getBlockSize();
 		g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);
 	}
 

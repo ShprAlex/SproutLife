@@ -1,4 +1,4 @@
-package com.sproutlife.panel.gamepanel;
+package com.sproutlife.panel.handler;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,13 +10,17 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
 import com.sproutlife.model.step.GameStep.StepType;
+import com.sproutlife.panel.GamePanel;
+import com.sproutlife.panel.PanelController;
+import com.sproutlife.renderer.BoardRenderer;
 
 public class CellClickHandler {
-    GameController gameController;
+    
+    PanelController panelController;
     MouseAdapter cellClickListener; 
     
-    public CellClickHandler(GameController gameController) {
-        this.gameController = gameController;
+    public CellClickHandler(PanelController panelController) {
+        this.panelController = panelController;
         initialize();
     }
     
@@ -26,11 +30,11 @@ public class CellClickHandler {
     }
     
     private GameModel getGameModel() {
-        return gameController.getGameModel();
+        return panelController.getGameModel();
     }
     
     private GamePanel getGamePanel() {
-        return gameController.getFrame().getGamePanel();
+        return panelController.getGamePanel();
     }
     
     private Board getBoard() {
@@ -76,8 +80,8 @@ public class CellClickHandler {
     
     public void addCell(MouseEvent me) {
         
-        int x = me.getPoint().x/getGamePanel().BLOCK_SIZE-1;
-        int y = me.getPoint().y/getGamePanel().BLOCK_SIZE-1;
+        int x = me.getPoint().x/getGamePanel().getBoardRenderer().BLOCK_SIZE-1;
+        int y = me.getPoint().y/getGamePanel().getBoardRenderer().BLOCK_SIZE-1;
         
         if ((x >= 0) && (x < getBoard().getWidth()) && (y >= 0) && (y < getBoard().getHeight())) {
             addCell(x,y);

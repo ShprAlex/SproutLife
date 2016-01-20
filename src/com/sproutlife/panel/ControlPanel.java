@@ -18,14 +18,16 @@ import javax.swing.event.ChangeListener;
 
 import com.sproutlife.GameController;
 import com.sproutlife.Settings;
+import javax.swing.JSlider;
 
 public class ControlPanel extends JPanel {
 	
-	GameController gameController;
+	PanelController panelController;
+	private JSlider zoomSlider;
 	
-	public ControlPanel(GameController gameController) {
+	public ControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));		   
-		this.gameController = gameController;
+		this.panelController = panelController;
 		buildPanel();
 	}
 	/**
@@ -34,42 +36,44 @@ public class ControlPanel extends JPanel {
 	public void buildPanel() {		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {130, 50};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 20, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] {80, 100, 50};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 20, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
-		JButton startButton = new JButton("Start");
-		startButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				gameController.getGameModel().setPlayGame(true);
-			}
-		});
 		
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 10));
 		GridBagConstraints gbc_rigidArea_1 = new GridBagConstraints();
 		gbc_rigidArea_1.insets = new Insets(0, 0, 5, 5);
-		gbc_rigidArea_1.gridx = 0;
+		gbc_rigidArea_1.gridx = 1;
 		gbc_rigidArea_1.gridy = 0;
 		add(rigidArea_1, gbc_rigidArea_1);
+		
+		JButton startButton = new JButton("Start");
+		startButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelController.getGameModel().setPlayGame(true);
+			}
+		});
 		GridBagConstraints gbc_startButton = new GridBagConstraints();
 		gbc_startButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_startButton.gridwidth = 2;
 		gbc_startButton.insets = new Insets(0, 0, 5, 5);
-		gbc_startButton.gridx = 0;
+		gbc_startButton.gridx = 1;
 		gbc_startButton.gridy = 1;
 		add(startButton, gbc_startButton);
 		
 		JButton pauseButton = new JButton("Pause");
 		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			    gameController.getGameModel().setPlayGame(false);
+			    panelController.getGameModel().setPlayGame(false);
 			}
 		});
 		GridBagConstraints gbc_pauseButton = new GridBagConstraints();
 		gbc_pauseButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pauseButton.gridwidth = 2;
 		gbc_pauseButton.insets = new Insets(0, 0, 5, 5);
-		gbc_pauseButton.gridx = 0;
+		gbc_pauseButton.gridx = 1;
 		gbc_pauseButton.gridy = 2;
 		add(pauseButton, gbc_pauseButton);
 		
@@ -77,17 +81,28 @@ public class ControlPanel extends JPanel {
 		GridBagConstraints gbc_rigidArea = new GridBagConstraints();
 		gbc_rigidArea.gridwidth = 2;
 		gbc_rigidArea.insets = new Insets(0, 0, 5, 0);
-		gbc_rigidArea.gridx = 0;
+		gbc_rigidArea.gridx = 1;
 		gbc_rigidArea.gridy = 3;
 		add(rigidArea, gbc_rigidArea);
 		
-		JLabel childOneEnergyLabel = new JLabel("Child 1 energy");
-		GridBagConstraints gbc_childOneEnergyLabel = new GridBagConstraints();
-		gbc_childOneEnergyLabel.anchor = GridBagConstraints.WEST;
-		gbc_childOneEnergyLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_childOneEnergyLabel.gridx = 0;
-		gbc_childOneEnergyLabel.gridy = 4;
-		add(childOneEnergyLabel, gbc_childOneEnergyLabel);
+		JLabel lblZoom = new JLabel("Zoom");
+		GridBagConstraints gbc_lblZoom = new GridBagConstraints();
+		gbc_lblZoom.anchor = GridBagConstraints.WEST;
+		gbc_lblZoom.insets = new Insets(0, 0, 5, 5);
+		gbc_lblZoom.gridx = 0;
+		gbc_lblZoom.gridy = 5;
+		add(lblZoom, gbc_lblZoom);
+		
+		zoomSlider = new JSlider();
+		zoomSlider.setValue(0);
+		zoomSlider.setMaximum(10);
+		GridBagConstraints gbc_zoomSlider = new GridBagConstraints();
+		gbc_zoomSlider.fill = GridBagConstraints.HORIZONTAL;
+		gbc_zoomSlider.gridwidth = 2;
+		gbc_zoomSlider.insets = new Insets(0, 0, 5, 0);
+		gbc_zoomSlider.gridx = 1;
+		gbc_zoomSlider.gridy = 5;
+		add(zoomSlider, gbc_zoomSlider);
 		
 		JSpinner childOneEnergySpinner = new JSpinner();
 		childOneEnergySpinner.setValue(getInt(Settings.CHILD_ONE_ENERGY));
@@ -96,21 +111,22 @@ public class ControlPanel extends JPanel {
 				set(Settings.CHILD_ONE_ENERGY,((JSpinner) arg0.getSource()).getValue());
 			}
 		});		
+		
+		JLabel childOneEnergyLabel = new JLabel("Child 1 energy");
+		GridBagConstraints gbc_childOneEnergyLabel = new GridBagConstraints();
+		gbc_childOneEnergyLabel.gridwidth = 2;
+		gbc_childOneEnergyLabel.anchor = GridBagConstraints.WEST;
+		gbc_childOneEnergyLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_childOneEnergyLabel.gridx = 0;
+		gbc_childOneEnergyLabel.gridy = 6;
+		add(childOneEnergyLabel, gbc_childOneEnergyLabel);
 		GridBagConstraints gbc_childOneEnergySpinner = new GridBagConstraints();
 		gbc_childOneEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_childOneEnergySpinner.anchor = GridBagConstraints.NORTH;
 		gbc_childOneEnergySpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_childOneEnergySpinner.gridx = 1;
-		gbc_childOneEnergySpinner.gridy = 4;
+		gbc_childOneEnergySpinner.gridx = 2;
+		gbc_childOneEnergySpinner.gridy = 6;
 		add(childOneEnergySpinner, gbc_childOneEnergySpinner);
-		
-		JLabel childTwoEnergyLabel = new JLabel("Child 2 energy");
-		GridBagConstraints gbc_childTwoEnergyLabel = new GridBagConstraints();
-		gbc_childTwoEnergyLabel.anchor = GridBagConstraints.WEST;
-		gbc_childTwoEnergyLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_childTwoEnergyLabel.gridx = 0;
-		gbc_childTwoEnergyLabel.gridy = 5;
-		add(childTwoEnergyLabel, gbc_childTwoEnergyLabel);
 		
 		JSpinner childTwoEnergySpinner = new JSpinner();
 		childTwoEnergySpinner.setValue(getInt(Settings.CHILD_TWO_ENERGY));
@@ -119,21 +135,22 @@ public class ControlPanel extends JPanel {
 				set(Settings.CHILD_TWO_ENERGY,((JSpinner) arg0.getSource()).getValue());
 			}
 		});
+		
+		JLabel childTwoEnergyLabel = new JLabel("Child 2 energy");
+		GridBagConstraints gbc_childTwoEnergyLabel = new GridBagConstraints();
+		gbc_childTwoEnergyLabel.gridwidth = 2;
+		gbc_childTwoEnergyLabel.anchor = GridBagConstraints.WEST;
+		gbc_childTwoEnergyLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_childTwoEnergyLabel.gridx = 0;
+		gbc_childTwoEnergyLabel.gridy = 7;
+		add(childTwoEnergyLabel, gbc_childTwoEnergyLabel);
 		GridBagConstraints gbc_childTwoEnergySpinner = new GridBagConstraints();
 		gbc_childTwoEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_childTwoEnergySpinner.anchor = GridBagConstraints.NORTH;
 		gbc_childTwoEnergySpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_childTwoEnergySpinner.gridx = 1;
-		gbc_childTwoEnergySpinner.gridy = 5;
+		gbc_childTwoEnergySpinner.gridx = 2;
+		gbc_childTwoEnergySpinner.gridy = 7;
 		add(childTwoEnergySpinner, gbc_childTwoEnergySpinner);
-		
-		JLabel childThreeEnergyLabel = new JLabel("Child 3+ energy");		
-		GridBagConstraints gbc_childThreeEnergyLabel = new GridBagConstraints();
-		gbc_childThreeEnergyLabel.anchor = GridBagConstraints.WEST;
-		gbc_childThreeEnergyLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_childThreeEnergyLabel.gridx = 0;
-		gbc_childThreeEnergyLabel.gridy = 6;
-		add(childThreeEnergyLabel, gbc_childThreeEnergyLabel);
 		
 		JSpinner childThreeEnergySpinner = new JSpinner();
 		childThreeEnergySpinner.setValue(getInt(Settings.CHILD_THREE_ENERGY));
@@ -142,20 +159,33 @@ public class ControlPanel extends JPanel {
 				set(Settings.CHILD_THREE_ENERGY,((JSpinner) arg0.getSource()).getValue());
 			}
 		});
+		
+		JLabel childThreeEnergyLabel = new JLabel("Child 3+ energy");		
+		GridBagConstraints gbc_childThreeEnergyLabel = new GridBagConstraints();
+		gbc_childThreeEnergyLabel.gridwidth = 2;
+		gbc_childThreeEnergyLabel.anchor = GridBagConstraints.WEST;
+		gbc_childThreeEnergyLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_childThreeEnergyLabel.gridx = 0;
+		gbc_childThreeEnergyLabel.gridy = 8;
+		add(childThreeEnergyLabel, gbc_childThreeEnergyLabel);
 		GridBagConstraints gbc_childThreeEnergySpinner = new GridBagConstraints();
 		gbc_childThreeEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_childThreeEnergySpinner.anchor = GridBagConstraints.NORTH;
-		gbc_childThreeEnergySpinner.gridx = 1;
-		gbc_childThreeEnergySpinner.gridy = 6;
+		gbc_childThreeEnergySpinner.gridx = 2;
+		gbc_childThreeEnergySpinner.gridy = 8;
 		add(childThreeEnergySpinner, gbc_childThreeEnergySpinner);
 
 	}
 
-	public void set(String s, Object o) {
-		gameController.set(s, o);
-	}
-	
-	public int getInt(String s) {
-		return gameController.getSettings().getInt(s);
-	}
+    public void set(String s, Object o) {
+        panelController.getGameController().set(s, o);
+    }
+
+    public int getInt(String s) {
+        return panelController.getGameController().getSettings().getInt(s);
+    }
+
+    public JSlider getZoomSlider() {
+        return zoomSlider;
+    }
 }
