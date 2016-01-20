@@ -18,7 +18,7 @@ import com.sproutlife.renderer.BoardRenderer;
 
 
 public class GamePanel extends JPanel  {
-    public static final int BLOCK_SIZE = 3;
+    public static final int BLOCK_SIZE = 5;
   
     GameController controller;
     BoardRenderer boardRenderer;       

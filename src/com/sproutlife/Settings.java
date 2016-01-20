@@ -18,9 +18,9 @@ public class Settings {
     public void initSettings() {
     	set(Settings.MUTATION_ENABLED, true);
     	
-        set(Settings.CHILD_ONE_ENERGY, 2);
-        set(Settings.CHILD_TWO_ENERGY, 2);
-        set(Settings.CHILD_THREE_ENERGY, 2);
+        set(Settings.CHILD_ONE_ENERGY, 3);
+        set(Settings.CHILD_TWO_ENERGY, 3);
+        set(Settings.CHILD_THREE_ENERGY, 3);
 
     }
     

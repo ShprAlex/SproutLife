@@ -60,8 +60,12 @@ public class ColorsStep extends Step {
                 }
                 for (Organism o : getEchosystem().getOrganisms()) {
                     if (o.kind==splitKind) {
-                        
-                        o.kind = o.x<middleX?splitKind : emptyKind ;
+                        if (middleX>getBoard().getWidth()/2) {
+                            o.kind = o.x<middleX?splitKind : emptyKind ;                            
+                        }
+                        else {
+                            o.kind = o.x>middleX?splitKind : emptyKind ;
+                        }                       
                     }
                 }
             }        

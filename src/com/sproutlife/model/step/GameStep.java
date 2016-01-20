@@ -1,5 +1,7 @@
 package com.sproutlife.model.step;
 
+import java.util.Random;
+
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
@@ -65,7 +67,7 @@ public class GameStep extends Step {
         */
     
         
-        getEchosystem().setOrgLifespan(lifespan);        
+        getEchosystem().setOrgLifespan(lifespan+(new Random()).nextInt(3));        
         
         lifeStep.perform();
         fireStepPerformed(StepType.LIFE_STEP);
@@ -73,10 +75,9 @@ public class GameStep extends Step {
         mutationStep.perform();
         fireStepPerformed(StepType.MUTATION_STEP);
  
-        sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);
-        //Set child energy
-        
-        sproutStep.setSeedBorder(2);
+
+        sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);        
+        sproutStep.setSeedBorder(1);
         sproutStep.perform();       
         fireStepPerformed(StepType.SPROUT_STEP);
 

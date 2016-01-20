@@ -40,13 +40,13 @@ public class BoardRenderer extends Renderer {
 	        ((Graphics2D) g).setTransform(t);
          */
 
-        paintBackground(g);
-
-        paintCells(g);		
+        paintBackground(g);  		
 
         paintOrgHeads(g);
 
         paintOrgTails(g);
+        
+        paintCells(g);
 
         paintGenomes(g);
     }

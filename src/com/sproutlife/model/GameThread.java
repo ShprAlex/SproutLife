@@ -1,5 +1,7 @@
 package com.sproutlife.model;
 
+import javax.swing.SwingUtilities;
+
 import com.sproutlife.model.step.GameStep.StepType;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
@@ -51,8 +53,9 @@ public class GameThread {
     
 
     private int getSleepDelay() {
+        
         int sleep = 1;
-      
+       
         if (superSlowIntro) {
             if (getGameModel().getTime()<100 ) {
                 sleep = 800 - (int) (Math.log10(getGameModel().getTime()/13.0+1)*800) ;
@@ -71,42 +74,52 @@ public class GameThread {
             }
         }
         return sleep;
+        
     }
     
     private int getIterations() {
         int iterations = 1;
+        
         if(getGameModel().getEchosystem().getOrganisms().size()>120) {
             iterations =2;
         }
-        if (getGameModel().getEchosystem().getOrganisms().size()>180) {
-            iterations = 4;
+        
+        if(getGameModel().getEchosystem().getOrganisms().size()>180) {
+            iterations =4;
         }
+
         if (getGameModel().getEchosystem().getOrganisms().size()>240) {
             iterations = 8;
         }
+
         return iterations;
     }
     
     private class InnerGameThread extends Thread {
         public void run() {
 
-            while(playGame) {
+            while (playGame) {
 
                 try {
+
                     synchronized (getGameModel().getEchosystem()) {
                         getGameModel().performGameStep();
                     }
 
                     int sleep = getSleepDelay();
-                   
+
                     int iterations = getIterations();
 
-                    if (getGameModel().getTime()%iterations==0) {
-                        fireStepBundlePerformed();                    
+                    if (getGameModel().getTime() % iterations == 0) {
+
+                        fireStepBundlePerformed();
+
                         Thread.sleep(sleep);
+
                     }
-                    
-                } catch (InterruptedException ex) {}
+
+                }
+                catch (InterruptedException ex) {}
             }
         }
     }

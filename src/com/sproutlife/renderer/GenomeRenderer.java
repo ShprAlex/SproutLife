@@ -19,27 +19,38 @@ public class GenomeRenderer extends Renderer {
 		
 		ArrayList<Point> filteredMutationPoints = getFilteredMutationPoints(o);
 		
-		int mbs = Math.min(1, BLOCK_SIZE/3);
+		double mbs = Math.max(1, BLOCK_SIZE/3.5);
 	    
 		//Paint white background under black mutation points
-		 
-		g.setColor(new Color(255,255,255,120));
-		if (BLOCK_SIZE>3) {                  
-			for (Point p: filteredMutationPoints) { 
-				g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(p.x*mbs)-2, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(p.y*mbs)-2, BLOCK_SIZE+4, BLOCK_SIZE+4);
-			}
+		
+		g.setColor(new Color(240,240,240));
+		//g.setColor(new Color(255,255,255,120));
+		if (BLOCK_SIZE>3) {       		    
+		    for (Point p: filteredMutationPoints) {
+		        if (BLOCK_SIZE>3) {
+		            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)-1, BLOCK_SIZE, BLOCK_SIZE+2);
+		            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)-1, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE+2, BLOCK_SIZE);
+		        }
+		        else if(false){
+		            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)-1, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)-1, BLOCK_SIZE+2, BLOCK_SIZE+2);
+		        
+		            //g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)-2, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)-2, BLOCK_SIZE+4, BLOCK_SIZE+4);
+		        }
+		    }
 		}
 
 		//Paint mutation points on top of background
-		
+
 		g.setColor(Color.black);		
 		for (Point p: filteredMutationPoints) {
-			if (BLOCK_SIZE<=3) {
-				g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(p.y*mbs), BLOCK_SIZE, BLOCK_SIZE);    
-			}
-			else {
-				g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(p.y*mbs), BLOCK_SIZE, BLOCK_SIZE);
-			}
+		    if (BLOCK_SIZE>3) {
+		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)+1, BLOCK_SIZE, BLOCK_SIZE-2);
+		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)+1, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE-2, BLOCK_SIZE);    
+		    }
+		    else {
+		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE, BLOCK_SIZE);
+		        //g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE, BLOCK_SIZE);
+		    }
 		}
 	}
 		
