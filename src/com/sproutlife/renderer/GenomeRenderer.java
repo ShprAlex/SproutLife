@@ -11,8 +11,8 @@ import com.sproutlife.model.echosystem.Organism;
 
 public class GenomeRenderer extends Renderer {
 	
-	public GenomeRenderer(GameModel gameModel) {
-		super(gameModel);		
+	public GenomeRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
+		super(gameModel, boardRenderer);		
 	}
 
 	public void paintGenome(Graphics2D g, Organism o) {
@@ -21,7 +21,7 @@ public class GenomeRenderer extends Renderer {
 		
 		int BLOCK_SIZE = getBlockSize();
 		
-		double mbs = Math.max(1, BLOCK_SIZE/3.5);
+		double mbs = BLOCK_SIZE/3.5;
 	    
 		//Paint white background under black mutation points
 		

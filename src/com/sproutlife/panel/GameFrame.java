@@ -5,12 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-
-import com.sproutlife.GameController;
 
 /**
  * Conway's game of life is a cellular automaton devised by the mathematician
@@ -22,9 +17,6 @@ public class GameFrame extends JFrame {
 
     PanelController panelController;
     JSplitPane splitPane = new JSplitPane();
-
-    private GamePanel gamePanel;
-    private ControlPanel controlPanel;
 
     public GameFrame(PanelController panelController) {
 

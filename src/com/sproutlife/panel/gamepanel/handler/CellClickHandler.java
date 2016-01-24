@@ -1,4 +1,4 @@
-package com.sproutlife.panel.handler;
+package com.sproutlife.panel.gamepanel.handler;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,8 +10,8 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
 import com.sproutlife.model.step.GameStep.StepType;
-import com.sproutlife.panel.GamePanel;
 import com.sproutlife.panel.PanelController;
+import com.sproutlife.panel.gamepanel.GamePanel;
 import com.sproutlife.renderer.BoardRenderer;
 
 public class CellClickHandler {
@@ -80,8 +80,8 @@ public class CellClickHandler {
     
     public void addCell(MouseEvent me) {
         
-        int x = me.getPoint().x/getGamePanel().getBoardRenderer().BLOCK_SIZE-1;
-        int y = me.getPoint().y/getGamePanel().getBoardRenderer().BLOCK_SIZE-1;
+        int x = me.getPoint().x/getGamePanel().getBoardRenderer().getBlockSize()-1;
+        int y = me.getPoint().y/getGamePanel().getBoardRenderer().getBlockSize()-1;
         
         if ((x >= 0) && (x < getBoard().getWidth()) && (y >= 0) && (y < getBoard().getHeight())) {
             addCell(x,y);

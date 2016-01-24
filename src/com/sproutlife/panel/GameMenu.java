@@ -22,6 +22,7 @@ import com.sproutlife.GameController;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.step.GameStep;
+import com.sproutlife.panel.gamepanel.GamePanel;
 
 public class GameMenu extends JMenuBar implements ActionListener {
     PanelController controller;

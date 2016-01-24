@@ -10,8 +10,8 @@ import com.sproutlife.model.echosystem.Organism;
 
 public class TailRenderer extends Renderer {
 
-    public TailRenderer(GameModel gameModel) {
-        super(gameModel);
+    public TailRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
+        super(gameModel, boardRenderer);
     }
 
     public void paintTail(Graphics2D g, Organism o) {

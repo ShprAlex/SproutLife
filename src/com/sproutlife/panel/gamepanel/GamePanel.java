@@ -1,4 +1,4 @@
-package com.sproutlife.panel;
+package com.sproutlife.panel.gamepanel;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,7 +7,8 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JPanel;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.panel.handler.CellClickHandler;
+import com.sproutlife.panel.PanelController;
+import com.sproutlife.panel.gamepanel.handler.CellClickHandler;
 import com.sproutlife.renderer.BoardRenderer;
 
 public class GamePanel extends JPanel {

@@ -4,21 +4,27 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.panel.GamePanel;
+import com.sproutlife.panel.gamepanel.GamePanel;
 
 public abstract class Renderer {
     
     protected GameModel gameModel;
+    protected BoardRenderer boardRenderer;
 
-    public Renderer(GameModel gameModel) {
-        this.gameModel = gameModel;	        
+    public Renderer(GameModel gameModel, BoardRenderer boardRenderer) {
+        this.gameModel = gameModel;	  
+        this.boardRenderer = boardRenderer;
     }
 
     public int getBlockSize() {
-        return BoardRenderer.BLOCK_SIZE;
-    }
+        return boardRenderer.getBlockSize();
+    }      
     
     public GameModel getGameModel() {
         return gameModel;
-    }	
+    }
+    
+    public BoardRenderer getBoardRenderer() {
+        return boardRenderer;
+    }
 }

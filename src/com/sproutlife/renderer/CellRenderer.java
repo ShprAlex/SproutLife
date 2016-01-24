@@ -9,8 +9,8 @@ import com.sproutlife.model.echosystem.Cell;
 public class CellRenderer extends Renderer {
     boolean paintRetiredCells;
 	
-	public CellRenderer(GameModel gameModel) {
-		super(gameModel);
+	public CellRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
+		super(gameModel, boardRenderer);
 		paintRetiredCells = false;
 	}
 
