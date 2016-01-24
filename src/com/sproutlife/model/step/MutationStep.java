@@ -123,11 +123,20 @@ public class MutationStep extends Step {
             }
             
             int rand6 = random.nextInt(6);
+            int decreaseOdds = 3;
+            
+            //if("friendly".equals(getSettings().getString(Settings.LIFE_MODE))) {
+            //    decreaseOdds = 4; //50% odds of decreasing vs. 33% odds of increasing    
+            //}
+            
             if (rand6 <=1) {
-            	//0, 1 33%
-                //do nothing;
+                
+                org.lifespan +=1;
+                if (random.nextInt(2)==1) {
+                    continue;
+                }
             }
-            else if (rand6<=3) {
+            else if (rand6<=decreaseOdds) {
                 //2,3 33%
                 org.lifespan -=1;
                 if (random.nextInt(2)==1) {
@@ -135,11 +144,8 @@ public class MutationStep extends Step {
                 }
             }
             else {
-                //4,5 33%
-                org.lifespan +=1;
-                if (random.nextInt(2)==1) {
-                    continue;
-                }
+              
+                //do nothing
             }
             
             /*
