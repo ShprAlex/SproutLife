@@ -4,23 +4,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
-public class LifeStep extends Step {   
+public class LifeStep extends Step { 
+    
+    public static enum LifeMode { 
+        FRIENDLY, 
+        COMPETITIVE 
+    }
+    LifeMode lifeMode;
         
     public LifeStep(GameModel gameModel) {
-        super(gameModel);                    
+        super(gameModel);   
+        lifeMode = LifeMode.FRIENDLY;
     }
     
     public void perform() {
         initStats();
-        
+        updateLifeMode();
         updateCells();                
     }
     
+    public LifeMode getLifeMode() {
+        return lifeMode;
+    }
+    
+    private void updateLifeMode() {
+        if("friendly".equals(getSettings().getString(Settings.LIFE_MODE))) {
+            this.lifeMode = LifeMode.FRIENDLY;
+        }
+        else {
+            this.lifeMode = LifeMode.COMPETITIVE;
+        }
+    }
+    
     public void updateCells() {
+        
+        
                 
         ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
         ArrayList<Cell> deadCells = new ArrayList<Cell>();         
@@ -67,73 +90,85 @@ public class LifeStep extends Step {
         }
     }     
     
+    public int getCompare(Organism o) {
+        return o.getParent().maxCells;
+    }
+    
     private Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int i, int j) {
 
-        //int friendCount = 0;
+        int friendCount = 0;
 
-        /*
-        for (Cell neighbor : neighbors) {
-            if (me.sameOrganism(neighbor) ) {
-                friendCount++;
+        
+        if (getLifeMode()==null) {
+            for (Cell neighbor : neighbors) {            
+                if (me.getOrganism()==neighbor.getOrganism()) {
+                    friendCount++;
+                }                
             }
-        }                              
-        */ 
-        /*
-        if(getEchosystem().getAge(me.getOrganism())>getEchosystem().getOrgLifespan(me.getOrganism())) {
-            //getEchosystem().removeCell(me);
-            return null;
+            if ((neighbors.size() == 2 || neighbors.size()==3)) { 
+                me.age+=1;                
+                return me;
+                         
+            }
         }
-        */
+        else if (getLifeMode()==LifeMode.FRIENDLY) {
+            for (Cell neighbor : neighbors) {            
+                if (me.getOrganism()==neighbor.getOrganism()) {
+                    friendCount++;
+                }                
+            }
+            if (friendCount>=1&&(neighbors.size() == 2 || neighbors.size()==3)) { 
+                me.age+=1;                
+                return me;
+                         
+            }
+        }
+        else if (getLifeMode()==LifeMode.COMPETITIVE) {
+            for (Cell neighbor : neighbors) {            
+                if (me.getOrganism().isFamily(neighbor.getOrganism(),3)) {
+                    friendCount++;
+                }
+                else {
+                    if (getCompare(me.getOrganism())<getCompare(neighbor.getOrganism())) {
+                        return null;
+                    }
+                }
+            }
+            
+
+
+            if ((friendCount == 2 || friendCount==3)) {
+                //if(getBoard().hasBiggerNeighbor25(i, j, me.getOrganism())) {
+                //    return null;
+                //}
+                me.age+=1;                
+                return me;
+
+            }
+        }
+         
+/*
         if (neighbors.size() == 2) { 
             me.age+=1;
             
-            //return me;
-            /*
-            if (me.age!=25) {
-                return me;
-             }
-             else {                
-                 getStats().die1++;
-                 return null;
-             }
-            */
             return me;
         }
         
         if (neighbors.size()==3) {
-            /*
-            if (neighbors.get(0).x +neighbors.get(1).x +neighbors.get(2).x==me.x*3 &&
-                    neighbors.get(0).y +neighbors.get(1).y +neighbors.get(2).y==me.y*3) {
-                //removeCell(me);
-                return null;
-
-            }
-            */
-            
             
             me.age+=1;
-            /*
-            if (me.age!=9 ) {
-               return me;
-            }
-            else {                
-                getStats().die1++;
-                return null;
-            }
-            */
+
             return me;
             
         }         
         
         if(neighbors.size()<=1) {
-            //getStats().die1++;
+            getStats().die1++;
         }
         else {
             getStats().die2++;
-        }
-         
-       // getEchosystem().removeCell(me);
-
+        }        
+*/
         return null;
         
     }
@@ -143,7 +178,7 @@ public class LifeStep extends Step {
             return null;
         }
         
-        if (neighbors.size()<3) {
+        if (neighbors.size()<3 || neighbors.size()>6) {
             return null;
         }
 
@@ -165,9 +200,46 @@ public class LifeStep extends Step {
                 return null;
             }
         }
+        if (getLifeMode()==LifeMode.FRIENDLY) {
+            return null;
+        }
 
-        //Do something more complicated for mixed neighbors 
- 
+        /*
+         * getLifeMode()==LifeMode.COMPETITIVE
+         * Do something more complicated for > 4 mixed neighbors 
+         */               
+        
+        Organism biggestOrg = null;
+        boolean tieForBiggest = false;
+        for (Cell c : neighbors) {
+            Organism o = c.getOrganism();
+            if (biggestOrg==null ||getCompare(biggestOrg)>getCompare(o)) {
+                biggestOrg = o;
+                tieForBiggest=false;
+            }
+            else {
+                if (getCompare(o)==getCompare(biggestOrg)) {
+                    tieForBiggest=true;
+                }
+            }
+        }
+        if (tieForBiggest) {
+            return null;
+        }
+        ArrayList<Cell> biggestOrgCells = new ArrayList<Cell>();
+        for (Cell c : neighbors) {
+            if (c.getOrganism()==biggestOrg) {
+                biggestOrgCells.add(c);
+            }
+        }
+        if (biggestOrgCells.size()==3) {
+            Cell bornCell = getEchosystem().createCell(i,j,biggestOrgCells);
+            return bornCell;
+        }
+        
+        
+        /*
+                 
         HashMap <Organism, ArrayList<Cell>> parentMap = new HashMap<Organism, ArrayList<Cell>>();
 
         //Group parent cells by organism
@@ -187,9 +259,7 @@ public class LifeStep extends Step {
         while (iterator.hasNext()) {
             Organism org = iterator.next();
 
-            if (parentMap.get(org).size()<3) {
-                //Ignore neighbors if less than 3 cells from the same organism               
-                
+            if (parentMap.get(org).size()<=3) {
                 iterator.remove(); 
             }            
             else if (parentMap.get(org).size()>3) {
@@ -197,43 +267,44 @@ public class LifeStep extends Step {
                 return null; 
             }
         }
-
+        
         if(parentMap.size()==1) {
             Cell bornCell = getEchosystem().createCell(i,j,parentMap.values().iterator().next());
 
             return bornCell;          
         }
-
-        if(parentMap.size()==2) {
-            Iterator <Organism >parentOrgsIterator = parentMap.keySet().iterator();
-            Organism po1 = parentOrgsIterator.next();
-            Organism po2 = parentOrgsIterator.next();
-            Cell bornCell;
-            Organism winner = chooseBornWinner(po1, po2);
-
-            if (winner!=null) {
-                bornCell = getEchosystem().createCell(i,j,parentMap.get(winner));            
-                return bornCell;   
+        if (getLifeMode()==LifeMode.COMPETITIVE) {
+            if(parentMap.size()==2) {
+                Iterator <Organism >parentOrgsIterator = parentMap.keySet().iterator();
+                Organism po1 = parentOrgsIterator.next();
+                Organism po2 = parentOrgsIterator.next();
+                Cell bornCell;
+                Organism winner = chooseWinner(po1, po2);
+    
+                if (winner!=null) {
+                    bornCell = getEchosystem().createCell(i,j,parentMap.get(winner));            
+                    return bornCell;   
+                }
             }
         }
-
+        */
         return null;            
 
     }
 
-    private Organism chooseBornWinner(Organism parentOrg1, Organism parentOrg2) {
+    private Organism chooseWinner(Organism org1, Organism org2) {
        
         // if (parentOrg1.energy>parentOrg2.energy) {
-        if (parentOrg1.size()>parentOrg2.size()) {
+        if (org1.size()>org2.size()) {
         //if (parentOrg1.size()<parentOrg2.size()) {
-            return parentOrg1;              
+            return org1;              
         }
          
         //if (parentOrg2.energy>parentOrg1.energy) {
-      if (parentOrg2.size()>parentOrg1.size()) {
+      if (org2.size()>org1.size()) {
         //if (parentOrg2.size()<parentOrg1.size()) {
 
-            return parentOrg2;               
+            return org2;               
         }
         
         return null; 
