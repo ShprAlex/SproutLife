@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Settings {
     HashMap<String, Object> settings;
     
+    public static String LIFE_MODE = "lifeMode";
     public static String MUTATION_ENABLED = "mutationEnabled";
     public static String CHILD_ONE_ENERGY = "childOneEnergy";
     public static String CHILD_TWO_ENERGY = "childTwoEnergy";
@@ -16,6 +17,8 @@ public class Settings {
 	}
     
     public void initSettings() {
+        set(Settings.LIFE_MODE, "friendly");
+        
     	set(Settings.MUTATION_ENABLED, true);
     	
         set(Settings.CHILD_ONE_ENERGY, 3);
@@ -34,5 +37,9 @@ public class Settings {
 
     public int getInt(String s) {
     	return (Integer) settings.get(s);
+    }
+    
+    public String getString(String s) {
+        return (String) settings.get(s);
     }
 }
