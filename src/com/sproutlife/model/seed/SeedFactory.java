@@ -75,9 +75,9 @@ public class SeedFactory {
             new SeedSproutPattern() {                
                 {                    
                     this.seedPattern = new BitPattern(new int[][]                                             
-                    	   {{0,0,0,0,0},
-                            {0,1,1,0,0},                         
-                            {0,0,0,1,0}},
+                    	   {{0,0,1},
+                            {0,1,0},                         
+                            {0,1,0}},
                           true);
 
                     this.sproutPattern = new BitPattern(new int[][]  
