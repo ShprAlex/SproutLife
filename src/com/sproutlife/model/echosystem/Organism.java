@@ -28,6 +28,8 @@ public class Organism {
     
     public int energy = 0;
     public int lifespan;
+    public int maxCells;
+    public int paab;
     
     public boolean bornFromInfected=false;
     public Organism infectedBy;
@@ -50,7 +52,7 @@ public class Organism {
         this.genome = new Genome();
         this.cells = new HashSet<Cell>();
         this.timeOfDeath = -1;  
-
+        this.maxCells = 0;
         
         if (parent!=null) {
             if (parent.infectedBy!=null) {
@@ -58,7 +60,7 @@ public class Organism {
                 this.parent = parent;
                 this.bornFromInfected = true;
             }
-            
+            this.paab = parent.getAge();
             parent.addChild(this);
             this.genome = parent.getGenome().clone();
             this.lifespan = parent.lifespan;
@@ -163,6 +165,7 @@ public class Organism {
      */
     public void addCell(Cell c) {
         cells.add(c);
+        this.maxCells = Math.max(size(), maxCells);
     }
     
     /*
@@ -226,6 +229,32 @@ public class Organism {
     public boolean equals(Organism t) {
         // TODO Auto-generated method stub
         return this.id == t.id;
+    }    
+    
+    private HashSet<Organism> getAncestorsAndMe(Organism o, int dist) {
+        HashSet<Organism> ancestors = new HashSet<Organism>();        
+        for (int d=0;d<=dist;d++) {
+            if (o!=null) {
+                ancestors.add(o);
+                o = o.getParent();
+            }
+            else {
+                break;
+            }
+        }
+        return ancestors;
+    }
+    
+    public boolean isFamily(Organism o2, int dist) {
+        
+        HashSet<Organism> myAncestors = getAncestorsAndMe(this, dist);
+        HashSet<Organism> otherAncestors = getAncestorsAndMe(o2, dist);
+        for (Organism o :myAncestors) {
+            if (otherAncestors.contains(o)) {
+                return true;
+            }
+        }
+        return false;        
     }
     
 }
