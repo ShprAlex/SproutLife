@@ -1,5 +1,7 @@
 package com.sproutlife.model;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import com.sproutlife.Settings;
 import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
@@ -20,12 +22,12 @@ public class GameModel {
 
     Stats stats;   
 
-    public GameModel(Settings settings) {
+    public GameModel(Settings settings, ReentrantReadWriteLock interactionLock) {
         this.settings = settings;
         this.clock = new GameClock();
         echosystem = new Echosystem(clock);
         gameStep = new GameStep(this);       
-        gameThread = new GameThread(this);
+        gameThread = new GameThread(this, interactionLock);
         stats = new Stats(this);
     }
 
