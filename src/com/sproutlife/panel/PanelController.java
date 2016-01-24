@@ -1,5 +1,6 @@
 package com.sproutlife.panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -131,9 +132,9 @@ public class PanelController {
         gameFrame.setVisible(true);  
         getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
-        getControlPanel().getZoomSlider().setValue(-3);
+        getControlPanel().getZoomSlider().setValue(-3);        
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
-                     
+        getImageManager().setBackgroundColor(new Color(160,160,160));                     
     }
 
     public void addListeners() {
@@ -237,7 +238,7 @@ public class PanelController {
         getInteractionLock().writeLock().lock();
         
         getBoardRenderer().setBounds(d);
-        Dimension boardSize = new Dimension(d.width/getBoardRenderer().getBlockSize(),d.height/getBoardRenderer().getBlockSize());
+        Dimension boardSize = new Dimension(d.width/getBoardRenderer().getDefaultBlockSize()-2,d.height/getBoardRenderer().getDefaultBlockSize()-2);
         getGameModel().getEchosystem().setBoardSize(boardSize);
         
         getInteractionLock().writeLock().unlock();

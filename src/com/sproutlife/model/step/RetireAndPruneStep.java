@@ -85,15 +85,7 @@ public class RetireAndPruneStep extends Step {
     }       
     
     public void pruneEmptyOrganisms() {
-    	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
-    	pruneOrgs.addAll(getOrganisms());
-    	for (Organism org : pruneOrgs) { 
-        
-            if (org.getCells().size()==0) {
-            	getEchosystem().removeOrganism(org);
-            }
-        }
-        
+        getEchosystem().pruneEmptyOrganisms();       
     }
     
     public void pruneParentTree() {

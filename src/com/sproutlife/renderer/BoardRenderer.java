@@ -116,7 +116,7 @@ public class BoardRenderer {
             g.setTransform(transform);
         }
 
-        //paintBackground(g);  		
+        paintBackground(g);  		
 
         paintOrgHeads(g);
 
@@ -147,16 +147,16 @@ public class BoardRenderer {
 
     private void paintBackground(Graphics g) {
         
-        g.setColor(new Color(248,248,248));
-        int x = (int) getRendererBounds().x;
-        int y = (int) getRendererBounds().y;
-        int w = (int) getRendererBounds().width;
-        int h = (int) getRendererBounds().height;
+        g.setColor(Color.white);
+        int x = (int) getRendererBounds().x-20;
+        int y = (int) getRendererBounds().y-20;
+        int w = (int) getRendererBounds().width+40;
+        int h = (int) getRendererBounds().height+40;
         g.fillRect(x, y, w, h);
         
-        g.setColor(Color.black);
-        g.drawRect(x, y, w, h);
-
+        //g.setColor(Color.darkGray);
+        //g.drawRect(x, y, w, h);
+        
     }
 
 

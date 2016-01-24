@@ -329,10 +329,10 @@ public class ScrollPanelController {
             int maxY = (int)(rendererBounds.getMaxY()*getScalingZoomFactor()) + yExtent - SUBTRACT_FROM_MARGIN;
             */
             
-            int minX = (int)(rendererBounds.getMinX()*getScalingZoomFactor());// -  SUBTRACT_FROM_MARGIN;
-            int maxX = (int)(rendererBounds.getMaxX()*getScalingZoomFactor());// +  SUBTRACT_FROM_MARGIN;
-            int minY = (int)(rendererBounds.getMinY()*getScalingZoomFactor());// -  SUBTRACT_FROM_MARGIN;
-            int maxY = (int)(rendererBounds.getMaxY()*getScalingZoomFactor());// +  SUBTRACT_FROM_MARGIN;
+            int minX = (int)(rendererBounds.getMinX()*getScalingZoomFactor())-20;
+            int maxX = (int)(rendererBounds.getMaxX()*getScalingZoomFactor())+20;
+            int minY = (int)(rendererBounds.getMinY()*getScalingZoomFactor())-20;
+            int maxY = (int)(rendererBounds.getMaxY()*getScalingZoomFactor())+20;
             
             if (maxX-minX<xExtent) {
                 int xDiff = xExtent-(maxX-minX);

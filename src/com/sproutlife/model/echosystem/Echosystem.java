@@ -228,7 +228,8 @@ public class Echosystem {
         }
         for (Cell r : removeList) {
             removeCell(r, false);
-        }        
+        }
+        pruneEmptyOrganisms();
     } 
 
     protected boolean validateBoard() {
@@ -252,6 +253,17 @@ public class Echosystem {
 
         return true;
     } 
+    
+    public void pruneEmptyOrganisms() {     
+        HashSet<Organism> pruneOrgs = new HashSet<Organism>();
+        pruneOrgs.addAll(getOrganisms());
+        for (Organism org : pruneOrgs) { 
+        
+            if (org.getCells().size()==0) {
+                removeOrganism(org);
+            }
+        }        
+    }
 
     public void setBoardSize(Dimension d) {
 
