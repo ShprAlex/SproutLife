@@ -18,11 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import com.sproutlife.GameController;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.step.GameStep;
-import com.sproutlife.panel.gamepanel.GamePanel;
+import com.sproutlife.panel.gamepanel.ScrollPanel;
 
 public class GameMenu extends JMenuBar implements ActionListener {
     PanelController controller;
@@ -46,8 +44,8 @@ public class GameMenu extends JMenuBar implements ActionListener {
         return controller.getGameModel();
     }    
     
-    public GamePanel getGamePanel() {
-        return controller.getGamePanel();
+    public ScrollPanel getScrollPanel() {
+        return controller.getScrollPanel();
     }
 
     private void initMenu() {
@@ -158,7 +156,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
                     if (cb_percent.getSelectedIndex() > 0) {
                         getGameModel().getEchosystem().resetCells();
                         getGameModel().getEchosystem().randomlyFillBoard((Integer)cb_percent.getSelectedItem());
-                        getGamePanel().repaint();
+                        getScrollPanel().repaint();
                         f_autoFill.dispose();
                     }
                 }
@@ -166,12 +164,12 @@ public class GameMenu extends JMenuBar implements ActionListener {
             f_autoFill.setVisible(true);
         } else if (ae.getSource().equals(mi_game_reset)) {
             getGameModel().getBoard().resetBoard();
-            getGamePanel().repaint();
+            getScrollPanel().repaint();
         } else if (ae.getSource().equals(mi_game_play)) {
             setPlayGame(true);
         } else if (ae.getSource().equals(mi_game_step)) {
             getGameModel().performGameStep();
-            getGamePanel().repaint();
+            getScrollPanel().repaint();
         } else if (ae.getSource().equals(mi_game_stop)) {
             setPlayGame(false);
         } else if (ae.getSource().equals(mi_help_source)) {

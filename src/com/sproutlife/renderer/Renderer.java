@@ -1,10 +1,6 @@
 package com.sproutlife.renderer;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
 import com.sproutlife.model.GameModel;
-import com.sproutlife.panel.gamepanel.GamePanel;
 
 public abstract class Renderer {
     

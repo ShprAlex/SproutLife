@@ -18,12 +18,10 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.model.step.GameStep.StepType;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
-import com.sproutlife.panel.gamepanel.GamePanel;
-import com.sproutlife.panel.gamepanel.ScrollPanelController;
+import com.sproutlife.panel.gamepanel.ImageManager;
 import com.sproutlife.panel.gamepanel.ScrollPanel;
 import com.sproutlife.panel.gamepanel.ScrollPanel.ViewportResizedListener;
-import com.sproutlife.panel.gamepanel.ImageManager;
-import com.sproutlife.panel.gamepanel.handler.CellClickHandler;
+import com.sproutlife.panel.gamepanel.ScrollPanelController;
 import com.sproutlife.panel.gamepanel.handler.DefaultHandlerSet;
 import com.sproutlife.panel.gamepanel.handler.InteractionHandler;
 import com.sproutlife.renderer.BoardRenderer;
@@ -31,7 +29,7 @@ import com.sproutlife.renderer.BoardRenderer;
 public class PanelController {
     GameController gameController;
     GameFrame gameFrame;
-    GamePanel gamePanel;    
+ 
     ControlPanel controlPanel;
     JMenuBar gameMenu;
     BoardRenderer boardRenderer;
@@ -64,11 +62,7 @@ public class PanelController {
     
     public GameController getGameController() {
         return gameController;
-    };
-    
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
+    };   
     
     public ScrollPanel getScrollPanel() {
         return getScrollController().getScrollPanel();
@@ -119,10 +113,7 @@ public class PanelController {
         gameMenu = new GameMenu(this);
         gameFrame.setJMenuBar(gameMenu);
         
-        
-        gamePanel = new GamePanel(this);
         boardRenderer = new BoardRenderer(getGameModel());
-        gamePanel.setBoardRenderer(boardRenderer);
         controlPanel = new ControlPanel(this);
         
         ScrollPanel scrollPanel = getScrollPanel();
@@ -146,8 +137,6 @@ public class PanelController {
     }
 
     public void addListeners() {
-        CellClickHandler cellClickHandler = new CellClickHandler(this);
-        cellClickHandler.addToGamePanel();
         
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
