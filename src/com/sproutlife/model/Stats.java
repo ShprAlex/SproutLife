@@ -2,6 +2,7 @@ package com.sproutlife.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import com.sproutlife.model.echosystem.Echosystem;
@@ -25,8 +26,8 @@ public class Stats {
     
     public int infectedCount =0;
     
-    public int[] childEnergy = new int[20];
-    public int[] sproutNumber = new int[20];
+    public int[] childEnergy = new int[100];
+    public int[] sproutNumber = new int[100];
     
     
     public Stats(GameModel gameModel) {
@@ -52,13 +53,106 @@ public class Stats {
         infectedCount = 0;
     }
     
-    public void printChildEnergy() {
+    public void printHistogram() {
         int cellCount = 0;
+
+        
         for (Organism o : getEchosystem().getOrganisms()) {
-            cellCount +=o.getCells().size();
+            int oc = o.size();
+            cellCount += oc;
+        }
+        
+        int[] countAtAge = new int[100];
+        int[] countAtSize = new int[100];
+        int[] countAtLifespan = new int[200];
+        int[] maxSizeAtLifespan = new int[200];
+        int[] maxAgeAtLifespan = new int[200];
+        int[] ageHalfLifespan = new int[200];
+        int[] sizeAtAge = new int[100];
+        int[] mutationCount = new int[100];
+        int[] maxCells = new int[100];
+        
+
+        for (Organism o : getEchosystem().getOrganisms()) {
+            int oc = o.size();
+            cellCount += oc;
+
+            countAtSize[o.size()/5]+=1;            
+            countAtAge[o.getAge()/5]+=1;
+            countAtLifespan[o.lifespan/2]+=1;
+            //int mc = o.getGenome().getRecentMutations(0,getEchosystem().getTime(),o.lifespan).size();
+            //mutationCount[mc/3]++;
+            if (oc>maxSizeAtLifespan[o.lifespan/2]) {
+                maxSizeAtLifespan[o.lifespan/2]=oc;
+            }
+            if (o.getAge()>maxAgeAtLifespan[o.lifespan/2]) {
+                maxAgeAtLifespan[o.lifespan/2]=oc;
+            }
+            if (o.getAge()>=o.lifespan/2) {
+                ageHalfLifespan[o.lifespan/2]++;;
+            }
+            
+            
+            sizeAtAge[o.getAge()/5]+=o.size();
+        }
+        int sumMax = 0;
+        for (Organism o : getEchosystem().getOrganisms()) {
+            if(o.getParent()!=null) {
+                if (o.getParent().maxCells/3<100) {
+                    maxCells[o.getParent().maxCells/3]++;
+                }
+                sumMax+=o.getParent().maxCells;
+            }
         }
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Cell count " + cellCount);
+        System.out.print(" Avg cells " + cellCount*10/getEchosystem().getOrganisms().size());
+        /*
+        System.out.print(" Count at age: ");
+        for (int i=0;i<10;i++) {
+            System.out.print(countAtAge[i]+" ");
+        }
+        */
+        /*
+        System.out.print(" Count at size: ");
+        for (int i=0;i<10;i++) {
+            System.out.print(countAtSize[i]+" ");
+        }
+        */
+        /*
+        System.out.print(" Count at lifespan: ");
+        for (int i=6;i<50;i++) {
+            System.out.print(countAtLifespan[i]+" ");
+        }
+        */
+        System.out.print(" AMC: "+sumMax*10/getEchosystem().getOrganisms().size());
+        System.out.print(" Max cells: ");
+        for (int i=0;i<50;i++) {
+            System.out.print(maxCells[i]+" ");
+        }
+        
+        /*
+        System.out.print(" MC: ");
+        for (int i=0;i<50;i++) {
+            System.out.print(mutationCount[i]+" ");
+        }
+        */
+        /*
+        System.out.print(" Size at age: ");
+        for (int i=0;i<10;i++) {
+            if (countAtAge[i]>0) {
+                System.out.print(sizeAtAge[i]*10/countAtAge[i]+" ");
+            }
+            else {
+                System.out.print("0 ");
+            }
+        }
+        */
+    }
+    
+    public void printChildEnergy() {
+        printHistogram();
+       
         System.out.print(" Avg Life " + avgLife);        
         int allEnergy = 0;                     
         int childSum = 0;
@@ -136,14 +230,27 @@ public class Stats {
     }
     
     private int getRecentMutationCount(int fromAge, int toAge) {
-    	HashSet<Mutation> recentMutations = new HashSet<Mutation>(); 
+    	HashSet<Mutation> recentMutations = new HashSet<Mutation>();
+    	HashMap<Mutation,Integer> totalRM = new HashMap<Mutation,Integer>();
     	
-        for (Organism o: getEchosystem().getOrganisms()) {
-        	int fromTime = getEchosystem().getTime()-fromAge;
-        	int toTime = getEchosystem().getTime()-toAge;
-        	recentMutations.addAll(o.getGenome().getRecentMutations(fromTime, toTime));
-        }
-        return recentMutations.size();
+    	for (Organism o: getEchosystem().getOrganisms()) {
+    	    int fromTime = getEchosystem().getTime()-fromAge;
+    	    int toTime = getEchosystem().getTime()-toAge;
+    	    for(Mutation m: o.getGenome().getRecentMutations(fromTime, toTime, o.lifespan)) {
+    	        recentMutations.add(m);
+    	        Integer mCount = totalRM.get(m);
+    	        if (mCount==null) {
+    	            mCount = 0;
+    	        }
+    	        mCount++;
+    	        totalRM.put(m, mCount);
+    	    }
+    	}
+    	int totalCount = 0;
+    	for (Integer mc : totalRM.values()) {
+    	    totalCount +=mc;
+    	}
+        return totalCount;//recentMutations.size();
     }
     
     
