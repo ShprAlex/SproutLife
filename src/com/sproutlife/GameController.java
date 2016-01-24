@@ -1,5 +1,7 @@
 package com.sproutlife;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.GameThread;
 import com.sproutlife.panel.GameFrame;
@@ -13,11 +15,14 @@ public class GameController {
 
     private Settings settings;
 
+    protected ReentrantReadWriteLock interactionLock;
 
     public GameController() {
         settings = new Settings();
-
-        gameModel = new GameModel(settings);
+         
+        interactionLock = new ReentrantReadWriteLock();
+        
+        gameModel = new GameModel(settings, interactionLock);
         
         panelController = new PanelController(this);
 
@@ -34,6 +39,10 @@ public class GameController {
         return gameModel;
     }
 
+    public ReentrantReadWriteLock getInteractionLock() {
+        return interactionLock;
+    }
+    
     public Settings getSettings() {
         return settings;
     }
