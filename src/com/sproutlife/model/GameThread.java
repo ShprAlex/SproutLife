@@ -1,5 +1,7 @@
 package com.sproutlife.model;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import javax.swing.SwingUtilities;
 
 import com.sproutlife.model.step.GameStep.StepType;
@@ -14,12 +16,14 @@ public class GameThread {
     GameStepListener gameStepListener;
     
     GameModel gameModel;
+    ReentrantReadWriteLock interactionLock;
     
     boolean superSlowIntro;
     boolean slowIntro;
     
-    public GameThread(GameModel gameModel) {     
+    public GameThread(GameModel gameModel, ReentrantReadWriteLock interactionLock) {     
         this.gameModel = gameModel;
+        this.interactionLock = interactionLock;
         
         superSlowIntro = false;
         slowIntro = true;
@@ -91,7 +95,7 @@ public class GameThread {
         if (getGameModel().getEchosystem().getOrganisms().size()>240) {
             iterations = 8;
         }
-
+                
         return iterations;
     }
     
@@ -102,9 +106,11 @@ public class GameThread {
 
                 try {
 
-                    synchronized (getGameModel().getEchosystem()) {
+                    //synchronized (getGameModel().getEchosystem()) {
+                        interactionLock.writeLock().lock();
                         getGameModel().performGameStep();
-                    }
+                        interactionLock.writeLock().unlock();
+                    //}
 
                     int sleep = getSleepDelay();
 
