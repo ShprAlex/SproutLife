@@ -90,11 +90,13 @@ public class Genome {
         return false;
     }
     
-    public Collection<Mutation> getRecentMutations(int fromTime, int toTime) {
+    public Collection<Mutation> getRecentMutations(int fromTime, int toTime, int maxAge) {
     	HashSet<Mutation> recentMutations = new HashSet<Mutation>();
     	for (ArrayList<Mutation> mu : mutations.values()) {
     		for (Mutation m : mu) {
-    			if (m.getGameTime()>=fromTime && m.getGameTime()<=toTime) {
+    			if (m.getGameTime()>=fromTime && 
+    			        m.getGameTime()<=toTime &&
+    			        m.getOrganismAge()<=maxAge) {
     				recentMutations.add(m);
     			}
     		}
