@@ -67,7 +67,7 @@ public class GameStep extends Step {
         */
     
         
-        getEchosystem().setOrgLifespan(lifespan+(new Random()).nextInt(3));        
+        getEchosystem().setDefaultOrgLifespan(lifespan+(new Random()).nextInt(3));        
         
         lifeStep.perform();
         fireStepPerformed(StepType.LIFE_STEP);

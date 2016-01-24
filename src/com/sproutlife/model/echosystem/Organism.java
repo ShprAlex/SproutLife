@@ -122,6 +122,14 @@ public class Organism {
         return clock;
     }
     
+    public int getLifespan() {
+        return lifespan;
+    }
+    
+    public void setLifespan(int lifespan) {
+        this.lifespan = lifespan;
+    }
+    
     public int getAge() {
         return getClock().getTime() - this.born;
     }

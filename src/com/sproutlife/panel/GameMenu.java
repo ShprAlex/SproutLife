@@ -28,7 +28,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
     //private JMenuBar mb_menu;
     private JMenu m_file, m_game, m_help;
     private JMenuItem mi_file_options, mi_file_exit;
-    private JMenuItem mi_game_autofill, mi_game_play, mi_game_step, mi_game_stop, mi_game_reset;
+    private JMenuItem mi_game_play, mi_game_step, mi_game_stop, mi_game_reset;
     private JMenuItem mi_help_about, mi_help_source;
     private Action enableMutationAction;
     
@@ -65,8 +65,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
         m_file.add(mi_file_options);
         m_file.add(new JSeparator());
         m_file.add(mi_file_exit);
-        mi_game_autofill = new JMenuItem("Autofill");
-        mi_game_autofill.addActionListener(this);
+
         mi_game_play = new JMenuItem("Play");
         mi_game_play.addActionListener(this);                        
         mi_game_step = new JMenuItem("Step");
@@ -76,7 +75,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
         mi_game_stop.addActionListener(this);
         mi_game_reset = new JMenuItem("Reset");
         mi_game_reset.addActionListener(this);
-        m_game.add(mi_game_autofill);
+
         m_game.add(new JSeparator());
         m_game.add(mi_game_play);
         m_game.add(mi_game_step);
@@ -136,32 +135,6 @@ public class GameMenu extends JMenuBar implements ActionListener {
                 }
             });
             f_options.setVisible(true);
-        } else if (ae.getSource().equals(mi_game_autofill)) {
-            final JFrame f_autoFill = new JFrame();            
-            f_autoFill.setTitle("Autofill");
-            f_autoFill.setSize(360, 60);
-            f_autoFill.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - f_autoFill.getWidth())/2, 
-                (Toolkit.getDefaultToolkit().getScreenSize().height - f_autoFill.getHeight())/2);
-            f_autoFill.setResizable(false);
-            JPanel p_autoFill = new JPanel();
-            p_autoFill.setOpaque(false);
-            f_autoFill.add(p_autoFill);
-            p_autoFill.add(new JLabel("What percentage should be filled? "));
-            Object[] percentageOptions = {"Select",0,1,10,15,20,25,30,40,50,60,70,80,90,95};
-            final JComboBox cb_percent = new JComboBox(percentageOptions);
-            p_autoFill.add(cb_percent);
-            cb_percent.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (cb_percent.getSelectedIndex() > 0) {
-                        getGameModel().getEchosystem().resetCells();
-                        getGameModel().getEchosystem().randomlyFillBoard((Integer)cb_percent.getSelectedItem());
-                        getScrollPanel().repaint();
-                        f_autoFill.dispose();
-                    }
-                }
-            });
-            f_autoFill.setVisible(true);
         } else if (ae.getSource().equals(mi_game_reset)) {
             getGameModel().getBoard().resetBoard();
             getScrollPanel().repaint();

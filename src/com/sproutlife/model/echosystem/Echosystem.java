@@ -14,12 +14,10 @@ public class Echosystem {
         
     Board board;      
 
-    int orgLifespan; //Organism lifespan;
+    int defaultOrgLifespan; 
     int retirementTimeSpan;
 
     GameClock clock; 
-
-    //Organism gaya;
 
     public int typeCount = 0;
 
@@ -35,7 +33,7 @@ public class Echosystem {
 
         this.organisms.add(gaya);
 
-        this.orgLifespan = 30;
+        this.defaultOrgLifespan = 30;
         this.retirementTimeSpan = 10;
 
     }  
@@ -77,6 +75,7 @@ public class Echosystem {
         organisms.add(gaya);
 
     }
+    /*
     public Cell addCell(int x, int y) {
         Organism gaya;
         if (getOrganisms().size()==0) {
@@ -94,7 +93,7 @@ public class Echosystem {
         } 
         return null;
     }   
-
+    */
     public boolean removeCell(Cell c) {
         return removeCell(c, true);
     }
@@ -155,21 +154,14 @@ public class Echosystem {
         }        
     }
 
-    public void setOrgLifespan(int orgLifespan) {
-        this.orgLifespan = orgLifespan;
+    public void setDefaultOrgLifespan(int orgLifespan) {
+        this.defaultOrgLifespan = orgLifespan;
     }
-
-    public int getOrgLifespan(Organism org) {
-        if (org.lifespan==0) {
-            org.lifespan=this.orgLifespan;
-        }
-        if (org.getKind()==0 ) {
-            //return org.lifespan + 50;
-        }
-        return org.lifespan;//-org.x/100;
-        //return orgLifeSpan; 
+   
+    public int getDefaultOrgLifespan() {
+        return defaultOrgLifespan;
     }
-
+    
     public int getRetirementTimeSpan() {
         return retirementTimeSpan;
     }
@@ -181,7 +173,10 @@ public class Echosystem {
     public Organism createOranism(int x,int y, Organism parent, Seed seed) {        
         typeCount++;
         //                                        
-        Organism newOrg = new Organism(typeCount, getClock(), x, y, parent, seed);        
+        Organism newOrg = new Organism(typeCount, getClock(), x, y, parent, seed);   
+        if (parent==null) {
+            newOrg.setLifespan(getDefaultOrgLifespan());
+        }
 
         organisms.add(newOrg);
         return newOrg;
@@ -262,23 +257,10 @@ public class Echosystem {
 
         getBoard().setBoardSize(d);
         updateBoard();
-        /*
-        getBoard().resetBoard();
-
-        ArrayList<Cell> removeList = new ArrayList<Cell>(0);
-        for (Cell current : getCells()) {
-            if ((current.x > getBoard().getWidth()-1) || (current.y > getBoard().getHeight()-1)) {
-                removeList.add(current);
-            }
-        }
-        for (Cell r : removeList) {
-            removeCell(r);
-        }
-         */
-        //cellList.removeAll(removeList);
+ 
     }
 
-
+/*
     public void randomlyFillBoard(int percent) {
         for (int i=0; i<getBoard().getWidth(); i++) {
             for (int j=0; j<getBoard().getHeight(); j++) {
@@ -301,6 +283,7 @@ public class Echosystem {
                 addCell(100,j);
             }
         }
-    }          
+    }  
+    */        
 
 }

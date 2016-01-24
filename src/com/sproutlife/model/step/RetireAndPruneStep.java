@@ -68,8 +68,8 @@ public class RetireAndPruneStep extends Step {
     	HashSet<Organism> retireOrgs = new HashSet<Organism>();
     	retireOrgs.addAll(getOrganisms());
         for (Organism o : retireOrgs) {
-        	if (o.getAge()>getEchosystem().getOrgLifespan(o)) {
-        		getEchosystem().retireOrganism(o);
+        	if (o.getAge()>o.lifespan) {
+        	    getEchosystem().retireOrganism(o);
         	}
         }
     }
@@ -78,7 +78,7 @@ public class RetireAndPruneStep extends Step {
     	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
     	pruneOrgs.addAll(getEchosystem().getRetiredOrganisms());
     	for (Organism org : pruneOrgs) {    	
-            if (org.getAge()>getEchosystem().getOrgLifespan(org)+getEchosystem().getRetirementTimeSpan()) {
+            if (org.getAge()>org.lifespan+getEchosystem().getRetirementTimeSpan()) {
                 getEchosystem().removeRetired(org);
             }
         }
