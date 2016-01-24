@@ -76,7 +76,7 @@ public class GameStep extends Step {
         fireStepPerformed(StepType.MUTATION_STEP);
  
 
-        sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);        
+        sproutStep.setSeedType(SeedType.Bentline1_RPentomino);        
         sproutStep.setSeedBorder(1);
         sproutStep.perform();       
         fireStepPerformed(StepType.SPROUT_STEP);
