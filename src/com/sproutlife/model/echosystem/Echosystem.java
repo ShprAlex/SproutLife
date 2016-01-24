@@ -301,7 +301,6 @@ public class Echosystem {
                 addCell(100,j);
             }
         }
-    }       
-
+    }          
 
 }
