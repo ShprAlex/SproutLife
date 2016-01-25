@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Random;
 
 import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
@@ -27,11 +28,11 @@ public class Echosystem {
         this.board = new Board();                
         this.clock = clock;
 
-        this.typeCount = 0;
+        //this.typeCount = 0;
 
-        Organism gaya = new Organism(0,getClock(),100,100, null, null);
+        //Organism gaya = new Organism(0,getClock(),100,100, null, null);
 
-        this.organisms.add(gaya);
+        //this.organisms.add(gaya);
 
         this.defaultOrgLifespan = 30;
         this.retirementTimeSpan = 10;
@@ -70,9 +71,13 @@ public class Echosystem {
 
     public void resetCells() {
         getBoard().resetBoard();
+        this.setDefaultOrgLifespan(15);
+        /*
         organisms = new HashSet<Organism>();
         Organism gaya = new Organism(0,getClock(),100,100, null, null);
         organisms.add(gaya);
+        */
+        
 
     }
     /*
@@ -170,12 +175,12 @@ public class Echosystem {
         this.retirementTimeSpan = retirementTimeSpan;
     }
 
-    public Organism createOranism(int x,int y, Organism parent, Seed seed) {        
+    public Organism createOrganism(int x,int y, Organism parent, Seed seed) {        
         typeCount++;
         //                                        
         Organism newOrg = new Organism(typeCount, getClock(), x, y, parent, seed);   
         if (parent==null) {
-            newOrg.setLifespan(getDefaultOrgLifespan());
+            newOrg.setLifespan(getDefaultOrgLifespan()+(new Random()).nextInt(3));
         }
 
         organisms.add(newOrg);

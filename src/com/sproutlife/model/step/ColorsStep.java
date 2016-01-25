@@ -46,7 +46,7 @@ public class ColorsStep extends Step {
             }              
             
             if (splitKind!=-1) {
-                
+                /*
                 ArrayList<Integer> lifespans = new ArrayList<Integer>();
                 for (Organism o : getEchosystem().getOrganisms()) {                    
                     if (o.kind==splitKind) {
@@ -64,7 +64,8 @@ public class ColorsStep extends Step {
                         o.kind = (getMutationCount(o)<=middleL)?splitKind : emptyKind ;                                                                           
                     }
                 }
-                /*
+                */
+                
                 ArrayList<Integer> xCoords = new ArrayList<Integer>();
                 for (Organism o : getEchosystem().getOrganisms()) {                    
                     if (o.kind==splitKind) {
@@ -87,13 +88,13 @@ public class ColorsStep extends Step {
                         }                       
                     }
                 }
-                */
+                
             }        
         }
     }
     
     private int getMutationCount(Organism o) {
-        return o.getGenome().getRecentMutations(0,getEchosystem().getTime(),o.lifespan).size();
+        return o.getGenome().getRecentMutations(getEchosystem().getTime()-1000,getEchosystem().getTime(),o.lifespan).size();
     }
 
 }

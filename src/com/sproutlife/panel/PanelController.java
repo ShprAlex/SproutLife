@@ -2,6 +2,8 @@ package com.sproutlife.panel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -170,6 +172,42 @@ public class PanelController {
             }
         });
         
+        getControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
+            public void stateChanged(ChangeEvent e) {
+                int value = ((JSlider) e.getSource()).getValue();
+                updateSpeedValue(value);
+
+            }
+        });
+        
+        getControlPanel().getStartPauseButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (getGameModel().getPlayGame()) {
+                    getGameModel().setPlayGame(false);
+                    getControlPanel().getStartPauseButton().setText("Start");
+                }
+                else {
+                    getGameModel().setPlayGame(true);
+                    getControlPanel().getStartPauseButton().setText("Pause");
+                }
+            }
+        });
+        
+        getControlPanel().getStepButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                getGameModel().performGameStep();
+                getImageManager().repaintNewImage();
+            }
+        });
+        
+        
+        getControlPanel().getResetButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                getGameModel().getEchosystem().resetCells();
+                getImageManager().repaintNewImage();
+            }
+        });
+        
         //Only need to add this to one of the two buttons
         getControlPanel().getRdbtnFriendly().addItemListener(new ItemListener() {  
             @Override
@@ -196,20 +234,31 @@ public class PanelController {
         }
         
     }
+    public void updateSpeedValue(int value) {
+        getGameModel().getGameThread().setAutoAdjust(false);
+   
+        int sleepDelay = 1;
+        int iterations = 1;
+        switch (value) {
+            case -5 : sleepDelay = 500; break;
+            case -4 : sleepDelay = 100; break;
+            case -3 : sleepDelay = 20; break;
+            case -2 : sleepDelay = 8; break;
+            case -1 : sleepDelay = 4; break;  
+            case 0 : break;
+            case 1 : iterations = 2; break;
+            case 2 : iterations = 4; break;
+            case 3 : iterations = 8; break;
+            case 4 : iterations = 16; break;
+            case 5 : iterations = 32; break;          
+        }
+        getGameModel().getGameThread().setSleepDelay(sleepDelay);
+        getGameModel().getGameThread().setIterations(iterations);
+
+   
+    }
     
     public void updateZoomValue(int value) {
-        
-        /*
-        switch (value) {
-            case -5 : zoom = 1/6.0; break;
-            case -4 : zoom = 2/6.0; break;
-            case -3 : zoom = 3/6.0; break;
-            case -2 : zoom = 4/6.0; break;
-            case -1 : zoom = 5/6.0; break;
-            case 0: zoom = 1; break;
-            default: zoom = Math.pow(1.1, value);
-        }
-        */
         
         double zoom =1;
         if (value >=0 ) {

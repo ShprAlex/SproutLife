@@ -104,8 +104,8 @@ public class GameMenu extends JMenuBar implements ActionListener {
             mi_game_play.setEnabled(true);
             mi_game_stop.setEnabled(false);        
         }
-    }
-        
+    }        
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource().equals(mi_file_exit)) {

@@ -9,7 +9,7 @@ import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
 
 public class GameThread {
-    boolean playGame = false;
+    private boolean playGame = false;
     
     Thread innerThread;
     
@@ -18,12 +18,20 @@ public class GameThread {
     GameModel gameModel;
     ReentrantReadWriteLock interactionLock;
     
+    int sleepDelay;
+    int iterations;
+    
     boolean superSlowIntro;
     boolean slowIntro;
+    boolean autoAdjust;
     
     public GameThread(GameModel gameModel, ReentrantReadWriteLock interactionLock) {     
         this.gameModel = gameModel;
         this.interactionLock = interactionLock;
+        
+        this.autoAdjust = true;
+        this.sleepDelay = 0;
+        this.iterations = 1;
         
         superSlowIntro = false;
         slowIntro = true;
@@ -39,6 +47,23 @@ public class GameThread {
         if (playGame) {
             new InnerGameThread().start();
         }
+    }    
+    
+    public boolean getPlayGame() {
+        return playGame;
+    }
+
+
+    public void setAutoAdjust(boolean autoAdjust) {
+        this.autoAdjust = autoAdjust;
+    }
+    
+    public void setSleepDelay(int sleepDelay) {
+        this.sleepDelay = sleepDelay;
+    }
+    
+    public void setIterations(int iterations) {
+        this.iterations = iterations;
     }
     
     /*
@@ -54,10 +79,11 @@ public class GameThread {
             gameStepListener.stepPerformed(event);
         }       
     }
-    
-
-    private int getSleepDelay() {
         
+    private int getSleepDelay() {
+        if (!autoAdjust) {
+            return sleepDelay;
+        }
         int sleep = 1;
        
         if (superSlowIntro) {
@@ -80,8 +106,12 @@ public class GameThread {
         return sleep;
         
     }
+
     
     private int getIterations() {
+        if (!autoAdjust) {
+            return this.iterations;
+        }
         int iterations = 1;
         
         if(getGameModel().getEchosystem().getOrganisms().size()>120) {
@@ -110,9 +140,11 @@ public class GameThread {
                         interactionLock.writeLock().lock();
                         getGameModel().performGameStep();
                         interactionLock.writeLock().unlock();
+                        
                     //}
 
-                    int sleep = getSleepDelay();
+                    int sleep = Math.max(1, getSleepDelay()); 
+                    //Painting is glitchy if sleepDelay is less than 1;
 
                     int iterations = getIterations();
 

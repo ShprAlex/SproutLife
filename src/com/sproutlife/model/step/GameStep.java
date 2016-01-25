@@ -38,9 +38,7 @@ public class GameStep extends Step {
         //Mutation m = new Mutation(new Point(1,-2),5);
         //gameModel.getEchosystem().getOrganisms().iterator().next().getGenetics().addMutation(m);
     }
-    
-         
-    int lifespan = 16;
+            
     
     public void perform() {       
         
@@ -52,9 +50,11 @@ public class GameStep extends Step {
         colorsStep.perform();
         fireStepPerformed(StepType.COLOR_STEP);
                 
+        
         if(getEchosystem().getOrganisms().size()<40) {
             if (getTime()%200==0) {
-                lifespan+=1;
+                int lifespan = Math.max(16,getEchosystem().getDefaultOrgLifespan());                          
+                getEchosystem().setDefaultOrgLifespan(lifespan+1);
             }            
         }
         /*
@@ -64,10 +64,7 @@ public class GameStep extends Step {
         else {
             getEchosystem().liftBarrier =false;
         }
-        */
-    
-        
-        getEchosystem().setDefaultOrgLifespan(lifespan+(new Random()).nextInt(3));        
+        */                   
         
         lifeStep.perform();
         fireStepPerformed(StepType.LIFE_STEP);
@@ -113,7 +110,7 @@ public class GameStep extends Step {
         
         if (getTime()%100==0) {
         	//getStats().printMutations();
-            getStats().printChildEnergy();
+            //getStats().printChildEnergy();
 
         }             
     }   

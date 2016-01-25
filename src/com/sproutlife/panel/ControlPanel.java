@@ -30,9 +30,14 @@ public class ControlPanel extends JPanel {
 	private JSlider zoomSlider;
 	private JRadioButton rdbtnFriendly;
 	private JRadioButton rdbtnCompetitive;
+	private JButton startPauseButton;
+	private JButton stepButton;
+	private JSlider speedSlider;
+	private JButton resetButton;
 	
 	public ControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
+		setPreferredSize(new Dimension(250, 500));
 		        
 		this.panelController = panelController;
 		buildPanel();
@@ -43,76 +48,88 @@ public class ControlPanel extends JPanel {
 	public void buildPanel() {		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {80, 100, 50};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gridBagLayout.columnWidths = new int[] {10, 0, 100, 100, 80, 10};
+		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 15, 20, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 10));
-		GridBagConstraints gbc_rigidArea_1 = new GridBagConstraints();
-		gbc_rigidArea_1.insets = new Insets(0, 0, 5, 5);
-		gbc_rigidArea_1.gridx = 1;
-		gbc_rigidArea_1.gridy = 0;
-		add(rigidArea_1, gbc_rigidArea_1);
+		JPanel panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.anchor = GridBagConstraints.NORTH;
+		gbc_panel_1.gridwidth = 3;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_1.gridx = 2;
+		gbc_panel_1.gridy = 1;
+		add(panel_1, gbc_panel_1);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();		
+		gbl_panel_1.columnWidths = new int[]{0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 23};
+		gbl_panel_1.columnWeights = new double[]{1.0, 1.0};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0};
+		panel_1.setLayout(gbl_panel_1);
 		
-		JButton startButton = new JButton("Start");
-		startButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panelController.getGameModel().setPlayGame(true);
-			}
+		startPauseButton = new JButton("Start");
+		startPauseButton.setMaximumSize(new Dimension(200, 23));
+		startPauseButton.setPreferredSize(new Dimension(100, 23));
+		GridBagConstraints gbc_startPauseButton = new GridBagConstraints();
+		gbc_startPauseButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_startPauseButton.insets = new Insets(0, 0, 5, 5);
+		gbc_startPauseButton.gridx = 0;
+		gbc_startPauseButton.gridy = 0;
+		panel_1.add(startPauseButton, gbc_startPauseButton);
+		
+		resetButton = new JButton("Reset");
+		resetButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    }
 		});
-		GridBagConstraints gbc_startButton = new GridBagConstraints();
-		gbc_startButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_startButton.gridwidth = 2;
-		gbc_startButton.insets = new Insets(0, 0, 5, 0);
-		gbc_startButton.gridx = 1;
-		gbc_startButton.gridy = 1;
-		add(startButton, gbc_startButton);
+		GridBagConstraints gbc_resetButton = new GridBagConstraints();
+		gbc_resetButton.insets = new Insets(0, 0, 5, 0);
+		gbc_resetButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_resetButton.gridx = 1;
+		gbc_resetButton.gridy = 0;
+		panel_1.add(resetButton, gbc_resetButton);
+		resetButton.setPreferredSize(new Dimension(100, 23));
 		
-		JButton pauseButton = new JButton("Pause");
-		pauseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			    panelController.getGameModel().setPlayGame(false);
-			}
+		stepButton = new JButton("Step");
+		GridBagConstraints gbc_stepButton = new GridBagConstraints();
+		gbc_stepButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_stepButton.insets = new Insets(0, 0, 0, 5);
+		gbc_stepButton.gridx = 0;
+		gbc_stepButton.gridy = 1;
+		panel_1.add(stepButton, gbc_stepButton);
+		stepButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent arg0) {
+		    }
 		});
-		GridBagConstraints gbc_pauseButton = new GridBagConstraints();
-		gbc_pauseButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_pauseButton.gridwidth = 2;
-		gbc_pauseButton.insets = new Insets(0, 0, 5, 0);
-		gbc_pauseButton.gridx = 1;
-		gbc_pauseButton.gridy = 2;
-		add(pauseButton, gbc_pauseButton);
-		
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 10));
-		GridBagConstraints gbc_rigidArea = new GridBagConstraints();
-		gbc_rigidArea.gridwidth = 2;
-		gbc_rigidArea.insets = new Insets(0, 0, 5, 0);
-		gbc_rigidArea.gridx = 1;
-		gbc_rigidArea.gridy = 3;
-		add(rigidArea, gbc_rigidArea);
+		stepButton.setPreferredSize(new Dimension(100, 23));
 		
 		JLabel lblZoom = new JLabel("Zoom");
+		lblZoom.setMinimumSize(new Dimension(100, 14));
 		GridBagConstraints gbc_lblZoom = new GridBagConstraints();
 		gbc_lblZoom.anchor = GridBagConstraints.WEST;
 		gbc_lblZoom.insets = new Insets(0, 0, 5, 5);
-		gbc_lblZoom.gridx = 0;
-		gbc_lblZoom.gridy = 5;
+		gbc_lblZoom.gridx = 2;
+		gbc_lblZoom.gridy = 3;
 		add(lblZoom, gbc_lblZoom);
 		
 		zoomSlider = new JSlider();
+		zoomSlider.setMinorTickSpacing(1);
 		zoomSlider.setMinimum(-5);
 		zoomSlider.setValue(-2);
 		zoomSlider.setMaximum(5);
 		GridBagConstraints gbc_zoomSlider = new GridBagConstraints();
 		gbc_zoomSlider.fill = GridBagConstraints.HORIZONTAL;
 		gbc_zoomSlider.gridwidth = 2;
-		gbc_zoomSlider.insets = new Insets(0, 0, 5, 0);
-		gbc_zoomSlider.gridx = 1;
-		gbc_zoomSlider.gridy = 5;
+		gbc_zoomSlider.insets = new Insets(0, 0, 5, 5);
+		gbc_zoomSlider.gridx = 3;
+		gbc_zoomSlider.gridy = 3;
 		add(zoomSlider, gbc_zoomSlider);
 		
 		JSpinner childOneEnergySpinner = new JSpinner();
+		childOneEnergySpinner.setPreferredSize(new Dimension(50, 20));
 		childOneEnergySpinner.setValue(getInt(Settings.CHILD_ONE_ENERGY));
 		childOneEnergySpinner.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -120,28 +137,49 @@ public class ControlPanel extends JPanel {
 			}
 		});
 		
-		JLabel lblLifeMode = new JLabel("Life Mode");
-		GridBagConstraints gbc_lblLifeMode = new GridBagConstraints();
-		gbc_lblLifeMode.anchor = GridBagConstraints.WEST;
-		gbc_lblLifeMode.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLifeMode.gridx = 0;
-		gbc_lblLifeMode.gridy = 6;
-		add(lblLifeMode, gbc_lblLifeMode);
+		JLabel speedLabel = new JLabel("Speed");
+		GridBagConstraints gbc_speedLabel = new GridBagConstraints();
+		gbc_speedLabel.anchor = GridBagConstraints.WEST;
+		gbc_speedLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_speedLabel.gridx = 2;
+		gbc_speedLabel.gridy = 4;
+		add(speedLabel, gbc_speedLabel);
+		
+		speedSlider = new JSlider();		
+		speedSlider.setMinimum(-5);
+		speedSlider.setMaximum(5);
+		speedSlider.setValue(-2);
+		GridBagConstraints gbc_speedSlider = new GridBagConstraints();
+		gbc_speedSlider.fill = GridBagConstraints.HORIZONTAL;
+		gbc_speedSlider.gridwidth = 2;
+		gbc_speedSlider.insets = new Insets(0, 0, 5, 5);
+		gbc_speedSlider.gridx = 3;
+		gbc_speedSlider.gridy = 4;
+		add(speedSlider, gbc_speedSlider);
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 2;
-		gbc_panel.anchor = GridBagConstraints.EAST;
-		gbc_panel.insets = new Insets(0, 0, 5, 0);
-		gbc_panel.fill = GridBagConstraints.VERTICAL;
-		gbc_panel.gridx = 1;
+		gbc_panel.gridwidth = 3;
+		gbc_panel.anchor = GridBagConstraints.WEST;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel.gridx = 2;
 		gbc_panel.gridy = 6;
 		add(panel, gbc_panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		JLabel lblLifeMode = new JLabel("Life Mode");
+		panel.add(lblLifeMode);
+		
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		panel.add(horizontalGlue_1);
 		
 		rdbtnFriendly = new JRadioButton("Friendly");
+		rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		panel.add(rdbtnFriendly);
 		
 		rdbtnCompetitive = new JRadioButton("Competitive");
+		rdbtnCompetitive.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		panel.add(rdbtnCompetitive);
 		
 		ButtonGroup lifeModeButtonGroup = new ButtonGroup();
@@ -153,18 +191,19 @@ public class ControlPanel extends JPanel {
 		gbc_childOneEnergyLabel.gridwidth = 2;
 		gbc_childOneEnergyLabel.anchor = GridBagConstraints.WEST;
 		gbc_childOneEnergyLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_childOneEnergyLabel.gridx = 0;
+		gbc_childOneEnergyLabel.gridx = 2;
 		gbc_childOneEnergyLabel.gridy = 8;
 		add(childOneEnergyLabel, gbc_childOneEnergyLabel);
 		GridBagConstraints gbc_childOneEnergySpinner = new GridBagConstraints();
 		gbc_childOneEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_childOneEnergySpinner.anchor = GridBagConstraints.NORTH;
-		gbc_childOneEnergySpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_childOneEnergySpinner.gridx = 2;
+		gbc_childOneEnergySpinner.anchor = GridBagConstraints.NORTHEAST;
+		gbc_childOneEnergySpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_childOneEnergySpinner.gridx = 4;
 		gbc_childOneEnergySpinner.gridy = 8;
 		add(childOneEnergySpinner, gbc_childOneEnergySpinner);
 		
 		JSpinner childTwoEnergySpinner = new JSpinner();
+		childTwoEnergySpinner.setPreferredSize(new Dimension(50, 20));
 		childTwoEnergySpinner.setValue(getInt(Settings.CHILD_TWO_ENERGY));
 		childTwoEnergySpinner.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -177,18 +216,19 @@ public class ControlPanel extends JPanel {
 		gbc_childTwoEnergyLabel.gridwidth = 2;
 		gbc_childTwoEnergyLabel.anchor = GridBagConstraints.WEST;
 		gbc_childTwoEnergyLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_childTwoEnergyLabel.gridx = 0;
+		gbc_childTwoEnergyLabel.gridx = 2;
 		gbc_childTwoEnergyLabel.gridy = 9;
 		add(childTwoEnergyLabel, gbc_childTwoEnergyLabel);
 		GridBagConstraints gbc_childTwoEnergySpinner = new GridBagConstraints();
 		gbc_childTwoEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_childTwoEnergySpinner.anchor = GridBagConstraints.NORTH;
-		gbc_childTwoEnergySpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_childTwoEnergySpinner.gridx = 2;
+		gbc_childTwoEnergySpinner.anchor = GridBagConstraints.NORTHEAST;
+		gbc_childTwoEnergySpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_childTwoEnergySpinner.gridx = 4;
 		gbc_childTwoEnergySpinner.gridy = 9;
 		add(childTwoEnergySpinner, gbc_childTwoEnergySpinner);
 		
 		JSpinner childThreeEnergySpinner = new JSpinner();
+		childThreeEnergySpinner.setPreferredSize(new Dimension(50, 20));
 		childThreeEnergySpinner.setValue(getInt(Settings.CHILD_THREE_ENERGY));
 		childThreeEnergySpinner.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -201,13 +241,14 @@ public class ControlPanel extends JPanel {
 		gbc_childThreeEnergyLabel.gridwidth = 2;
 		gbc_childThreeEnergyLabel.anchor = GridBagConstraints.WEST;
 		gbc_childThreeEnergyLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_childThreeEnergyLabel.gridx = 0;
+		gbc_childThreeEnergyLabel.gridx = 2;
 		gbc_childThreeEnergyLabel.gridy = 10;
 		add(childThreeEnergyLabel, gbc_childThreeEnergyLabel);
 		GridBagConstraints gbc_childThreeEnergySpinner = new GridBagConstraints();
 		gbc_childThreeEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_childThreeEnergySpinner.anchor = GridBagConstraints.NORTH;
-		gbc_childThreeEnergySpinner.gridx = 2;
+		gbc_childThreeEnergySpinner.insets = new Insets(0, 0, 0, 5);
+		gbc_childThreeEnergySpinner.anchor = GridBagConstraints.NORTHEAST;
+		gbc_childThreeEnergySpinner.gridx = 4;
 		gbc_childThreeEnergySpinner.gridy = 10;
 		add(childThreeEnergySpinner, gbc_childThreeEnergySpinner);
 
@@ -229,5 +270,17 @@ public class ControlPanel extends JPanel {
     }
     public JRadioButton getRdbtnCompetitive() {
         return rdbtnCompetitive;
+    }
+    public JButton getStartPauseButton() {
+        return startPauseButton;
+    }
+    public JButton getStepButton() {
+        return stepButton;
+    }
+    public JSlider getSpeedSlider() {
+        return speedSlider;
+    }
+    public JButton getResetButton() {
+        return resetButton;
     }
 }

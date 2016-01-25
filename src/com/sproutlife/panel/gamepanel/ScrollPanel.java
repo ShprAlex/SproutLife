@@ -64,6 +64,7 @@ public class ScrollPanel extends JPanel {
                         //paintFrontShapes(g2);
                     }
                     else {
+                        
                         try {
                                               
                             /*
@@ -271,13 +272,13 @@ public class ScrollPanel extends JPanel {
         hScrollModel.addChangeListener(changeListener);
     }
     
-    private void fireViewportResized(int viewportWidth, int viewportHeight) {
+    private synchronized void fireViewportResized(int viewportWidth, int viewportHeight) {
         for ( ViewportResizedListener gvrl : viewportResizedListeners ) {
             gvrl.viewportResized(viewportWidth, viewportHeight);
         }
     }
     
-    public void addViewportResizedListener(ViewportResizedListener gvrl) {
+    public synchronized void addViewportResizedListener(ViewportResizedListener gvrl) {
         viewportResizedListeners.add(gvrl);
     }
     

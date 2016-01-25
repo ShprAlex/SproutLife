@@ -21,7 +21,7 @@ public class GameModel {
     Settings settings;
 
     Stats stats;   
-
+    
     public GameModel(Settings settings, ReentrantReadWriteLock interactionLock) {
         this.settings = settings;
         this.clock = new GameClock();
@@ -76,7 +76,15 @@ public class GameModel {
         } else {
             gameThread.setPlayGame(false);            
         }
-    }    
+    }
+    
+    public GameThread getGameThread() {
+        return gameThread;
+    }
+    
+    public boolean getPlayGame() {
+        return gameThread.getPlayGame();
+    }
 
     public void setGameStepListener(GameStepListener l) {
         if (gameThread!=null) {

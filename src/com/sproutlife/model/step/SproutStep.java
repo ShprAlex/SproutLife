@@ -351,7 +351,7 @@ public class SproutStep extends Step {
         if (seedOrg!=null && seedOrg.infectedBy!=null) {
             getStats().infectedCount++;
         }
-        Organism newOrg = getEchosystem().createOranism(newOrgX, newOrgY, seedOrg, seed);
+        Organism newOrg = getEchosystem().createOrganism(newOrgX, newOrgY, seedOrg, seed);
         
         //Remove old seed
         for (int x=0;x<seedWidth;x++) {

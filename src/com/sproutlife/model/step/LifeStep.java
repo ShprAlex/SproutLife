@@ -91,7 +91,7 @@ public class LifeStep extends Step {
     }     
     
     public int getCompare(Organism o) {
-        return o.getParent().maxCells;
+        return o.size();
     }
     
     private Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int i, int j) {
@@ -125,7 +125,7 @@ public class LifeStep extends Step {
         }
         else if (getLifeMode()==LifeMode.COMPETITIVE) {
             for (Cell neighbor : neighbors) {            
-                if (me.getOrganism().isFamily(neighbor.getOrganism(),3)) {
+                if (me.getOrganism().isFamily(neighbor.getOrganism(),2)) {
                     friendCount++;
                 }
                 else {
