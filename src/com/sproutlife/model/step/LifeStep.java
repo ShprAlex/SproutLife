@@ -11,7 +11,8 @@ import com.sproutlife.model.echosystem.Organism;
 
 public class LifeStep extends Step { 
     
-    public static enum LifeMode { 
+    public static enum LifeMode {
+        COOPERATIVE,
         FRIENDLY, 
         COMPETITIVE 
     }
@@ -35,6 +36,9 @@ public class LifeStep extends Step {
     private void updateLifeMode() {
         if("friendly".equals(getSettings().getString(Settings.LIFE_MODE))) {
             this.lifeMode = LifeMode.FRIENDLY;
+        }
+        else if("cooperative".equals(getSettings().getString(Settings.LIFE_MODE))) {
+            this.lifeMode = LifeMode.COOPERATIVE;
         }
         else {
             this.lifeMode = LifeMode.COMPETITIVE;
@@ -99,7 +103,7 @@ public class LifeStep extends Step {
         int friendCount = 0;
 
         
-        if (getLifeMode()==null) {
+        if (getLifeMode()==LifeMode.COOPERATIVE) {
             for (Cell neighbor : neighbors) {            
                 if (me.getOrganism()==neighbor.getOrganism()) {
                     friendCount++;
@@ -200,7 +204,7 @@ public class LifeStep extends Step {
                 return null;
             }
         }
-        if (getLifeMode()==LifeMode.FRIENDLY) {
+        if (getLifeMode()==LifeMode.FRIENDLY || getLifeMode()==LifeMode.COOPERATIVE ) {
             return null;
         }
 

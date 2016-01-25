@@ -34,10 +34,11 @@ public class ControlPanel extends JPanel {
 	private JButton stepButton;
 	private JSlider speedSlider;
 	private JButton resetButton;
+	private JRadioButton rdbtnCooperative;
 	
 	public ControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
-		setPreferredSize(new Dimension(250, 500));
+		setPreferredSize(new Dimension(260, 500));
 		        
 		this.panelController = panelController;
 		buildPanel();
@@ -155,36 +156,65 @@ public class ControlPanel extends JPanel {
 		gbc_speedSlider.insets = new Insets(0, 0, 5, 5);
 		gbc_speedSlider.gridx = 3;
 		gbc_speedSlider.gridy = 4;
-		add(speedSlider, gbc_speedSlider);
+		add(speedSlider, gbc_speedSlider);				
 		
-		JPanel panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridwidth = 3;
-		gbc_panel.anchor = GridBagConstraints.WEST;
-		gbc_panel.insets = new Insets(0, 0, 5, 5);
-		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel.gridx = 2;
-		gbc_panel.gridy = 6;
-		add(panel, gbc_panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		JPanel lifeModePanel = new JPanel();
+		GridBagConstraints gbc_lifeModePanel = new GridBagConstraints();
+		gbc_lifeModePanel.gridwidth = 3;
+		gbc_lifeModePanel.anchor = GridBagConstraints.NORTH;
+		gbc_lifeModePanel.insets = new Insets(0, 0, 5, 5);
+		gbc_lifeModePanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lifeModePanel.gridx = 2;
+		gbc_lifeModePanel.gridy = 6;
+		add(lifeModePanel, gbc_lifeModePanel);
+		GridBagLayout gbl_lifeModePanel = new GridBagLayout();
+		gbl_lifeModePanel.columnWidths = new int[]{66, 40, 40};
+		gbl_lifeModePanel.rowHeights = new int[]{23, 0};
+		gbl_lifeModePanel.columnWeights = new double[]{1.0, 1.0, 1.0};
+		gbl_lifeModePanel.rowWeights = new double[]{0.0, 0.0};
+		lifeModePanel.setLayout(gbl_lifeModePanel);
 		
 		JLabel lblLifeMode = new JLabel("Life Mode");
-		panel.add(lblLifeMode);
-		
-		Component horizontalGlue_1 = Box.createHorizontalGlue();
-		panel.add(horizontalGlue_1);
-		
-		rdbtnFriendly = new JRadioButton("Friendly");
-		rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		panel.add(rdbtnFriendly);
-		
-		rdbtnCompetitive = new JRadioButton("Competitive");
-		rdbtnCompetitive.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		panel.add(rdbtnCompetitive);
+		GridBagConstraints gbc_lblLifeMode = new GridBagConstraints();
+		gbc_lblLifeMode.anchor = GridBagConstraints.WEST;
+		gbc_lblLifeMode.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLifeMode.gridx = 0;
+		gbc_lblLifeMode.gridy = 0;
+		lifeModePanel.add(lblLifeMode, gbc_lblLifeMode);
 		
 		ButtonGroup lifeModeButtonGroup = new ButtonGroup();
+		
+		rdbtnCooperative = new JRadioButton("Cooperative");
+		rdbtnCooperative.setToolTipText("<html>Tends towards order.<br>Cells don't differentiate<br> between their own organism<br> and others</html>");
+		GridBagConstraints gbc_rdbtnCooperative = new GridBagConstraints();
+		gbc_rdbtnCooperative.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnCooperative.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnCooperative.gridx = 1;
+		gbc_rdbtnCooperative.gridy = 0;
+		lifeModePanel.add(rdbtnCooperative, gbc_rdbtnCooperative);
+		lifeModeButtonGroup.add(rdbtnCooperative);
+		
+		rdbtnFriendly = new JRadioButton("Friendly");
+		rdbtnFriendly.setToolTipText("<html>A bit more chaotic. Cells know<br> which one is thier organism,<br> but tolerate some contact<br> from other organisms</html>");
+		rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		GridBagConstraints gbc_rdbtnFriendly = new GridBagConstraints();
+		gbc_rdbtnFriendly.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnFriendly.insets = new Insets(0, 0, 5, 0);
+		gbc_rdbtnFriendly.gridx = 2;
+		gbc_rdbtnFriendly.gridy = 0;
+		lifeModePanel.add(rdbtnFriendly, gbc_rdbtnFriendly);
 		lifeModeButtonGroup.add(rdbtnFriendly);
-		lifeModeButtonGroup.add(rdbtnCompetitive);
+		
+		rdbtnCompetitive = new JRadioButton("Competitive");
+		rdbtnCompetitive.setToolTipText("<html>Most chaotic. Cells know which<br> cells are in their organism and<br>its family, and they will kill<br> adjacent cells from \"smaller\" <br>organisms with fewer cells<br> at the time</html>");
+		rdbtnCompetitive.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		GridBagConstraints gbc_rdbtnCompetitive = new GridBagConstraints();
+		gbc_rdbtnCompetitive.insets = new Insets(0, 0, 0, 5);
+		gbc_rdbtnCompetitive.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnCompetitive.gridx = 1;
+		gbc_rdbtnCompetitive.gridy = 1;
+		lifeModePanel.add(rdbtnCompetitive, gbc_rdbtnCompetitive);
+		lifeModeButtonGroup.add(rdbtnCompetitive);				
 		
 		JLabel childOneEnergyLabel = new JLabel("Child 1 energy");
 		GridBagConstraints gbc_childOneEnergyLabel = new GridBagConstraints();
@@ -282,5 +312,8 @@ public class ControlPanel extends JPanel {
     }
     public JButton getResetButton() {
         return resetButton;
+    }
+    public JRadioButton getRdbtnCooperative() {
+        return rdbtnCooperative;
     }
 }

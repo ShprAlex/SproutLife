@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
+import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -131,6 +132,7 @@ public class PanelController {
     }
     
     private void initComponents() {
+        ToolTipManager.sharedInstance().setInitialDelay(0);
         gameFrame.setVisible(true);  
         getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
@@ -203,7 +205,9 @@ public class PanelController {
         
         getControlPanel().getResetButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                getInteractionLock().writeLock().lock();
                 getGameModel().getEchosystem().resetCells();
+                getInteractionLock().writeLock().unlock();
                 getImageManager().repaintNewImage();
             }
         });
@@ -214,6 +218,9 @@ public class PanelController {
             public void itemStateChanged(ItemEvent e) {
                 if (getControlPanel().getRdbtnFriendly().isSelected()) {
                     getSettings().set(Settings.LIFE_MODE, "friendly");
+                }
+                else if(getControlPanel().getRdbtnCooperative().isSelected()) {
+                    getSettings().set(Settings.LIFE_MODE, "cooperative");
                 }
                 else {
                     getSettings().set(Settings.LIFE_MODE, "competitive");
