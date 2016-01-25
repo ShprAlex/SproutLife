@@ -13,6 +13,7 @@ import java.util.Random;
 
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
@@ -68,7 +69,7 @@ public class RetireAndPruneStep extends Step {
     	HashSet<Organism> retireOrgs = new HashSet<Organism>();
     	retireOrgs.addAll(getOrganisms());
         for (Organism o : retireOrgs) {
-        	if (o.getAge()>o.lifespan) {
+        	if (o.getAge()>Math.min(o.lifespan,getSettings().getInt(Settings.MAX_LIFESPAN))) {
         	    getEchosystem().retireOrganism(o);
         	}
         }

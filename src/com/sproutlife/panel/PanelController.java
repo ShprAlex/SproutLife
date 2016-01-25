@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
@@ -138,10 +139,14 @@ public class PanelController {
         updateZoomValue(-3);
         getControlPanel().getZoomSlider().setValue(-3);        
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
-        getImageManager().setBackgroundColor(new Color(160,160,160));                     
+        getImageManager().setBackgroundColor(new Color(160,160,160)); 
+        
+        getControlPanel().getMaxLifespanSpinner().setValue(
+                getSettings().getInt(Settings.MAX_LIFESPAN));
     }
 
     public void addListeners() {
+        getScrollPanel().enableMouseListeners();
         
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
@@ -228,7 +233,13 @@ public class PanelController {
             }                      
         });
 
-        getScrollPanel().enableMouseListeners();
+        getControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
+            }
+        });
+
+        
     }
           
     public void updateFromSettings() {

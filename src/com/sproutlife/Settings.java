@@ -7,9 +7,12 @@ public class Settings {
     
     public static String LIFE_MODE = "lifeMode";
     public static String MUTATION_ENABLED = "mutationEnabled";
+    public static String MAX_LIFESPAN = "maxLifespan";
     public static String CHILD_ONE_ENERGY = "childOneEnergy";
     public static String CHILD_TWO_ENERGY = "childTwoEnergy";
     public static String CHILD_THREE_ENERGY = "childThreeEnergy";
+    
+    
     
     public Settings() {
         settings = new HashMap<String, Object>();
@@ -20,6 +23,8 @@ public class Settings {
         set(Settings.LIFE_MODE, "friendly");
         
     	set(Settings.MUTATION_ENABLED, true);
+    	
+    	set(Settings.MAX_LIFESPAN, 70);
     	
         set(Settings.CHILD_ONE_ENERGY, 24);
         set(Settings.CHILD_TWO_ENERGY, 3);

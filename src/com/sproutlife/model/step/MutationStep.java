@@ -129,7 +129,7 @@ public class MutationStep extends Step {
             //    decreaseOdds = 4; //50% odds of decreasing vs. 33% odds of increasing    
             //}
             
-            if (rand6 <=1) {
+            if (rand6 <=1 && org.lifespan<getSettings().getInt(Settings.MAX_LIFESPAN)) {
                 
                 org.lifespan +=1;
                 if (random.nextInt(2)==1) {
