@@ -217,8 +217,7 @@ public class PanelController {
             }
         });
         
-        //Only need to add this to one of the two buttons
-        getControlPanel().getRdbtnFriendly().addItemListener(new ItemListener() {  
+        ItemListener lifeModeListener = new ItemListener() {  
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (getControlPanel().getRdbtnFriendly().isSelected()) {
@@ -231,8 +230,12 @@ public class PanelController {
                     getSettings().set(Settings.LIFE_MODE, "competitive");
                 }
             }                      
-        });
-
+        };        
+        getControlPanel().getRdbtnCompetitive().addItemListener(lifeModeListener);
+        getControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
+        getControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
+        
+        
         getControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
