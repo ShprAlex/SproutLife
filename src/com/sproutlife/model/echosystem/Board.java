@@ -91,4 +91,55 @@ public class Board {
         return surrounding;
     }
     
+    public ArrayList<Cell> getExtra4Neighbors(int i, int j) {
+        ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
+        Cell c;
+        c = getCell(i+2,j);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i-2,j);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i,j+2);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i,j-2);
+        if (c!=null) neighbors.add(c);
+        
+        
+        c = getCell(i+2,j+1);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i-2,j+1);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i+2,j-1);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i-2,j-1);
+        if (c!=null) neighbors.add(c);
+        
+        c = getCell(i+1,j+2);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i-1,j+2);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i+1,j-2);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i-1,j-2);
+        if (c!=null) neighbors.add(c);
+        
+        return neighbors;
+        
+    }
+    public ArrayList<Cell> getNeighbors25(int i, int j) {
+        ArrayList<Cell> surrounding = new ArrayList<Cell>(0);
+        for (int s=-2;s<=2;s++) {
+            for (int t=-2;t<=2;t++) {
+                if (s==0 && t==0) {
+                    continue;
+                }
+                Cell sp = this.getCell(i+s, j+t);
+    
+                if (sp!=null) { 
+                    surrounding.add(sp); 
+                }
+            }
+        }
+        return surrounding;
+    }
+    
 }
