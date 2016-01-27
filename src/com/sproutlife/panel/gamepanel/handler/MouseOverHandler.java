@@ -15,7 +15,7 @@ public class MouseOverHandler extends Handler {
     public void mouseMoved(Point2D.Double mousePosition) {
         updateMouseOver(mousePosition);
 
-        gc.getImageManager().repaintNewImage();
+        //gc.getImageManager().repaintNewImage();
 
  
     }
@@ -27,11 +27,13 @@ public class MouseOverHandler extends Handler {
     }
     
     protected void updateMouseOver(Point2D.Double mousePosition) {
+        /*
         try {
             gc.getInteractionLock().writeLock().lock();
         }
         finally {
             gc.getInteractionLock().writeLock().unlock();
         }
+        */
     }
 }

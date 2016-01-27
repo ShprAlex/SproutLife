@@ -53,15 +53,18 @@ public class InteractionHandler implements MouseListener, MouseMotionListener,
     
     
     public void updateMouseOver() {
+        mouseOverHandler.updateMouseOver(gc.getScrollController().getDrawPositionFromMousePosition(mousePoint));
+        /*
         try {
             gc.getInteractionLock().writeLock().lock();
             //if ( !handlerSet.popupVisible() ) {
-                mouseOverHandler.updateMouseOver(gc.getScrollController().getDrawPositionFromMousePosition(mousePoint));
+            //    mouseOverHandler.updateMouseOver(gc.getScrollController().getDrawPositionFromMousePosition(mousePoint));
             //}
         }
         finally {
             gc.getInteractionLock().writeLock().unlock();
         }
+        */
     }
 
     private static int getAllKeyModifiers() {
@@ -215,6 +218,11 @@ public class InteractionHandler implements MouseListener, MouseMotionListener,
     }
     
     private void updateMousePosition(MouseEvent mouseEvent, boolean updateMouseOver) {
+        mousePoint = mouseEvent.getPoint();
+        if ( updateMouseOver ) {
+            mouseOverHandler.mouseMoved(gc.getScrollController().getDrawPositionFromMousePosition(mousePoint));
+        }
+        /*
         try {
             gc.getInteractionLock().writeLock().lock();
             mousePoint = mouseEvent.getPoint();
@@ -225,6 +233,7 @@ public class InteractionHandler implements MouseListener, MouseMotionListener,
         finally {
             gc.getInteractionLock().writeLock().unlock();
         }
+        */
     }
     
     public void mouseExited(MouseEvent mouseEvent) {

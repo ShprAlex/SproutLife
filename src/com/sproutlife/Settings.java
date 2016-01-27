@@ -24,11 +24,11 @@ public class Settings {
         
     	set(Settings.MUTATION_ENABLED, true);
     	
-    	set(Settings.MAX_LIFESPAN, 70);
+    	set(Settings.MAX_LIFESPAN, 40);
     	
-        set(Settings.CHILD_ONE_ENERGY, 24);
-        set(Settings.CHILD_TWO_ENERGY, 3);
-        set(Settings.CHILD_THREE_ENERGY, 3);
+        set(Settings.CHILD_ONE_ENERGY, 0);
+        set(Settings.CHILD_TWO_ENERGY, 0);
+        set(Settings.CHILD_THREE_ENERGY, 0);
 
     }
     

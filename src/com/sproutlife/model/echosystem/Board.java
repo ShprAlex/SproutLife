@@ -94,6 +94,7 @@ public class Board {
     public ArrayList<Cell> getExtra4Neighbors(int i, int j) {
         ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
         Cell c;
+ 
         c = getCell(i+2,j);
         if (c!=null) neighbors.add(c);
         c = getCell(i-2,j);
@@ -103,6 +104,22 @@ public class Board {
         c = getCell(i,j-2);
         if (c!=null) neighbors.add(c);
         
+        return neighbors;     
+    }
+    
+    public ArrayList<Cell> getExtra12Neighbors(int i, int j) {
+        ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
+        
+        Cell c;
+        
+        c = getCell(i+2,j);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i-2,j);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i,j+2);
+        if (c!=null) neighbors.add(c);
+        c = getCell(i,j-2);
+        if (c!=null) neighbors.add(c);        
         
         c = getCell(i+2,j+1);
         if (c!=null) neighbors.add(c);
@@ -122,24 +139,24 @@ public class Board {
         c = getCell(i-1,j-2);
         if (c!=null) neighbors.add(c);
         
-        return neighbors;
-        
+        return neighbors;     
     }
-    public ArrayList<Cell> getNeighbors25(int i, int j) {
-        ArrayList<Cell> surrounding = new ArrayList<Cell>(0);
-        for (int s=-2;s<=2;s++) {
-            for (int t=-2;t<=2;t++) {
-                if (s==0 && t==0) {
+    
+    public ArrayList<Cell> getExtraNeighbors(int i, int j, int dist) {
+        ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
+        for (int s=-dist;s<=dist;s++) {
+            for (int t=-dist;t<=dist;t++) {
+                if ((s==-1 || s==0 || s==1) && (t==-1 || t==0 || t==1)) {
                     continue;
                 }
                 Cell sp = this.getCell(i+s, j+t);
     
                 if (sp!=null) { 
-                    surrounding.add(sp); 
+                    neighbors.add(sp); 
                 }
             }
         }
-        return surrounding;
+        return neighbors;
     }
     
 }

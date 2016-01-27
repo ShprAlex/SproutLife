@@ -29,7 +29,12 @@ public class LifeStep extends Step {
     public void perform() {
         initStats();
         updateLifeMode();
-        updateCells();                
+        if (lifeMode == competitiveLife) {
+            ((CompetitiveLife) competitiveLife).updateCells();
+        }
+        else {
+            updateCells();
+        }
     }
     
     public LifeMode getLifeMode() {
@@ -49,50 +54,54 @@ public class LifeStep extends Step {
     }
     
     public void updateCells() {        
-                
+  
         ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
-        ArrayList<Cell> deadCells = new ArrayList<Cell>();         
+        ArrayList<Cell> deadCells = new ArrayList<Cell>();  
+
         
-        for (int i=0; i<getBoard().getWidth(); i++) {
-            
+        for (int i=0; i<getBoard().getWidth(); i++) {            
             for (int j=0; j<getBoard().getHeight(); j++) {                                   
                 
                 Cell me = getBoard().getCell(i,j);
+                
+                if (me == null) {
+                    if (getBoard().hasNeighbors(i, j)) {
+                        ArrayList<Cell> neighbors = getBoard().getNeighbors(i, j);
 
-                if (me!=null) {
+                        Cell result = getLifeMode().getBorn(neighbors, i, j);
+
+                        if (result != null) {
+
+                            bornCells.add(result);
+                            getStats().born++;
+                        }
+                    }
+                }
+                else {                    
                     ArrayList<Cell> neighbors = getBoard().getNeighbors(i,j);
                     Cell result = getLifeMode().keepAlive(me,neighbors,i,j);
                     if (result!=null) {
-                        getStats().stayed++;
+                        getStats().stayed++;                       
                     }
                     else {
                         deadCells.add(me);
                     }
 
-                } 
-                else {                        
-                    if (getBoard().hasNeighbors(i,j)) {
-                        ArrayList<Cell> neighbors = getBoard().getNeighbors(i,j);
-
-                        Cell result = getLifeMode().getBorn(neighbors,i,j);
-
-                        if (result!=null) {
-                            bornCells.add(result);
-                            getStats().born++;
-                        }
-
-                    }
                 }           
             }
         }
         
-        for (Cell c: bornCells) {
-            getEchosystem().addCell(c);
-            //getBoard().setCell(c);            
-        }
+        //Remove cells before adding cells to avoid Organism having duplicate cells,
+        //Orgs don't do Contains checks for speed
         for (Cell c: deadCells) {
             getEchosystem().removeCell(c);
+            
         }
+       
+        for (Cell c: bornCells) {
+            getEchosystem().addCell(c);
+        }
+
     }     
     
     private void initStats() {                

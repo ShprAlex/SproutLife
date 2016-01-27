@@ -95,15 +95,22 @@ public class Stats {
             
             sizeAtAge[o.getAge()/5]+=o.size();
         }
+        
         int sumMax = 0;
         for (Organism o : getEchosystem().getOrganisms()) {
+            
             if(o.getParent()!=null) {
-                if (o.getParent().maxCells/3<100) {
-                    maxCells[o.getParent().maxCells/3]++;
+                int ts = o.getParent().getTerritorySize();
+                if (o.getParent().getParent()!=null) {
+                    ts = Math.max(ts, o.getParent().getParent().getTerritorySize());
                 }
-                sumMax+=o.getParent().maxCells;
+                if (o.getParent().getTerritorySize()/3<100) {
+                    maxCells[ts/10]++;
+                }
+                sumMax+=ts;
             }
         }
+        
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Cell count " + cellCount);
         System.out.print(" Avg cells " + cellCount*10/getEchosystem().getOrganisms().size());
@@ -119,18 +126,19 @@ public class Stats {
             System.out.print(countAtSize[i]+" ");
         }
         */
-        /*
+        
         System.out.print(" Count at lifespan: ");
         for (int i=6;i<50;i++) {
             System.out.print(countAtLifespan[i]+" ");
         }
-        */
+        
         System.out.print(" AMC: "+sumMax*10/getEchosystem().getOrganisms().size());
-        System.out.print(" Max cells: ");
+        /*
+        System.out.print(" Max cells: ");               
         for (int i=0;i<50;i++) {
             System.out.print(maxCells[i]+" ");
         }
-        
+        */
         /*
         System.out.print(" MC: ");
         for (int i=0;i<50;i++) {

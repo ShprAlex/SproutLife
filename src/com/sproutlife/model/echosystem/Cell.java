@@ -38,16 +38,7 @@ public class Cell extends Point {
     
     public void addToOrganism() {
         organism.addCell(this.x, this.y);
-    }
-   
-    
-    public Cell clone() {
-        Cell c = new Cell(x,y); 
-        c.setOrganism(this.getOrganism());
-        c.age=this.age+1;
-        
-        return c;
-    }
+    }      
     
     public Organism getOrganism() {
         return organism;

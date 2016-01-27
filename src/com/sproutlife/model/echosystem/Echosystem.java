@@ -70,7 +70,11 @@ public class Echosystem {
 
 
     public void resetCells() {
-        getBoard().resetBoard();
+        ArrayList<Cell> cells = new ArrayList<Cell>(getCells());
+        for (Cell c: cells) {
+          removeCell(c);  
+        }
+        //getBoard().resetBoard();
         this.setDefaultOrgLifespan(15);
         /*
         organisms = new HashSet<Organism>();
@@ -180,7 +184,7 @@ public class Echosystem {
         //                                        
         Organism newOrg = new Organism(typeCount, getClock(), x, y, parent, seed);   
         if (parent==null) {
-            newOrg.setLifespan(getDefaultOrgLifespan()+(new Random()).nextInt(3));
+            newOrg.setLifespan(getDefaultOrgLifespan());//+(new Random()).nextInt(3));
         }
 
         organisms.add(newOrg);
@@ -237,7 +241,7 @@ public class Echosystem {
         pruneEmptyOrganisms();
     } 
 
-    protected boolean validateBoard() {
+    public boolean validateBoard() {
         for (Organism o : getOrganisms()) {
             for (Cell current : o.getCells()) {
 

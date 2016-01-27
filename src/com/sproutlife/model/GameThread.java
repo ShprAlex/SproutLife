@@ -142,20 +142,20 @@ public class GameThread {
                         interactionLock.writeLock().unlock();
                         
                     //}
-
-                    int sleep = Math.max(1, getSleepDelay()); 
-                    //Painting is glitchy if sleepDelay is less than 1;
-
+                    
                     int iterations = getIterations();
 
                     if (getGameModel().getTime() % iterations == 0) {
 
                         fireStepBundlePerformed();
+                        
+                        int sleep = Math.max(1, getSleepDelay());                        
+ 
+                        //Painting is glitchy if sleepDelay is less than 1;
 
                         Thread.sleep(sleep);
 
                     }
-
                 }
                 catch (InterruptedException ex) {}
             }

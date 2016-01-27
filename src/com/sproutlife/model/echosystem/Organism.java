@@ -16,6 +16,8 @@ public class Organism {
     ArrayList<Organism> children;
     Genome genome;
     private HashSet<Cell> cells;
+    // territory is used to track all visited points
+    private HashSet<Point> territory; 
     public GameClock clock;
     
     
@@ -37,6 +39,7 @@ public class Organism {
     
     boolean alive = true;
     int collisionCount = 0;
+    int territoryLength = 0;
         
     public Organism(int id, GameClock clock, int x, int y, Organism parent, Seed seed) {
         
@@ -51,6 +54,7 @@ public class Organism {
         this.seed = seed;
         this.genome = new Genome();
         this.cells = new HashSet<Cell>();
+        this.territory = new HashSet<Point>();
         this.timeOfDeath = -1;  
         this.maxCells = 0;
         
@@ -164,7 +168,7 @@ public class Organism {
     
     public Cell addCell(int x, int y) {
         Cell c = new Cell(x, y, this);
-        cells.add(c);
+        addCell(c);
         return c;
     }
     
@@ -173,6 +177,11 @@ public class Organism {
      */
     public void addCell(Cell c) {
         cells.add(c);
+        territory.add(c);
+        int dist = (c.x-this.x)*(c.x-this.x)+(c.y-this.y)*(c.y-this.y);
+        if (territoryLength<dist) {
+            territoryLength = dist;
+        }
         this.maxCells = Math.max(size(), maxCells);
     }
     
@@ -212,14 +221,30 @@ public class Organism {
     public boolean removeCell(int x, int y) {
         Cell c = getCell(x,y);
         if (c!=null) {
-            cells.remove(c);
-            return true;
+            return removeCell(c);
         }
         return false;           
     }
     
     public int size() {
         return cells.size();
+    }
+    
+    public int getTerritorySize() {
+        return territory.size();
+    }
+    
+    public int getTerritoryLength() {
+        return territoryLength;
+    }
+    
+    public boolean removeFromTerritory(Cell c) {
+        boolean result = territory.remove(c);
+        if(!result) {
+            int x=4;
+            System.out.println("Remove from territory failed?");
+        }
+        return result;
     }
     
     public boolean isAlive() {

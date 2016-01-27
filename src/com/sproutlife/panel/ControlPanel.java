@@ -149,7 +149,7 @@ public class ControlPanel extends JPanel {
 		
 		speedSlider = new JSlider();		
 		speedSlider.setMinimum(-5);
-		speedSlider.setMaximum(5);
+		speedSlider.setMaximum(4);
 		speedSlider.setValue(-2);
 		GridBagConstraints gbc_speedSlider = new GridBagConstraints();
 		gbc_speedSlider.fill = GridBagConstraints.HORIZONTAL;
@@ -186,7 +186,11 @@ public class ControlPanel extends JPanel {
 		ButtonGroup lifeModeButtonGroup = new ButtonGroup();
 		
 		rdbtnCooperative = new JRadioButton("Cooperative");
-		rdbtnCooperative.setToolTipText("<html>Tends towards order.<br>Cells don't differentiate<br> between their own organism<br> and others</html>");
+		rdbtnCooperative.setToolTipText("<html>"+
+		        "Tends towards order and<br>"+
+		        "synchronization. Cells<br>"+
+		        "don't differentiate between<br>"+
+		        "their own organism and others</html>");
 		GridBagConstraints gbc_rdbtnCooperative = new GridBagConstraints();
 		gbc_rdbtnCooperative.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnCooperative.insets = new Insets(0, 0, 5, 5);
@@ -196,7 +200,12 @@ public class ControlPanel extends JPanel {
 		lifeModeButtonGroup.add(rdbtnCooperative);
 		
 		rdbtnFriendly = new JRadioButton("Friendly");
-		rdbtnFriendly.setToolTipText("<html>A bit more chaotic. Cells know<br> which one is thier organism,<br> but tolerate some contact<br> from other organisms</html>");
+		rdbtnFriendly.setToolTipText("<html>"+
+		        "Cells know which one is their<br>"+
+		        "organism, but tolerate some<br>"+
+		        "contact from other organisms.<br>"+
+		        "Maintains complexity."+
+		        "</html>");
 		rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		GridBagConstraints gbc_rdbtnFriendly = new GridBagConstraints();
 		gbc_rdbtnFriendly.anchor = GridBagConstraints.WEST;
@@ -207,7 +216,13 @@ public class ControlPanel extends JPanel {
 		lifeModeButtonGroup.add(rdbtnFriendly);
 		
 		rdbtnCompetitive = new JRadioButton("Competitive");
-		rdbtnCompetitive.setToolTipText("<html>Most chaotic. Cells know which<br> cells are in their organism and<br>its family, and they will kill<br> adjacet cells from \"smaller\" unrelated <br>organisms with fewer cells<br> at the time</html>");
+		rdbtnCompetitive.setToolTipText("<html>"+
+		        "Grow bigger. Cells know which<br>"+
+		        "other cells are in their organism<br>"+
+		        "and its family, and will kill<br>"+
+		        "adjacet cells from smaller<br>"+
+		        "unrelated organisms."+		        
+		        "</html>");
 		rdbtnCompetitive.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		GridBagConstraints gbc_rdbtnCompetitive = new GridBagConstraints();
 		gbc_rdbtnCompetitive.insets = new Insets(0, 0, 0, 5);

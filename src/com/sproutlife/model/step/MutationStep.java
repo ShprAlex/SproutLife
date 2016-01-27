@@ -55,7 +55,8 @@ public class MutationStep extends Step {
                Cell c = getBoard().getCell(p);
                if (c!=null) {
                    if (c.getOrganism()==o) {
-                       getEchosystem().removeCell(c);
+                       boolean result = getEchosystem().removeCell(c);
+                       c.getOrganism().removeFromTerritory(c);
                        //getBoard().removeCell(c);
                        Mutation m = o.getGenome().getMutation(age, pi);
                        Integer freq = popularMutations.get(m);
