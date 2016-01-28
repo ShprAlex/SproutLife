@@ -335,6 +335,10 @@ public class PanelController {
         getBoardRenderer().setZoom(zoom);          
         getScrollController().setScalingZoomFactor(zoom);
         getScrollController().updateScrollBars();
+        
+        int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
+        int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
+        getControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
         //getImageManager().repaintNewGraphImage();
     }
     
@@ -343,8 +347,9 @@ public class PanelController {
         //d.height-=40;
 
         getInteractionLock().writeLock().lock();
-
+         
         getBoardRenderer().setBounds(d);
+                
         int boardWidth = (d.width-40)/getBoardRenderer().getDefaultBlockSize()-2;
         int boardHeight = (d.height-40)/getBoardRenderer().getDefaultBlockSize()-2;
         
@@ -353,6 +358,7 @@ public class PanelController {
             getControlPanel().getBoardWidthSpinner().setValue(boardWidth);
             getControlPanel().getBoardHeightSpinner().setValue(boardHeight);
         }
+        
         getControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
 
         Dimension boardSize = new Dimension(boardWidth,boardHeight);
@@ -361,7 +367,13 @@ public class PanelController {
         getInteractionLock().writeLock().unlock();
 
         getScrollController().updateScrollBars();
+        
+        int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
+        int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
+        getControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+        
         getImageManager().repaintNewImage();
+
     }    
     
     public void updateBoardSize(int width, int height) {
