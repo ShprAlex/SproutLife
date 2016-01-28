@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import com.sproutlife.panel.PanelController;
 import com.sproutlife.renderer.RendererUtils;
@@ -30,7 +31,7 @@ public class ImageManager {
     }
     
     private static Color BACK_COLOR = Color.white;
-    private static int SAVE_IMAGE_PAD = 50;
+    private static int SAVE_IMAGE_PAD = 0;
     
     public static void setBackgroundColor(Color color) { 
         BACK_COLOR = color; 
@@ -42,10 +43,11 @@ public class ImageManager {
     private PanelController panelController;
     private LogoStyle logoStyle;
     
-    public static final Image applicationLogoImage = null;
-        //new ImageIcon(ImageManager.class.getResource("/images/Logo_Application.gif")).getImage();
-    public static Image smallLogoImage = null;        
-    public static Image largeLogoImage = null;
+    public static final Image applicationLogoImage = null; 
+        
+    public static Image smallLogoImage =
+        new ImageIcon(ImageManager.class.getResource("/images/SproutLife_Logo.png")).getImage();
+    public static Image largeLogoImage = smallLogoImage;
         
     
     private Image drawImage;
@@ -120,9 +122,14 @@ public class ImageManager {
     protected void paintImage(Image image, Image logoImage, AffineTransform transform) {
         if ( panelController.getBoardRenderer() != null ) {
             paintBackground(image);
-            
+             
             Graphics2D g2 = (Graphics2D)image.getGraphics();                        
            
+            g2.setTransform(transform);
+            panelController.getBoardRenderer().paint(g2);
+            paintMessage(image);           
+            
+            g2.setTransform(new AffineTransform());
             if ( logoImage != null ) {
                 // draw the logo in the bottom right corner
                 g2.setTransform(new AffineTransform());
@@ -130,11 +137,7 @@ public class ImageManager {
                              image.getWidth(null)-logoImage.getWidth(null),
                              image.getHeight(null)-logoImage.getHeight(null),
                              null);
-            } 
-            g2.setTransform(transform);
-            panelController.getBoardRenderer().paint(g2);
-            paintMessage(image);
-            
+            }
         }
     }
 
@@ -492,8 +495,7 @@ public class ImageManager {
     
     protected void paintBackground(Graphics2D g2, int width, int height) {      
         g2.setColor(BACK_COLOR);
-        g2.fillRect(0,0,width,height);
-        
+        g2.fillRect(0,0,width,height);        
     }
     
     public void addPaintImageListener(PaintImageListener paintImageListener) {

@@ -66,7 +66,7 @@ public class ScrollPanelController {
                 double viewportY = getViewportOffsetY();
                 gc.getBoardRenderer().getTransform().setToScale(scalingZoomFactor,scalingZoomFactor);
                 gc.getBoardRenderer().getTransform().translate(viewportX, viewportY);
-                updateScrollBarsWithCenter(getCenterDrawPosition());
+                updateScrollBarsWithCenter(getCenterDrawPosition());                                    
             }
             finally {
                 gc.getInteractionLock().writeLock().unlock();
@@ -202,7 +202,7 @@ public class ScrollPanelController {
     
     public Point2D.Double getCenterDrawPosition() {
         try {
-            gc.getInteractionLock().readLock().lock();
+            gc.getInteractionLock().readLock().lock();  
             return centerLocation;
         }
         finally {
@@ -329,10 +329,10 @@ public class ScrollPanelController {
             int maxY = (int)(rendererBounds.getMaxY()*getScalingZoomFactor()) + yExtent - SUBTRACT_FROM_MARGIN;
             */
             
-            int minX = (int)(rendererBounds.getMinX()*getScalingZoomFactor())-20;
-            int maxX = (int)(rendererBounds.getMaxX()*getScalingZoomFactor())+20;
-            int minY = (int)(rendererBounds.getMinY()*getScalingZoomFactor())-20;
-            int maxY = (int)(rendererBounds.getMaxY()*getScalingZoomFactor())+20;
+            int minX = (int)(rendererBounds.getMinX()*getScalingZoomFactor());
+            int maxX = (int)(rendererBounds.getMaxX()*getScalingZoomFactor());
+            int minY = (int)(rendererBounds.getMinY()*getScalingZoomFactor());
+            int maxY = (int)(rendererBounds.getMaxY()*getScalingZoomFactor());
             
             if (maxX-minX<xExtent) {
                 int xDiff = xExtent-(maxX-minX);

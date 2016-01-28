@@ -79,7 +79,7 @@ public class BoardRenderer {
     }
     
     public void setBounds(Dimension d) {
-        this.bounds = new Rectangle2D.Double(0,0,d.getWidth(),d.getHeight());
+        this.bounds = new Rectangle2D.Double(-20,-20,d.getWidth(),d.getHeight());
     }
     
     public Rectangle2D.Double getRendererBounds() {

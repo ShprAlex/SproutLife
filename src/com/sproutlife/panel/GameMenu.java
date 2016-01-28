@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import com.sproutlife.Settings;
+import com.sproutlife.action.ExportGifAction;
+import com.sproutlife.action.ExportPngAction;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.panel.gamepanel.ScrollPanel;
 
@@ -62,6 +64,8 @@ public class GameMenu extends JMenuBar implements ActionListener {
         mi_file_options.addActionListener(this);
         mi_file_exit = new JMenuItem("Exit");
         mi_file_exit.addActionListener(this);
+        m_file.add(new ExportPngAction(controller));
+        m_file.add(new ExportGifAction(controller));
         m_file.add(mi_file_options);
         m_file.add(new JSeparator());
         m_file.add(mi_file_exit);

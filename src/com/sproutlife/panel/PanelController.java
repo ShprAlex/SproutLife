@@ -24,6 +24,7 @@ import com.sproutlife.model.step.GameStep.StepType;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
 import com.sproutlife.panel.gamepanel.ImageManager;
+import com.sproutlife.panel.gamepanel.ImageManager.LogoStyle;
 import com.sproutlife.panel.gamepanel.ScrollPanel;
 import com.sproutlife.panel.gamepanel.ScrollPanel.ViewportResizedListener;
 import com.sproutlife.panel.gamepanel.ScrollPanelController;
@@ -51,7 +52,7 @@ public class PanelController {
         
         this.scrollController = new ScrollPanelController(this);
 
-        this.imageManager = new ImageManager(this,  null);
+        this.imageManager = new ImageManager(this,  LogoStyle.Small);
         
         buildPanels();
             
@@ -135,7 +136,7 @@ public class PanelController {
     private void initComponents() {
         ToolTipManager.sharedInstance().setInitialDelay(0);
         gameFrame.setVisible(true);  
-        getBoardRenderer().setDefaultBlockSize(3);
+        getBoardRenderer().setDefaultBlockSize(4);
         updateZoomValue(-3);
         getControlPanel().getZoomSlider().setValue(-3);        
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
@@ -297,18 +298,19 @@ public class PanelController {
         }
         //updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         //double zoom = Math.pow(1.1, value);
-        getBoardRenderer().setZoom(zoom);  
+        getBoardRenderer().setZoom(zoom);          
         getScrollController().setScalingZoomFactor(zoom);
+        getScrollController().updateScrollBars();
         //getImageManager().repaintNewGraphImage();
     }
     
     public void updateBoardSizeFromPanelSize(Dimension d) {
-        d.width-=40;
-        d.height-=40;
+        //d.width-=40;
+        //d.height-=40;
         getInteractionLock().writeLock().lock();
         
         getBoardRenderer().setBounds(d);
-        Dimension boardSize = new Dimension(d.width/getBoardRenderer().getDefaultBlockSize()-2,d.height/getBoardRenderer().getDefaultBlockSize()-2);
+        Dimension boardSize = new Dimension((d.width-40)/getBoardRenderer().getDefaultBlockSize()-2,(d.height-40)/getBoardRenderer().getDefaultBlockSize()-2);
         getGameModel().getEchosystem().setBoardSize(boardSize);
         
         getInteractionLock().writeLock().unlock();
