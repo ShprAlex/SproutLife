@@ -3,4 +3,3 @@ Evolving version of Conway's Game of Life which introduces organisms and mutatio
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLifeBackground1.png)
