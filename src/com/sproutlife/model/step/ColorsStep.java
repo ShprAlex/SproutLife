@@ -40,7 +40,7 @@ public class ColorsStep extends Step {
                 if (kindCount[i]==0) {
                     emptyKind = i;
                 }
-                if (kindCount[i]*100/getEchosystem().getOrganisms().size()>85) {
+                if (kindCount[i]*100/getEchosystem().getOrganisms().size()>70) {
                     splitKind = i;                
                 }                
             }              
