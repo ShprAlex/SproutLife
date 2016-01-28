@@ -86,7 +86,7 @@ public class BoardRenderer {
     }
     
     public void setBounds(Dimension d) {
-        this.bounds = new Rectangle2D.Double(-20,-20,d.getWidth(),d.getHeight());
+        this.bounds = new Rectangle2D.Double(0,0,d.getWidth(),d.getHeight());
     }
     
     public Rectangle2D.Double getRendererBounds() {
@@ -94,10 +94,10 @@ public class BoardRenderer {
             return null;
         }
         
-        double x = bounds.x;
-        double y = bounds.y;
-        double w = bounds.width * BLOCK_SIZE/getDefaultBlockSize();
-        double h = bounds.height * BLOCK_SIZE/getDefaultBlockSize();
+        double x = bounds.x - 20 * BLOCK_SIZE / getDefaultBlockSize();
+        double y = bounds.y - 20 * BLOCK_SIZE / getDefaultBlockSize();
+        double w = bounds.width * BLOCK_SIZE / getDefaultBlockSize();
+        double h = bounds.height * BLOCK_SIZE / getDefaultBlockSize();
         
         //Can dynamically compute bounds
         //return new Rectangle2D.Double(0,0,gamePanel.getWidth(),gamePanel.getHeight());
@@ -155,15 +155,15 @@ public class BoardRenderer {
     private void paintBackground(Graphics g) {
         
         g.setColor(Color.white);
-        int x = (int) getRendererBounds().x-20;
-        int y = (int) getRendererBounds().y-20;
-        int w = (int) getRendererBounds().width+40;
-        int h = (int) getRendererBounds().height+40;
+        int x = (int) getRendererBounds().x;
+        int y = (int) getRendererBounds().y;
+        int w = (int) getRendererBounds().width;
+        int h = (int) getRendererBounds().height;
         g.fillRect(x, y, w, h);
-        
-        //g.setColor(Color.darkGray);
-        //g.drawRect(x, y, w, h);
-        
+        /*
+        g.setColor(Color.darkGray);
+        g.drawRect(x, y, w, h);
+        */
     }
 
 

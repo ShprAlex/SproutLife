@@ -143,7 +143,7 @@ public class PanelController {
     private void initComponents() {
         ToolTipManager.sharedInstance().setInitialDelay(0);
         gameFrame.setVisible(true);  
-        getBoardRenderer().setDefaultBlockSize(4);
+        getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
         getControlPanel().getZoomSlider().setValue(-3);        
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
@@ -158,7 +158,10 @@ public class PanelController {
         
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
-                updateBoardSizeFromPanelSize(new Dimension(viewportWidth, viewportHeight));                                
+                if (getControlPanel().getAutoSizeGridCheckbox().isSelected()) {
+                    updateBoardSizeFromPanelSize(new Dimension(viewportWidth, viewportHeight));
+                } 
+                                                
             }
         });
         
@@ -176,22 +179,6 @@ public class PanelController {
                 if (event.getStepType() == StepType.STEP_BUNDLE) {
                     getImageManager().repaintNewImage();
                 }
-            }
-        });
-        
-        getControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
-            public void stateChanged(ChangeEvent e) {
-                int value = ((JSlider) e.getSource()).getValue();
-                updateZoomValue(value);
-
-            }
-        });
-        
-        getControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
-            public void stateChanged(ChangeEvent e) {
-                int value = ((JSlider) e.getSource()).getValue();
-                updateSpeedValue(value);
-
             }
         });
         
@@ -222,6 +209,46 @@ public class PanelController {
                 getGameModel().getEchosystem().resetCells();
                 getInteractionLock().writeLock().unlock();
                 getImageManager().repaintNewImage();
+            }
+        });
+        
+        getControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
+            public void stateChanged(ChangeEvent e) {
+                int value = ((JSlider) e.getSource()).getValue();
+                updateZoomValue(value);
+
+            }
+        });
+        
+        getControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
+            public void stateChanged(ChangeEvent e) {
+                int value = ((JSlider) e.getSource()).getValue();
+                updateSpeedValue(value);
+
+            }
+        });
+        
+        getControlPanel().getBoardWidthSpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {                
+                getControlPanel().getAutoSizeGridCheckbox().setSelected(false);                
+                int width =  (int) getControlPanel().getBoardWidthSpinner().getValue();
+                int height = (int) getControlPanel().getBoardHeightSpinner().getValue();
+                updateBoardSize(width, height);
+            }
+        });
+        
+        getControlPanel().getBoardHeightSpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                int width =  (int) getControlPanel().getBoardWidthSpinner().getValue();
+                int height = (int) getControlPanel().getBoardHeightSpinner().getValue();
+                updateBoardSize(width, height);
+            }
+        });
+        
+        getControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                getBoardRenderer().setDefaultBlockSize(getBoardRenderer().getBlockSize());
+                updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());                                               
             }
         });
         
@@ -314,15 +341,32 @@ public class PanelController {
     public void updateBoardSizeFromPanelSize(Dimension d) {
         //d.width-=40;
         //d.height-=40;
-        getInteractionLock().writeLock().lock();
-        
-        getBoardRenderer().setBounds(d);
-        Dimension boardSize = new Dimension((d.width-40)/getBoardRenderer().getDefaultBlockSize()-2,(d.height-40)/getBoardRenderer().getDefaultBlockSize()-2);
-        getGameModel().getEchosystem().setBoardSize(boardSize);
-        
-        getInteractionLock().writeLock().unlock();
-        
-        getScrollController().updateScrollBars();
 
+        getInteractionLock().writeLock().lock();
+
+        getBoardRenderer().setBounds(d);
+        int boardWidth = (d.width-40)/getBoardRenderer().getDefaultBlockSize()-2;
+        int boardHeight = (d.height-40)/getBoardRenderer().getDefaultBlockSize()-2;
+        
+        boolean autoSizeGrid = getControlPanel().getAutoSizeGridCheckbox().isSelected();
+        if (autoSizeGrid) {
+            getControlPanel().getBoardWidthSpinner().setValue(boardWidth);
+            getControlPanel().getBoardHeightSpinner().setValue(boardHeight);
+        }
+        getControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
+
+        Dimension boardSize = new Dimension(boardWidth,boardHeight);
+        getGameModel().getEchosystem().setBoardSize(boardSize);
+
+        getInteractionLock().writeLock().unlock();
+
+        getScrollController().updateScrollBars();
+        getImageManager().repaintNewImage();
     }    
+    
+    public void updateBoardSize(int width, int height) {
+        int displayWidth = (width+2)*getBoardRenderer().getDefaultBlockSize()+40;
+        int displayHeight = (height+2)*getBoardRenderer().getDefaultBlockSize()+40;
+        updateBoardSizeFromPanelSize(new Dimension(displayWidth,displayHeight));
+    }
 }

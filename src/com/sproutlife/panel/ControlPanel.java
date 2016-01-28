@@ -30,6 +30,7 @@ import com.sproutlife.Settings;
 import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 
 public class ControlPanel extends JPanel {
 	
@@ -43,6 +44,10 @@ public class ControlPanel extends JPanel {
 	private JButton resetButton;
 	private JRadioButton rdbtnCooperative;
 	private JSpinner maxLifespanSpinner;
+	private JSpinner boardWidthSpinner;
+	private JSpinner boardHeightSpinner;
+	private JCheckBox autoSizeGridCheckbox;
+	private JButton clipGridToViewButton;
 	
 	public ControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -58,9 +63,9 @@ public class ControlPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {10, 0, 100, 100, 80, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 0, 0, 15, 20, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 31, 15, 0, 0, 0, 15, 20, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JPanel panel_1 = new JPanel();
@@ -164,7 +169,79 @@ public class ControlPanel extends JPanel {
 		gbc_speedSlider.insets = new Insets(0, 0, 5, 5);
 		gbc_speedSlider.gridx = 3;
 		gbc_speedSlider.gridy = 4;
-		add(speedSlider, gbc_speedSlider);				
+		add(speedSlider, gbc_speedSlider);
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 3;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 2;
+		gbc_panel.gridy = 6;
+		add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{66, 40, 40};
+		gbl_panel.rowHeights = new int[]{23, 0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0};
+		panel.setLayout(gbl_panel);
+		
+		JLabel lblGrid = new JLabel("Grid");
+		GridBagConstraints gbc_lblGrid = new GridBagConstraints();
+		gbc_lblGrid.anchor = GridBagConstraints.WEST;
+		gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGrid.gridx = 0;
+		gbc_lblGrid.gridy = 0;
+		panel.add(lblGrid, gbc_lblGrid);
+		
+		JLabel lblWidth = new JLabel("Width");
+		GridBagConstraints gbc_lblWidth = new GridBagConstraints();
+		gbc_lblWidth.anchor = GridBagConstraints.WEST;
+		gbc_lblWidth.insets = new Insets(0, 0, 5, 5);
+		gbc_lblWidth.gridx = 1;
+		gbc_lblWidth.gridy = 0;
+		panel.add(lblWidth, gbc_lblWidth);
+		
+		boardWidthSpinner = new JSpinner();
+		GridBagConstraints gbc_boardWidthSpinner = new GridBagConstraints();
+		gbc_boardWidthSpinner.insets = new Insets(0, 0, 5, 0);
+		gbc_boardWidthSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_boardWidthSpinner.gridx = 2;
+		gbc_boardWidthSpinner.gridy = 0;
+		panel.add(boardWidthSpinner, gbc_boardWidthSpinner);
+		
+		JLabel lblHeight = new JLabel("Height");
+		GridBagConstraints gbc_lblHeight = new GridBagConstraints();
+		gbc_lblHeight.anchor = GridBagConstraints.WEST;
+		gbc_lblHeight.insets = new Insets(0, 0, 5, 5);
+		gbc_lblHeight.gridx = 1;
+		gbc_lblHeight.gridy = 1;
+		panel.add(lblHeight, gbc_lblHeight);
+		
+		boardHeightSpinner = new JSpinner();
+		GridBagConstraints gbc_boardHeightSpinner = new GridBagConstraints();
+		gbc_boardHeightSpinner.insets = new Insets(0, 0, 5, 0);
+		gbc_boardHeightSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_boardHeightSpinner.gridx = 2;
+		gbc_boardHeightSpinner.gridy = 1;
+		panel.add(boardHeightSpinner, gbc_boardHeightSpinner);
+		
+		autoSizeGridCheckbox = new JCheckBox("Auto Size");
+		autoSizeGridCheckbox.setSelected(true);
+		GridBagConstraints gbc_autoSizeGridCheckbox = new GridBagConstraints();
+		gbc_autoSizeGridCheckbox.anchor = GridBagConstraints.WEST;
+		gbc_autoSizeGridCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_autoSizeGridCheckbox.gridx = 1;
+		gbc_autoSizeGridCheckbox.gridy = 2;
+		panel.add(autoSizeGridCheckbox, gbc_autoSizeGridCheckbox);
+		
+		clipGridToViewButton = new JButton("Clip to View");
+		clipGridToViewButton.setMargin(new Insets(2, 2, 2, 2));
+		GridBagConstraints gbc_clipGridToViewButton = new GridBagConstraints();
+		gbc_clipGridToViewButton.anchor = GridBagConstraints.EAST;
+		gbc_clipGridToViewButton.gridx = 2;
+		gbc_clipGridToViewButton.gridy = 2;
+		panel.add(clipGridToViewButton, gbc_clipGridToViewButton);
 		
 		JPanel lifeModePanel = new JPanel();
 		GridBagConstraints gbc_lifeModePanel = new GridBagConstraints();
@@ -173,7 +250,7 @@ public class ControlPanel extends JPanel {
 		gbc_lifeModePanel.insets = new Insets(0, 0, 5, 5);
 		gbc_lifeModePanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lifeModePanel.gridx = 2;
-		gbc_lifeModePanel.gridy = 6;
+		gbc_lifeModePanel.gridy = 8;
 		add(lifeModePanel, gbc_lifeModePanel);
 		GridBagLayout gbl_lifeModePanel = new GridBagLayout();
 		gbl_lifeModePanel.columnWidths = new int[]{66, 40, 40};
@@ -245,7 +322,7 @@ public class ControlPanel extends JPanel {
 		gbc_lblMaxLifespan.gridwidth = 2;
 		gbc_lblMaxLifespan.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMaxLifespan.gridx = 2;
-		gbc_lblMaxLifespan.gridy = 8;
+		gbc_lblMaxLifespan.gridy = 10;
 		add(lblMaxLifespan, gbc_lblMaxLifespan);
 		
 		maxLifespanSpinner = new JSpinner();
@@ -255,7 +332,7 @@ public class ControlPanel extends JPanel {
 		gbc_maxLifespanSpinner.anchor = GridBagConstraints.NORTHEAST;
 		gbc_maxLifespanSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_maxLifespanSpinner.gridx = 4;
-		gbc_maxLifespanSpinner.gridy = 8;
+		gbc_maxLifespanSpinner.gridy = 10;
 		add(maxLifespanSpinner, gbc_maxLifespanSpinner);
 		
 		JLabel childOneEnergyLabel = new JLabel("Child 1 energy");
@@ -264,14 +341,14 @@ public class ControlPanel extends JPanel {
 		gbc_childOneEnergyLabel.anchor = GridBagConstraints.WEST;
 		gbc_childOneEnergyLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_childOneEnergyLabel.gridx = 2;
-		gbc_childOneEnergyLabel.gridy = 10;
+		gbc_childOneEnergyLabel.gridy = 12;
 		add(childOneEnergyLabel, gbc_childOneEnergyLabel);
 		GridBagConstraints gbc_childOneEnergySpinner = new GridBagConstraints();
 		gbc_childOneEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_childOneEnergySpinner.anchor = GridBagConstraints.NORTHEAST;
 		gbc_childOneEnergySpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_childOneEnergySpinner.gridx = 4;
-		gbc_childOneEnergySpinner.gridy = 10;
+		gbc_childOneEnergySpinner.gridy = 12;
 		add(childOneEnergySpinner, gbc_childOneEnergySpinner);
 		
 		JSpinner childTwoEnergySpinner = new JSpinner();
@@ -289,14 +366,14 @@ public class ControlPanel extends JPanel {
 		gbc_childTwoEnergyLabel.anchor = GridBagConstraints.WEST;
 		gbc_childTwoEnergyLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_childTwoEnergyLabel.gridx = 2;
-		gbc_childTwoEnergyLabel.gridy = 11;
+		gbc_childTwoEnergyLabel.gridy = 13;
 		add(childTwoEnergyLabel, gbc_childTwoEnergyLabel);
 		GridBagConstraints gbc_childTwoEnergySpinner = new GridBagConstraints();
 		gbc_childTwoEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_childTwoEnergySpinner.anchor = GridBagConstraints.NORTHEAST;
 		gbc_childTwoEnergySpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_childTwoEnergySpinner.gridx = 4;
-		gbc_childTwoEnergySpinner.gridy = 11;
+		gbc_childTwoEnergySpinner.gridy = 13;
 		add(childTwoEnergySpinner, gbc_childTwoEnergySpinner);
 		
 		JSpinner childThreeEnergySpinner = new JSpinner();
@@ -314,14 +391,14 @@ public class ControlPanel extends JPanel {
 		gbc_childThreeEnergyLabel.anchor = GridBagConstraints.WEST;
 		gbc_childThreeEnergyLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_childThreeEnergyLabel.gridx = 2;
-		gbc_childThreeEnergyLabel.gridy = 12;
+		gbc_childThreeEnergyLabel.gridy = 14;
 		add(childThreeEnergyLabel, gbc_childThreeEnergyLabel);
 		GridBagConstraints gbc_childThreeEnergySpinner = new GridBagConstraints();
 		gbc_childThreeEnergySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_childThreeEnergySpinner.insets = new Insets(0, 0, 0, 5);
 		gbc_childThreeEnergySpinner.anchor = GridBagConstraints.NORTHEAST;
 		gbc_childThreeEnergySpinner.gridx = 4;
-		gbc_childThreeEnergySpinner.gridy = 12;
+		gbc_childThreeEnergySpinner.gridy = 14;
 		add(childThreeEnergySpinner, gbc_childThreeEnergySpinner);
 
 	}
@@ -360,5 +437,17 @@ public class ControlPanel extends JPanel {
     }
     public JSpinner getMaxLifespanSpinner() {
         return maxLifespanSpinner;
+    }
+    public JSpinner getBoardWidthSpinner() {
+        return boardWidthSpinner;
+    }
+    public JSpinner getBoardHeightSpinner() {
+        return boardHeightSpinner;
+    }
+    public JCheckBox getAutoSizeGridCheckbox() {
+        return autoSizeGridCheckbox;
+    }
+    public JButton getClipGridToViewButton() {
+        return clipGridToViewButton;
     }
 }
