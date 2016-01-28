@@ -44,6 +44,7 @@ public class PanelController {
     GameFrame gameFrame;
  
     MainControlPanel mainControlPanel;
+    SettingsControlPanel settingsControlPanel;
     JMenuBar gameMenu;
     BoardRenderer boardRenderer;
         
@@ -113,6 +114,13 @@ public class PanelController {
         return mainControlPanel;
     }
     
+    /**
+     * @return the settingsControlPanel
+     */
+    public SettingsControlPanel getSettingsControlPanel() {
+        return settingsControlPanel;
+    }
+    
     public JMenuBar getGameMenu() {
         return gameMenu;
     }
@@ -128,13 +136,14 @@ public class PanelController {
         
         boardRenderer = new BoardRenderer(getGameModel());
         mainControlPanel = new MainControlPanel(this);
+        settingsControlPanel = new SettingsControlPanel(this);
         
         ScrollPanel scrollPanel = getScrollPanel();
         
 
         JTabbedPane rightPane = new JTabbedPane();
         rightPane.addTab("Main", mainControlPanel);
-        rightPane.addTab("Stats", new JPanel());
+        rightPane.addTab("Settings", settingsControlPanel);
 
         gameFrame.getSplitPane().setLeftComponent(scrollPanel);
         gameFrame.getSplitPane().setRightComponent(rightPane);
@@ -149,7 +158,7 @@ public class PanelController {
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
         
-        getMainControlPanel().getMaxLifespanSpinner().setValue(
+        getSettingsControlPanel().getMaxLifespanSpinner().setValue(
                 getSettings().getInt(Settings.MAX_LIFESPAN));
     }
 
@@ -271,7 +280,7 @@ public class PanelController {
         getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
         
         
-        getMainControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
+        getSettingsControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
