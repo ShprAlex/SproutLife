@@ -43,7 +43,7 @@ public class PanelController {
     GameController gameController;
     GameFrame gameFrame;
  
-    ControlPanel controlPanel;
+    MainControlPanel mainControlPanel;
     JMenuBar gameMenu;
     BoardRenderer boardRenderer;
         
@@ -109,8 +109,8 @@ public class PanelController {
         return gameFrame;
     }
     
-    public ControlPanel getControlPanel() {
-        return controlPanel;
+    public MainControlPanel getMainControlPanel() {
+        return mainControlPanel;
     }
     
     public JMenuBar getGameMenu() {
@@ -127,13 +127,13 @@ public class PanelController {
         gameFrame.setJMenuBar(gameMenu);
         
         boardRenderer = new BoardRenderer(getGameModel());
-        controlPanel = new ControlPanel(this);
+        mainControlPanel = new MainControlPanel(this);
         
         ScrollPanel scrollPanel = getScrollPanel();
         
 
         JTabbedPane rightPane = new JTabbedPane();
-        rightPane.addTab("Controls", controlPanel);
+        rightPane.addTab("Main", mainControlPanel);
         rightPane.addTab("Stats", new JPanel());
 
         gameFrame.getSplitPane().setLeftComponent(scrollPanel);
@@ -145,11 +145,11 @@ public class PanelController {
         gameFrame.setVisible(true);  
         getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
-        getControlPanel().getZoomSlider().setValue(-3);        
+        getMainControlPanel().getZoomSlider().setValue(-3);        
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
         
-        getControlPanel().getMaxLifespanSpinner().setValue(
+        getMainControlPanel().getMaxLifespanSpinner().setValue(
                 getSettings().getInt(Settings.MAX_LIFESPAN));
     }
 
@@ -158,7 +158,7 @@ public class PanelController {
         
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
-                if (getControlPanel().getAutoSizeGridCheckbox().isSelected()) {
+                if (getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
                     updateBoardSizeFromPanelSize(new Dimension(viewportWidth, viewportHeight));
                 } 
                                                 
@@ -182,20 +182,20 @@ public class PanelController {
             }
         });
         
-        getControlPanel().getStartPauseButton().addActionListener(new ActionListener() {
+        getMainControlPanel().getStartPauseButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 if (getGameModel().getPlayGame()) {
                     getGameModel().setPlayGame(false);
-                    getControlPanel().getStartPauseButton().setText("Start");
+                    getMainControlPanel().getStartPauseButton().setText("Start");
                 }
                 else {
                     getGameModel().setPlayGame(true);
-                    getControlPanel().getStartPauseButton().setText("Pause");
+                    getMainControlPanel().getStartPauseButton().setText("Pause");
                 }
             }
         });
         
-        getControlPanel().getStepButton().addActionListener(new ActionListener() {
+        getMainControlPanel().getStepButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 getGameModel().performGameStep();
                 getImageManager().repaintNewImage();
@@ -203,7 +203,7 @@ public class PanelController {
         });
         
         
-        getControlPanel().getResetButton().addActionListener(new ActionListener() {
+        getMainControlPanel().getResetButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 getInteractionLock().writeLock().lock();
                 getGameModel().getEchosystem().resetCells();
@@ -212,7 +212,7 @@ public class PanelController {
             }
         });
         
-        getControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
+        getMainControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateZoomValue(value);
@@ -220,7 +220,7 @@ public class PanelController {
             }
         });
         
-        getControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
+        getMainControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateSpeedValue(value);
@@ -228,24 +228,24 @@ public class PanelController {
             }
         });
         
-        getControlPanel().getBoardWidthSpinner().addChangeListener(new ChangeListener() {
+        getMainControlPanel().getBoardWidthSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {                
-                getControlPanel().getAutoSizeGridCheckbox().setSelected(false);                
-                int width =  (int) getControlPanel().getBoardWidthSpinner().getValue();
-                int height = (int) getControlPanel().getBoardHeightSpinner().getValue();
+                getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);                
+                int width =  (int) getMainControlPanel().getBoardWidthSpinner().getValue();
+                int height = (int) getMainControlPanel().getBoardHeightSpinner().getValue();
                 updateBoardSize(width, height);
             }
         });
         
-        getControlPanel().getBoardHeightSpinner().addChangeListener(new ChangeListener() {
+        getMainControlPanel().getBoardHeightSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                int width =  (int) getControlPanel().getBoardWidthSpinner().getValue();
-                int height = (int) getControlPanel().getBoardHeightSpinner().getValue();
+                int width =  (int) getMainControlPanel().getBoardWidthSpinner().getValue();
+                int height = (int) getMainControlPanel().getBoardHeightSpinner().getValue();
                 updateBoardSize(width, height);
             }
         });
         
-        getControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
+        getMainControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 getBoardRenderer().setDefaultBlockSize(getBoardRenderer().getBlockSize());
                 updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());                                               
@@ -255,10 +255,10 @@ public class PanelController {
         ItemListener lifeModeListener = new ItemListener() {  
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (getControlPanel().getRdbtnFriendly().isSelected()) {
+                if (getMainControlPanel().getRdbtnFriendly().isSelected()) {
                     getSettings().set(Settings.LIFE_MODE, "friendly");
                 }
-                else if(getControlPanel().getRdbtnCooperative().isSelected()) {
+                else if(getMainControlPanel().getRdbtnCooperative().isSelected()) {
                     getSettings().set(Settings.LIFE_MODE, "cooperative");
                 }
                 else {
@@ -266,12 +266,12 @@ public class PanelController {
                 }
             }                      
         };        
-        getControlPanel().getRdbtnCompetitive().addItemListener(lifeModeListener);
-        getControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
-        getControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
+        getMainControlPanel().getRdbtnCompetitive().addItemListener(lifeModeListener);
+        getMainControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
+        getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
         
         
-        getControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
+        getMainControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
@@ -283,10 +283,10 @@ public class PanelController {
     public void updateFromSettings() {
         String lifeMode = getSettings().getString(Settings.LIFE_MODE);
         if ("friendly".equals(lifeMode)) {
-            getControlPanel().getRdbtnFriendly().setSelected(true);
+            getMainControlPanel().getRdbtnFriendly().setSelected(true);
         }
         else {
-            getControlPanel().getRdbtnCompetitive().setSelected(true);
+            getMainControlPanel().getRdbtnCompetitive().setSelected(true);
         }
         
     }
@@ -338,7 +338,7 @@ public class PanelController {
         
         int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
         int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
-        getControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+        getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
         //getImageManager().repaintNewGraphImage();
     }
     
@@ -353,13 +353,13 @@ public class PanelController {
         int boardWidth = (d.width-40)/getBoardRenderer().getDefaultBlockSize()-2;
         int boardHeight = (d.height-40)/getBoardRenderer().getDefaultBlockSize()-2;
         
-        boolean autoSizeGrid = getControlPanel().getAutoSizeGridCheckbox().isSelected();
+        boolean autoSizeGrid = getMainControlPanel().getAutoSizeGridCheckbox().isSelected();
         if (autoSizeGrid) {
-            getControlPanel().getBoardWidthSpinner().setValue(boardWidth);
-            getControlPanel().getBoardHeightSpinner().setValue(boardHeight);
+            getMainControlPanel().getBoardWidthSpinner().setValue(boardWidth);
+            getMainControlPanel().getBoardHeightSpinner().setValue(boardHeight);
         }
         
-        getControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
+        getMainControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
 
         Dimension boardSize = new Dimension(boardWidth,boardHeight);
         getGameModel().getEchosystem().setBoardSize(boardSize);
@@ -370,7 +370,7 @@ public class PanelController {
         
         int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
         int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
-        getControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+        getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
         
         getImageManager().repaintNewImage();
 

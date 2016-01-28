@@ -33,7 +33,7 @@ import javax.swing.JRadioButton;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
-public class ControlPanel extends JPanel {
+public class MainControlPanel extends JPanel {
 	
 	PanelController panelController;
 	private JSlider zoomSlider;
@@ -51,7 +51,7 @@ public class ControlPanel extends JPanel {
 	private JButton clipGridToViewButton;
 	private JLabel imageWidthHeightLabel;
 	
-	public ControlPanel(PanelController panelController) {
+	public MainControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
 		setPreferredSize(new Dimension(260, 500));
 		        
