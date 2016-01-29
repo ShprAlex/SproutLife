@@ -254,6 +254,10 @@ public class Organism {
         return result;
     }
     
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+    
     public boolean isAlive() {
         return alive && !(getTimeOfDeath()>0);
     }
