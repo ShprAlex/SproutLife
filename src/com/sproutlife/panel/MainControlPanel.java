@@ -32,6 +32,7 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 
 public class MainControlPanel extends JPanel {
 	
@@ -49,16 +50,12 @@ public class MainControlPanel extends JPanel {
 	private JCheckBox autoSizeGridCheckbox;
 	private JButton clipGridToViewButton;
 	private JLabel imageWidthHeightLabel;
-	private JLabel lblShowLayers;
-	private JPanel panel_2;
-	private JCheckBox chckbxCellLayer;
-	private JCheckBox chckbxGenomeLayer;
-	private JCheckBox chckbxOrgHeadLayer;
-	private JCheckBox chckbxOrgTailLayer;
+	private JLabel lblSeedType;
+	private JComboBox seedTypeComboBox;
 	
 	public MainControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
-		setPreferredSize(new Dimension(260, 600));
+		setPreferredSize(new Dimension(260, 631));
 		        
 		this.panelController = panelController;
 		buildPanel();
@@ -70,9 +67,9 @@ public class MainControlPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {10, 0, 100, 100, 80, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 15, 31, 15, 0, 15, 0, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 15, 0, 0, 15, 0, 31, 15, 0, 15, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JPanel panel_1 = new JPanel();
@@ -171,28 +168,45 @@ public class MainControlPanel extends JPanel {
 		
 		JPanel lifeModePanel = new JPanel();
 		ButtonGroup lifeModeButtonGroup = new ButtonGroup();
+		
+		lblSeedType = new JLabel("Seed Type");
+		GridBagConstraints gbc_lblSeedType = new GridBagConstraints();
+		gbc_lblSeedType.anchor = GridBagConstraints.WEST;
+		gbc_lblSeedType.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSeedType.gridx = 2;
+		gbc_lblSeedType.gridy = 6;
+		add(lblSeedType, gbc_lblSeedType);
+		
+		seedTypeComboBox = new JComboBox();
+		GridBagConstraints gbc_seedTypeComboBox = new GridBagConstraints();
+		gbc_seedTypeComboBox.gridwidth = 2;
+		gbc_seedTypeComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_seedTypeComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_seedTypeComboBox.gridx = 3;
+		gbc_seedTypeComboBox.gridy = 6;
+		add(seedTypeComboBox, gbc_seedTypeComboBox);
+		
+		JLabel lblLifeMode = new JLabel("Life Mode");
+		GridBagConstraints gbc_lblLifeMode = new GridBagConstraints();
+		gbc_lblLifeMode.anchor = GridBagConstraints.WEST;
+		gbc_lblLifeMode.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLifeMode.gridx = 2;
+		gbc_lblLifeMode.gridy = 8;
+		add(lblLifeMode, gbc_lblLifeMode);
 		GridBagConstraints gbc_lifeModePanel = new GridBagConstraints();
 		gbc_lifeModePanel.gridwidth = 3;
 		gbc_lifeModePanel.anchor = GridBagConstraints.NORTH;
 		gbc_lifeModePanel.insets = new Insets(0, 0, 5, 5);
 		gbc_lifeModePanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lifeModePanel.gridx = 2;
-		gbc_lifeModePanel.gridy = 6;
+		gbc_lifeModePanel.gridy = 9;
 		add(lifeModePanel, gbc_lifeModePanel);
 		GridBagLayout gbl_lifeModePanel = new GridBagLayout();
-		gbl_lifeModePanel.columnWidths = new int[]{66, 40, 40};
+		gbl_lifeModePanel.columnWidths = new int[]{30, 40, 40};
 		gbl_lifeModePanel.rowHeights = new int[]{23, 0};
-		gbl_lifeModePanel.columnWeights = new double[]{1.0, 1.0, 1.0};
+		gbl_lifeModePanel.columnWeights = new double[]{1.0, 0.0, 0.0};
 		gbl_lifeModePanel.rowWeights = new double[]{0.0, 0.0};
 		lifeModePanel.setLayout(gbl_lifeModePanel);
-		
-		JLabel lblLifeMode = new JLabel("Life Mode");
-		GridBagConstraints gbc_lblLifeMode = new GridBagConstraints();
-		gbc_lblLifeMode.anchor = GridBagConstraints.WEST;
-		gbc_lblLifeMode.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLifeMode.gridx = 0;
-		gbc_lblLifeMode.gridy = 0;
-		lifeModePanel.add(lblLifeMode, gbc_lblLifeMode);
 		
 		rdbtnCooperative = new JRadioButton("Cooperative");
 		rdbtnCooperative.setToolTipText("<html>"+
@@ -241,28 +255,28 @@ public class MainControlPanel extends JPanel {
 		lifeModePanel.add(rdbtnCompetitive, gbc_rdbtnCompetitive);
 		lifeModeButtonGroup.add(rdbtnCompetitive);				
 		
+		JLabel lblGrid = new JLabel("Grid");
+		GridBagConstraints gbc_lblGrid = new GridBagConstraints();
+		gbc_lblGrid.anchor = GridBagConstraints.WEST;
+		gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGrid.gridx = 2;
+		gbc_lblGrid.gridy = 11;
+		add(lblGrid, gbc_lblGrid);
+		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 3;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 2;
-		gbc_panel.gridy = 8;
+		gbc_panel.gridy = 12;
 		add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{66, 40, 40};
+		gbl_panel.columnWidths = new int[]{30, 40, 40};
 		gbl_panel.rowHeights = new int[]{23, 0, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0};
 		panel.setLayout(gbl_panel);
-		
-		JLabel lblGrid = new JLabel("Grid");
-		GridBagConstraints gbc_lblGrid = new GridBagConstraints();
-		gbc_lblGrid.anchor = GridBagConstraints.WEST;
-		gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGrid.gridx = 0;
-		gbc_lblGrid.gridy = 0;
-		panel.add(lblGrid, gbc_lblGrid);
 		
 		JLabel lblWidth = new JLabel("Width");
 		GridBagConstraints gbc_lblWidth = new GridBagConstraints();
@@ -318,51 +332,18 @@ public class MainControlPanel extends JPanel {
 		gbc_lblImage_1.anchor = GridBagConstraints.WEST;
 		gbc_lblImage_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblImage_1.gridx = 2;
-		gbc_lblImage_1.gridy = 10;
+		gbc_lblImage_1.gridy = 14;
 		add(lblImage_1, gbc_lblImage_1);
 		
 		imageWidthHeightLabel = new JLabel("100, 100");
 		imageWidthHeightLabel.setFont(imageWidthHeightLabel.getFont().deriveFont(Font.PLAIN));
 		GridBagConstraints gbc_imageWidthHeightLabel = new GridBagConstraints();
+		gbc_imageWidthHeightLabel.anchor = GridBagConstraints.EAST;
+		gbc_imageWidthHeightLabel.gridwidth = 2;
 		gbc_imageWidthHeightLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_imageWidthHeightLabel.gridx = 4;
-		gbc_imageWidthHeightLabel.gridy = 10;
+		gbc_imageWidthHeightLabel.gridx = 3;
+		gbc_imageWidthHeightLabel.gridy = 14;
 		add(imageWidthHeightLabel, gbc_imageWidthHeightLabel);
-		
-		lblShowLayers = new JLabel("Display");
-		GridBagConstraints gbc_lblShowLayers = new GridBagConstraints();
-		gbc_lblShowLayers.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblShowLayers.insets = new Insets(0, 0, 0, 5);
-		gbc_lblShowLayers.gridx = 2;
-		gbc_lblShowLayers.gridy = 12;
-		add(lblShowLayers, gbc_lblShowLayers);
-		
-		panel_2 = new JPanel();
-		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
-		gbc_panel_2.anchor = GridBagConstraints.WEST;
-		gbc_panel_2.gridwidth = 2;
-		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
-		gbc_panel_2.fill = GridBagConstraints.VERTICAL;
-		gbc_panel_2.gridx = 3;
-		gbc_panel_2.gridy = 12;
-		add(panel_2, gbc_panel_2);
-		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
-		
-		chckbxCellLayer = new JCheckBox("Cell Layer");
-		chckbxCellLayer.setSelected(true);
-		panel_2.add(chckbxCellLayer);
-		
-		chckbxGenomeLayer = new JCheckBox("Genome Layer");
-		chckbxGenomeLayer.setSelected(true);
-		panel_2.add(chckbxGenomeLayer);
-		
-		chckbxOrgHeadLayer = new JCheckBox("Org Head Layer");
-		chckbxOrgHeadLayer.setSelected(true);
-		panel_2.add(chckbxOrgHeadLayer);
-		
-		chckbxOrgTailLayer = new JCheckBox("Org Tail Layer");
-		chckbxOrgTailLayer.setSelected(true);
-		panel_2.add(chckbxOrgTailLayer);
 
 	}
 
@@ -409,16 +390,7 @@ public class MainControlPanel extends JPanel {
     public JLabel getImageWidthHeightLabel() {
         return imageWidthHeightLabel;
     }
-    public JCheckBox getChckbxCellLayer() {
-        return chckbxCellLayer;
-    }
-    public JCheckBox getChckbxGenomeLayer() {
-        return chckbxGenomeLayer;
-    }
-    public JCheckBox getChckbxOrgHeadLayer() {
-        return chckbxOrgHeadLayer;
-    }
-    public JCheckBox getChckbxOrgTailLayer() {
-        return chckbxOrgTailLayer;
+    public JComboBox getSeedTypeComboBox() {
+        return seedTypeComboBox;
     }
 }

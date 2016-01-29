@@ -15,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -27,6 +28,7 @@ import javax.swing.event.ChangeListener;
 import com.sproutlife.GameController;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
+import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.step.GameStep.StepType;
 import com.sproutlife.model.step.GameStepEvent;
 import com.sproutlife.model.step.GameStepListener;
@@ -44,6 +46,7 @@ public class PanelController {
     GameFrame gameFrame;
  
     MainControlPanel mainControlPanel;
+    DisplayControlPanel displayControlPanel;
     SettingsControlPanel settingsControlPanel;
     JMenuBar gameMenu;
     BoardRenderer boardRenderer;
@@ -71,6 +74,7 @@ public class PanelController {
         
         addGeneralListeners();
         addMainControlPanelListeners();
+        addDisplayControlPanelListeners();
         addSettingsControlPanelListeners();
         
         updateFromSettings();
@@ -123,6 +127,13 @@ public class PanelController {
         return settingsControlPanel;
     }
     
+    /**
+     * @return the displayControlPanel
+     */
+    public DisplayControlPanel getDisplayControlPanel() {
+        return displayControlPanel;
+    }
+    
     public JMenuBar getGameMenu() {
         return gameMenu;
     }
@@ -138,6 +149,7 @@ public class PanelController {
         
         boardRenderer = new BoardRenderer(getGameModel());
         mainControlPanel = new MainControlPanel(this);
+        displayControlPanel = new DisplayControlPanel(this);
         settingsControlPanel = new SettingsControlPanel(this);
         
         ScrollPanel scrollPanel = getScrollPanel();
@@ -145,6 +157,7 @@ public class PanelController {
 
         JTabbedPane rightPane = new JTabbedPane();
         rightPane.addTab("Main", mainControlPanel);
+        rightPane.addTab("Display", displayControlPanel);
         rightPane.addTab("Settings", settingsControlPanel);
 
         gameFrame.getSplitPane().setLeftComponent(scrollPanel);
@@ -161,7 +174,7 @@ public class PanelController {
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
         
         getSettingsControlPanel().getMaxLifespanSpinner().setValue(
-                getSettings().getInt(Settings.MAX_LIFESPAN));
+                getSettings().getInt(Settings.MAX_LIFESPAN));        
     }
 
     public void addGeneralListeners() {
@@ -274,36 +287,38 @@ public class PanelController {
         };        
         getMainControlPanel().getRdbtnCompetitive().addItemListener(lifeModeListener);
         getMainControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
-        getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
-        
-        getMainControlPanel().getChckbxCellLayer().addItemListener(new ItemListener() {            
+        getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);       
+    }
+   
+    public void addDisplayControlPanelListeners() {
+        getDisplayControlPanel().getChckbxCellLayer().addItemListener(new ItemListener() {            
             @Override
             public void itemStateChanged(ItemEvent e) {
-                getBoardRenderer().setPaintCellLayer(getMainControlPanel().getChckbxCellLayer().isSelected());
+                getBoardRenderer().setPaintCellLayer(getDisplayControlPanel().getChckbxCellLayer().isSelected());
                 
             }
         });
         
-        getMainControlPanel().getChckbxGenomeLayer().addItemListener(new ItemListener() {            
+        getDisplayControlPanel().getChckbxGenomeLayer().addItemListener(new ItemListener() {            
             @Override
             public void itemStateChanged(ItemEvent e) {
-                getBoardRenderer().setPaintGenomeLayer(getMainControlPanel().getChckbxGenomeLayer().isSelected());
+                getBoardRenderer().setPaintGenomeLayer(getDisplayControlPanel().getChckbxGenomeLayer().isSelected());
                 
             }
         });
         
-        getMainControlPanel().getChckbxOrgHeadLayer().addItemListener(new ItemListener() {            
+        getDisplayControlPanel().getChckbxOrgHeadLayer().addItemListener(new ItemListener() {            
             @Override
             public void itemStateChanged(ItemEvent e) {
-                getBoardRenderer().setPaintHeadLayer(getMainControlPanel().getChckbxOrgHeadLayer().isSelected());
+                getBoardRenderer().setPaintHeadLayer(getDisplayControlPanel().getChckbxOrgHeadLayer().isSelected());
                 
             }
         });
         
-        getMainControlPanel().getChckbxOrgTailLayer().addItemListener(new ItemListener() {            
+        getDisplayControlPanel().getChckbxOrgTailLayer().addItemListener(new ItemListener() {            
             @Override
             public void itemStateChanged(ItemEvent e) {
-                getBoardRenderer().setPaintTailLayer(getMainControlPanel().getChckbxOrgTailLayer().isSelected());
+                getBoardRenderer().setPaintTailLayer(getDisplayControlPanel().getChckbxOrgTailLayer().isSelected());
                 
             }
         });
@@ -314,9 +329,9 @@ public class PanelController {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
-        }); 
-        
+        });         
     }
+       
           
     public void updateFromSettings() {
         String lifeMode = getSettings().getString(Settings.LIFE_MODE);
@@ -328,6 +343,7 @@ public class PanelController {
         }
         
     }
+        
     public void updateSpeedValue(int value) {
         getGameModel().getGameThread().setAutoAdjust(false);
    
@@ -372,7 +388,7 @@ public class PanelController {
         //double zoom = Math.pow(1.1, value);
         getBoardRenderer().setZoom(zoom);          
         getScrollController().setScalingZoomFactor(zoom);
-        getScrollController().updateScrollBars();
+        //getScrollController().updateScrollBars();
         
         int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
         int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
