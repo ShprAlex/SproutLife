@@ -15,10 +15,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 public class BoardRenderer {
     
@@ -32,12 +34,17 @@ public class BoardRenderer {
     private TailRenderer tailRenderer;
     private GenomeRenderer genomeRenderer;
     
+    private boolean paintCellLayer;
+    private boolean paintHeadLayer;
+    private boolean paintTailLayer;
+    private boolean paintGenomeLayer;    
+    
     private AffineTransform transform;
     
     Rectangle2D.Double bounds;
     Rectangle2D.Double visibleBounds;
         
-    private double zoom = 1;
+    private double zoom = 1;      
 
     public BoardRenderer(GameModel gameModel) {
         
@@ -49,12 +56,91 @@ public class BoardRenderer {
         this.tailRenderer = new TailRenderer(gameModel, this);
         this.genomeRenderer = new GenomeRenderer(gameModel, this);
         
-        transform = new AffineTransform();
+        this.paintCellLayer = true;
+        this.paintHeadLayer = true;
+        this.paintTailLayer = true;
+        this.paintGenomeLayer = true;
+        
+        this.transform = new AffineTransform();        
     } 
+    
+    public void paint(Graphics2D g) {               
+        
+        if (getZoom()!=1) {
+            /*            
+            AffineTransform t = new AffineTransform();
+            int width = getGamePanel().getWidth();
+            int height = getGamePanel().getHeight();
+            double zoom = getZoom();
+            
+            double xoffset = (width - width * zoom)/2;
+            double yoffset = (height - height * zoom)/2;
+           
+            t.translate(xoffset, yoffset);
+            t.scale(getZoom(), getZoom());
+            */
+            
+            g.setTransform(transform);
+        }
+        
+        //updateCachedOrganisms();
+        
+        //updateAvgOrgPositions();
+
+        paintBackground(g);             
+        
+        if (getPaintHeadLayer()) {
+            paintOrgHeads(g);
+        }
+        if (getPaintTailLayer()) {
+            paintOrgTails(g);
+        }
+        
+        if (getPaintCellLayer()) {
+            paintCells(g);
+        }
+        
+        if (getPaintGenomeLayer()) {
+            paintGenomes(g);
+        }
+        
+    }   
     
     public GameModel getGameModel() {
         return gameModel;
     }       
+    
+    public void setPaintCellLayer(boolean paint) {
+        this.paintCellLayer = paint;
+    }
+    
+    public boolean getPaintCellLayer() {
+        return paintCellLayer;
+    }
+    
+    public void setPaintHeadLayer(boolean paint) {
+        this.paintHeadLayer = paint;
+    }
+    
+    public boolean getPaintHeadLayer() {
+        return paintHeadLayer;
+    }
+    
+    public void setPaintTailLayer(boolean paint) {
+        this.paintTailLayer = paint;
+    }
+    
+    public boolean getPaintTailLayer() {
+        return paintTailLayer;
+    }
+    
+    public void setPaintGenomeLayer(boolean paint) {
+        this.paintGenomeLayer = paint;
+    }
+    
+    public boolean getPaintGenomeLayer() {
+        return paintGenomeLayer;
+    }    
     
     public AffineTransform getTransform() {
         return transform;
@@ -104,36 +190,6 @@ public class BoardRenderer {
         return new Rectangle2D.Double(x,y,w,h);        
     }
       
-    public void paint(Graphics2D g) {		
-        
-        if (getZoom()!=1) {
-            /*            
-            AffineTransform t = new AffineTransform();
-            int width = getGamePanel().getWidth();
-            int height = getGamePanel().getHeight();
-            double zoom = getZoom();
-            
-            double xoffset = (width - width * zoom)/2;
-            double yoffset = (height - height * zoom)/2;
-           
-            t.translate(xoffset, yoffset);
-            t.scale(getZoom(), getZoom());
-            */
-            
-            g.setTransform(transform);
-        }
-
-        paintBackground(g);  		
-
-        paintOrgHeads(g);
-
-        paintOrgTails(g);
-        
-        paintCells(g);
-
-        paintGenomes(g);
-    }
-    
     public double getZoom() {
         return zoom;
     }
@@ -154,7 +210,7 @@ public class BoardRenderer {
 
     private void paintBackground(Graphics g) {
         
-        g.setColor(Color.white);
+        g.setColor(new Color(255,255,255));
         int x = (int) getRendererBounds().x;
         int y = (int) getRendererBounds().y;
         int w = (int) getRendererBounds().width;
@@ -198,7 +254,7 @@ public class BoardRenderer {
         Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
 
         for (Organism o : orgs) {
-            genomeRenderer.paintGenome(g, o);
+            genomeRenderer.paintGenome(g,o);
         }
     }
 }

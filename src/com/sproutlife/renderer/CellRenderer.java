@@ -36,28 +36,29 @@ public class CellRenderer extends Renderer {
 	}
 
 	private Color getColor(Cell c) {	
-		int red = 0;
-		int green = 0;
-		int blue = 0;
+	
 
 		int age;
 		
 		if (c.getOrganism().isAlive()) {
-			age = c.getOrganism().getAge();
-			
-			red = c.getOrganism().getKind()%3==0?255:120;
-			green = c.getOrganism().getKind()%3==1?255:120;
-			blue = c.getOrganism().getKind()%3==2?255:120;
+		        int grayC = 120;
+		        switch (c.getOrganism().getKind()) {
+		            case 0: return new Color(255, grayC, grayC);
+		            case 1: return new Color(grayC-10, 255, grayC-10);
+		            case 2: return new Color(grayC, grayC ,255);
+		        }
 		}
 		else if (getPaintRetiredCells()) {
 			age = getGameModel().getTime()-c.getOrganism().getTimeOfDeath();
-			
-			red = Math.min(255,c.getOrganism().getKind()%3==0?255:120+age*10);
-			green = Math.min(255,c.getOrganism().getKind()%3==1?255:120+age*10);
-			blue = Math.min(255,c.getOrganism().getKind()%3==2?255:120+age*10);
+			int ageC = Math.min(255,120+age*10);
+		        switch (c.getOrganism().getKind()) {		            
+		            case 0: return new Color(255, ageC, ageC);
+		            case 1: return new Color(ageC, 255, ageC);
+		            case 2: return new Color(ageC, ageC ,255);
+		        }	
 		}	
 		
-		return new Color(red,green,blue);
+		return null;
 	}
 
 }

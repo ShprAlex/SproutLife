@@ -32,41 +32,76 @@ public class GenomeRenderer extends Renderer {
 	    
 		//Paint white background under black mutation points
 		
-		g.setColor(new Color(240,240,240));
+		g.setColor(getColor(o));
 		//g.setColor(new Color(255,255,255,120));
-		if (BLOCK_SIZE>3) {       		    
+		if (BLOCK_SIZE>2) {       		
+		    int countP=0;
 		    for (Point p: filteredMutationPoints) {
-		        if (BLOCK_SIZE>3) {
-		            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)-1, BLOCK_SIZE, BLOCK_SIZE+2);
-		            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)-1, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE+2, BLOCK_SIZE);
+		        boolean oneSmaller = false;
+
+		        if (countP++>4) {
+		            oneSmaller=true;
 		        }
-		        else if(false){
-		            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)-1, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)-1, BLOCK_SIZE+2, BLOCK_SIZE+2);
-		        
-		            //g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)-2, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)-2, BLOCK_SIZE+4, BLOCK_SIZE+4);
+	                    
+		        if (BLOCK_SIZE>3&&!oneSmaller || BLOCK_SIZE>4) {
+
+		            paintBlock(g,o.x,o.y,p.x,p.y,0,1,oneSmaller);
+		            paintBlock(g,o.x,o.y,p.x,p.y,1,0,oneSmaller);
+
+		        }
+		        else {
+
+		            paintBlock(g,o.x,o.y,p.x,p.y,1,1,oneSmaller);
+
 		        }
 		    }
 		}
 
 		//Paint mutation points on top of background
 
-		g.setColor(Color.black);		
+		
+		g.setColor(Color.black);
+		int countP=0;
 		for (Point p: filteredMutationPoints) {
-		    if (BLOCK_SIZE>3) {
-		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs)+1, BLOCK_SIZE, BLOCK_SIZE-2);
-		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs)+1, BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE-2, BLOCK_SIZE);    
+		    boolean oneSmaller = false;
+		    
+		    if (countP++>4) {
+                        oneSmaller=true;
+                    }
+
+		    if (BLOCK_SIZE>3&&!oneSmaller || BLOCK_SIZE>4) {
+
+		        paintBlock(g,o.x,o.y,p.x,p.y,0,-1,oneSmaller);
+		        paintBlock(g,o.x,o.y,p.x,p.y,-1,0,oneSmaller);
 		    }
 		    else {
-		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE, BLOCK_SIZE);
-		        //g.fillOval(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(int)(p.x*mbs), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(int)(p.y*mbs), BLOCK_SIZE, BLOCK_SIZE);
+		        paintBlock(g,o.x,o.y,p.x,p.y,0,0,oneSmaller);
 		    }
 		}
+	}
+	
+	public void paintBlock(Graphics2D g, int x, int y, int mx, int my, int dx, int dy, boolean oneSmaller) {
+	    
+	    int BLOCK_SIZE = getBlockSize();            
+            double mbs = BLOCK_SIZE/3.5;
+            
+	    int rx = BLOCK_SIZE + (BLOCK_SIZE*x)+(int)(mx*mbs)-dx;
+	    int ry = BLOCK_SIZE + (BLOCK_SIZE*y)+(int)(my*mbs)-dy;
+	    int rw = BLOCK_SIZE+dx*2;
+	    int rh = BLOCK_SIZE+dy*2;
+	    
+	    if (oneSmaller && rw>1) {
+	        rw-=1;
+	        rh-=1;
+	    }
+	    
+            g.fillRect(rx, ry, rw, rh);            
 	}
 		
 	
 	ArrayList<Point> getFilteredMutationPoints(Organism o) {
 		ArrayList<Point> filteredMutationPoints = new ArrayList<Point>();
-		for (int age = 0;age<50;age++) {
+		for (int age = 0;age<40;age++) {
 			ArrayList<Point> mutationPoints = o.getGenome().getMutationPoints( age);
 			int timeLimit = 15000;//Math.max(10000,getGameModel().getClock()/3);
 
@@ -86,5 +121,18 @@ public class GenomeRenderer extends Renderer {
 			}
 		}
 		return filteredMutationPoints;
+	}
+	
+	private Color getColor(Organism o) {
+	    //return Color.white;
+	        
+	    int grayC = 200;
+	    switch (o.getKind()) {
+	        case 0: return new Color(255, 186, 186);
+	        case 1: return new Color(grayC, 255, grayC);
+	        case 2: return new Color(grayC+10, grayC+10,255);
+	    }
+	    return null;
+	        
 	}
 }

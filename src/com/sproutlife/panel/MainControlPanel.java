@@ -49,6 +49,12 @@ public class MainControlPanel extends JPanel {
 	private JCheckBox autoSizeGridCheckbox;
 	private JButton clipGridToViewButton;
 	private JLabel imageWidthHeightLabel;
+	private JLabel lblShowLayers;
+	private JPanel panel_2;
+	private JCheckBox chckbxCellLayer;
+	private JCheckBox chckbxGenomeLayer;
+	private JCheckBox chckbxOrgHeadLayer;
+	private JCheckBox chckbxOrgTailLayer;
 	
 	public MainControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -64,9 +70,9 @@ public class MainControlPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {10, 0, 100, 100, 80, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 15, 31, 15, 0, 15, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 15, 31, 15, 0, 15, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JPanel panel_1 = new JPanel();
@@ -322,6 +328,41 @@ public class MainControlPanel extends JPanel {
 		gbc_imageWidthHeightLabel.gridx = 4;
 		gbc_imageWidthHeightLabel.gridy = 10;
 		add(imageWidthHeightLabel, gbc_imageWidthHeightLabel);
+		
+		lblShowLayers = new JLabel("Display");
+		GridBagConstraints gbc_lblShowLayers = new GridBagConstraints();
+		gbc_lblShowLayers.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblShowLayers.insets = new Insets(0, 0, 0, 5);
+		gbc_lblShowLayers.gridx = 2;
+		gbc_lblShowLayers.gridy = 12;
+		add(lblShowLayers, gbc_lblShowLayers);
+		
+		panel_2 = new JPanel();
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.anchor = GridBagConstraints.WEST;
+		gbc_panel_2.gridwidth = 2;
+		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_2.fill = GridBagConstraints.VERTICAL;
+		gbc_panel_2.gridx = 3;
+		gbc_panel_2.gridy = 12;
+		add(panel_2, gbc_panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+		
+		chckbxCellLayer = new JCheckBox("Cell Layer");
+		chckbxCellLayer.setSelected(true);
+		panel_2.add(chckbxCellLayer);
+		
+		chckbxGenomeLayer = new JCheckBox("Genome Layer");
+		chckbxGenomeLayer.setSelected(true);
+		panel_2.add(chckbxGenomeLayer);
+		
+		chckbxOrgHeadLayer = new JCheckBox("Org Head Layer");
+		chckbxOrgHeadLayer.setSelected(true);
+		panel_2.add(chckbxOrgHeadLayer);
+		
+		chckbxOrgTailLayer = new JCheckBox("Org Tail Layer");
+		chckbxOrgTailLayer.setSelected(true);
+		panel_2.add(chckbxOrgTailLayer);
 
 	}
 
@@ -367,5 +408,17 @@ public class MainControlPanel extends JPanel {
     }
     public JLabel getImageWidthHeightLabel() {
         return imageWidthHeightLabel;
+    }
+    public JCheckBox getChckbxCellLayer() {
+        return chckbxCellLayer;
+    }
+    public JCheckBox getChckbxGenomeLayer() {
+        return chckbxGenomeLayer;
+    }
+    public JCheckBox getChckbxOrgHeadLayer() {
+        return chckbxOrgHeadLayer;
+    }
+    public JCheckBox getChckbxOrgTailLayer() {
+        return chckbxOrgTailLayer;
     }
 }
