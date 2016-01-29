@@ -225,9 +225,9 @@ public class BoardRenderer {
 
     private void paintCells(Graphics2D g) {	
 
-        ArrayList<Cell> cells = getGameModel().getEchosystem().getCells();
-        for (Cell c : cells) {
-            cellRenderer.paintCell(g, c);			
+        Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
+        for (Organism o : orgs) {
+            cellRenderer.paintCells(g, o);			
         } 
     }
 

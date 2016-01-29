@@ -22,7 +22,6 @@ import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.BitPattern;
 import com.sproutlife.model.seed.Seed;
 import com.sproutlife.model.seed.SeedFactory;
-import com.sproutlife.model.seed.SymmetricSeed;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.seed.SeedSproutPattern;
 
@@ -32,7 +31,9 @@ public class SproutStep extends Step {
     
     SeedType seedType;
     
-    int seedBorder = 1;   
+    int seedBorder = 1;
+    
+    HashMap<Organism,ArrayList<Seed>> savedSeeds;
     
     public SproutStep(GameModel gameModel) {
         super(gameModel);       
@@ -79,9 +80,21 @@ public class SproutStep extends Step {
             o.energy++;
         }
         
-        HashMap<Organism,ArrayList<Seed>> seeds = findSeeds();
-        
-        sproutSeeds(seeds);
+        if (getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE)) {                        
+            
+            if (this.savedSeeds!=null) {
+                sproutSeeds(this.savedSeeds);
+            }
+            
+            savedSeeds = findSeeds();
+            
+        }
+        else { 
+            //simple way of doing things, makes it harder to display seeds;
+            HashMap<Organism,ArrayList<Seed>> seeds = findSeeds();
+            
+            sproutSeeds(seeds);
+        }
         
         if (getEchosystem().getOrganisms().size()<30) {
             sproutRandomSeed();
@@ -139,7 +152,7 @@ public class SproutStep extends Step {
                
                if (c==null) {
                    //Should almost never happen, only if seeds overlapped.
-                   continue;
+                   //continue;
                }
                
                int childEnergy;
@@ -202,7 +215,7 @@ public class SproutStep extends Step {
         for (Organism o : getEchosystem().getOrganisms()) {
            for (Cell c : o.getCells()) {                              
 
-                Seed s = checkSeed(c);                              
+                Seed s = checkAndMarkSeed(c);                              
 
                 if (s!=null) {
                     
@@ -220,7 +233,7 @@ public class SproutStep extends Step {
 
     }          
 
-    private Seed checkSeed(Cell topLeftCell) {
+    private Seed checkAndMarkSeed(Cell topLeftCell) {
         int border = getSeedBorder();                
 
         for (Seed s : SeedFactory.getSeedRotations(getSeedType())) {
@@ -238,7 +251,7 @@ public class SproutStep extends Step {
             s.setSeedBorder(border);
             s.setParentPosition(topLeftCell.getOrganism().getPosition());
             
-            if(checkSeed(s)) {          
+            if(checkAndMarkSeed(s)) {          
                 return s;
             }
         }
@@ -269,7 +282,7 @@ public class SproutStep extends Step {
             }        
         };  
         s.setPosition(x, y);       
-        s.setParentPosition(new Point(x,y));
+        s.setParentPosition(new Point(120,120));
         Seed randomSeed = new Seed(newPattern, s.getRotation(), s.isMirror());
         
         randomSeed.setPosition(x, y);                      
@@ -281,7 +294,7 @@ public class SproutStep extends Step {
         
     }
     
-    public boolean checkSeed(Seed seed) {
+    public boolean checkAndMarkSeed(Seed seed) {
 
         ArrayList<Cell> seedCells = new ArrayList<Cell>();        
         Organism seedOrg = null;
@@ -337,7 +350,9 @@ public class SproutStep extends Step {
                 }
             }
         }
-
+        for (Cell c: seedCells) {
+            c.setMarkedAsSeed(true);
+        }
         return true;
     }    
     
@@ -358,12 +373,21 @@ public class SproutStep extends Step {
         int newOrgX = sproutX + seed.getSproutCenter().x;
         int newOrgY = sproutY + seed.getSproutCenter().y;
         
-        if(seedX<0 || seedY<0 || 
-           seedX+seedWidth>getBoard().getWidth()-1 || seedY+seedHeight>getBoard().getHeight()-1 ||
-           sproutX+sproutWidth>getBoard().getWidth()-1 || sproutY+sproutHeight>getBoard().getHeight()-1 ||
-           sproutX<0 || sproutY<0 ) {
+        if (seedX < 0 || seedY < 0
+                || seedX + seedWidth > getBoard().getWidth() - 1
+                || seedY + seedHeight > getBoard().getHeight() - 1
+                || sproutX + sproutWidth > getBoard().getWidth() - 1
+                || sproutY + sproutHeight > getBoard().getHeight() - 1
+                || sproutX < 0 || sproutY < 0) {
+            
+            //Clear the seed flag from cells before returning null
+            if (seedOrg!=null) {
+                for (Cell c : seedOrg.getCells()) {
+                    c.setMarkedAsSeed(false);
+                }
+            }
             return;
-        }      
+        }  
     
         //Organism seedOrg = seed.getOrganism();
         if (seedOrg!=null && seedOrg.infectedBy!=null) {
@@ -400,7 +424,7 @@ public class SproutStep extends Step {
                 
                 if (seed.getSproutBit(si, sj)) {
                     
-                    Cell newC = getEchosystem().addCell(i,j,newOrg); 
+                    Cell newC = getEchosystem().addCell(i,j,newOrg);                     
 
                 }
                 else {

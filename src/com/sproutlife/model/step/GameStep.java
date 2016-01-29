@@ -67,15 +67,7 @@ public class GameStep extends Step {
                 }
                 getEchosystem().setDefaultOrgLifespan(lifespan+1);
             }            
-        }
-        /*
-        if ((getClock()%5000)<1000) {
-            getEchosystem().liftBarrier =true;
-        }
-        else {
-            getEchosystem().liftBarrier =false;
-        }
-        */                   
+        }              
         
         lifeStep.perform();
         fireStepPerformed(StepType.LIFE_STEP);
@@ -83,7 +75,7 @@ public class GameStep extends Step {
         mutationStep.perform();
         fireStepPerformed(StepType.MUTATION_STEP);
 
-        sproutStep.setSeedType(SeedType.Bentline1m_RPentomino);        
+                
         sproutStep.setSeedBorder(1);
         sproutStep.perform();       
         fireStepPerformed(StepType.SPROUT_STEP);

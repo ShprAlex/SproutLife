@@ -9,6 +9,8 @@ package com.sproutlife;
 
 import java.util.HashMap;
 
+import com.sproutlife.model.seed.SeedFactory.SeedType;
+
 public class Settings {
     HashMap<String, Object> settings;
     public static String SEED_TYPE = "seedType";
@@ -18,6 +20,9 @@ public class Settings {
     public static String CHILD_ONE_ENERGY = "childOneEnergy";
     public static String CHILD_TWO_ENERGY = "childTwoEnergy";
     public static String CHILD_THREE_ENERGY = "childThreeEnergy";
+    //Determines whether seeds are sprouted immediately upon detection,
+    //Or a step later so seed cells can be displayed before the sprout is.
+    public static String SPROUT_DELAYED_MODE = "sproutDelayedMode";
     
     
     
@@ -27,6 +32,8 @@ public class Settings {
 	}
     
     public void initSettings() {
+        set(Settings.SEED_TYPE, SeedType.Bentline1_RPentomino.toString());
+        
         set(Settings.LIFE_MODE, "friendly");
         
     	set(Settings.MUTATION_ENABLED, true);
@@ -36,6 +43,8 @@ public class Settings {
         set(Settings.CHILD_ONE_ENERGY, 0);
         set(Settings.CHILD_TWO_ENERGY, 0);
         set(Settings.CHILD_THREE_ENERGY, 0);
+        
+        set(Settings.SPROUT_DELAYED_MODE, true);
 
     }
     

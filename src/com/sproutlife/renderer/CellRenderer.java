@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
+import com.sproutlife.model.echosystem.Organism;
 
 public class CellRenderer extends Renderer {
     boolean paintRetiredCells;
@@ -29,29 +30,44 @@ public class CellRenderer extends Renderer {
 		return paintRetiredCells;
 	}
 	
-	public void paintCell(Graphics2D g, Cell c) {
-		g.setColor(getColor(c));
+	public void paintCells(Graphics2D g, Organism o) {
+		
 		int BLOCK_SIZE = getBlockSize();
-		g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);
-	}
+		for (Cell c: o.getCells()) {
+		    if (c.isMarkedAsSeed() || c.getOrganism().getAge()<5) {
+		        g.setColor(Color.black);
+		        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x)-2, BLOCK_SIZE + (BLOCK_SIZE*c.y)-2, BLOCK_SIZE+4, BLOCK_SIZE+4);
+		    }
+		}
+		for (Cell c: o.getCells()) {
+                    if (c.isMarkedAsSeed() || c.getOrganism().getAge()<5) {
+                        g.setColor(Color.white);
+                        g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x)-1, BLOCK_SIZE + (BLOCK_SIZE*c.y)-1, BLOCK_SIZE+2, BLOCK_SIZE+2);
+                    }
+                }
+    		g.setColor(getColor(o));
+    		for (Cell c: o.getCells()) {
+    		    g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);
+    		}
+	}		
 
-	private Color getColor(Cell c) {	
+	private Color getColor(Organism o) {	
 	
 
 		int age;
 		
-		if (c.getOrganism().isAlive()) {
+		if (o.isAlive()) {
 		        int grayC = 120;
-		        switch (c.getOrganism().getKind()) {
+		        switch (o.getKind()) {
 		            case 0: return new Color(255, grayC, grayC);
 		            case 1: return new Color(grayC-10, 255, grayC-10);
 		            case 2: return new Color(grayC, grayC ,255);
 		        }
 		}
 		else if (getPaintRetiredCells()) {
-			age = getGameModel().getTime()-c.getOrganism().getTimeOfDeath();
+			age = getGameModel().getTime()-o.getTimeOfDeath();
 			int ageC = Math.min(255,120+age*10);
-		        switch (c.getOrganism().getKind()) {		            
+		        switch (o.getKind()) {		            
 		            case 0: return new Color(255, ageC, ageC);
 		            case 1: return new Color(ageC, 255, ageC);
 		            case 2: return new Color(ageC, ageC ,255);
@@ -59,6 +75,6 @@ public class CellRenderer extends Renderer {
 		}	
 		
 		return null;
-	}
+	}	
 
 }
