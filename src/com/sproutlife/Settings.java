@@ -31,7 +31,7 @@ public class Settings {
         
     	set(Settings.MUTATION_ENABLED, true);
     	
-    	set(Settings.MAX_LIFESPAN, 40);
+    	set(Settings.MAX_LIFESPAN, 100);
     	
         set(Settings.CHILD_ONE_ENERGY, 0);
         set(Settings.CHILD_TWO_ENERGY, 0);
