@@ -109,8 +109,8 @@ public class CompetitiveLife extends LifeMode {
             //if(getBoard().hasBiggerNeighbor25(i, j, me.getOrganism())) {
             //    return null;
             //}
-            //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 3)) {
-            for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
+            for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
+            //for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
                 if (!me.getOrganism().isFamily(neighbor.getOrganism(),2) && 
                         getCompare(me.getOrganism())<getCompare(neighbor.getOrganism())) {
                     return null;
@@ -172,8 +172,8 @@ public class CompetitiveLife extends LifeMode {
                 }
             }
         }
-        //for (Cell c : getBoard().getExtraNeighbors(i, j, 2)) {
-        for (Cell c : getBoard().getExtra4Neighbors(i, j)) { 
+        for (Cell c : getBoard().getExtraNeighbors(i, j, 2)) {
+        //for (Cell c : getBoard().getExtra4Neighbors(i, j)) { 
             Organism o = c.getOrganism();
             if (biggestOrg==null ||getCompare(biggestOrg)>getCompare(o)) {
                 biggestOrg = o;
