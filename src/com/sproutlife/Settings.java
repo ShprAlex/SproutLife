@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class Settings {
     HashMap<String, Object> settings;
-    
+    public static String SEED_TYPE = "seedType";
     public static String LIFE_MODE = "lifeMode";
     public static String MUTATION_ENABLED = "mutationEnabled";
     public static String MAX_LIFESPAN = "maxLifespan";

@@ -21,6 +21,7 @@ import com.sproutlife.model.seed.patterns.BoxlidRpPattern;
 import com.sproutlife.model.seed.patterns.GliderRpPattern;
 import com.sproutlife.model.seed.patterns.L2B1RpPattern;
 import com.sproutlife.model.seed.patterns.L2RpPattern;
+import com.sproutlife.model.seed.patterns.OnebitB1RpPattern;
 import com.sproutlife.model.seed.patterns.OnebitRpPattern;
 import com.sproutlife.model.seed.patterns.RpRpPattern;
 import com.sproutlife.model.seed.patterns.Square2RpPattern;
@@ -29,24 +30,38 @@ import com.sproutlife.model.seed.patterns.Square2RpPattern;
 public class SeedFactory {
     
     public static enum SeedType { 
-        L2_RPentomino, 
-        L2B1_RPentomino, 
-        Square2_RPentomino, 
-        Glider_RPentomino, 
-        RPentomino_RPentomino,
-        Boxlid_RPentomino, 
-        Boxlid3_RPentomino,
-        Boxhat_RPentomino,
-        Bentline1_RPentomino,
-        Bentline1m_RPentomino,
-        BentlineMargin35_RPentomino,
-        Onebit_RPentomino,        
-        Test_Pattern;
+               
+        L2_RPentomino ("L2 to R-Pentomino"),
+        L2B1_RPentomino ("L2B1 to R-Pentomino"), 
+        Square2_RPentomino ("2x2 Box to R-Pentomino"), 
+        Glider_RPentomino ("Glider to R-Pentomino"), 
+        RPentomino_RPentomino ("R-Pentomino to R-Pentomino"),
+        Boxlid_RPentomino ("Boxlid to R-Pentomino"), 
+        Boxlid3_RPentomino ("Boxlid3 to R-Pentomino"),
+        Boxhat_RPentomino ("Boxhat to R-Pentomino"),
+        Bentline1_RPentomino ("Bentline1 to R-Pentomino"),
+        Bentline1m_RPentomino ("Bentline1m to R-Pentomino"),
+        BentlineMargin35_RPentomino ("BentlineM35 to R-Pentomino"),
+        Onebit_RPentomino ("Onebit to R-Pentomino"), 
+        OnebitB1_RPentomino ("OnebitB1 to R-Pentomino"),  
+        Test_Pattern ("Test Pattern");
+                   
+        private final String name;
+        
+        private SeedType(String name) {
+            this.name = name;
+        }
+
+        public String toString() {
+           return this.name;
+        }
+        
         
         public boolean isSymmetric4() {
             switch(this) {
                 case Square2_RPentomino : return true; 
                 case Onebit_RPentomino : return true;
+                case OnebitB1_RPentomino : return true;
                 //case Test_Pattern : return true;
                 default: return false;
             }                
@@ -76,6 +91,7 @@ public class SeedFactory {
         patterns.put(SeedType.Bentline1m_RPentomino, new Bentline1mRpPattern());
         patterns.put(SeedType.BentlineMargin35_RPentomino, new BentlineMargin35Pattern());
         patterns.put(SeedType.Onebit_RPentomino, new OnebitRpPattern());
+        patterns.put(SeedType.OnebitB1_RPentomino, new OnebitB1RpPattern());
         
         
         patterns.put(SeedType.Test_Pattern, 

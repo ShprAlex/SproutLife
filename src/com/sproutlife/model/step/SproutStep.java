@@ -42,6 +42,15 @@ public class SproutStep extends Step {
         this.seedType = seedType;
     }
     
+    public void setSeedType(String seedTypeString) {
+        for (SeedType st : SeedType.values()) {
+            if (st.toString().equals(seedTypeString)) {
+                setSeedType(st);
+                return;
+            }
+        }
+    }
+    
     public SeedType getSeedType() {
         return seedType;
     }    
@@ -64,6 +73,8 @@ public class SproutStep extends Step {
     }      
     
     public void perform() {
+        this.setSeedType(getSettings().getString(Settings.SEED_TYPE));
+        
         for (Organism o : getEchosystem().getOrganisms()) {
             o.energy++;
         }
@@ -168,7 +179,7 @@ public class SproutStep extends Step {
                        //o.energy-=childEnergy ;
                        o.energy=0;
                        
-                       if(childCount>=0&&getTime()>100) { //sproutSeed() above may have failed
+                       if(childCount>=0&&getTime()>100&&childCount<20) { //sproutSeed() above may have failed
                            getStats().childEnergy[childCount]+=o.getAge();
                            getStats().sproutNumber[childCount]++;
                        }
