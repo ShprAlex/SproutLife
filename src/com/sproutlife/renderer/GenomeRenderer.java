@@ -34,7 +34,7 @@ public class GenomeRenderer extends Renderer {
 		
 		g.setColor(getColor(o));
 		//g.setColor(new Color(255,255,255,120));
-		if (BLOCK_SIZE>2) {       		
+		if (BLOCK_SIZE>3) {       		
 		    int countP=0;
 		    for (Point p: filteredMutationPoints) {
 		        boolean oneSmaller = false;
