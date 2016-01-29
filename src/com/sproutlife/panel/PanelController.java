@@ -418,9 +418,8 @@ public class PanelController {
         getScrollController().setScalingZoomFactor(zoom);
         //getScrollController().updateScrollBars();
         
-        int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
-        int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
-        getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+        updateImageWidthHeightLabel();
+
         //getImageManager().repaintNewGraphImage();
     }
     
@@ -444,15 +443,15 @@ public class PanelController {
         getMainControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
 
         Dimension boardSize = new Dimension(boardWidth,boardHeight);
+        boardSize.width=Math.max(1, boardSize.width);
+        boardSize.height=Math.max(1, boardSize.height);
         getGameModel().getEchosystem().setBoardSize(boardSize);
 
         getInteractionLock().writeLock().unlock();
 
         getScrollController().updateScrollBars();
         
-        int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
-        int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
-        getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+        updateImageWidthHeightLabel();
         
         getImageManager().repaintNewImage();
 
@@ -462,5 +461,14 @@ public class PanelController {
         int displayWidth = (width+2)*getBoardRenderer().getDefaultBlockSize()+40;
         int displayHeight = (height+2)*getBoardRenderer().getDefaultBlockSize()+40;
         updateBoardSizeFromPanelSize(new Dimension(displayWidth,displayHeight));
+    }
+    
+    public void updateImageWidthHeightLabel() {
+        int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
+        int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
+        imageWidth = Math.min(imageWidth,getScrollPanel().getViewportSize().width);
+        imageHeight = Math.min(imageHeight,getScrollPanel().getViewportSize().height);
+        
+        getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
     }
 }
