@@ -276,6 +276,7 @@ public class Echosystem {
         for (Organism org : pruneOrgs) { 
         
             if (org.getCells().size()==0) {
+                org.setAlive(false);
                 removeOrganism(org);
             }
         }        
