@@ -84,6 +84,9 @@ public class GenomeRenderer extends Renderer {
 	    
 	    int BLOCK_SIZE = getBlockSize();            
             double mbs = BLOCK_SIZE/3.5;
+            if (BLOCK_SIZE>3) {
+                mbs = BLOCK_SIZE/4.5;
+            }
             
 	    int rx = BLOCK_SIZE + (BLOCK_SIZE*x)+(int)(mx*mbs)-dx;
 	    int ry = BLOCK_SIZE + (BLOCK_SIZE*y)+(int)(my*mbs)-dy;
