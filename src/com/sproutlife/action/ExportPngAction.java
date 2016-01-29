@@ -65,7 +65,7 @@ public class ExportPngAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent e) {
         initChooser();
-
+        controller.getScrollController().updateScrollBars();
         int returnVal = chooser.showSaveDialog(controller.getGameFrame());
         File saveFile;
         if (returnVal == JFileChooser.APPROVE_OPTION) {

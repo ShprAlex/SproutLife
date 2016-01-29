@@ -70,7 +70,7 @@ public class ExportGifAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent e) {
         initChooser();
-
+        controller.getScrollController().updateScrollBars();
         int returnVal = chooser.showSaveDialog(controller.getGameFrame());
         File saveFile;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -94,6 +94,7 @@ public class ExportGifAction extends AbstractAction {
     }    
     
     public void saveImage(File saveFile) throws Exception {
+
         int width = (int) controller.getBoardRenderer().getRendererBounds().getWidth();
         int height = width*9/16;
         BufferedImage firstImage = controller.getImageManager().getCroppedExportImage(width, height);
