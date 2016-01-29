@@ -69,7 +69,9 @@ public class PanelController {
     public void start() {
         initComponents();
         
-        addListeners();
+        addGeneralListeners();
+        addMainControlPanelListeners();
+        addSettingsControlPanelListeners();
         
         updateFromSettings();
     }
@@ -162,7 +164,7 @@ public class PanelController {
                 getSettings().getInt(Settings.MAX_LIFESPAN));
     }
 
-    public void addListeners() {
+    public void addGeneralListeners() {
         getScrollPanel().enableMouseListeners();
         
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
@@ -174,14 +176,6 @@ public class PanelController {
             }
         });
         
-        /*
-        getGamePanel().addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                updateBoardSizeFromGamePanelSize();
-            }
-        });  
-        */
         getGameModel().setGameStepListener(new GameStepListener() {
             @Override
             public void stepPerformed(GameStepEvent event) {
@@ -190,7 +184,10 @@ public class PanelController {
                 }
             }
         });
-        
+                                      
+    }
+    
+    private void addMainControlPanelListeners() {
         getMainControlPanel().getStartPauseButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 if (getGameModel().getPlayGame()) {
@@ -279,13 +276,45 @@ public class PanelController {
         getMainControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
         getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
         
+        getMainControlPanel().getChckbxCellLayer().addItemListener(new ItemListener() {            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getBoardRenderer().setPaintCellLayer(getMainControlPanel().getChckbxCellLayer().isSelected());
+                
+            }
+        });
         
+        getMainControlPanel().getChckbxGenomeLayer().addItemListener(new ItemListener() {            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getBoardRenderer().setPaintGenomeLayer(getMainControlPanel().getChckbxGenomeLayer().isSelected());
+                
+            }
+        });
+        
+        getMainControlPanel().getChckbxOrgHeadLayer().addItemListener(new ItemListener() {            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getBoardRenderer().setPaintHeadLayer(getMainControlPanel().getChckbxOrgHeadLayer().isSelected());
+                
+            }
+        });
+        
+        getMainControlPanel().getChckbxOrgTailLayer().addItemListener(new ItemListener() {            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getBoardRenderer().setPaintTailLayer(getMainControlPanel().getChckbxOrgTailLayer().isSelected());
+                
+            }
+        });
+    }
+    
+    public void addSettingsControlPanelListeners() {
         getSettingsControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
-        });
-
+        }); 
         
     }
           
