@@ -50,4 +50,9 @@ To get organisms to grow, we need to add another incentive. A "competitive" mode
 
 Will write more about this later, check out the code!
 
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
+
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-29a.gif)
+
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
 
