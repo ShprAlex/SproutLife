@@ -10,7 +10,7 @@ From their evolution we can see that there is a trade-off between individual ben
 
 Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I became obsessed with creating Sprout Life in December 2015. 
 
-My main motivation is to hack on something that's relatively small and self-contained. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project. It's purpose is to look cool and be fun to talk about.
+My main motivation is to hack on something that's relatively small and self-contained. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project. It's appeal is that it is a game, a hobby project meant to look cool and be fun to talk about.
 
 I hope that others get involved with this project as well. I decided to start with a Java implementation because it's the language I'm most familiar with for designing the application. I think that current processors are fast enough to have Sprout Life run in a web browser using Javascript.
 
