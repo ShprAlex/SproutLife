@@ -40,6 +40,14 @@ It is also an excellent model of both evolution and collective behavior. There a
  
 - **Visualizing Mutation** - A lucky accident helped me come up with a beautiful way to display an organisms genetics. The triangle and paw-print pattenrs you see in the GIF above are actually direct representations of recent mutations from an organisms genetic code. Mutations have (x,y) coordinates, and therefore live in the same space as the organism. The lucky accident was that I accidentally shrunk the dimensions of those mutations, causing them to appear bunched together in the center of the organism rather than spread out over it's body. All the mutations across different time points are displayed at the same time, except for older mutations which would be identical for organisms that are all relatives of each other.
  
+- **Rotation and Orientation** - It's important to keep track of which way the R-Pentomino, or potentially other sprout pattern, was facing when the organism was born. There are 8 ways to rotate a pattern, 4 rotations and 2 mirror images for most patterns. The (x,y) coordinates for mutations must be relative to how the seed pattern was oriented. It's also good to let the parent organism determine which direction the sprouted child is facing. A 2x2 block seed presents us with a tricky dilemma in that we don't know which way it's facing. We can resolve this issue by checking which way the parent was facing when it was born, and combining this with whether the seed is above, below, left, right, or otherwise oriented relative to the parent. Combining these two we can have the child born facing a direction relative to how the parent was born.
+ 
+### Results - what are they?
 
+There are some exciting, and some dissapointing, things we can see when we run Sprout Life. The initial excitement is that there is in fact evolution. The initial disappointment, that takes longer to discover, is that most evolution is in the wrong direction! Organisms want to evolve to be simpler. They start big and figure out a way to get small and therefore increase their population.
+
+To get organisms to grow, we need to add another incentive. A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these paramers finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
+
+Will write more about this later, check out the code!
 
 
