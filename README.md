@@ -32,6 +32,8 @@ It is also an excellent model of both evolution and collective behavior. There a
 
 - **Organism** - An organism is a collection of cells. Organisms begin their life as a sprout, and every cell that grows from this pattern becomes part of the organism. Collisions betwen cells of different organisms will be discussed later.
 
+![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutAnimation.gif)
+
 - **Reproduction** - An organism is formed when we replace parent cells from one organism with child cells of a new organism. We thus create the possibility of inheritance. Every organism has a single parent (although sexual reproduction can easily be added as a result of contact between a parent and other organisms).
 
 - **Self imposed lifespan** - It turns out that having old organisms destroy and remove their cells from the board is beneficial to the children because it craetes more room for them to grow. It was also exciting to discover that lettign organisms control their own lifespan, through an integer value that can mutate from generation to generation does not lead to run-away growth. Organisms often prefer to be small. This kind of cell-death is another deviation from the rules of GOL.
