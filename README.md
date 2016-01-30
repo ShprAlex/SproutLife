@@ -8,7 +8,7 @@ From their evolution we can see that there is a trade-off between individual ben
 
 ###About me
 
-Hi, I'm Alex Shapiro. I became obsessed with creating Sprout Life in December 2015. 
+Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I became obsessed with creating Sprout Life in December 2015. 
 
 My main motivation is to hack on something that's relatively small and self-contained. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project. I'm also excited that it main purpose is to look cool and be fun to talk about.
 
@@ -16,8 +16,20 @@ I hope that others get involved with this project as well. Rather than collabora
 
 One future possibility is that organisms evolved separately on different machines can be brought together to compete on a central server. That is assuming that others are as passionate and inspired as I am.
 
-### More about Sprout Life
+### Genetic algorithms and collective behavior
 
 Sprout Life is exciting, because it presents a truly open ended model for genetic evolution. As far as I'm aware, most genetic algorithms work on a fixed set of parameters. In the case of GOL and Sprout Life, part of the code is embedded in the body of the pattern/organism. The bigger the organism the bigger the code, allowing it to grow to an unbounded complexity. 
 
 It is also an excellent model of both evolution and collective behavior. There are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day.
+
+### Seeds that Sprout - the key idea
+
+![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
+
+- **Seed** A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. This was my first choice for a seed pattern. I've since found that other small patterns work just as well, and better in some casees.
+
+- **Sprout** A sprout is a pattern that replaces a seed. An [R-Pentomino](https://www.youtube.com/watch?v=bTPN3spiq1I) is a natural choice for a sprout pattern becase it is small and produces a lot of growth.
+
+- **Organism** An organism is a collection of cells. Organisms begin their life as a sprout, and every cell that grows from this pattern becomes part of the organism. Collisions betwen cells of different organisms will be discussed later.
+
+- **Reproduction** An organism is formed when we replace parent cells from one organism with child cells of a new organism. We thus create the possibility of inheritance. Every organism has a single parent (although sexual reproduction can easily be added as a result of contact between a parent and other organisms).
