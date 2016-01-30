@@ -47,9 +47,10 @@ public class CellRenderer extends Renderer {
 		        }
 		    }
 		}
-    		g.setColor(getColor(o));
-    		for (Cell c: o.getCells()) {
-    		    g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);
+    		
+    		for (Cell c: o.getCells()) { 
+    		    g.setColor(getColor(o));
+    		    g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);   
     		}
 	}		
 
@@ -59,7 +60,7 @@ public class CellRenderer extends Renderer {
 		int age;
 		
 		if (o.isAlive()) {
-		        int grayC = 120;
+		        int grayC = 100;
 		        switch (o.getKind()) {
 		            case 0: return new Color(255, grayC, grayC);
 		            case 1: return new Color(grayC-10, 255, grayC-10);
@@ -77,6 +78,5 @@ public class CellRenderer extends Renderer {
 		}	
 		
 		return null;
-	}	
-
+	}			      
 }

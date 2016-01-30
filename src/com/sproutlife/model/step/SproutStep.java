@@ -113,6 +113,9 @@ public class SproutStep extends Step {
         //Math.max(10,getEchosystem().getOrganisms().size()/10);        
         
         for (Organism o: seeds.keySet()) {
+            if(!o.isAlive()) {
+                continue;
+            }
             ArrayList<Seed> seedList = seeds.get(o);
             if (seedList.size()>1) {
                 final Organism fo = o;

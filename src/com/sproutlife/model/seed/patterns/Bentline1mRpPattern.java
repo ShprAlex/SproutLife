@@ -18,13 +18,13 @@ public class Bentline1mRpPattern extends SeedSproutPattern {
     public Bentline1mRpPattern() {
         
         this.seedPattern = new BitPattern(new int[][]                                             
-                {{1,0,0},
-                {0,1,1},                          
+               {{0,0,1},
+                {1,1,0},                          
                 {0,0,0}},
                 true);
 
         this.sproutPattern = new BitPattern(new int[][]  
-                {{0,1,1},
+               {{0,1,1},
                 {1,1,0},                         
                 {0,1,0}},
                 true);

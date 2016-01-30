@@ -96,6 +96,7 @@ public class ExportGifAction extends AbstractAction {
     public void saveImage(File saveFile) throws Exception {
 
         int width = (int) controller.getBoardRenderer().getRendererBounds().getWidth();
+        width = Math.min(width,controller.getScrollPanel().getViewportSize().width);
         int height = width*9/16;
         BufferedImage firstImage = controller.getImageManager().getCroppedExportImage(width, height);
         
@@ -113,7 +114,14 @@ public class ExportGifAction extends AbstractAction {
         writer.writeToSequence(firstImage);
         
         for(int i=0; i<200; i++) {
-            for(int j=0; j<4; j++) {
+            int skipFrames = 4;
+            if (controller.getBoardRenderer().getBlockSize()==4) {
+                skipFrames = 2;
+            }
+            if (controller.getBoardRenderer().getBlockSize()>4) {
+                skipFrames = 1;
+            }
+            for(int j=0; j<skipFrames; j++) {
                 controller.getGameController().getGameModel().performGameStep();
                 controller.getImageManager().repaintNewImage();
             }
