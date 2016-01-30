@@ -306,7 +306,7 @@ public class PanelController {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintCellLayer(getDisplayControlPanel().getChckbxCellLayer().isSelected());
-                
+                getImageManager().repaintNewImage();
             }
         });
         
@@ -314,7 +314,7 @@ public class PanelController {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintGenomeLayer(getDisplayControlPanel().getChckbxGenomeLayer().isSelected());
-                
+                getImageManager().repaintNewImage();
             }
         });
         
@@ -322,7 +322,7 @@ public class PanelController {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintHeadLayer(getDisplayControlPanel().getChckbxOrgHeadLayer().isSelected());
-                
+                getImageManager().repaintNewImage();
             }
         });
         
@@ -330,7 +330,15 @@ public class PanelController {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintTailLayer(getDisplayControlPanel().getChckbxOrgTailLayer().isSelected());
-                
+                getImageManager().repaintNewImage();
+            }
+        });
+        
+        getDisplayControlPanel().getChckbxOutlineSeeds().addItemListener(new ItemListener() {            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                getBoardRenderer().setOutlineSeeds(getDisplayControlPanel().getChckbxOutlineSeeds().isSelected());
+                getImageManager().repaintNewImage();
             }
         });
     }

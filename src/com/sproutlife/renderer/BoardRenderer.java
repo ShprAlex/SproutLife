@@ -37,7 +37,8 @@ public class BoardRenderer {
     private boolean paintCellLayer;
     private boolean paintHeadLayer;
     private boolean paintTailLayer;
-    private boolean paintGenomeLayer;    
+    private boolean paintGenomeLayer;
+    private boolean outlineSeeds;
     
     private AffineTransform transform;
     
@@ -60,6 +61,7 @@ public class BoardRenderer {
         this.paintHeadLayer = true;
         this.paintTailLayer = true;
         this.paintGenomeLayer = true;
+        this.outlineSeeds = false;
         
         this.transform = new AffineTransform();        
     } 
@@ -141,6 +143,14 @@ public class BoardRenderer {
     public boolean getPaintGenomeLayer() {
         return paintGenomeLayer;
     }    
+    
+    public void setOutlineSeeds(boolean outlineSeeds) {
+        this.outlineSeeds = outlineSeeds;
+    }
+    
+    public boolean getOutlineSeeds() {
+        return outlineSeeds;
+    }
     
     public AffineTransform getTransform() {
         return transform;

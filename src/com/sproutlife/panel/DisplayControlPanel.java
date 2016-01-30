@@ -42,6 +42,7 @@ public class DisplayControlPanel extends JPanel {
 	private JCheckBox chckbxOrgHeadLayer;
 	private JCheckBox chckbxOrgTailLayer;
 	private JLabel lblDrawLayers;
+	private JCheckBox chckbxOutlineSeeds;
 	
 	public DisplayControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -57,26 +58,27 @@ public class DisplayControlPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {10, 100, 100, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		lblDrawLayers = new JLabel("Draw Layers");
 		GridBagConstraints gbc_lblDrawLayers = new GridBagConstraints();
 		gbc_lblDrawLayers.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblDrawLayers.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDrawLayers.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDrawLayers.gridx = 1;
 		gbc_lblDrawLayers.gridy = 1;
 		add(lblDrawLayers, gbc_lblDrawLayers);
 		
 		panel_2 = new JPanel();
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
-		gbc_panel_2.anchor = GridBagConstraints.EAST;
-		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_2.gridwidth = 2;
+		gbc_panel_2.anchor = GridBagConstraints.WEST;
+		gbc_panel_2.insets = new Insets(0, 30, 0, 5);
 		gbc_panel_2.fill = GridBagConstraints.VERTICAL;
-		gbc_panel_2.gridx = 2;
-		gbc_panel_2.gridy = 1;
+		gbc_panel_2.gridx = 1;
+		gbc_panel_2.gridy = 2;
 		add(panel_2, gbc_panel_2);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		
@@ -95,6 +97,9 @@ public class DisplayControlPanel extends JPanel {
 		chckbxOrgTailLayer = new JCheckBox("Org Tail Layer");
 		chckbxOrgTailLayer.setSelected(true);
 		panel_2.add(chckbxOrgTailLayer);
+		
+		chckbxOutlineSeeds = new JCheckBox("Outline Seeds & Young");
+		panel_2.add(chckbxOutlineSeeds);
 
 	}
 
@@ -109,5 +114,8 @@ public class DisplayControlPanel extends JPanel {
     }
     public JCheckBox getChckbxOrgTailLayer() {
         return chckbxOrgTailLayer;
+    }
+    public JCheckBox getChckbxOutlineSeeds() {
+        return chckbxOutlineSeeds;
     }
 }
