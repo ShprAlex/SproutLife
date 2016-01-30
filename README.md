@@ -12,7 +12,7 @@ Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I became obsessed with cre
 
 My main motivation is to hack on something that's relatively small and self-contained. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project. I'm also excited that it main purpose is to look cool and be fun to talk about.
 
-I hope that others get involved with this project as well. Rather than collaborating directly, I see this as a theme that others can innovate on. I decided to start with a Java implementation because it's the language I'm most familiar with for designing the application. I think that current processors are fast enough to have Sprout Life run in a web browser using Javascript.
+I hope that others get involved with this project as well. I decided to start with a Java implementation because it's the language I'm most familiar with for designing the application. I think that current processors are fast enough to have Sprout Life run in a web browser using Javascript.
 
 One future possibility is that organisms evolved separately on different machines can be brought together to compete on a central server. That is assuming that others are as passionate and inspired as I am.
 
