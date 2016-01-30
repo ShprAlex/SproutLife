@@ -39,7 +39,7 @@ It is also an excellent model of both evolution and collective behavior. There a
 - **Mutation** - There are lots of ways to implement a genetic code and mutation. An option that I've come up with, and that works well, is to have a collection of (x,y) coordinates, and a time value ((x,y),t) for each coordinate. If at time t, an organism has a mutation (x,y), and it has a living cell at those coordinates, than that cell is killed. Turning off a cell changes how the organism grows from that point. Mutations can be added to the genetic code, or existing mutations removed during an organisms life (or prior to birth). In theory, every time an organism is born it gets to live it's life from the begining, and thus beneficial mutations will propogate. What's tricky is taht a child may be born in a different enviroment than it's parent. For instance a second child is born in a different environment than a first child. Rather than being concerned with these things, every organism treats it's genetic code the same way.
  
 - **Visualizing Mutation** - A lucky accident helped me come up with a beautiful way to display an organisms genetics. The triangle and paw-print pattenrs you see in the GIF above are actually direct representations of recent mutations from an organisms genetic code. Mutations have (x,y) coordinates, and therefore live in the same space as the organism. The lucky accident was that I accidentally shrunk the dimensions of those mutations, causing them to appear bunched together in the center of the organism rather than spread out over it's body. All the mutations across different time points are displayed at the same time, except for older mutations which would be identical for organisms that are all relatives of each other.
-- 
+ 
 
 
 
