@@ -8,9 +8,9 @@ From their evolution we can see that there is a trade-off between individual ben
 
 ###About me
 
-Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by artificial intelligence. Cellular automata has always been a source of inspiration though. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond it's programming, to understand the real world by learning from a simulation, I think this have been the dream of many technologists including myself.
+Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by artificial intelligence. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond it's programming, to understand the real world by learning from a simulation, I think this have been the dream of many technologists including myself.
 
-I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. I've been excited by the results, although of course even some minimal achievements, like the evolution of two stably co-existing species are still out of reach.
+I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. 
 
 A big part of my motivation is to hack on something that's relatively small and self-contained. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project. Its appeal is that it is something can be taken lightly, a hobby project meant to look cool and be fun to talk about.
 
@@ -18,9 +18,11 @@ I hope that others get involved with this project as well. I decided to start wi
 
 ### Genetic algorithms and collective behavior
 
-Sprout Life is exciting, because it presents a truly open ended model for genetic evolution. As far as I'm aware, most genetic algorithms work on a fixed set of parameters. In the case of GOL and Sprout Life, part of the code is embedded in the body of the pattern/organism. The bigger the organism the bigger the code, allowing it to grow to an unbounded complexity. 
+Sprout Life is exciting because presents a truly open ended model for genetic evolution. As far as I'm aware, most genetic algorithms work on a fixed set of parameters. The machine can optimize parameter values, but it can't really create something new. In the case of GOL and Sprout Life, part of the code is embedded in the body of the pattern/organism. The bigger the organism the bigger the code, allowing it to grow to an unbounded complexity. 
 
-It is also an excellent model of both evolution and collective behavior. There are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day.
+It is collective behavior, not just individual fintess, that is the driver for evolution within Sprout Life. Cellular automata patterns are sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to it's offspring, parents, and relatives.
+
+A better model of collective evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed on them by looking at what happens to the population as a new capability is discovered.
 
 ### Seeds that Sprout - the key idea
 
