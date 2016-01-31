@@ -20,13 +20,15 @@ I hope that others get involved with this project as well. In particular, I hope
 
 Sprout Life is exciting because presents a truly open ended model for genetic evolution. As far as I'm aware, most genetic algorithms work on a fixed set of parameters. The machine can optimize parameter values, but it can't really create something new. In the case of GOL and Sprout Life, part of the code is embedded in the body of the pattern/organism. The bigger the organism the bigger the code, allowing it to grow to an unbounded complexity. 
 
-It is collective behavior, not just individual fitness, that is the driver for evolution within Sprout Life. Cellular automata patterns are sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to it's offspring, parents, and relatives.
+It is collective behavior, not just individual fitness, that is the driver for evolution within Sprout Life. Cellular automata patterns are sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
 A better model of collective evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed on them by looking at what happens to the population as a new capability is discovered.
 
 ### Seeds that Sprout - the key idea
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
+
+- **Cell** - Cells are "on" coordinates on the grid of [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL). "Off" coordinates on the grid are not considered cells, and are simply empty. At every cycle, the game updates which cells are on the board. Existing cells can stay alive, produce new cells in adjacent squares, or die.
 
 - **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. Other small patterns work just as well, and better in some cases.
 
@@ -38,11 +40,11 @@ A better model of collective evolution is a rich source of metaphor. Beyond biol
 
 ![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutAnimation.gif)
 
-- **Self imposed lifespan** - It turns out that having old organisms destroy and remove their cells from the board is beneficial to the children. When a parent's cells are removed, it creates more room for children and descendants to grow. It was exciting to discover that letting organisms control their own lifespan does not lead to run-away growth. Organisms often prefer to be small. The maximum lifespan is encoded as an integer value that can mutate from generation to generation. This kind of cell-death is another deviation from the rules of GOL.
+- **Self imposed lifespan** - It turns out that having old organisms self-destruct is beneficial to their children. Removing all of a parent's cells from the board creates more room for its children and descendants to grow. New organisms develop in a predictable pattern allowing stability to arise, whereas older organisms get damaged by collision and mutation. It was exciting to discover that letting organisms control their own lifespan does not lead to run-away growth. Organisms often prefer to be small. The maximum lifespan is encoded as an integer value that can mutate from generation to generation. This kind of cell-death is another deviation from the rules of GOL.
 
 - **Mutation** - There are lots of ways to implement a genetic code and mutation. An option that works well, is to have mutations be a pair of (x,y) coordinates, and a time value ((x,y),t) for each coordinate. If at time t, an organism has a mutation ((x,y),t) and it has a living cell at coordinates (x,y) then that cell is killed. Turning off a cell changes how the organism grows from that point. This is yet another deviation from GOL rules.
 
-- **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed during an organism’s life (or prior to birth). In theory, every time an organism is born it gets to live its life from the beginning. If its lucky and does everything right it reproduces and thrives, if not, it dies childless. Thus beneficial mutations will propagate. What's tricky is that a child may be born in a different environment than its parent. For instance a second child is born in a different environment than a first child (and the parent may have been a first child). Rather than being concerned with these things, every organism treats its genetic code the same way.
+- **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed during an organism’s life (or prior to birth). In theory, every time an organism is born it gets to live its life from the beginning. If it’s lucky and does everything right it reproduces and thrives, if not, it dies childless. Thus beneficial mutations will propagate. What's tricky is that a child may be born in a different environment than its parent. For instance a second child is born in a different environment than a first child (and the parent may have been a first child). Rather than being concerned with these things, every organism treats its genetic code the same way.
  
 - **Visualizing the Genome** - A lucky accident helped me come up with a beautiful way to display an organism's genome. The triangle and paw-print patterns in the GIF above are actually direct representations of an organism's recent mutations. Mutations have (x,y) coordinates, and correspond to the same space as the organism. The lucky accident was that I accidentally shrunk the dimensions of those mutations, causing them to appear bunched together in the center of the organism rather than spread out over its body. All the mutations across different time points are displayed at the same time, except for older mutations which would be identical for organisms that are all relatives of each other.
  
@@ -64,7 +66,7 @@ The direction towards smallness is not straight forward, and we can still learn 
 
 There are a few ways we can encourage our evolutionary model to maintain complexity so as to keep things interesting.
 
-- **Maturity to child-bearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, if we say that an organism can't have children until 20 cycles have passes, this ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
+- **Maturity to child-bearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
