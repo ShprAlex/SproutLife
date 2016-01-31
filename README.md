@@ -54,16 +54,12 @@ A better model of collective evolution is a rich source of metaphor. Beyond biol
 
 There are some exciting, and some disappointing, things we can see when we run Sprout Life. The initial excitement is that there is in fact evolution. The potential disappointment is that most evolution is in the wrong direction! Organisms want to evolve to be simpler. They start big and figure out a way to get small and therefore increase their population.
 
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
+
 ### Collisions - "competitive mode" lets organisms grow bigger
 
 To get organisms to grow, we need to add another incentive. A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
 
 Will write more about this later, check out the code!
-
-#####Cool blinkers
-
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
-
-#####Different competing gene lines
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
