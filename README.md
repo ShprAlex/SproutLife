@@ -28,7 +28,7 @@ A better model of collective evolution is a rich source of metaphor. Beyond biol
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
 
-- **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state, as defined in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL). At every cycle of the gameexisting cells can stay alive, produce new cells in adjacent squares, or die and be removed.
+- **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state, as defined in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL). What GOL calls "dead" cells, Sprout Life simply considers as empty space. This is only a clarification of terminology, it dos not change the rules.
 
 - **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. Other small patterns work just as well, and better in some cases.
 
