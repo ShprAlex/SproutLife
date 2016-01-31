@@ -50,9 +50,23 @@ A better model of collective evolution is a rich source of metaphor. Beyond biol
  
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-29a.gif)
 
-### Evolution - but as a race to the bottom
+### Evolution - a race to the bottom?
 
-There are some exciting, and some disappointing, things we can see when we run Sprout Life. The initial excitement is that there is in fact evolution. The potential disappointment is that most evolution is in the wrong direction! Organisms want to evolve to be simpler. They start big and figure out a way to get small and therefore increase their population.
+The initial excitement of developing Sprout Life was that it worked! Organisms do arise, reproduce, and mutate to improve themselves. But what can we see about the direction that evolution seems to take?
+
+It turns out that the basic implementation creates organisms that want to be smaller. Organisms start big and clumsy, and figure out a way to get small and efficient. As they get smaller, organisms are able to reproduce more quickly and increase their population within the grid.
+
+A bigger size does have advantages. An organism needs to compete as well as reproduce, and a greater size allows it to put more energy into collisions disruptive to its neighbors.
+
+The direction towards smallness is not straight forward, and we can still learn a lot from how new abilities are introduced and propagate through the population. Overall though, the trend is to be simple, and simple is boring. Simple is also a fixed boundary beyond which progress isn't possible.
+
+### Overcoming simplicity - initial techniques to maintain complexity
+
+There are a few ways we can encourage our evolutionary model to maintain complexity so as to keep things interesting.
+
+- **Maturity to child-bearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, if we say that an organism can't have children until 20 cycles have passes, this ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
+
+- **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
 
