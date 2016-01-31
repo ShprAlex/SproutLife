@@ -54,9 +54,9 @@ A better model of collective evolution is a rich source of metaphor. Beyond biol
 
 The initial excitement of developing Sprout Life was that it worked! Organisms do arise, reproduce, and mutate to improve themselves. But what can we see about the direction that evolution seems to take?
 
-It turns out that the basic implementation creates organisms that want to be smaller. Organisms start big and clumsy, and figure out a way to get small and efficient. As they get smaller, organisms are able to reproduce more quickly and increase their population within the grid.
+- **Organisms want to be small** - It turns out that the basic implementation creates organisms that want to be smaller. Organisms start big and clumsy, and figure out a way to get small and efficient. As they get smaller, organisms are able to reproduce more quickly and increase their population within the grid.
 
-A bigger size does have advantages. An organism needs to compete as well as reproduce, and a greater size allows it to put more energy into collisions disruptive to its neighbors.
+- **Bigger can be better** - A bigger size does have advantages. An organism needs to compete as well as reproduce, and a greater size allows it to put more energy into collisions disruptive to its neighbors.
 
 The direction towards smallness is not straight forward, and we can still learn a lot from how new abilities are introduced and propagate through the population. Overall though, the trend is to be simple, and simple is boring. Simple is also a fixed boundary beyond which progress isn't possible.
 
