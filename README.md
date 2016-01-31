@@ -48,6 +48,10 @@ A better model of collective evolution is a rich source of metaphor. Beyond biol
  
 - **Rotation and Orientation** - It's important to keep track of which way the R-Pentomino, or potentially other sprout pattern, was facing when the organism was born. There are 8 ways to rotate a pattern, 4 rotations and 2 mirror images for most patterns. The (x,y) coordinates for mutations must be relative to how the seed pattern was oriented. It's also good to let the parent organism determine which direction the sprouted child is facing. A 2x2 block seed presents us with a tricky dilemma in that we don't know which way it's facing. We can resolve this issue by checking which way the parent was facing when it was born, and combining this with whether the seed is above, below, left, right, or otherwise oriented relative to the parent. Combining these two we can have the child born facing a direction relative to how the parent was born.
  
+#####Centipede looking guys
+
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-29a.gif)
+
 ### Results - what are they?
 
 There are some exciting, and some disappointing, things we can see when we run Sprout Life. The initial excitement is that there is in fact evolution. The potential disappointment is that most evolution is in the wrong direction! Organisms want to evolve to be simpler. They start big and figure out a way to get small and therefore increase their population.
@@ -59,10 +63,6 @@ Will write more about this later, check out the code!
 #####Cool blinkers
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
-
-#####Centipede looking guys
-
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-29a.gif)
 
 #####Different competing gene lines
 
