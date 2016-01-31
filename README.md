@@ -8,7 +8,7 @@ From their evolution we can see that there is a trade-off between individual ben
 
 ### Introduction
 
-Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by thinking about congnition. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond its programming, to understand the real world by learning from a simulation, I think this have been the dream of many technologists including myself.
+Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by thinking about cognition. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond its programming, to understand the real world by learning from a simulation, I think this have been the dream of many technologists including myself.
 
 I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project.
 
@@ -24,7 +24,7 @@ It is collective behavior, not just individual fitness, that is the driver for e
 
 A better model of collective evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed on by models based on the ebb and flow of evolution.
 
-Speed is of the essence in simulating evolution. The ideal is to have a beautiful story unfold in real time. Cellular autamata are perfectly designed for rapid computation by computers. Getting the next state of the game is almost like adding together two binary numbers, which is what computers were made to do. With the computer as our vehicle, we can explore the evolving world of cellular automata and learn from our discoveries.
+Speed is of the essence in simulating evolution. The ideal is to have a beautiful story unfold in real time. Cellular automata are perfectly designed for rapid computation by computers. Getting the next state of the game is almost like adding together two binary numbers, which is what computers were made to do. With the computer as our vehicle, we can explore the evolving world of cellular automata and learn from our discoveries.
 
 ### Seeds that Sprout - the key idea
 
