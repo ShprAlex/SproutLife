@@ -6,29 +6,31 @@ From their evolution we can see that there is a trade-off between individual ben
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
 
-###About me
+### Introduction
 
-Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by artificial intelligence. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond its programming, to understand the real world by learning from a simulation, I think this have been the dream of many technologists including myself.
+Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by thinking about cognition. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond its programming, to understand the real world by learning from a simulation, I think this have been the dream of many technologists including myself.
 
 I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project.
 
-I started with a Java implementation because my initial goal was to quickly refile the design, and java is language I'm most familiar with. Popularizing the application may be better done in Javascript. I think that current processors are fast enough to run Sprout Life using Javascript in a web browser.
+I started with a Java implementation because my initial goal was to quickly refine the design, and java is language I'm most familiar with. Popularizing the application may be better done in Javascript. I think that current processors are fast enough to run Sprout Life using Javascript in a web browser.
 
 I hope that others get involved with this project as well. In particular, I hope that Sprout Life appeals to programmers for the same reason that GOL does - it is relatively small and self contained and produces results that look cool and are fun to talk about. 
 
-### Genetic algorithms and collective behavior
+### Motivation
 
 Sprout Life is exciting because presents a truly open ended model for genetic evolution. As far as I'm aware, most genetic algorithms work on a fixed set of parameters. The machine can optimize parameter values, but it can't really create something new. In the case of GOL and Sprout Life, part of the code is embedded in the body of the pattern/organism. The bigger the organism the bigger the code, allowing it to grow to an unbounded complexity. 
 
 It is collective behavior, not just individual fitness, that is the driver for evolution within Sprout Life. Cellular automata patterns are sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
-A better model of collective evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed on them by looking at what happens to the population as a new capability is discovered.
+A better model of collective evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of genes, and the success of ideas in the startup world which I'm a part of by day. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed upon them by modelling the ebb and flow of evolution.
+
+Speed is of the essence in simulating evolution. The ideal is to have a beautiful story unfold in real time. Cellular automata are perfectly designed for rapid computation by computers. Getting the next state of the game is almost like adding together two binary numbers. This is what computers were made to do. With the computer as our vehicle, we can explore the evolving world of cellular automata and learn from our discoveries.
 
 ### Seeds that Sprout - the key idea
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
 
-- **Cell** - Cells are "on" coordinates on the grid of [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL). "Off" coordinates on the grid are not considered cells, and are simply empty. At every cycle, the game updates which cells are alive on the board. Existing cells can stay alive, produce new cells in adjacent squares, or die and be removed.
+- **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state, as defined in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL). What GOL calls "dead" cells, Sprout Life simply considers as empty space. This is only a clarification of terminology, it dos not change the rules.
 
 - **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. Other small patterns work just as well, and better in some cases.
 
