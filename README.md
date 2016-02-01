@@ -74,7 +74,15 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
-- **Tyranny of 3rd children** - We want to see drama unfold in the game, and 3rd children create drama. In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. Organisms strive for order, and stable patterns arise rather quickly when organisms have only two children. By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can make an organism wait 30 cycles to have 2 children, but after that a 3rd child might take no time at all. Thus organisms with three children will dominate by spending less energy per child. Having 3 children makes it harder to establish a stable pattern of who dies when and how. This results in chaos, a less densely populated board, and a lower population. So what's good for the individual is in some ways bad for the community. We can relate this to China's one child policy - regardless of the actual outcome, their goal was to benefit the country as a whole at the expense of the individual. Another parallel is curbing smoking, and laws in general that create rules on collective behavior that doesn't naturally arise at an individual level.
+### Tyranny of 3rd children
+
+We want to see drama unfold in the game, and 3rd children create drama. In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. Organisms strive for order, and stable patterns arise rather quickly when organisms have only two children. 
+
+By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can make an organism wait 30 cycles to have 2 children, but after that a 3rd child might take no time at all. Thus organisms with three children will dominate by spending less energy per child. 
+
+Having 3 children makes it harder to establish a stable pattern of who dies when and how. This results in chaos, a less densely populated board, and a lower population. So what's good for the individual is in some ways bad for the community. 
+
+We can relate this to China's one child policy - regardless of the actual outcome, their goal was to benefit the country as a whole at the expense of the individual. Another parallel is curbing smoking, and laws in general that create rules on collective behavior that doesn't naturally arise at an individual level.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
 
