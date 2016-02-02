@@ -44,7 +44,7 @@ public class Settings {
         set(Settings.CHILD_TWO_ENERGY, 0);
         set(Settings.CHILD_THREE_ENERGY, 0);
         
-        set(Settings.SPROUT_DELAYED_MODE, true);
+        set(Settings.SPROUT_DELAYED_MODE, false);
 
     }
     

@@ -7,31 +7,17 @@
  *******************************************************************************/
 package com.sproutlife.panel;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.sproutlife.GameController;
-import com.sproutlife.Settings;
-
-import javax.swing.JSlider;
 import javax.swing.JRadioButton;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 
 public class DisplayControlPanel extends JPanel {
 	
@@ -43,6 +29,11 @@ public class DisplayControlPanel extends JPanel {
 	private JCheckBox chckbxOrgTailLayer;
 	private JLabel lblDrawLayers;
 	private JCheckBox chckbxOutlineSeeds;
+	
+	private JLabel lblSproutMode;
+	private JPanel panel;
+	private JRadioButton rdbtnFunctional;
+	private JRadioButton rdbtnVisual;
 	
 	public DisplayControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -57,10 +48,10 @@ public class DisplayControlPanel extends JPanel {
 	public void buildPanel() {		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {10, 100, 100, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] {10, 30, 100, 10};
+		gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 		setLayout(gridBagLayout);
 		
 		lblDrawLayers = new JLabel("Draw Layers");
@@ -75,7 +66,7 @@ public class DisplayControlPanel extends JPanel {
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
 		gbc_panel_2.gridwidth = 2;
 		gbc_panel_2.anchor = GridBagConstraints.WEST;
-		gbc_panel_2.insets = new Insets(0, 30, 0, 5);
+		gbc_panel_2.insets = new Insets(0, 30, 5, 5);
 		gbc_panel_2.fill = GridBagConstraints.VERTICAL;
 		gbc_panel_2.gridx = 1;
 		gbc_panel_2.gridy = 2;
@@ -100,6 +91,56 @@ public class DisplayControlPanel extends JPanel {
 		
 		chckbxOutlineSeeds = new JCheckBox("Outline Seeds & Young");
 		panel_2.add(chckbxOutlineSeeds);
+		
+		
+		lblSproutMode = new JLabel("Sprout Mode");
+		GridBagConstraints gbc_lblSproutMode = new GridBagConstraints();
+		gbc_lblSproutMode.anchor = GridBagConstraints.WEST;
+		gbc_lblSproutMode.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSproutMode.gridx = 1;
+		gbc_lblSproutMode.gridy = 4;
+		add(lblSproutMode, gbc_lblSproutMode);
+		
+		panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 2;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 5;
+		add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{30, 40, 40, 0};
+		gbl_panel.rowHeights = new int[]{0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		ButtonGroup sproutModeButtonGroup = new ButtonGroup();
+		rdbtnFunctional = new JRadioButton("Functional");
+		sproutModeButtonGroup.add(rdbtnFunctional);
+		rdbtnFunctional.setToolTipText("<html>Seeds are immediately replaced<br>by sprouts before being shown.<br>More efficient for reproduction.</html>");
+		rdbtnFunctional.setSelected(true);
+		rdbtnFunctional.setMargin(new Insets(2, 2, 2, 13));
+		rdbtnFunctional.setAlignmentX(1.0f);
+		GridBagConstraints gbc_radioButton = new GridBagConstraints();
+		gbc_radioButton.anchor = GridBagConstraints.WEST;
+		gbc_radioButton.insets = new Insets(0, 0, 0, 5);
+		gbc_radioButton.gridx = 1;
+		gbc_radioButton.gridy = 0;
+		panel.add(rdbtnFunctional, gbc_radioButton);
+		
+		rdbtnVisual = new JRadioButton("Visual");
+		sproutModeButtonGroup.add(rdbtnVisual);
+		rdbtnVisual.setToolTipText("<html>Seeds are displayed but an<br>extra step is added to show them.</html>");
+		rdbtnVisual.setMargin(new Insets(2, 2, 2, 11));
+		GridBagConstraints gbc_rdbtnVisual = new GridBagConstraints();
+		gbc_rdbtnVisual.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnVisual.gridx = 2;
+		gbc_rdbtnVisual.gridy = 0;
+		panel.add(rdbtnVisual, gbc_rdbtnVisual);
+
+		
 
 	}
 
@@ -117,5 +158,12 @@ public class DisplayControlPanel extends JPanel {
     }
     public JCheckBox getChckbxOutlineSeeds() {
         return chckbxOutlineSeeds;
+    }
+    
+    public JRadioButton getRdbtnVisual() {
+        return rdbtnVisual;       
+    }
+    public JRadioButton getRdbtnFunctional() {
+        return rdbtnFunctional;
     }
 }

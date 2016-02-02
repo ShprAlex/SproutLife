@@ -52,6 +52,7 @@ public class MainControlPanel extends JPanel {
 	private JLabel imageWidthHeightLabel;
 	private JLabel lblSeedType;
 	private JComboBox seedTypeComboBox;
+
 	
 	public MainControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -67,9 +68,9 @@ public class MainControlPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {10, 0, 100, 100, 80, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 15, 0, 0, 15, 0, 31, 15, 0, 15, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 0, 0, 15, 0, 0, 15, 0, 31, 15, 0, 15, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JPanel panel_1 = new JPanel();
@@ -184,14 +185,16 @@ public class MainControlPanel extends JPanel {
 		gbc_seedTypeComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_seedTypeComboBox.gridx = 3;
 		gbc_seedTypeComboBox.gridy = 6;
-		add(seedTypeComboBox, gbc_seedTypeComboBox);
+		add(seedTypeComboBox, gbc_seedTypeComboBox);		
 		
-		JLabel lblLifeMode = new JLabel("Life Mode");
+		
+		JLabel lblLifeMode = new JLabel("Collision Mode");
 		GridBagConstraints gbc_lblLifeMode = new GridBagConstraints();
+		gbc_lblLifeMode.gridwidth = 2;
 		gbc_lblLifeMode.anchor = GridBagConstraints.WEST;
 		gbc_lblLifeMode.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLifeMode.gridx = 2;
-		gbc_lblLifeMode.gridy = 8;
+		gbc_lblLifeMode.gridy = 10;
 		add(lblLifeMode, gbc_lblLifeMode);
 		GridBagConstraints gbc_lifeModePanel = new GridBagConstraints();
 		gbc_lifeModePanel.gridwidth = 3;
@@ -199,7 +202,7 @@ public class MainControlPanel extends JPanel {
 		gbc_lifeModePanel.insets = new Insets(0, 0, 5, 5);
 		gbc_lifeModePanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lifeModePanel.gridx = 2;
-		gbc_lifeModePanel.gridy = 9;
+		gbc_lifeModePanel.gridy = 11;
 		add(lifeModePanel, gbc_lifeModePanel);
 		GridBagLayout gbl_lifeModePanel = new GridBagLayout();
 		gbl_lifeModePanel.columnWidths = new int[]{30, 40, 40};
@@ -260,7 +263,7 @@ public class MainControlPanel extends JPanel {
 		gbc_lblGrid.anchor = GridBagConstraints.WEST;
 		gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGrid.gridx = 2;
-		gbc_lblGrid.gridy = 11;
+		gbc_lblGrid.gridy = 13;
 		add(lblGrid, gbc_lblGrid);
 		
 		JPanel panel = new JPanel();
@@ -269,7 +272,7 @@ public class MainControlPanel extends JPanel {
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 2;
-		gbc_panel.gridy = 12;
+		gbc_panel.gridy = 14;
 		add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{30, 40, 40};
@@ -332,7 +335,7 @@ public class MainControlPanel extends JPanel {
 		gbc_lblImage_1.anchor = GridBagConstraints.WEST;
 		gbc_lblImage_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblImage_1.gridx = 2;
-		gbc_lblImage_1.gridy = 14;
+		gbc_lblImage_1.gridy = 16;
 		add(lblImage_1, gbc_lblImage_1);
 		
 		imageWidthHeightLabel = new JLabel("100, 100");
@@ -342,7 +345,7 @@ public class MainControlPanel extends JPanel {
 		gbc_imageWidthHeightLabel.gridwidth = 2;
 		gbc_imageWidthHeightLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_imageWidthHeightLabel.gridx = 3;
-		gbc_imageWidthHeightLabel.gridy = 14;
+		gbc_imageWidthHeightLabel.gridy = 16;
 		add(imageWidthHeightLabel, gbc_imageWidthHeightLabel);
 
 	}

@@ -289,7 +289,7 @@ public class PanelController {
         };        
         getMainControlPanel().getRdbtnCompetitive().addItemListener(lifeModeListener);
         getMainControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
-        getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);    
+        getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
         
         getMainControlPanel().getSeedTypeComboBox().addActionListener(new ActionListener() {
             
@@ -341,6 +341,21 @@ public class PanelController {
                 getImageManager().repaintNewImage();
             }
         });
+        
+        ItemListener sproutModeListener = new ItemListener() {  
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (getDisplayControlPanel().getRdbtnVisual().isSelected()) {
+                    getSettings().set(Settings.SPROUT_DELAYED_MODE, true);
+                }
+                else if(getDisplayControlPanel().getRdbtnFunctional().isSelected()) {
+                    getSettings().set(Settings.SPROUT_DELAYED_MODE, false);
+                }
+            }                      
+        };        
+        getDisplayControlPanel().getRdbtnVisual().addItemListener(sproutModeListener);
+        getDisplayControlPanel().getRdbtnFunctional().addItemListener(sproutModeListener);         
+        
     }
     
     public void addSettingsControlPanelListeners() {
@@ -367,12 +382,12 @@ public class PanelController {
         JComboBox<SeedType> seedCb = ( JComboBox<SeedType>)getMainControlPanel().getSeedTypeComboBox();
         seedCb.addItem(SeedType.Bentline1_RPentomino);
         seedCb.addItem(SeedType.Bentline1m_RPentomino);
+        seedCb.addItem(SeedType.Bentline_U3x3);
         seedCb.addItem(SeedType.Square2_RPentomino);
         seedCb.addItem(SeedType.L2_RPentomino);
         seedCb.addItem(SeedType.L2B1_RPentomino);
-        seedCb.addItem(SeedType.Boxlid_RPentomino);
-        seedCb.addItem(SeedType.Boxlid3_RPentomino);
-        seedCb.addItem(SeedType.Boxhat_RPentomino);
+        seedCb.addItem(SeedType.Boxlid3_RPentomino);                
+        seedCb.addItem(SeedType.Boxhat_RPentomino);        
         seedCb.addItem(SeedType.OnebitB1_RPentomino);
         seedCb.addItem(SeedType.Glider_RPentomino);
         seedCb.addItem(SeedType.RPentomino_RPentomino);
