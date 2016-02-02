@@ -17,6 +17,7 @@ import com.sproutlife.model.seed.patterns.Bentline1mRpPattern;
 import com.sproutlife.model.seed.patterns.BentlineMargin35Pattern;
 import com.sproutlife.model.seed.patterns.BoxhatRpPattern;
 import com.sproutlife.model.seed.patterns.Boxlid3RpPattern;
+import com.sproutlife.model.seed.patterns.BentlineU3x3;
 import com.sproutlife.model.seed.patterns.BoxlidRpPattern;
 import com.sproutlife.model.seed.patterns.GliderRpPattern;
 import com.sproutlife.model.seed.patterns.L2B1RpPattern;
@@ -35,12 +36,13 @@ public class SeedFactory {
         L2B1_RPentomino ("L2B1 to R-Pentomino"), 
         Square2_RPentomino ("2x2 Box to R-Pentomino"), 
         Glider_RPentomino ("Glider to R-Pentomino"), 
-        RPentomino_RPentomino ("R-Pentomino to R-Pentomino"),
+        RPentomino_RPentomino ("R-Pentomino to R-Pentomino"),        
         Boxlid_RPentomino ("Boxlid to R-Pentomino"), 
-        Boxlid3_RPentomino ("Boxlid3 to R-Pentomino"),
+        Boxlid3_RPentomino ("Boxlid3 to R-Pentomino"),        
         Boxhat_RPentomino ("Boxhat to R-Pentomino"),
         Bentline1_RPentomino ("Bentline1 to R-Pentomino"),
         Bentline1m_RPentomino ("Bentline1m to R-Pentomino"),
+        Bentline_U3x3 ("Bentline to U 3x3"),
         BentlineMargin35_RPentomino ("BentlineM35 to R-Pentomino"),
         Onebit_RPentomino ("Onebit to R-Pentomino"), 
         OnebitB1_RPentomino ("OnebitB1 to R-Pentomino"),  
@@ -86,6 +88,7 @@ public class SeedFactory {
         patterns.put(SeedType.RPentomino_RPentomino, new RpRpPattern());
         patterns.put(SeedType.Boxlid_RPentomino, new BoxlidRpPattern());
         patterns.put(SeedType.Boxlid3_RPentomino, new Boxlid3RpPattern());
+        patterns.put(SeedType.Bentline_U3x3, new BentlineU3x3());
         patterns.put(SeedType.Boxhat_RPentomino, new BoxhatRpPattern());
         patterns.put(SeedType.Bentline1_RPentomino, new Bentline1RpPattern());
         patterns.put(SeedType.Bentline1m_RPentomino, new Bentline1mRpPattern());
@@ -98,15 +101,15 @@ public class SeedFactory {
             new SeedSproutPattern() {                
                 {                    
                     this.seedPattern = new BitPattern(new int[][]                                             
-                    	   {{0,0,1},
+                    	   {{1,0,0},
                             {0,1,0},                         
-                            {0,1,0}},
+                            {1,1,0}},
                           true);
 
                     this.sproutPattern = new BitPattern(new int[][]  
-                         {{0,1,1},
-                          {1,1,0},                         
-                          {0,1,0}},
+                         {{1,1,1},
+                          {1,0,1},                         
+                          {1,0,1}},
                           true);
 
                     this.sproutOffset = new Point(1,0);
