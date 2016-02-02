@@ -106,12 +106,15 @@ public class MutationStep extends Step {
 
         //int size = Math.max(2000, allCells.size());
         int repeatTimes = 1;
-        int invMutationRate = 120;
+        int invMutationRate = 160;
         
         if(getEchosystem().getOrganisms().size()>invMutationRate) {
             repeatTimes = getEchosystem().getOrganisms().size()/invMutationRate;
         }
-        if (getEchosystem().getOrganisms().size()<invMutationRate ) {
+        if (getEchosystem().getOrganisms().size()<invMutationRate/3 ) {
+            repeatTimes = random.nextInt(10)==0 ? 1:0;
+        }
+        else if (getEchosystem().getOrganisms().size()<invMutationRate ) {
             repeatTimes = random.nextInt(3)==0 ? 1:0;
         }
         
