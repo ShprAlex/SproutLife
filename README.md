@@ -82,7 +82,7 @@ Organisms strive for order, and stable patterns arise rather quickly when organi
 
 Organisms with three children will dominate because having more children means they spend less energy per child on average. However, having 3 children makes it harder to establish a stable pattern of who dies when and how. This results in chaos, a less densely populated board, and a lower population. 
 
-So what's good for the individual can in some ways be bad for the community. We can relate this to China's one child policy - regardless of the actual outcome, their goal was to benefit the country as a whole at the expense of the individual. Another parallel is curbing smoking, and laws in general that create rules on collective behavior that doesn't naturally arise at an individual level.
+So what's good for the individual can in some ways be bad for the community. We can relate this to China's one child policy. Regardless of the actual outcome, their goal was to benefit the country as a whole at the expense of the individual. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
 
