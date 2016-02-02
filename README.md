@@ -80,7 +80,7 @@ We want to see drama unfold in the game, and 3rd children create drama. In a wor
 
 By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can require a big energy investment to have the first two children, and litte for each additional child. Organisms with three children will dominate because having more children means they spend less energy per child on average. 
 
-Organisms strive for order, and stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo, and that creates more permutations of possible outcomes. This results in chaos, a less densely populated board, and a lower population. 
+Organisms strive for order, and stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo. That creates more permutations of possible outcomes, which are harder to optimize. This results in chaos, a less densely populated board, and a lower population. 
 
 So what's good for the individual can in some ways be bad for the community. In our world this is a frequent occurrence requiring government intervention. An extreme but relevant example is China's one child policy. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
 
