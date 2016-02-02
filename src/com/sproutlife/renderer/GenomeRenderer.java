@@ -127,8 +127,7 @@ public class GenomeRenderer extends Renderer {
 	
 	private Color getColor(Organism o) {
 	    //return Color.white;
-	        return Color.white;
-	        /*
+
 	    int grayC = 200;
 	    switch (o.getKind()) {
 	        case 0: return new Color(255, 186, 186);
@@ -136,7 +135,7 @@ public class GenomeRenderer extends Renderer {
 	        case 2: return new Color(grayC+10, grayC+10,255);
 	    }
 	    return null;
-	    */
+	    
 	        
 	}
 }
