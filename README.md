@@ -78,7 +78,7 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 
 We want to see drama unfold in the game, and 3rd children create drama. In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. 
 
-Organisms strive for order, and stable patterns arise rather quickly when organisms have only two children. 
+Organisms strive for order, and stable patterns arise quickly when organisms have only two children. 
 
 By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can make an organism wait 30 cycles to have 2 children, but after that a 3rd child might take no time at all. Organisms with three children will dominate because having more children means they spend less energy per child on average. However, having 3 children makes it harder to establish a stable pattern of who dies when and how. This results in chaos, a less densely populated board, and a lower population. 
 
