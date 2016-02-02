@@ -80,7 +80,7 @@ We want to see drama unfold in the game, and 3rd children create drama. By contr
 
 In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. Organisms strive for order, and stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo, and that creates more permutations of possible outcomes. This results in chaos, a less densely populated board, and a lower population. 
 
-So what's good for the individual can in some ways be bad for the community. We can relate this to China's one child policy. Regardless of whether its moral or practical, their goal was to benefit the country as a whole at the expense of the individual. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
+So what's good for the individual can in some ways be bad for the community. In our world this is a frequent occurrence requiring government intervention. An extreme but relevant example is China's one child policy. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
 
