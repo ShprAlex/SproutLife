@@ -96,7 +96,7 @@ public class SproutStep extends Step {
             sproutSeeds(seeds);
         }
         
-        if (getEchosystem().getOrganisms().size()<30) {
+        if (getEchosystem().getOrganisms().size()<12) {
             sproutRandomSeed();
         }
     }
