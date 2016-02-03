@@ -118,7 +118,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 - **Number of cells at the time of collision** - This was the most obvious way to check who was bigger at the time of collision. However, all organisms start as small sprouts. This means there will be lots of chances for an organism that would have been a big grown up to lose to an organism that will remain small when fully grown. In practice this wasn't moving the needle.
 
-- **Max number of cells during current life** - This helps to give an advantage to older organisms that may decline in size after hitting an early peak. Yes, size really peaks early and goes down, this is not just anthropomorphism.
+- **Max number of cells during current life** - This helps to give an advantage to older organisms that may decline in size after hitting an early peak. Yes, organisms do peak in size early on and then get smaller, this is not just anthropomorphism.
  
 - **Max number of cells in parent's life time** - The organism may be small now, but its parent was big. Therefore the child's size advantage during a collision will be judged by the parent. This finally started to have an effect. However, the maximum size an organism achieves is still too granular. It takes a lot to boost the maximum size more than a few cells.
 
