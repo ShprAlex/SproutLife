@@ -88,6 +88,8 @@ So what's good for the individual can in some ways be bad for the community. In 
 
 ### Collisions - "competitive mode" lets organisms grow bigger
 
+For evolution towards greater complexity, it should be the case that the best bigger organism is superior to the best smaller organism. Bigger is not always better, but a more advanced organism should be able to evolve by taking advantage of greater size. Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism and the greater it's size the more room for mutation. The more mutations an organism has, the longer its genetic code (which simply lists their mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. In essance being bigger gives an arganism a bigger brain (which is also it's body), and we want an environment where bigger brains win.
+
 To get organisms to grow, we need to add another incentive. A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
 
 Will write more about this later, check out the code!
