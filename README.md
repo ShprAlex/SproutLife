@@ -92,19 +92,26 @@ For evolution towards greater complexity, it should be the case that bigger is b
 
 Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
 
-### Collisions - "competitive mode" lets organisms grow bigger
+### Collisions between organisms
 
-- **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. They can be directly adjacent, or they could be one space apart. 
+- **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. The cells can be directly adjacent, or they could be one space apart. At locations where two organisms meet, collisions typically cause the death of cells that would have stayed alive, or prevent the birth of cells that otherwise would have been born.
 
-- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is in contrast to rules contolling lifespan, minimum clild bearing age, seed type, etc, which operate on a personal level.
+- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is in contrast to rules controlling lifespan, minimum child bearing age, seed type, etc., which operate on a personal level.
 
-- **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable charectaristics. We can say that it's optional for an organism to posess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
+- **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable characteristics. We can say that it's optional for an organism to possess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
 
-- **Effect of collisions** - Cells have two kinds of rules. 1. Rules for when a living cell stays alive or dies. 2. Rules for when a new cell is born. Collisions can affect both of these rules. We can have a rule where a cell is forced to die prematurely when it is adjacent to the cell of a superior organism. For empty space between organisms, we can have a rule where a cell that would be born isn't when the empty space is adjacent to the cell of a superior organism.
+### Non-competitive collision modes
+
+- **Cooperative collisions** - 
+
+- **Friendly collisions** - 
+
+### Competitive collision mode - finally achieving growth
 
 A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
 
 Will write more about this later, check out the code!
+
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
 
