@@ -112,7 +112,21 @@ Collisions are unavoidable as organisms reproduce to fill the board. To keep thi
 
 - **Friendly mode - more personality** - The slight difference between cooperative mode and friendly mode lets cells distinguish between their own organism and others. This translates into a tendency to benefit one's own organism at the expense of collective stability. The result is that friendly mode tends to maintain organisms at their current size more so than cooperative mode where organisms tend to shrink. Evolution keeps going even as organisms stay at their current size.
 
-### Competitive collision mode - finally achieving growth
+### Competitive Mode - first steps, defining "big"
+
+In pursuit of bigger, more sophisticated organisms it seems natural to let bigger organisms win collisions. Bigger organisms should come out undamaged and carrying on with reproduction, while smaller organisms have some cells deleted and may be unable to procreate. However, easy definitions of "big" didn't seem to work, so it was necessary to hunt for a better metric for size comparison.
+
+- **Number of cells at the time of collision** - This was the most obvious way to check who was bigger at the time of collision. However, all organisms start as small sprouts. This means there will be lots of chances for an organism that would have been a big grown up to lose to an organism that will remain small when fully grown. In practice this wasn't moving the needle.
+
+- **Max number of cells during current life** - This helps to give an advantage to older organisms that may decline in size after hitting an early peak. Yes, size really peaks early and goes down, this is not just anthropomorphism.
+ 
+- **Max number of cells in parent's life time** - The organism may be small now, but its parent was big. Therefore the child's size advantage during a collision will be judged by the parent. This finally started to have an effect. However, the maximum size an organism achieves is still too granular. It takes a lot to boost the maximum size more than a few cells.
+
+- **Max territory** - Territory is defined as all the coordinates visited by an organism during its life. If an organism creates a glider, than that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
+
+- **Max between parent's and grandparent's territory ** - This heavy handed measure, judging an organism's size by the maximum size of its parent's and grandparent's is finally what was settled on. Now we can make sure that bigger organisms get the upper hand in the population and that the general trend is towards growth.
+
+### Competitive Mode - finally achieving growth
 
 A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
 
