@@ -102,7 +102,7 @@ Bigger organisms are able to have more mutations. Mutations correspond to coordi
 
 ### Natural collision modes
 
-Collisions are unavoidable as organisms reproduce to fill the board. To keep things simple, we can respect the rules of GOL when deciding how to handle cells with adjacent neighbors from a different organism.
+Collisions are unavoidable as organisms reproduce to fill the board. To keep things simple and "natural", we can respect the rules of GOL when handling collisions.
 
 - **Cooperative mode** - Cooperative mode is the most direct implementation of GOL rules. Just like GOL, a cell stays alive if it has 2 or 3 living neighbors, regardless of which organism those neighbors belong to. New cells are born when a cell has exactly 3 neighbors, but all 3 neighbors must be part of the same organism. If there are more than 3 neighbors or 3 neighbors from a mix of organisms, a cell isn't born.
 
