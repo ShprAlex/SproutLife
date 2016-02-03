@@ -108,7 +108,9 @@ Collisions are unavoidable as organisms reproduce to fill the board. To keep thi
 
 - **Cooperative mode - a common goal** - Cooperative mode minimizes the difference between how a cell sees its own organism and others. Because of this, stable structures are established fastest in cooperative mode. When cells become stable, they tend to reduce their lifespan so as to create minimal growth in order to reproduce. Extra cells generated beyond the need for reproduction only get in the way.
 
-- **Friendly mode** - 
+- **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors must be a part of the cell's own organism. The birth conditions are the same as for cooperative mode.
+
+- **Friendly mode - more personality** - The slight difference between cooperative mode and friendly mode lets cells distinguish between their own organism and others. This translates into a tendency to benefit one's own organism at the expense of collective stability. The result is that friendly mode tends to maintain organisms at their current size more so than cooperative mode where organisms tend to shrink. Evolution keeps going even as organisms stay at their current size.
 
 ### Competitive collision mode - finally achieving growth
 
