@@ -114,7 +114,7 @@ Collisions are unavoidable as organisms reproduce to fill the board. To keep thi
 
 ### Competitive Mode - first steps, defining "big"
 
-In pursuit of bigger, more sophisticated organisms it seems natural to let bigger organisms win collisions. Bigger organisms should come out undamaged and carrying on with reproduction, while smaller organisms have some cells deleted and may be unable to procreate. However, easy definitions of "big" didn't seem to work, so it was necessary to hunt for a better metric for size comparison.
+In pursuit of bigger, more sophisticated organisms it seems natural to let bigger organisms win collisions. Bigger organisms should come out undamaged and carrying on with reproduction, while smaller organisms have some cells destroyed and may be unable to procreate. However, easy definitions of "big" didn't seem to work, so it was necessary to hunt for a better metric for size comparison.
 
 - **Number of cells at the time of collision** - This was the most obvious way to check who was bigger at the time of collision. However, all organisms start as small sprouts. This means there will be lots of chances for an organism that would have been a big grown up to lose to an organism that will remain small when fully grown. In practice this wasn't moving the needle.
 
