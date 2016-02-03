@@ -95,8 +95,7 @@ Will write more about this later, check out the code!
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
 
 ### Rock Paper Scissors - Big Bigger Biggest. 
-### Aka.
-### The enemy of my enemy is my food.
+### Aka. The enemy of my enemy is my food.
 
 The size advantage we've created is constant no matter what the difference in size. If one organism is a little bigger than a competitor it benefits the same as if it were a lot bigger. However, the reproductive advantage of smaller organisms being quicker to make copies of themselves varies proportionately to size. The result is that a much bigger organism will collapse when in contact with a smaller organism -- unless it evolves. Larger organisms must develop an inherent advantage over much smaller organisms to survive. And they do, to a point.
 
