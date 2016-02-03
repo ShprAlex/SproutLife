@@ -122,7 +122,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
  
 - **Max number of cells in parent's life time** - The organism may be small now, but its parent was big. Therefore the child's size advantage during a collision will be judged by the parent. This finally started to have an effect. However, the maximum size an organism achieves is still too granular. It takes a lot to boost the maximum size more than a few cells.
 
-- **Max territory** - Territory is defined as all the coordinates visited by an organism during its life. If an organism creates a glider, than that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
+- **Max territory** - Territory is defined as all the coordinates ever occupied by an organism's cells during its life. If an organism creates a glider, than that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
 
 - **Max between parent's and grandparent's territory** - This heavy handed measure, judging an organism's size by the maximum size of its parent's and grandparent's sizes is finally what was settled on. Now we can make sure that bigger organisms get the upper hand in the population and that the general trend is towards growth.
 
