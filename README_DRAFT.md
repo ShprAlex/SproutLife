@@ -5,6 +5,8 @@ The size advantage we've created is constant no matter what the difference in si
 
 The relationship between small, bigger, and biggest is remeniscent of rock paper scissors. Interestingly this kind of [Cyclic cellular automata](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton) has been studied by David Griffeath and is illustrated well in this video [YouTube Video](https://www.youtube.com/watch?v=M4cV0nCIZoc).
 
+[Simple algorithm](http://discovery.ucl.ac.uk/17241/1/17241.pdf)
+
 What's really interesting is that there is a stability present with 3 types or organisms that have a cycle of dominance that isn't present with just 2 organisms. This tendency to maintain a mixes state may eventually leed to mutually co-existing species, and even structures reminiscent of cell walls.
 
 ### Working well vs. looking good (draft)
