@@ -106,7 +106,7 @@ Collisions are unavoidable as organisms reproduce to fill the board. To keep thi
 
 - **Cooperative mode** - Cooperative mode is the most direct implementation of GOL rules. Just like GOL, a cell stays alive if it has 2 or 3 living neighbors, regardless of which organism those neighbors belong to. New cells are born when a cell has exactly 3 neighbors, but all 3 neighbors must be part of the same organism. If there are more than 3 neighbors or 3 neighbors from a mix of organisms, a cell isn't born.
 
-- **Cooperative mode - a common goal** - Cooperative mode minimizes the difference between how a cell sees its own organism and others. Because of this, stable structures are established fastest in cooperative mode. When cells become stable, they tend to reduce their lifespan so as to create minimal growth in order to reproduce. Extra cells generated beyond the need for reproduction only get in the way.
+- **Cooperative mode - a common goal** - Cooperative mode minimizes the difference between how a cell sees its own organism and others. Because of this, stable structures are established fastest in cooperative mode. When organisms become stable, they tend to reduce their lifespan so as to create minimal growth in order to reproduce. Extra cells generated beyond the need for reproduction only get in the way.
 
 - **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors must be a part of the cell's own organism. The birth conditions are the same as for cooperative mode.
 
