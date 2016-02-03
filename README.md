@@ -94,7 +94,15 @@ Bigger organisms are able to have more mutations. Mutations correspond to coordi
 
 ### Collisions - "competitive mode" lets organisms grow bigger
 
-To get organisms to grow, we need to add another incentive. A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
+- **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. They can be directly adjacent, or they could be one space apart. 
+
+- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is opposed to rules contolling lifespan, minimum clild bearing age, seed type, etc, which operate on a personal level.
+
+- **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable charectaristics. We can say that it's optional for an organism to posess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
+
+- **Effect of collisions** - Cells have two kinds of rules. 1. Rules for when a living cell stays alive or dies. 2. Rules for when a new cell is born. Collisions can affect both of these rules. We can have a rule where a cell is forced to die prematurely when it is adjacent to the cell of a superior organism. For empty space between organisms, we can have a rule where a cell that would be born isn't when the empty space is adjacent to the cell of a superior organism.
+
+A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
 
 Will write more about this later, check out the code!
 
