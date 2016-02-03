@@ -96,7 +96,7 @@ Bigger organisms are able to have more mutations. Mutations correspond to coordi
 
 - **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. They can be directly adjacent, or they could be one space apart. 
 
-- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is opposed to rules contolling lifespan, minimum clild bearing age, seed type, etc, which operate on a personal level.
+- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is in contrast to rules contolling lifespan, minimum clild bearing age, seed type, etc, which operate on a personal level.
 
 - **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable charectaristics. We can say that it's optional for an organism to posess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
 
