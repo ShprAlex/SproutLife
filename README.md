@@ -62,7 +62,7 @@ The initial excitement of developing Sprout Life was that it worked! Organisms d
 
 - **Organisms want to be small** - It turns out that the basic implementation creates organisms that want to be smaller. Organisms start big and clumsy, and figure out a way to get small and efficient. As they get smaller, organisms are able to reproduce more quickly and increase their population within the grid.
 
-- **Bigger can be better** - A bigger size does have advantages. An organism needs to compete as well as reproduce, and a greater size allows it to put more energy into collisions disruptive to its neighbors.
+- **Bigger can be better** - A bigger size does have advantages. An organism needs to compete for space as well as reproduce, and a greater size allows it to put more energy into collisions disruptive to its neighbors.
 
 The direction towards smallness is not straight forward, and we can still learn a lot from how new abilities are introduced and propagate through the population. Overall though, the trend is to be simple, and simple is boring. Simple is also a fixed boundary beyond which progress isn't possible.
 
@@ -86,9 +86,13 @@ So what's good for the individual can in some ways be bad for the community. In 
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
 
-### Collisions - "competitive mode" lets organisms grow bigger
+### Bigger bodies, bigger brains
 
-For evolution towards greater complexity, it should be the case that the best bigger organism is superior to the best smaller organism. Bigger is not always better, but a more advanced organism should be able to evolve by taking advantage of greater size. Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism and the greater it's size the more room for mutation. The more mutations an organism has, the longer its genetic code (which simply lists their mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. In essance being bigger gives an arganism a bigger brain (which is also it's body), and we want an environment where bigger brains win.
+For evolution towards greater complexity, it should be the case that bigger is better than smaller. The best bigger organism should be superior to the best smaller organism. Bigger need not always be better, but a more advanced organism should be able to evolve by taking advantage of greater size. 
+
+Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
+
+### Collisions - "competitive mode" lets organisms grow bigger
 
 To get organisms to grow, we need to add another incentive. A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
 
