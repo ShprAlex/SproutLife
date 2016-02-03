@@ -74,7 +74,7 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
-### Individual oppertunity vs. Collective stability - or - Tyranny of 3rd children
+### Individual opportunity vs. collective stability - or - The tyranny of 3rd children
 
 We want to see drama unfold in the game, and 3rd children create drama. In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. 
 
