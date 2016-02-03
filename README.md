@@ -96,15 +96,19 @@ Bigger organisms are able to have more mutations. Mutations correspond to coordi
 
 - **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. The cells can be directly adjacent, or they could be one space apart. At locations where two organisms meet, collisions typically cause the death of cells that would have stayed alive, or prevent the birth of cells that otherwise would have been born.
 
-- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is in contrast to rules controlling lifespan, minimum child bearing age, seed type, etc., which operate on a personal level.
+- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins when two organism collide. This is in contrast to rules controlling lifespan, minimum child bearing age, seed type, etc., which operate on an individual level.
 
 - **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable characteristics. We can say that it's optional for an organism to possess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
 
-### Non-competitive collision modes
+### Natural collision modes
 
-- **Cooperative collisions** - 
+Collisions are unavoidable as organisms reproduce to fill the board. To keep things simple, we can respect the rules of GOL when deciding how to handle cells with adjacent neighbors from a different organism.
 
-- **Friendly collisions** - 
+- **Cooperative mode** - Cooperative mode is the most direct implementation of GOL rules. Just like GOL, a cell stays alive if it has 2 or 3 living neighbors, regardless of which organism those neighbors belong to. New cells are born when a cell has exactly 3 neighbors, but all 3 neighbors must be part of the same organism. If there are more than 3 neighbors or 3 neighbors from a mix of organisms, a cell isn't born.
+
+- **Cooperative mode - a common goal** - Cooperative mode minimizes the difference between how a cell sees its own organism and others. Because of this, stable structures are established fastest in cooperative mode. When cells become stable, they tend to reduce their lifespan so as to create minimal growth in order to reproduce. Extra cells generated beyond the need for reproduction only get in the way.
+
+- **Friendly mode** - 
 
 ### Competitive collision mode - finally achieving growth
 
