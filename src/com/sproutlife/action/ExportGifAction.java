@@ -71,6 +71,9 @@ public class ExportGifAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         initChooser();
         controller.getScrollController().updateScrollBars();
+        controller.getGameModel().setPlayGame(false);
+        //TODO: have play/pause button text update itself 
+        controller.getMainControlPanel().getStartPauseButton().setText("Play");
         int returnVal = chooser.showSaveDialog(controller.getGameFrame());
         File saveFile;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -84,12 +87,21 @@ public class ExportGifAction extends AbstractAction {
                     ex.printStackTrace();
                 }
             }
+            final File finalSaveFile = saveFile;
+            new Thread() {
+                
+                @Override
+                public void run() {
+                    try {
+                        saveImage(finalSaveFile);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(controller.getGameFrame(), "Image is too large, or nothing to draw");
+                    }
+                    
+                }
+            }.start();
+            
 
-            try {
-                saveImage(saveFile);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(controller.getGameFrame(), "Image is too large, or nothing to draw");
-            }
         }
     }    
     
@@ -122,7 +134,9 @@ public class ExportGifAction extends AbstractAction {
                 skipFrames = 1;
             }
             for(int j=0; j<skipFrames; j++) {
-                controller.getGameController().getGameModel().performGameStep();
+                controller.getInteractionLock().writeLock().lock();
+                controller.getGameModel().performGameStep();
+                controller.getInteractionLock().writeLock().unlock();
                 controller.getImageManager().repaintNewImage();
             }
             
