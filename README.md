@@ -20,7 +20,7 @@ I hope that others get involved with this project as well. In particular, I hope
 
 There are several reasons why Sprout Life is exciting:
 
-- **Patterns as programs** - Conway's Game of Life creates a visual programming language where patterns of 1's and 0's on a board act as programs. A pattern can take on a life of its own and move across the board while the cells remain stationary. Lots of interesting patterns arise spontaneously in Conway's Game of Life, but it stops short of producing reproduction. This is where Sprout Life picks up.
+- **Patterns as programs** - Conway's Game of Life creates a visual programming language where patterns of 1's and 0's on a board act as programs. A pattern can take on a life of its own and move across the board while the grid remains stationary. Lots of interesting patterns arise spontaneously in Conway's Game of Life, but it stops short of producing reproduction. This is where Sprout Life picks up.
 
 - **Open ended evolution** - Sprout Life allows for truly open ended evolution. Other evolution simulations ([Video](https://www.youtube.com/watch?v=JBgG_VSP7f8)) create interesting behavior, but they have a separation between the body of the organism and the code. In the case of GOL and Sprout Life, the bigger the pattern, the bigger the code. The goal is to design a system that allows programs to grow to an unlimited complexity. "Unlimited" in this case is far, far, away from even the simplest of bacteria. But life is self-similar, so there can be a lot to learn from even basic life forms.
 
