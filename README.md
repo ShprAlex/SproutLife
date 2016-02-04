@@ -144,5 +144,14 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
 
 
+### **** DRAFT ****
+### Rock Paper Scissors - Small Bigger Biggest. 
+### Aka. The enemy of my enemy is my food.
 
+The size advantage we've created is constant no matter what the difference in size. If one organism is a little bigger than a competitor it benefits the same as if it were a lot bigger. However, the reproductive advantage of smaller organisms varies proportionately to size. The smaller the organism the quicker it is to make copies of itself. The result is that a colony of a much bigger organism will collapse when in contact with colony of a smaller organism -- unless it evolves. Larger organisms must develop an inherent advantage over much smaller organisms to survive. And they do.
 
+The relationship between small, bigger, and biggest is reminiscent of rock paper scissors. Interestingly this kind of [Cyclic cellular automata](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton) has been studied by David Griffeath and is illustrated well in this video [YouTube Video](https://www.youtube.com/watch?v=M4cV0nCIZoc).
+
+Another good article referencing the Belousov-Zhabotinsky reaction and a [simple algorithm](http://discovery.ucl.ac.uk/17241/1/17241.pdf) can be seen here. Note the A,B,C triple that occurs in this document as well.
+
+What's really interesting is that there is a stability present with 3 types or organisms that have a cycle of dominance that isn't present with just 2 organisms. This tendency to maintain a mixes state may eventually lead to mutually co-existing species, and even structures reminiscent of cell walls.
