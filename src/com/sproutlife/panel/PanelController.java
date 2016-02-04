@@ -207,7 +207,7 @@ public class PanelController {
             public void actionPerformed(ActionEvent arg0) {
                 if (getGameModel().getPlayGame()) {
                     getGameModel().setPlayGame(false);
-                    getMainControlPanel().getStartPauseButton().setText("Start");
+                    getMainControlPanel().getStartPauseButton().setText("Play");
                 }
                 else {
                     getGameModel().setPlayGame(true);
@@ -228,6 +228,8 @@ public class PanelController {
             public void actionPerformed(ActionEvent arg0) {
                 getInteractionLock().writeLock().lock();
                 getGameModel().getEchosystem().resetCells();
+                getGameModel().getEchosystem().pruneEmptyOrganisms();
+                getMainControlPanel().getStartPauseButton().setText("Start");
                 getInteractionLock().writeLock().unlock();
                 getImageManager().repaintNewImage();
             }
