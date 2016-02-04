@@ -4,25 +4,21 @@
  * are made available under the terms of the The MIT License (MIT)
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
+ * 
+ * Development started with a Java based implementation created by Matthew Burke.
+ * http://burke9077.com 
+ * Burke9077@gmail.com @burke9077 Creative Commons Attribution 4.0 International
  *******************************************************************************/
 package com.sproutlife.panel;
 
-import java.awt.Desktop;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URI;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import com.sproutlife.Settings;
@@ -35,13 +31,12 @@ public class GameMenu extends JMenuBar implements ActionListener {
     PanelController controller;
     
     //private JMenuBar mb_menu;
-    private JMenu m_file, m_game, m_help;
-    private JMenuItem mi_file_options, mi_file_exit;
+    private JMenu m_file, m_game;
+    private JMenuItem mi_file_exit;
     private JMenuItem mi_game_play, mi_game_step, mi_game_stop, mi_game_reset;
-    private JMenuItem mi_help_about, mi_help_source;
+    
     private Action enableMutationAction;
     
-    private int i_movesPerSecond = 200;
     
     public GameMenu(PanelController controller) {
         this.controller = controller;
@@ -67,41 +62,25 @@ public class GameMenu extends JMenuBar implements ActionListener {
         this.add(m_game);
         //m_help = new JMenu("Help");
         //this.add(m_help);
-        mi_file_options = new JMenuItem("Options");
-        mi_file_options.addActionListener(this);
         mi_file_exit = new JMenuItem("Exit");
         mi_file_exit.addActionListener(this);
         m_file.add(new ExportPngAction(controller));
         m_file.add(new ExportGifAction(controller));
-        m_file.add(mi_file_options);
         m_file.add(new JSeparator());
         m_file.add(mi_file_exit);
 
-        mi_game_play = new JMenuItem("Play");
-        mi_game_play.addActionListener(this);                        
+        mi_game_play = new JMenuItem(controller.getActionManager().getPlayGameAction());                        
         mi_game_step = new JMenuItem("Step");
         mi_game_step.addActionListener(this);
-        mi_game_stop = new JMenuItem("Stop");
-        mi_game_stop.setEnabled(false);
-        mi_game_stop.addActionListener(this);
-        mi_game_reset = new JMenuItem("Reset");
-        mi_game_reset.addActionListener(this);
+        mi_game_reset = new JMenuItem(controller.getActionManager().getResetGameAction());
+
 
         m_game.add(new JSeparator());
         m_game.add(mi_game_play);
         m_game.add(mi_game_step);
-        m_game.add(mi_game_stop);
         m_game.add(new JMenuItem(this.enableMutationAction));
         m_game.add(mi_game_reset);
-        /*
-        mi_help_about = new JMenuItem("About");
-        mi_help_about.addActionListener(this);
-        mi_help_source = new JMenuItem("Source");
-        mi_help_source.addActionListener(this);
-        m_help.add(mi_help_about);
-        m_help.add(mi_help_source);
-        */
-        // Setup game board
+
     }
     
     public void setPlayGame(boolean playGame) {
@@ -122,50 +101,10 @@ public class GameMenu extends JMenuBar implements ActionListener {
         if (ae.getSource().equals(mi_file_exit)) {
             // Exit the game
             System.exit(0);
-        } else if (ae.getSource().equals(mi_file_options)) {
-            // Put up an options panel to change the number of moves per second
-            final JFrame f_options = new JFrame();
-            f_options.setTitle("Options");
-            f_options.setSize(300,60);
-            f_options.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - f_options.getWidth())/2, 
-                (Toolkit.getDefaultToolkit().getScreenSize().height - f_options.getHeight())/2);
-            f_options.setResizable(false);
-            JPanel p_options = new JPanel();
-            p_options.setOpaque(false);
-            f_options.add(p_options);
-            p_options.add(new JLabel("Number of moves per second:"));
-            Integer[] secondOptions = {1,2,3,4,5,10,15,20};
-            final JComboBox cb_seconds = new JComboBox(secondOptions);
-            p_options.add(cb_seconds);
-            cb_seconds.setSelectedItem(i_movesPerSecond);
-            cb_seconds.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    i_movesPerSecond = (Integer)cb_seconds.getSelectedItem();
-                    f_options.dispose();
-                }
-            });
-            f_options.setVisible(true);
-        } else if (ae.getSource().equals(mi_game_reset)) {
-            getGameModel().getBoard().resetBoard();
-            getScrollPanel().repaint();
-        } else if (ae.getSource().equals(mi_game_play)) {
-            setPlayGame(true);
         } else if (ae.getSource().equals(mi_game_step)) {
             getGameModel().performGameStep();
             getScrollPanel().repaint();
-        } else if (ae.getSource().equals(mi_game_stop)) {
-            setPlayGame(false);
-        } else if (ae.getSource().equals(mi_help_source)) {
-            Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-            try {
-                desktop.browse(new URI("https://github.com/Burke9077/Conway-s-Game-of-Life"));
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Source is available on GitHub at:\nhttps://github.com/Burke9077/Conway-s-Game-of-Life", "Source", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else if (ae.getSource().equals(mi_help_about)) {
-            JOptionPane.showMessageDialog(null, "Conway's game of life was a cellular animation devised by the mathematician John Conway.\nThis Java, swing based implementation was created by Matthew Burke.\n\nhttp://burke9077.com\nBurke9077@gmail.com\n@burke9077\n\nCreative Commons Attribution 4.0 International");
-        }
+        } 
     }
     
     private void initActions() {

@@ -71,9 +71,8 @@ public class ExportGifAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         initChooser();
         controller.getScrollController().updateScrollBars();
-        controller.getGameModel().setPlayGame(false);
-        //TODO: have play/pause button text update itself 
-        controller.getMainControlPanel().getStartPauseButton().setText("Play");
+        controller.setPlayGame(false);
+
         int returnVal = chooser.showSaveDialog(controller.getGameFrame());
         File saveFile;
         if (returnVal == JFileChooser.APPROVE_OPTION) {

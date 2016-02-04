@@ -15,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -27,6 +28,9 @@ import javax.swing.event.ChangeListener;
 
 import com.sproutlife.GameController;
 import com.sproutlife.Settings;
+import com.sproutlife.action.ActionManager;
+import com.sproutlife.action.PlayGameAction;
+import com.sproutlife.action.ResetGameAction;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.step.GameStep.StepType;
@@ -44,6 +48,7 @@ import com.sproutlife.renderer.BoardRenderer;
 public class PanelController {
     GameController gameController;
     GameFrame gameFrame;
+    ActionManager actionManager;
  
     MainControlPanel mainControlPanel;
     DisplayControlPanel displayControlPanel;
@@ -58,15 +63,16 @@ public class PanelController {
     public PanelController(GameController gameController) {
         this.gameController = gameController;
         
+        this.actionManager = new ActionManager(this);
+        
         this.interactionHandler = new InteractionHandler(this); 
         interactionHandler.setHandlerSet(new DefaultHandlerSet(this));
         
         this.scrollController = new ScrollPanelController(this);
 
-        this.imageManager = new ImageManager(this,  LogoStyle.Small);
+        this.imageManager = new ImageManager(this,  LogoStyle.Small);               
         
-        buildPanels();
-            
+        buildPanels();            
     }
     
     public void start() {
@@ -83,6 +89,13 @@ public class PanelController {
     public GameController getGameController() {
         return gameController;
     };   
+    
+    /**
+     * @return the actionManager
+     */
+    public ActionManager getActionManager() {
+        return actionManager;
+    }
     
     public ScrollPanel getScrollPanel() {
         return getScrollController().getScrollPanel();
@@ -214,18 +227,8 @@ public class PanelController {
     }
     
     private void addMainControlPanelListeners() {
-        getMainControlPanel().getStartPauseButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                if (getGameModel().getPlayGame()) {
-                    getGameModel().setPlayGame(false);
-                    getMainControlPanel().getStartPauseButton().setText("Play");
-                }
-                else {
-                    getGameModel().setPlayGame(true);
-                    getMainControlPanel().getStartPauseButton().setText("Pause");
-                }
-            }
-        });
+        getMainControlPanel().getStartPauseButton().setAction(
+                getActionManager().getPlayGameAction()); 
         
         getMainControlPanel().getStepButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -233,19 +236,10 @@ public class PanelController {
                 getImageManager().repaintNewImage();
             }
         });
-        
-        
-        getMainControlPanel().getResetButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                getInteractionLock().writeLock().lock();
-                getGameModel().getEchosystem().resetCells();
-                getGameModel().getEchosystem().pruneEmptyOrganisms();
-                getMainControlPanel().getStartPauseButton().setText("Start");
-                getInteractionLock().writeLock().unlock();
-                getImageManager().repaintNewImage();
-            }
-        });
-        
+                
+        getMainControlPanel().getResetButton().setAction(
+                getActionManager().getResetGameAction());
+                                        
         getMainControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
@@ -313,7 +307,7 @@ public class PanelController {
             }
         });        
     }
-   
+      
     public void addDisplayControlPanelListeners() {
         getDisplayControlPanel().getChckbxCellLayer().addItemListener(new ItemListener() {            
             @Override
@@ -407,6 +401,10 @@ public class PanelController {
             getMainControlPanel().getRdbtnCompetitive().setSelected(true);
         }
         
+    }
+    
+    public void setPlayGame(boolean playGame) {
+        getActionManager().getPlayGameAction().setPlayGame(playGame);
     }
     
     public void initSeedTypeComboBox() {
