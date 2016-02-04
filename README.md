@@ -110,7 +110,7 @@ Collisions are unavoidable as organisms reproduce to fill the board. To keep thi
 
 - **Friends vs. Neighbors** - Friends are defined as adjacent cells from the same organism. This is in contrast to neighbors which are adjacent cells which can be from the same or different organisms. 
 
-- **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors is a friend from the cell's own organism. The birth conditions are the same as for cooperative mode.
+- **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors is a friend (as defined above). The birth conditions are the same as for cooperative mode.
 
 - **Friendly mode - more personality** - The slight difference between cooperative mode and friendly mode lets cells distinguish between their own organism and others. This translates into a tendency to benefit one's own organism at the expense of collective stability. The result is that friendly mode tends to maintain organisms at their current size more so than cooperative mode where organisms tend to shrink. Evolution keeps going even as organisms stay at their current size.
 
