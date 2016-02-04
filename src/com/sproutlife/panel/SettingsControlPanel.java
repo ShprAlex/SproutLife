@@ -25,6 +25,9 @@ public class SettingsControlPanel extends JPanel {
 	
 	PanelController panelController;
 	private JSpinner maxLifespanSpinner;
+	private JSpinner childOneEnergySpinner;
+	private JSpinner childTwoEnergySpinner;
+	private JSpinner childThreeEnergySpinner;
 	
 	public SettingsControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -45,14 +48,9 @@ public class SettingsControlPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JSpinner childOneEnergySpinner = new JSpinner();
+		childOneEnergySpinner = new JSpinner();
 		childOneEnergySpinner.setPreferredSize(new Dimension(50, 20));
-		childOneEnergySpinner.setValue(getInt(Settings.CHILD_ONE_ENERGY));
-		childOneEnergySpinner.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				set(Settings.CHILD_ONE_ENERGY,((JSpinner) arg0.getSource()).getValue());
-			}
-		});
+
 		ButtonGroup lifeModeButtonGroup = new ButtonGroup();
 		
 		JLabel lblMaxLifespan = new JLabel("Max lifespan");
@@ -74,7 +72,7 @@ public class SettingsControlPanel extends JPanel {
 		gbc_maxLifespanSpinner.gridy = 1;
 		add(maxLifespanSpinner, gbc_maxLifespanSpinner);
 		
-		JLabel childOneEnergyLabel = new JLabel("Child 1 energy");
+		JLabel childOneEnergyLabel = new JLabel("Min childbearing age");
 		GridBagConstraints gbc_childOneEnergyLabel = new GridBagConstraints();
 		gbc_childOneEnergyLabel.gridwidth = 2;
 		gbc_childOneEnergyLabel.anchor = GridBagConstraints.WEST;
@@ -90,16 +88,10 @@ public class SettingsControlPanel extends JPanel {
 		gbc_childOneEnergySpinner.gridy = 3;
 		add(childOneEnergySpinner, gbc_childOneEnergySpinner);
 		
-		JSpinner childTwoEnergySpinner = new JSpinner();
+		childTwoEnergySpinner = new JSpinner();
 		childTwoEnergySpinner.setPreferredSize(new Dimension(50, 20));
-		childTwoEnergySpinner.setValue(getInt(Settings.CHILD_TWO_ENERGY));
-		childTwoEnergySpinner.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				set(Settings.CHILD_TWO_ENERGY,((JSpinner) arg0.getSource()).getValue());
-			}
-		});
 		
-		JLabel childTwoEnergyLabel = new JLabel("Child 2 energy");
+		JLabel childTwoEnergyLabel = new JLabel("Min 1st - 2nd child age");
 		GridBagConstraints gbc_childTwoEnergyLabel = new GridBagConstraints();
 		gbc_childTwoEnergyLabel.gridwidth = 2;
 		gbc_childTwoEnergyLabel.anchor = GridBagConstraints.WEST;
@@ -115,16 +107,10 @@ public class SettingsControlPanel extends JPanel {
 		gbc_childTwoEnergySpinner.gridy = 4;
 		add(childTwoEnergySpinner, gbc_childTwoEnergySpinner);
 		
-		JSpinner childThreeEnergySpinner = new JSpinner();
+		childThreeEnergySpinner = new JSpinner();
 		childThreeEnergySpinner.setPreferredSize(new Dimension(50, 20));
-		childThreeEnergySpinner.setValue(getInt(Settings.CHILD_THREE_ENERGY));
-		childThreeEnergySpinner.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				set(Settings.CHILD_THREE_ENERGY,((JSpinner) arg0.getSource()).getValue());
-			}
-		});
 		
-		JLabel childThreeEnergyLabel = new JLabel("Child 3+ energy");		
+		JLabel childThreeEnergyLabel = new JLabel("Min age btw ++ children");		
 		GridBagConstraints gbc_childThreeEnergyLabel = new GridBagConstraints();
 		gbc_childThreeEnergyLabel.gridwidth = 2;
 		gbc_childThreeEnergyLabel.anchor = GridBagConstraints.WEST;
@@ -142,16 +128,17 @@ public class SettingsControlPanel extends JPanel {
 
 	}
 
-    public void set(String s, Object o) {
-        panelController.getGameController().set(s, o);
-    }
-
-    public int getInt(String s) {
-        return panelController.getGameController().getSettings().getInt(s);
-    }
-
     public JSpinner getMaxLifespanSpinner() {
         return maxLifespanSpinner;
     }
 
+    public JSpinner getChildOneEnergySpinner() {
+        return childOneEnergySpinner;
+    }
+    public JSpinner getChildTwoEnergySpinner() {
+        return childTwoEnergySpinner;
+    }
+    public JSpinner getChildThreeEnergySpinner() {
+        return childThreeEnergySpinner;
+    }
 }

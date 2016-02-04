@@ -173,10 +173,21 @@ public class PanelController {
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
         
-        getSettingsControlPanel().getMaxLifespanSpinner().setValue(
-                getSettings().getInt(Settings.MAX_LIFESPAN));
+        initSettingsControlPanel();
         
         initSeedTypeComboBox();
+    }
+    
+    private void initSettingsControlPanel() {
+        getSettingsControlPanel().getMaxLifespanSpinner().setValue(
+                getSettings().getInt(Settings.MAX_LIFESPAN));
+        getSettingsControlPanel().getChildOneEnergySpinner().setValue(
+                getSettings().getInt(Settings.CHILD_ONE_ENERGY));
+        getSettingsControlPanel().getChildTwoEnergySpinner().setValue(
+                getSettings().getInt(Settings.CHILD_TWO_ENERGY));
+        getSettingsControlPanel().getChildThreeEnergySpinner().setValue(
+                getSettings().getInt(Settings.CHILD_THREE_ENERGY));
+                        
     }
 
     public void addGeneralListeners() {
@@ -365,7 +376,25 @@ public class PanelController {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
-        });         
+        });
+        
+        getSettingsControlPanel().getChildOneEnergySpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                getSettings().set(Settings.CHILD_ONE_ENERGY,((JSpinner) arg0.getSource()).getValue());
+            }
+        });
+        
+        getSettingsControlPanel().getChildTwoEnergySpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                getSettings().set(Settings.CHILD_TWO_ENERGY,((JSpinner) arg0.getSource()).getValue());
+            }
+        });
+        
+        getSettingsControlPanel().getChildThreeEnergySpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                getSettings().set(Settings.CHILD_THREE_ENERGY,((JSpinner) arg0.getSource()).getValue());
+            }
+        });
     }
        
           
