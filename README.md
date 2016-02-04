@@ -108,7 +108,9 @@ Collisions are unavoidable as organisms reproduce to fill the board. To keep thi
 
 - **Cooperative mode - a common goal** - Cooperative mode minimizes the difference between how a cell sees its own organism and others. Because of this, stable structures are established fastest in cooperative mode. When organisms become stable, they tend to reduce their lifespan so as to create minimal growth in order to reproduce. Extra cells generated beyond the need for reproduction only get in the way.
 
-- **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors must be a part of the cell's own organism. The birth conditions are the same as for cooperative mode.
+- **Friends vs. Neighbors** - Friends are defined as adjacent cells from the same organism. This is in contrast to neighbors which are adjacent cells which can be from the same or different organisms. 
+
+- **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors is a friend from the cell's own organism. The birth conditions are the same as for cooperative mode.
 
 - **Friendly mode - more personality** - The slight difference between cooperative mode and friendly mode lets cells distinguish between their own organism and others. This translates into a tendency to benefit one's own organism at the expense of collective stability. The result is that friendly mode tends to maintain organisms at their current size more so than cooperative mode where organisms tend to shrink. Evolution keeps going even as organisms stay at their current size.
 
@@ -122,17 +124,23 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
  
 - **Max number of cells in parent's life time** - The organism may be small now, but its parent was big. Therefore the child's size advantage during a collision will be judged by the parent. This finally started to have an effect. However, the maximum size an organism achieves is still too granular. It takes a lot to boost the maximum size more than a few cells.
 
-- **Territory** - Territory is defined as all the coordinates ever occupied by an organism's cells during its life. If an organism creates a glider, than that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
+- **Territory size** - Territory is defined as all the coordinates ever occupied by an organism's cells during its life. If an organism creates a glider, than that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
 
 - **Max between parent's and grandparent's territory** - This heavy handed measure, judging an organism's size by the maximum size of its parent's and grandparent's sizes is finally what was settled on. Now we can make sure that bigger organisms get the upper hand in the population and that the general trend is towards evolution of bigger organisms.
 
 ### Competitive Mode - finally achieving growth
 
-A "competitive" mode makes it so that when organisms collide, the cells touched on the smaller organism are destroyed. Tweaking these parameters finally resulted in organisms growing bigger. Ultimately, bigger is better under the right circumstances, which means there is no bound to how sophisticated an organism can be in order to more effectively survive and reproduce.
+- **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survive with 2 or 3 friends but more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
 
-Will write more about this later, check out the code!
+- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a bigger effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does than the cell dies or isn't born.
 
+- **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
+ 
+- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Even so, growth is slow. It can take 1,000 generations, which takes a 1 minute, for a change in organism size to take place. Growth is easier to achieve in organisms that are already big. Organisms that have become optimized to be small through the application of cooperative mode can resist growing larger even after competitive mode is on for a long time.
 
+- **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. A glider gun used as a real gun to disable enemies? This is a real possibility, that I believe I've seen happen. There is lots of cool things to see and cool experiments to do. 
+
+ 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
 
 
