@@ -4,7 +4,7 @@ Sprout Life extends the concept of Conway’s Game of Life to enable reproductio
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
-We can encourage bigger, more complex organisms to dominate over smaller organisms. In this way we create an open ended problem for evolution to solve. It’s exciting because there is no limit to how complex the evolved organisms can get.
+The evolution we create is open ended. We can encourage bigger, more complex organisms to dominate over smaller ones. It’s exciting because there is no limit to how complex the evolved organisms can get.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
 
