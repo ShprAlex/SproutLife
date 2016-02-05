@@ -2,7 +2,7 @@
 
 Sprout Life is an extension of Conway’s Game of Life which enables reproduction and mutation among the patterns on the board. We treat patterns of cells like organisms. Organisms grow and reproduce according to the rules of GOL, with a couple of slight changes. Organisms develop beneficial mutations which are passed down to their offspring. We can see evolution take place as successful organisms take over the board.
 
-From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer life span do not always help an organism and its descendants to thrive.
+From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
 We can encourage bigger, more complex organisms to dominate over smaller organisms. In this way we create an open ended problem for evolution to solve. It’s exciting because there is no limit to how complex the evolved organisms can get.
 
@@ -76,7 +76,7 @@ The direction towards smallness is not straight forward, and we can still learn 
 
 There are a few ways we can encourage our evolutionary model to maintain complexity so as to keep things interesting.
 
-- **Maturity to child-bearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
+- **Maturity to childbearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
@@ -102,7 +102,7 @@ Bigger organisms are able to have more mutations. Mutations correspond to coordi
 
 - **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. The cells can be directly adjacent, or they could be one space apart. At locations where two organisms meet, collisions typically cause the death of cells that would have stayed alive, or prevent the birth of cells that otherwise would have been born.
 
-- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins and who gets damaged when two organism collide. This is in contrast to rules controlling lifespan, minimum child bearing age, seed type, etc., which operate on an individual level.
+- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins and who gets damaged when two organism collide. This is in contrast to rules controlling lifespan, minimum childbearing age, seed type, etc., which operate on an individual level.
 
 - **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable characteristics. We can say that it's optional for an organism to possess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
 
