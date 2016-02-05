@@ -1,8 +1,6 @@
 # Sprout Life
 
-Sprout Life adds reproduction and mutation to Conway’s Game of Life. A pattern of cells is treated like an organism. To reproduce, the pattern has to grow according to GOL rules to produce a seed pattern, which becomes the start of a new organism.
-
-As it grows, an organism can acquire mutations that cause it to be quicker to produce seeds and reproduce. The resulting mutations are passed down to the next generation. We can see evolution take place as successful organisms take over the board.
+Sprout Life adds reproduction and mutation to Conway’s Game of Life. To reproduce, a pattern has to grow according to GOL rules to produce a seed pattern, which becomes the start of a new organism. Organisms acquire mutations that cause them to be quicker to produce seeds and reproduce. The resulting mutations are passed down to the next generation. We can see evolution take place as successful organisms take over the board.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer life span do not always help an organism and its descendants to thrive.
 
