@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life supports the next stage of evolution in Conway’s Game of Life. GOL defined a way for random pixels to self-organize into lifelike patterns. Sprout Life is a slight change to the rules that allows these patterns reproduce, mutate, and evolve.
+Sprout Life brings the next stage of evolution to Conway’s Game of Life. GOL defined a way for random pixels to self-organize into lifelike patterns. Sprout Life is a slight change to the rules that allows these patterns reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
