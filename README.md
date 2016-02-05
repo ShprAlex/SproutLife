@@ -1,10 +1,8 @@
 # Sprout Life
 
-Sprout Life extends the concept of Conway’s Game of Life to enable reproduction and mutation. We treat patterns of cells like organisms. Organisms grow and reproduce according to the rules of GOL, with a couple of slight changes. We can watch evolution take place as successful organisms take over the board.
+Sprout Life supports the next stage of evolution in Conway’s Game of Life. GOL defined a way for random pixels to self-organize into lifelike patterns. Sprout Life is a slight change to the rules that allows these patterns reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
-
-The evolution we create is open ended. We can encourage bigger, more complex organisms to dominate over smaller ones. It’s exciting because there is no limit to how complex the evolved organisms can get.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
 
@@ -22,9 +20,7 @@ I hope that others get involved with this project as well. In particular, I hope
 
 There are several reasons why Sprout Life is exciting:
 
-- **Patterns as programs** - You can think of patterns in Conway's Game of Life as machines. A pattern can take on a life of its own and move across the board. Patterns are also caclulators. Skilled designers have created patterns that perform complex tasks like [generating prime numbers](http://www.njohnston.ca/2009/08/generating-sequences-of-primes-in-conways-game-of-life/). Because of their calculating ability patterns act like programs, which means we are evolving brains and not just bodies.
-
-- **Open ended evolution** - Sprout Life allows for truly open ended evolution. Other evolution simulations ([Video](https://www.youtube.com/watch?v=JBgG_VSP7f8)) create interesting behavior, but they have a separation between the body of the organism and the code. In the case of GOL and Sprout Life, the bigger the pattern, the bigger the code. There are a lot more moving pieces. In the end, we'd like to see organisms outsmart their competition by growing bigger and more complex.
+- **Open ended evolution** - Sprout Life allows for truly open ended evolution. We can encourage bigger organisms to dominate over smaller ones. As organisms grow in size, they also grow in terms of their computing ability. The patterns are programs, not just machines. It’s exciting because there is no limit to how complex the evolved organisms can get.
 
 - **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
@@ -96,7 +92,11 @@ So what's good for the individual can in some ways be bad for the community. In 
 
 For evolution towards greater complexity, it should be the case that bigger is better than smaller. The best bigger organism should be superior to the best smaller organism. Bigger need not always be better, but a more advanced organism should be able to evolve by taking advantage of greater size. 
 
-Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
+Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. 
+
+Patterns are programs not just machines. Skilled designers have created GOL patterns that perform complex tasks like [generating prime numbers](http://www.njohnston.ca/2009/08/generating-sequences-of-primes-in-conways-game-of-life/). Because of their calculating ability patterns act like programs, which means we are evolving brains and not just bodies.
+
+In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
 
 ### Collisions between organisms
 
