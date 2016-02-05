@@ -22,7 +22,7 @@ I hope that others get involved with this project as well. In particular, I hope
 
 There are several reasons why Sprout Life is exciting:
 
-- **Simple as 1,2,3** - GOL is really simple. Really you never have to count to more than 3. Sprout Life maintains this simplicity. All the concepts below stem from counting up neighbors of a square on a grid and easy rules for flipping a cell on or off.
+- **Simple as 1,2,3** - GOL is really simple. Really you never have to count to more than 3. Sprout Life maintains this simplicity. All the concepts below stem from counting up neighbors and easy rules for flipping a cell on or off.
 
 - **Patterns as programs** - You can think of patterns in Conway's Game of Life as machines. A pattern can take on a life of its own and move across the board. Patterns are also caclulators. Skilled designers have created patterns that perform complex tasks like [computing prime numbers](http://www.njohnston.ca/2009/08/generating-sequences-of-primes-in-conways-game-of-life/). Because of their calculating ability patterns act like programs, which means we are evolving brains and not just bodies.
 
