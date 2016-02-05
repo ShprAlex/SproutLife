@@ -22,6 +22,8 @@ I hope that others get involved with this project as well. In particular, I hope
 
 There are several reasons why Sprout Life is exciting:
 
+- **Simple as 1,2,3** - GOL is really simple. Really you never have to count to more than 3. Sprout Life maintains this simplicity. All the concepts below stem from counting up neighbors of a square on a grid and easy rules for flipping a cell on or off.
+
 - **Patterns as programs** - Conway's Game of Life creates a visual programming language where patterns of 1's and 0's on a board act as programs. You can think of patterns as machines. A pattern can take on a life of its own and move across the board. Patterns are also caclulators. Skilled designers have created patterns that perform complex tasks like [calculating prime numbers](http://www.njohnston.ca/2009/08/generating-sequences-of-primes-in-conways-game-of-life/). Because of their calculating ability, we are evolving brains, not just bodies.
 
 - **Open ended evolution** - Sprout Life allows for truly open ended evolution. Other evolution simulations ([Video](https://www.youtube.com/watch?v=JBgG_VSP7f8)) create interesting behavior, but they have a separation between the body of the organism and the code. In the case of GOL and Sprout Life, the bigger the pattern, the bigger the code. There are a lot more moving pieces. We want the system to support ever more complicated, coordinated interaction. In the end, we'd also like to see organisms develop the ability to outsmart their competition by growing bigger and more complex.
