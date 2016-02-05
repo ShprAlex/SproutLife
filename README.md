@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life extends the concept of Conway’s Game of Life to enable reproduction and mutation among the patterns on the board. We treat patterns of cells like organisms. Organisms grow and reproduce according to the rules of GOL, with a couple of slight changes. We can watch evolution take place as successful organisms take over the board.
+Sprout Life extends the concept of Conway’s Game of Life to enable reproduction and mutation. We treat patterns of cells like organisms. Organisms grow and reproduce according to the rules of GOL, with a couple of slight changes. We can watch evolution take place as successful organisms take over the board.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
