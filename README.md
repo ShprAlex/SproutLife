@@ -30,7 +30,7 @@ There are several reasons why Sprout Life is exciting:
 
 ### Seeds that Sprout - the key idea
 
-A slight change in the rules from GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
+A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
 
