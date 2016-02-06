@@ -1,8 +1,8 @@
 # Sprout Life
 
-Sprout Life introduces the concept of organisms to Conway's Game of Life. A slight change to the rules allows organisms to reproduce and to mutate. Now we can watch first hand as organisms evolve.
+Sprout Life brings the next stage of evolution to Conway’s Game of Life. GOL defined a way for random pixels to self-organize into lifelike patterns. Sprout Life changes the rules slightly to allow patterns to reproduce, mutate, and evolve.
 
-From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer life span do not always help an organism and its descendants to thrive.
+From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
 
@@ -20,9 +20,7 @@ I hope that others get involved with this project as well. In particular, I hope
 
 There are several reasons why Sprout Life is exciting:
 
-- **Patterns as programs** - Conway's Game of Life creates a visual programming language where patterns of 1's and 0's on a board act as programs. A pattern can take on a life of its own and move across the board. Lots of interesting patterns arise spontaneously in Conway's Game of Life, but it stops short of producing reproduction. This is where Sprout Life picks up.
-
-- **Open ended evolution** - Sprout Life allows for truly open ended evolution. Other evolution simulations ([Video](https://www.youtube.com/watch?v=JBgG_VSP7f8)) create interesting behavior, but they have a separation between the body of the organism and the code. In the case of GOL and Sprout Life, the bigger the pattern, the bigger the code. There are a lot more moving pieces. We want the system to support ever more complicated, coordinated interaction. The goal of the organisms is survival, but we'd also like to see them develop the ability to outsmart their competition by growing bigger and more complex.
+- **Open ended evolution** - Sprout Life allows for truly open ended evolution. We can encourage bigger organisms to dominate over smaller ones. As organisms grow in size, they also grow in terms of their computing ability. The cell patterns are programs, not just machines. It’s exciting because there is no limit to how big and complex the evolved organisms can get.
 
 - **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
@@ -74,7 +72,7 @@ The direction towards smallness is not straight forward, and we can still learn 
 
 There are a few ways we can encourage our evolutionary model to maintain complexity so as to keep things interesting.
 
-- **Maturity to child-bearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
+- **Maturity to childbearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
@@ -94,13 +92,17 @@ So what's good for the individual can in some ways be bad for the community. In 
 
 For evolution towards greater complexity, it should be the case that bigger is better than smaller. The best bigger organism should be superior to the best smaller organism. Bigger need not always be better, but a more advanced organism should be able to evolve by taking advantage of greater size. 
 
-Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
+Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. 
+
+Patterns are programs not just machines. Skilled designers have created GOL patterns that perform complex tasks like [generating prime numbers](http://www.njohnston.ca/2009/08/generating-sequences-of-primes-in-conways-game-of-life/). Because of their calculating ability patterns act like programs, which means we are evolving brains and not just bodies.
+
+In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
 
 ### Collisions between organisms
 
 - **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. The cells can be directly adjacent, or they could be one space apart. At locations where two organisms meet, collisions typically cause the death of cells that would have stayed alive, or prevent the birth of cells that otherwise would have been born.
 
-- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins and who gets damaged when two organism collide. This is in contrast to rules controlling lifespan, minimum child bearing age, seed type, etc., which operate on an individual level.
+- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins and who gets damaged when two organism collide. This is in contrast to rules controlling lifespan, minimum childbearing age, seed type, etc., which operate on an individual level.
 
 - **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable characteristics. We can say that it's optional for an organism to possess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
 
