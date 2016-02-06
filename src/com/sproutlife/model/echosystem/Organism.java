@@ -16,38 +16,42 @@ import java.util.Set;
 import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
 
+/**
+ * Organisms are a collection of Cells. They keep track of the location where
+ * they were born, the seed from which they sprouted, their parents and
+ * children. They have a genome which stores their mutations.
+ * 
+ * Organisms have a lot going on, and some experimental attributes are placed in
+ * OrgAttributes to keep the code a bit cleaner.
+ * 
+ * @author Alex Shapiro
+ */
+
 public class Organism {
-    int id;
+    private int id;
+    private HashSet<Cell> cells;       
+    private Organism parent;
+    private ArrayList<Organism> children;
+    private Genome genome;
     private Seed seed;
-    Organism parent;
-    ArrayList<Organism> children;
-    Genome genome;
-    private HashSet<Cell> cells;
-    // territory is used to track all visited points
-    private HashSet<Point> territory; 
+
+    //The clock lets us know the organism's age, so we can just track when it was born 
     public GameClock clock;
+
+    // Lifespan isn's age, but a self destruct value above
+    // which the organism is removed
+    public int lifespan; 
+    private int born; //Game time when the organism was born.
+    private boolean alive = true;
+    private int timeOfDeath;         
+                        
+    private Point location;
+    public int x; //duplicate location for shorter code
+    public int y; //duplicate location for shorter code
     
-    
-    public int born;    
-    public int timeOfDeath;
-    public Point position;
-    public int x;
-    public int y;
-    public int kind = 0;
-    
-    public int energy = 0;
-    public int lifespan;
-    public int maxCells;
-    public int paab;
-    
-    public boolean bornFromInfected=false;
-    public Organism infectedBy;
-    public boolean infectorCanSprout=false;
-    
-    boolean alive = true;
-    int collisionCount = 0;
-    int territoryLength = 0;
-        
+    //Keep track of random and experimental attributes in separate class    
+    private OrgAttributes attributes;
+            
     public Organism(int id, GameClock clock, int x, int y, Organism parent, Seed seed) {
         
         this.id = id;
@@ -57,52 +61,28 @@ public class Organism {
         this.children = new ArrayList<Organism>();
         this.x = x;
         this.y = y;
-        this.position = new Point(x,y);
+        this.location = new Point(x,y);
         this.seed = seed;
         this.genome = new Genome();
-        this.cells = new HashSet<Cell>();
-        this.territory = new HashSet<Point>();
+        this.cells = new HashSet<Cell>();        
         this.timeOfDeath = -1;  
-        this.maxCells = 0;
-        
+        this.attributes = new OrgAttributes(this);
+   
         if (parent!=null) {
-            if (parent.infectedBy!=null) {
-                parent = parent.infectedBy;
-                this.parent = parent;
-                this.bornFromInfected = true;
-            }
-            this.paab = parent.getAge();
             parent.addChild(this);
             this.genome = parent.getGenome().clone();
             this.lifespan = parent.lifespan;
         }
-        this.genome.setSeed(this.seed);
-        
-        if (parent==null) {
-            kind = (new Random()).nextInt(3); //kind = 0;
-        }
-        /*
-        else if (id<=1000) {
-            kind = (new Random()).nextInt(3); 
-        }
-        */
-        else {
-            kind = parent.getKind();
-        }
-        // TODO Auto-generated constructor stub
+        this.genome.setSeed(this.seed);        
     }
     
     public int getId() {
         return id;
     }
     
-    public Point getPosition() {
-        return position;
-    }
-    
-    public int getKind() {
-        return kind;
-    }    
+    public Point getLocation() {
+        return location;
+    }   
     
     public Organism getParent() {
         return parent;
@@ -144,7 +124,11 @@ public class Organism {
     public int getAge() {
         return getClock().getTime() - this.born;
     }
-    
+
+    public OrgAttributes getAttributes() {
+        return attributes;
+    }    
+           
     public Genome getGenome() {
         return genome;
     }
@@ -162,8 +146,8 @@ public class Organism {
         }
         for (Point p : adjustOffsets) {
             
-            p.x += getPosition().x;
-            p.y += getPosition().y;
+            p.x += getLocation().x;
+            p.y += getLocation().y;
 
         }
         return adjustOffsets;        
@@ -184,17 +168,22 @@ public class Organism {
      */
     public void addCell(Cell c) {
         cells.add(c);
-        territory.add(c);
+        
+        getAttributes().territory.add(c);
         int dist = (c.x-this.x)*(c.x-this.x)+(c.y-this.y)*(c.y-this.y);
-        if (territoryLength<dist) {
-            territoryLength = dist;
+        if (getAttributes().territoryRadius<dist) {
+            getAttributes().territoryRadius = dist;
         }
-        this.maxCells = Math.max(size(), maxCells);
+        this.getAttributes().maxCells = Math.max(size(), getAttributes().maxCells);
     }
     
     /*
      * Create cell but don't add it;
-     */
+     * @param x - the x coordinate of the cell
+     * @param y - the y coordinate of the cell
+     * @param parents - the parents of the cell
+     * @return Create but don't add the cell
+     */    
     public Cell createCell(int x, int y, ArrayList<Cell> parents) {
         //Potentially check that parents are same type as organism;
         Cell c = new Cell(x, y, parents);
@@ -233,24 +222,16 @@ public class Organism {
         return false;           
     }
     
+    /*
+     * @return #of cells, should method be called getSize()?
+     */
     public int size() {
         return cells.size();
     }
-    
-    public int getTerritorySize() {
-        return territory.size();
-    }
-    
-    public int getTerritoryLength() {
-        return territoryLength;
-    }
-    
+        
     public boolean removeFromTerritory(Cell c) {
-        boolean result = territory.remove(c);
-        if(!result) {
-            int x=4;
-            System.out.println("Remove from territory failed?");
-        }
+        boolean result = getAttributes().territory.remove(c);
+        
         return result;
     }
     
@@ -289,6 +270,14 @@ public class Organism {
         return ancestors;
     }
     
+    /*
+     * @param o2 - check if organism #2 is in my family
+     * 
+     * @param dist - degrees of separation, TODO: for now it's actually 2x
+     * degrees of separation and should be refactored.
+     * 
+     * @return return true if we are related
+     */
     public boolean isFamily(Organism o2, int dist) {
         
         HashSet<Organism> myAncestors = getAncestorsAndMe(this, dist);

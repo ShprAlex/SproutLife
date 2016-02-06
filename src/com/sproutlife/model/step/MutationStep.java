@@ -127,11 +127,7 @@ public class MutationStep extends Step {
             }
            
             Cell c = allCells.get(mutationIndex);
-            Organism org = c.getOrganism();
-            
-            if (org.infectedBy!=null) {
-                continue;
-            }
+            Organism org = c.getOrganism();           
             
             int rand6 = random.nextInt(6);
             int decreaseOdds = 3;

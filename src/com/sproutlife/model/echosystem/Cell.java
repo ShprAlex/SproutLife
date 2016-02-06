@@ -10,26 +10,33 @@ package com.sproutlife.model.echosystem;
 import java.awt.Point;
 import java.util.ArrayList;
 
+/**
+ * A Cell keeps track it's coordinates and which organism it belongs to.
+ * 
+ * For now cells extend Point, which gives us hash code and equals methods, this
+ * dependency should probably be removed later.
+ * 
+ * @author Alex Shapiro
+ */
+public class Cell extends Point {
 
-public class Cell extends Point {            
-    
     private Organism organism = null;
 
-    public int age; //experimental
-    
-    boolean markedAsSeed;     
-    
+    public int age; // experimental
+
+    boolean markedAsSeed;
+
     public Cell(int x, int y, Organism o) {
-        super(x,y);
-        this.organism = o;   
+        super(x, y);
+        this.organism = o;
         this.age = 1;
-        this.markedAsSeed = false;  
+        this.markedAsSeed = false;
     }
-    
+
     public Cell(int x, int y, ArrayList<Cell> surrounding) {
-        this(x, y, surrounding.get(0).getOrganism());        
+        this(x, y, surrounding.get(0).getOrganism());
     }
-    
+
     public boolean isMarkedAsSeed() {
         return markedAsSeed;
     }
@@ -37,13 +44,13 @@ public class Cell extends Point {
     public void setMarkedAsSeed(boolean markedAsSeed) {
         this.markedAsSeed = markedAsSeed;
     }
-    
+
     public Organism getOrganism() {
         return organism;
     }
-    
-    public boolean sameOrganism(Cell c2) {
+
+    public boolean isSameOrganism(Cell c2) {
         return this.getOrganism().equals(c2.getOrganism());
     }
-                                                           
+
 }

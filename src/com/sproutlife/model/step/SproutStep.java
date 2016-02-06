@@ -77,7 +77,7 @@ public class SproutStep extends Step {
         this.setSeedType(getSettings().getString(Settings.SEED_TYPE));
         
         for (Organism o : getEchosystem().getOrganisms()) {
-            o.energy++;
+            o.getAttributes().energy = o.getAttributes().energy +1;
         }
         
         if (getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE)) {                        
@@ -186,21 +186,18 @@ public class SproutStep extends Step {
                */
                
                //if (o.getParent()==null || Math.abs(Math.abs(o.getParent().x-s.getPosition().x)-Math.abs(o.getParent().y-s.getPosition().y))>4) {
-                   if (o.getId()==0 || o.energy>=childEnergy ) { 
+                   if (o.getId()==0 || o.getAttributes().energy>=childEnergy ) { 
                        
                        sproutSeed(s, o);
                        int childCount = o.getChildren().size()-1;
                        
                        
                        //o.energy-=childEnergy ;
-                       o.energy=0;
+                       o.getAttributes().energy = 0;
                        
                        if(childCount>=0&&getTime()>100&&childCount<20) { //sproutSeed() above may have failed
                            getStats().childEnergy[childCount]+=o.getAge();
                            getStats().sproutNumber[childCount]++;
-                       }
-                       else {
-                           int q=1;
                        }
                    }
                //}
@@ -252,7 +249,7 @@ public class SproutStep extends Step {
             
             s.setPosition(x, y);                      
             s.setSeedBorder(border);
-            s.setParentPosition(topLeftCell.getOrganism().getPosition());
+            s.setParentPosition(topLeftCell.getOrganism().getLocation());
             
             if(checkAndMarkSeed(s)) {          
                 return s;
@@ -392,10 +389,6 @@ public class SproutStep extends Step {
             return;
         }  
     
-        //Organism seedOrg = seed.getOrganism();
-        if (seedOrg!=null && seedOrg.infectedBy!=null) {
-            getStats().infectedCount++;
-        }
         Organism newOrg = getEchosystem().createOrganism(newOrgX, newOrgY, seedOrg, seed);
         
         //Remove old seed

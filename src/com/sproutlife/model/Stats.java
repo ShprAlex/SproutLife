@@ -107,11 +107,11 @@ public class Stats {
         for (Organism o : getEchosystem().getOrganisms()) {
             
             if(o.getParent()!=null) {
-                int ts = o.getParent().getTerritorySize();
+                int ts = o.getParent().getAttributes().getTerritorySize();
                 if (o.getParent().getParent()!=null) {
-                    ts = Math.max(ts, o.getParent().getParent().getTerritorySize());
+                    ts = Math.max(ts, o.getParent().getParent().getAttributes().getTerritorySize());
                 }
-                if (o.getParent().getTerritorySize()/3<100) {
+                if (o.getParent().getAttributes().getTerritorySize()/3<100) {
                     maxCells[ts/10]++;
                 }
                 sumMax+=ts;
@@ -284,10 +284,10 @@ public class Stats {
             HashSet<Organism> remove = new HashSet<Organism>();
             for (Organism o: generation) {
 
-                if(getTime() - o.born < i*115 ) {
+                if(o.getAge() < i*115 ) {
                     remove.add(o);
                     Organism p = o.getParent();
-                    while (p!=null && (getTime() - p.born < i*115)) {
+                    while (p!=null && (p.getAge() < i*115)) {
                         p=p.getParent();
                     }
                     

@@ -66,7 +66,7 @@ public class TailRenderer extends Renderer {
     }
 
     private Color getColor(Organism o) {
-        switch (o.getKind()) {
+        switch (o.getAttributes().kind) {
             case 0:
                 return new Color(255, 160, 160);
             case 1:

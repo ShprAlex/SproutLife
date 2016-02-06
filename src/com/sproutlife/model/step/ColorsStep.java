@@ -31,7 +31,7 @@ public class ColorsStep extends Step {
         }
         int kindCount[] = new int[3];
         for (Organism o : getEchosystem().getOrganisms()) {
-            kindCount[o.getKind()]++;
+            kindCount[o.getAttributes().kind]++;
             /*
             if (o.getKind()!=oneKind) {
                 isOneKind=false;
@@ -56,7 +56,7 @@ public class ColorsStep extends Step {
                 /*
                 ArrayList<Integer> lifespans = new ArrayList<Integer>();
                 for (Organism o : getEchosystem().getOrganisms()) {                    
-                    if (o.kind==splitKind) {
+                    if (o.getKind()==splitKind) {
                         lifespans.add(getMutationCount(o));
                     }                                        
                 }
@@ -67,15 +67,15 @@ public class ColorsStep extends Step {
                     middleL = lifespans.get(lifespans.size()/2);
                 }
                 for (Organism o : getEchosystem().getOrganisms()) {
-                    if (o.kind==splitKind) {                        
-                        o.kind = (getMutationCount(o)<=middleL)?splitKind : emptyKind ;                                                                           
+                    if (o.getKind()==splitKind) {                        
+                        o.getKind() = (getMutationCount(o)<=middleL)?splitKind : emptyKind ;                                                                           
                     }
                 }
                 */
                 
                 ArrayList<Integer> xCoords = new ArrayList<Integer>();
                 for (Organism o : getEchosystem().getOrganisms()) {                    
-                    if (o.kind==splitKind) {
+                    if (o.getAttributes().kind==splitKind) {
                         xCoords.add(o.x);
                     }                                        
                 }
@@ -86,12 +86,12 @@ public class ColorsStep extends Step {
                     middleX = xCoords.get(xCoords.size()/2);
                 }
                 for (Organism o : getEchosystem().getOrganisms()) {
-                    if (o.kind==splitKind) {
+                    if (o.getAttributes().kind==splitKind) {
                         if (middleX>getBoard().getWidth()/2) {
-                            o.kind = o.x<middleX?splitKind : emptyKind ;                            
+                            o.getAttributes().kind = o.x<middleX?splitKind : emptyKind;                            
                         }
                         else {
-                            o.kind = o.x>middleX?splitKind : emptyKind ;
+                            o.getAttributes().kind = o.x>middleX?splitKind : emptyKind;
                         }                       
                     }
                 }

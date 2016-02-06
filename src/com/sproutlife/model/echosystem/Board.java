@@ -16,154 +16,174 @@ import java.util.HashMap;
 import com.sproutlife.model.seed.Seed;
 import com.sproutlife.model.seed.SymmetricSeed;
 
+/**
+ * The board allows us to quickly check for neighbors
+ * 
+ * Adding and removing cells to the board should be done through the Echosystem
+ * class. We mostly avoid error checking for the sake of speed.
+ * 
+ * @author Alex Shapiro
+ */
+
 public class Board {
-    
-    private Dimension boardSize = null;    
-  
-    
-    Cell[][] gameBoard;                  
-    
-    public Cell[][] getGameBoard() {
-        return gameBoard;
-    }
-    
-    public Cell getCell(int i, int j) {
-        if (i<0||j<0||i>=getWidth()||j>=getHeight()) {
+
+    private Dimension size = null;
+
+    Cell[][] gameBoard;
+
+    public Cell getCell(int x, int y) {
+        if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight()) {
             return null;
         }
-        return gameBoard[i][j];
+        return gameBoard[x][y];
     }
-    
+
     public Cell getCell(Point p) {
         return getCell(p.x, p.y);
     }
 
     public void setCell(Cell c) {
-      gameBoard[c.x][c.y] = c;
+        gameBoard[c.x][c.y] = c;
     }
-    
+
     public void removeCell(Cell c) {
-        clearCell(c.x, c.y);        
-   }
-    
+        clearCell(c.x, c.y);
+    }
+
     public void clearCell(int x, int y) {
         gameBoard[x][y] = null;
     }
-    
+
     public int getWidth() {
-        return boardSize.width;    
+        return size.width;
     }
-    
+
     public int getHeight() {
-        return boardSize.height;
-    }   
- 
+        return size.height;
+    }
+
     public void resetBoard() {
         gameBoard = new Cell[getWidth()][getHeight()];
     }
- 
-    
-    public void setBoardSize(Dimension d) {
-        this.boardSize = d;
+
+    public void setSize(Dimension d) {
+        this.size = d;
     }
-        
-    public boolean hasNeighbors(int i, int j) {
-        for (int s=-1;s<=1;s++) {
-            for (int t=-1;t<=1;t++) {
-                if (s==0 && t==0) {
+
+    public boolean hasNeighbors(int x, int y) {
+        for (int s = -1; s <= 1; s++) {
+            for (int t = -1; t <= 1; t++) {
+                if (s == 0 && t == 0) {
                     continue;
                 }
-                if (getCell(i+s, j+t)!=null) {
+                if (getCell(x + s, y + t) != null) {
                     return true;
-                }    
+                }
             }
         }
         return false;
     }
-    
-    public ArrayList<Cell> getNeighbors(int i, int j) {
+
+    public ArrayList<Cell> getNeighbors(int x, int y) {
         ArrayList<Cell> surrounding = new ArrayList<Cell>(0);
-        for (int s=-1;s<=1;s++) {
-            for (int t=-1;t<=1;t++) {
-                if (s==0 && t==0) {
+        for (int s = -1; s <= 1; s++) {
+            for (int t = -1; t <= 1; t++) {
+                if (s == 0 && t == 0) {
                     continue;
                 }
-                Cell sp = this.getCell(i+s, j+t);
-    
-                if (sp!=null) { 
-                    surrounding.add(sp); 
+                Cell sp = this.getCell(x + s, y + t);
+
+                if (sp != null) {
+                    surrounding.add(sp);
                 }
             }
         }
         return surrounding;
     }
-    
-    public ArrayList<Cell> getExtra4Neighbors(int i, int j) {
+
+    public ArrayList<Cell> getExtra4Neighbors(int x, int y) {
         ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
         Cell c;
- 
-        c = getCell(i+2,j);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i-2,j);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i,j+2);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i,j-2);
-        if (c!=null) neighbors.add(c);
-        
-        return neighbors;     
+
+        c = getCell(x + 2, y);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x - 2, y);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x, y + 2);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x, y - 2);
+        if (c != null)
+            neighbors.add(c);
+
+        return neighbors;
     }
-    
-    public ArrayList<Cell> getExtra12Neighbors(int i, int j) {
+
+    public ArrayList<Cell> getExtra12Neighbors(int x, int y) {
         ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
-        
+
         Cell c;
-        
-        c = getCell(i+2,j);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i-2,j);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i,j+2);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i,j-2);
-        if (c!=null) neighbors.add(c);        
-        
-        c = getCell(i+2,j+1);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i-2,j+1);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i+2,j-1);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i-2,j-1);
-        if (c!=null) neighbors.add(c);
-        
-        c = getCell(i+1,j+2);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i-1,j+2);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i+1,j-2);
-        if (c!=null) neighbors.add(c);
-        c = getCell(i-1,j-2);
-        if (c!=null) neighbors.add(c);
-        
-        return neighbors;     
+
+        c = getCell(x + 2, y);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x - 2, y);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x, y + 2);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x, y - 2);
+        if (c != null)
+            neighbors.add(c);
+
+        c = getCell(x + 2, y + 1);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x - 2, y + 1);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x + 2, y - 1);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x - 2, y - 1);
+        if (c != null)
+            neighbors.add(c);
+
+        c = getCell(x + 1, y + 2);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x - 1, y + 2);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x + 1, y - 2);
+        if (c != null)
+            neighbors.add(c);
+        c = getCell(x - 1, y - 2);
+        if (c != null)
+            neighbors.add(c);
+
+        return neighbors;
     }
-    
-    public ArrayList<Cell> getExtraNeighbors(int i, int j, int dist) {
+
+    public ArrayList<Cell> getExtraNeighbors(int x, int y, int dist) {
         ArrayList<Cell> neighbors = new ArrayList<Cell>(0);
-        for (int s=-dist;s<=dist;s++) {
-            for (int t=-dist;t<=dist;t++) {
-                if ((s==-1 || s==0 || s==1) && (t==-1 || t==0 || t==1)) {
+        for (int s = -dist; s <= dist; s++) {
+            for (int t = -dist; t <= dist; t++) {
+                if ((s == -1 || s == 0 || s == 1)
+                        && (t == -1 || t == 0 || t == 1)) {
                     continue;
                 }
-                Cell sp = this.getCell(i+s, j+t);
-    
-                if (sp!=null) { 
-                    neighbors.add(sp); 
+                Cell sp = this.getCell(x + s, y + t);
+
+                if (sp != null) {
+                    neighbors.add(sp);
                 }
             }
         }
         return neighbors;
     }
-    
+
 }

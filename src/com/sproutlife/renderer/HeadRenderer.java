@@ -43,7 +43,7 @@ public class HeadRenderer extends Renderer {
     }
 
     private Color getColor(Organism o) {
-        switch (o.getKind()) {
+        switch (o.getAttributes().kind) {
             case 0: return new Color(255, 176, 176);
             case 1: return new Color(186, 255, 186);
             case 2: return new Color(186, 186 ,255);

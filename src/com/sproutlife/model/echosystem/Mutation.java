@@ -9,17 +9,24 @@ package com.sproutlife.model.echosystem;
 
 import java.awt.Point;
 
+
+/**
+ * A Mutation is location relative to the organism's location. The mutation is
+ * affective when an organism is a specific age.
+ * 
+ * @author Alex Shapiro
+ */
+
 public class Mutation extends Object {
         
-    private Point location;
-    int organismAge;
-    int gameTime;
+    private Point location; //Un-rotated mutation location
+    int organismAge; //How old is the organism when this mutation is affective
+    int gameTime; //When was this mutation created, used for statistics.
     
     public Mutation(Point location, int organismAge, int gameTime) {
         this.location = location; 
         this.organismAge = organismAge;
         this.gameTime = gameTime;
-        // TODO Auto-generated constructor stub
     }
     
     public Point getLocation() {

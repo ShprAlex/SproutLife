@@ -61,7 +61,7 @@ public class CellRenderer extends Renderer {
 		
 		if (o.isAlive()) {
 		        int grayC = 100;
-		        switch (o.getKind()) {
+		        switch (o.getAttributes().kind) {
 		            case 0: return new Color(255, grayC, grayC);
 		            case 1: return new Color(grayC-10, 255, grayC-10);
 		            case 2: return new Color(grayC, grayC ,255);
@@ -70,7 +70,7 @@ public class CellRenderer extends Renderer {
 		else if (getPaintRetiredCells()) {
 			age = getGameModel().getTime()-o.getTimeOfDeath();
 			int ageC = Math.min(255,120+age*10);
-		        switch (o.getKind()) {		            
+		        switch (o.getAttributes().kind) {		            
 		            case 0: return new Color(255, ageC, ageC);
 		            case 1: return new Color(ageC, 255, ageC);
 		            case 2: return new Color(ageC, ageC ,255);

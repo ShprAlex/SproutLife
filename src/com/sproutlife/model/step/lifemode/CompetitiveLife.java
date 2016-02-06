@@ -21,13 +21,13 @@ public class CompetitiveLife extends LifeMode {
     }
     
     public int getCompare(Organism o) {
-        int val = o.getTerritorySize();
+        int val = o.getAttributes().getTerritorySize();
         if (o.getParent()!=null) {
-            val = Math.max(val,o.getParent().getTerritorySize());
+            val = Math.max(val,o.getParent().getAttributes().getTerritorySize());
             o = o.getParent();
         }
         if (o.getParent()!=null) {
-            val = Math.max(val,o.getParent().getTerritorySize());
+            val = Math.max(val,o.getParent().getAttributes().getTerritorySize());
             o = o.getParent();
         }
         return val;
