@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life brings the next stage of evolution to Conway’s Game of Life. GOL created self-organizing patterns that exhibit lifelike behaviors. Sprout Life allows these patterns to reproduce, mutate, and evolve.
+Sprout Life brings the next stage of evolution to Conway’s Game of Life. GOL created self-organizing patterns that exhibit lifelike behaviors. In Sprout Life allows these patterns to reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -29,6 +29,8 @@ There are several reasons why Sprout Life is exciting:
 - **Made for speed** - Speed is of the essence in simulating evolution. The ideal is to have a beautiful story unfold in real time. Cellular automata are perfectly designed for rapid computation by computers. Getting the next state of the game is almost like adding together two binary numbers. This is what computers were made to do. With the computer as our vehicle, we can explore the evolving world of cellular automata and learn from our discoveries.
 
 ### Seeds that Sprout - the key idea
+
+A slight change in the rules from GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
 
