@@ -20,7 +20,7 @@ import com.sproutlife.model.seed.Seed;
  * A Genome is a collection of mutations Mutations are stored in an un-rotated
  * state. We un-rotate a coordinate when adding it from the board and rotate it
  * back when returning it. Taking into account that the mutation may now belong
- * to a child that's facing a different direction than it's parent.
+ * to a child that's facing a different direction than its parent.
  * 
  * @author Alex Shapiro
  */

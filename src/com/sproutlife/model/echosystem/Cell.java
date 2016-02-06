@@ -11,7 +11,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 /**
- * A Cell keeps track it's coordinates and which organism it belongs to.
+ * A Cell keeps track its coordinates and which organism it belongs to.
  * 
  * For now cells extend Point, which gives us hash code and equals methods, this
  * dependency should probably be removed later.
