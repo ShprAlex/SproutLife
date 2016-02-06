@@ -31,8 +31,9 @@ public class ResetGameAction extends AbstractAction {
         
     public void actionPerformed(ActionEvent e) {
         controller.getInteractionLock().writeLock().lock();
-        controller.getGameModel().getEchosystem().resetCells();
-        controller.getGameModel().getEchosystem().pruneEmptyOrganisms();
+
+        controller.getGameModel().resetGame();
+
         if(!controller.getGameModel().getPlayGame()) {
             controller.getMainControlPanel().getStartPauseButton().getAction().putValue(NAME, "Start"); 
         }

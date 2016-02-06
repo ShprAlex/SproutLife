@@ -44,7 +44,7 @@ public class Echosystem {
         this.clock = clock;
 
         this.defaultOrgLifespan = 30;
-        this.retirementTimeSpan = 10;
+        this.retirementTimeSpan = 1000;
     }
 
     public Collection<Organism> getOrganisms() {
@@ -192,7 +192,7 @@ public class Echosystem {
 
             getBoard().removeCell(c);
         }
-
+        o.setAlive(false);
         o.setTimeOfDeath(getTime());
 
         organisms.remove(o);
@@ -260,12 +260,17 @@ public class Echosystem {
         for (Organism org : pruneOrgs) {
 
             if (org.getCells().size() == 0) {
-                org.setAlive(false);
-                removeOrganism(org);
+                retireOrganism(org);
+                //org.setAlive(false);
+                //removeOrganism(org);
             }
         }
     }
 
+    public void clearRetiredOrgs() {
+        getRetiredOrganisms().clear();
+    }
+    
     public void setBoardSize(Dimension d) {
         getBoard().setSize(d);
         updateBoard();

@@ -101,18 +101,10 @@ public class GameStep extends Step {
     }
     
     private void printStats() {        
-        
-        int lifeSum = 0;
+                
         if (getTime()%100==0) {
-            for (Organism o : getEchosystem().getOrganisms()) {
-                lifeSum +=o.lifespan;
-            }
-            getStats().avgLife = lifeSum*10/ getEchosystem().getOrganisms().size();
-        }
-        
-        if (getTime()%100==0) {
-        	//getStats().printMutations();
-            getStats().printChildEnergy();
+            getStats().update();
+            //getStats().printChildEnergy();
 
         }             
     }   

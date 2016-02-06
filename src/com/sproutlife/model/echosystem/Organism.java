@@ -122,7 +122,12 @@ public class Organism {
     }
     
     public int getAge() {
-        return getClock().getTime() - this.born;
+        if (isAlive()) {
+            return getClock().getTime() - this.born;
+        }
+        else {
+            return this.timeOfDeath - this.born;
+        }
     }
 
     public OrgAttributes getAttributes() {

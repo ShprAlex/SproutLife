@@ -18,6 +18,20 @@ import com.sproutlife.model.echosystem.Organism;
 
 public class Stats {
     GameModel gameModel;
+    
+    public double avgAge;
+    public double avgLifespan;
+    public int avgMaxLifespan;
+    
+    double avgSize = 0;
+    double avgMaxSize = 0;
+    double avgTerritory = 0;
+    int[] maxTerriroty = new int[100];
+    int sumMaxTerritory = 0;
+    
+    double avgTotalMutations = 0;
+    double avgRecentMutations = 0;
+    
     public int c1, c2, c3, c4;
     
     public int born, die1, die2, stayed;
@@ -25,8 +39,6 @@ public class Stats {
     
     public int mutationCount;
     public int mutationMiss;
-    
-    public int avgLife;
     
     public Mutation freqMutation;
     public int freqMuteFreq =0;
@@ -41,10 +53,6 @@ public class Stats {
         this.gameModel = gameModel;
     }
     
-    public GameModel getGame() {
-        return gameModel;
-    }
-    
     private Echosystem getEchosystem() {
         return gameModel.getEchosystem();
     }
@@ -53,9 +61,45 @@ public class Stats {
         return gameModel.getTime();
     }
     
+    public String getDisplayText() {
+        String text ="";
+        text += "Game Time: "+getTime();
+        text += "\n";
+        text += "\n";
+        text += "Population (Organism #): "+getEchosystem().getOrganisms().size();
+        text += "\n";
+        text += "\n";
+        text += "Average Age: "+String.format("%.1f", avgAge);
+        text += "\n";
+        text += "Average Lifespan: "+String.format("%.1f", avgLifespan);
+        text += "\n";
+        text += "Average Max Lifespan: "+String.format("%.1f", avgMaxLifespan/10.0+1);
+        text += "\n";
+        text += "\n";
+        text += "Average Cell #: "+String.format("%.1f", avgSize);
+        text += "\n";
+        text += "Average Territory: "+String.format("%.1f", avgTerritory);
+        text += "\n";       
+        text += "Average Max Cell#: "+String.format("%.0f", avgMaxSize);
+        text += "\n";
+        text += "Average Max Territory: "+(sumMaxTerritory/ getEchosystem().getOrganisms().size());
+        text += "\n";
+        text += "\n";
+        text += "Average Mutation #: "+String.format("%.1f", avgTotalMutations);
+        
+        return text;
+        
+    }
+    
+    public void update() {
+        updateAvgSize();
+        updateAvgLifespan();
+        updateAvgMutations();
+    }
+    
     public void printInfected() {
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
-        System.out.print(" Avg Life  " + avgLife);
+        System.out.print(" Avg Life  " + avgMaxLifespan);
         System.out.println(" Infected born "+infectedCount);
         infectedCount = 0;
     }
@@ -77,7 +121,7 @@ public class Stats {
         int[] ageHalfLifespan = new int[200];
         int[] sizeAtAge = new int[100];
         int[] mutationCount = new int[100];
-        int[] maxCells = new int[100];
+        
         
 
         for (Organism o : getEchosystem().getOrganisms()) {
@@ -101,22 +145,7 @@ public class Stats {
             
             
             sizeAtAge[o.getAge()/5]+=o.size();
-        }
-        
-        int sumMax = 0;
-        for (Organism o : getEchosystem().getOrganisms()) {
-            
-            if(o.getParent()!=null) {
-                int ts = o.getParent().getAttributes().getTerritorySize();
-                if (o.getParent().getParent()!=null) {
-                    ts = Math.max(ts, o.getParent().getParent().getAttributes().getTerritorySize());
-                }
-                if (o.getParent().getAttributes().getTerritorySize()/3<100) {
-                    maxCells[ts/10]++;
-                }
-                sumMax+=ts;
-            }
-        }
+        }               
         
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Cell count " + cellCount);
@@ -139,7 +168,7 @@ public class Stats {
             System.out.print(countAtLifespan[i]+" ");
         }
         
-        System.out.print(" AMC: "+sumMax*10/getEchosystem().getOrganisms().size());
+        System.out.print(" AMC: "+sumMaxTerritory*10/getEchosystem().getOrganisms().size());
         /*
         System.out.print(" Max cells: ");               
         for (int i=0;i<50;i++) {
@@ -168,14 +197,14 @@ public class Stats {
     public void printChildEnergy() {
         printHistogram();
        
-        System.out.print(" Avg Life " + avgLife);        
+        System.out.print(" Avg Life " + avgMaxLifespan);        
         int allEnergy = 0;                     
         int childSum = 0;
         for (int i=0;i<5;i++) {
         	childSum +=sproutNumber[i];
         }
         if (childSum>0) {
-        	System.out.print(" AVC: "+avgLife*getEchosystem().getOrganisms().size()/childSum);
+        	System.out.print(" AVC: "+avgMaxLifespan*getEchosystem().getOrganisms().size()/childSum);
         }
         System.out.print(" RM count: "+getRecentMutationCount(getEchosystem().getTime(),5000));
         System.out.print(" CE:");
@@ -223,11 +252,10 @@ public class Stats {
         sproutNumber = new int[20];
     }    
     
-    public void printMutations() {
-              
+    public void printMutations() {              
         
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
-        System.out.print(" Avg Life  " + avgLife);               
+        System.out.print(" Avg Life  " + avgMaxLifespan);               
         System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
         System.out.print(" Mutations: " + mutationCount +" Hit: "+(mutationCount-mutationMiss) + " Percent "+(int) (mutationMiss*100/(mutationCount+0.1)));        
         if (freqMutation!=null) {
@@ -301,6 +329,89 @@ public class Stats {
             System.out.print(" "+remove.size());
         }
         System.out.println(); 
+    }
+    
+    private void updateAvgSize() {
+        int maxSizeSum = 0;
+        int sizeSum = 0;
+        int territorySum = 0;
+        sumMaxTerritory = 0;
+        for (Organism o : getEchosystem().getOrganisms()) {
+
+            sizeSum += o.size();
+            territorySum +=o.getAttributes().getTerritorySize();
+            if(o.getParent()!=null) {
+                int ms = o.getParent().getAttributes().maxCells;
+                if (o.getParent().getParent()!=null) {
+                    ms = Math.max(ms, o.getParent().getAttributes().maxCells);
+                }
+
+                maxSizeSum+=ms;
+            }
+            
+            if(o.getParent()!=null) {
+                int ts = o.getParent().getAttributes().getTerritorySize();
+                if (o.getParent().getParent()!=null) {
+                    ts = Math.max(ts, o.getParent().getParent().getAttributes().getTerritorySize());
+                }
+                if (o.getParent().getAttributes().getTerritorySize()/3<100) {
+                    maxTerriroty[ts/10]++;
+                }
+                sumMaxTerritory+=ts;
+            }
+        }
+        
+        this.avgSize = sizeSum / (double) getEchosystem().getOrganisms().size();
+        this.avgTerritory = territorySum / (double) getEchosystem().getOrganisms().size();
+        this.avgMaxSize = maxSizeSum/ (double) getEchosystem().getOrganisms().size();
+    }
+    
+    private void updateAvgLifespan() {
+        int ageSum = 0;
+        for (Organism o : getEchosystem().getOrganisms()) {
+            ageSum +=o.getAge();
+        }
+        if (getEchosystem().getOrganisms().size()>0) {
+            this.avgAge = ageSum / (double) getEchosystem().getOrganisms().size();
+        }
+        else {
+            this.avgAge = 0;
+        }
+        
+        int lifespanSum = 0;
+        for (Organism o : getEchosystem().getRetiredOrganisms()) {
+            lifespanSum +=o.getAge();
+        }
+        if (getEchosystem().getRetiredOrganisms().size()>0) {
+            this.avgLifespan = lifespanSum / (double) getEchosystem().getRetiredOrganisms().size();
+        }
+        else {
+            this.avgLifespan = 0;
+        }
+        
+        int maxLifespanSum = 0;
+
+        for (Organism o : getEchosystem().getOrganisms()) {
+            maxLifespanSum +=o.lifespan;
+        }
+        this.avgMaxLifespan = maxLifespanSum*10/ getEchosystem().getOrganisms().size();
+
+    }
+    
+    public void updateAvgMutations() {
+        int mutationSum=0;
+        int recentMutationSum=0;
+        for (Organism o : getEchosystem().getOrganisms()) {
+            int fromTime = getEchosystem().getTime()-2000;
+            int toTime = getEchosystem().getTime();
+            //recentMutationSum+=o.getGenome().getRecentMutations(fromTime, toTime, o.lifespan).size();
+            mutationSum +=o.getGenome().getRecentMutations(0, toTime, o.lifespan).size();     
+        }
+        avgTotalMutations = mutationSum / (double) getEchosystem().getOrganisms().size();
+        //avgRecentMutations = recentMutationSum / (double) getEchosystem().getOrganisms().size();
+        
+        
+        
     }
 
 }

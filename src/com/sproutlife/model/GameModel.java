@@ -67,6 +67,14 @@ public class GameModel {
         clock.increment();
     }
 
+    public void resetGame() {
+        getEchosystem().resetCells();        
+        getEchosystem().pruneEmptyOrganisms();
+        getEchosystem().clearRetiredOrgs();
+        getClock().reset();
+        
+    }
+    
     public Stats getStats() {
         return stats;
     }   

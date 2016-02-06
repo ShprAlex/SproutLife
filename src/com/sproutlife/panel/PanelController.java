@@ -53,6 +53,7 @@ public class PanelController {
     MainControlPanel mainControlPanel;
     DisplayControlPanel displayControlPanel;
     SettingsControlPanel settingsControlPanel;
+    StatsPanel statsPanel;
     JMenuBar gameMenu;
     BoardRenderer boardRenderer;
         
@@ -147,6 +148,13 @@ public class PanelController {
         return displayControlPanel;
     }
     
+    /**
+     * @return the statsPanel
+     */
+    public StatsPanel getStatsPanel() {
+        return statsPanel;
+    }
+    
     public JMenuBar getGameMenu() {
         return gameMenu;
     }
@@ -164,6 +172,7 @@ public class PanelController {
         mainControlPanel = new MainControlPanel(this);
         displayControlPanel = new DisplayControlPanel(this);
         settingsControlPanel = new SettingsControlPanel(this);
+        statsPanel = new StatsPanel(this);
         
         ScrollPanel scrollPanel = getScrollPanel();
         
@@ -172,6 +181,7 @@ public class PanelController {
         rightPane.addTab("Main", mainControlPanel);
         rightPane.addTab("Display", displayControlPanel);
         rightPane.addTab("Settings", settingsControlPanel);
+        rightPane.addTab("Stats", statsPanel);
 
         gameFrame.getSplitPane().setLeftComponent(scrollPanel);
         gameFrame.getSplitPane().setRightComponent(rightPane);
@@ -220,9 +230,13 @@ public class PanelController {
             public void stepPerformed(GameStepEvent event) {
                 if (event.getStepType() == StepType.STEP_BUNDLE) {
                     getImageManager().repaintNewImage();
+                    if (getGameModel().getTime()%100==0) {
+                        getStatsPanel().getStatsTextPane().setText(
+                                getGameModel().getStats().getDisplayText());
+                    }
                 }
             }
-        });
+        });                
                                       
     }
     
