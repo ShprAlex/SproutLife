@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life brings the next stage of evolution to Conway’s Game of Life. GOL defined a way for random pixels to self-organize into lifelike patterns. Sprout Life changes the rules slightly to allow patterns to reproduce, mutate, and evolve.
+Sprout Life takes evolution within Conway’s Game of Life to the next level. GOL creates self-organizing patterns that exhibit lifelike behaviors. Sprout Life allows these patterns to reproduce, mutate, and grow more advanced.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -8,7 +8,7 @@ From their evolution we can see that there is a trade-off between individual ben
 
 ### Introduction
 
-Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which was inspired by cognition. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond its programming, to understand the real world by learning from a simulation, I think this has been the dream of many technologists including myself.
+Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which is somewhat related in terms of implementation. Cellular automata has always been a source of inspiration. The possibility of creating life within the machine, to have simple rules give rise to something that goes beyond its programming, to understand the real world by learning from a simulation, I think this has been the dream of many technologists including myself.
 
 I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still a fun toy project.
 
@@ -30,9 +30,11 @@ There are several reasons why Sprout Life is exciting:
 
 ### Seeds that Sprout - the key idea
 
+A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
+
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
 
-- **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state, as defined in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL). What GOL calls "dead" cells, Sprout Life simply considers as empty space. This is only a clarification of terminology, it dos not change the rules.
+- **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state. [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) uses the term "dead" cells to refer to empty coordinates. Sprout Life simply considers this as empty space. This is only a clarification of terminology, it does not change the rules.
 
 - **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. Other small patterns work just as well, and better in some cases.
 
@@ -82,7 +84,7 @@ We want to see drama unfold in the game, and 3rd children create drama. In a wor
 
 By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can require a big energy investment to have the first two children, and litte for each additional child. Organisms with three children will dominate because having more children means they spend less energy per child on average. 
 
-Organisms strive to find an order that's beneficial to their survival. Stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo. That creates more permutations of possible outcomes. It's a harder enviromnemt for our evolving organisms to optimize. 3rd children benefit the parent somewhat, but everyone ends up tripping over them. This results in chaos, a less densely populated board, and a lower population. 
+Organisms strive for order. Stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo. That creates more permutations of possible outcomes. It's a harder enviromnemt for our evolving organisms to optimize. 3rd children benefit their parent, but everyone ends up tripping over them. This results in chaos, a less densely populated board, and a lower population. 
 
 So what's good for the individual can in some ways be bad for the community. In our world this is a frequent occurrence requiring government intervention. An extreme but relevant example is China's one child policy. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
 
@@ -130,7 +132,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
  
 - **Max number of cells in parent's life time** - The organism may be small now, but its parent was big. Therefore the child's size advantage during a collision will be judged by the parent. This finally started to have an effect. However, the maximum size an organism achieves is still too granular. It takes a lot to boost the maximum size more than a few cells.
 
-- **Territory size** - Territory is defined as all the coordinates ever occupied by an organism's cells during its life. If an organism creates a glider, than that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
+- **Territory size** - Territory is defined as all the coordinates ever occupied by an organism's cells during its life. If an organism creates a glider, then that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
 
 - **Max between parent's and grandparent's territory** - This heavy handed measure, judging an organism's size by the maximum size of its parent's and grandparent's sizes is finally what was settled on. Now we can make sure that bigger organisms get the upper hand in the population and that the general trend is towards evolution of bigger organisms.
 
@@ -153,7 +155,9 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 This part is still a draft!
 
-The size advantage of competitive mode is constant no matter what the difference in size. If one organism is a little bigger than a competitor it benefits the same as if it were a lot bigger. However, the reproductive advantage of smaller organisms varies proportionately to size. The smaller the organism the quicker it is to make copies of itself. The result is that a colony of a much bigger organisms will collapse when in contact with colony of a smaller organism -- unless it evolves. Larger organisms must develop an inherent advantage over much smaller organisms to survive. And they do.
+The size advantage of competitive mode is constant no matter what the difference in size. If one organism is a little bigger than a competitor it benefits the same as if it were a lot bigger. However, the reproductive advantage of smaller organisms is inversely proportional to size. The smaller the organism the quicker it is to make copies of itself. 
+
+With a big enough gap in size, the reproductive advantage of being smaller will overwhelm the advantage of being bigger. The result is that a colony of a much bigger organisms will collapse when in contact with colony of smaller organisms -- unless it evolves. Larger organisms must develop an inherent advantage over much smaller organisms to survive. And they do.
 
 The relationship between small, bigger, and biggest is reminiscent of rock paper scissors. Interestingly this kind of [Cyclic cellular automata](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton) has been studied by David Griffeath and is illustrated well in this video [YouTube Video](https://www.youtube.com/watch?v=M4cV0nCIZoc).
 
