@@ -58,23 +58,53 @@ public class SeedFactory {
            return this.name;
         }
         
-        
-        public boolean isSymmetric4() {
-            switch(this) {
-                case Square2_RPentomino : return true; 
-                case Onebit_RPentomino : return true;
-                case OnebitB1_RPentomino : return true;
-                //case Test_Pattern : return true;
-                default: return false;
-            }                
+        /*
+         * 8 way symmetry. Looks the same way under rotation and also mirroring.
+         * 
+         * @return true if the seed has 8 way symmetry.
+         */
+        public boolean isSymmetric8() {
+            switch (this) {
+                case Square2_RPentomino:
+                    return true;
+                case Onebit_RPentomino:
+                    return true;
+                case OnebitB1_RPentomino:
+                    return true;
+                    // case Test_Pattern : return true;
+                default:
+                    return false;
+            }
         }
-        
+
+        /*
+         * 4 way symmetry. Like a line which is symmetric under mirroring, and 2
+         * rotations.
+         * 
+         * @return true if the seed has 4 way symmetry.
+         */
+        public boolean isSymmetric4() {
+            switch (this) {
+                default:
+                    return false;
+            }
+        }
+
+        /*
+         * 2 way symmetry. All 4 rotations are different, but mirror images look
+         * the same as a rotation
+         * 
+         * @return true if the seed has 2 way symmetry.
+         */
         public boolean isSymmetric2() {
-            switch(this) {
-                case L2_RPentomino : return true; 
-                case L2B1_RPentomino : return true; 
-                default: return false;
-            }                
+            switch (this) {
+                case L2_RPentomino:
+                    return true;
+                case L2B1_RPentomino:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }   
     
@@ -124,13 +154,15 @@ public class SeedFactory {
             return null;
         }
         
-        if (type.isSymmetric4()) {
+        if (type.isSymmetric8()) {
+            //We only need one rotation when the seed is symmetric
             return getSymmetricRotation(ssp);
         }
         if (type.isSymmetric2()) {
             return get4SeedRotations(ssp);
         }
         else {        
+            //We need 8 rotations when the seed *isn't* symmetric
             return get8SeedRotations(ssp);
         }
                 
