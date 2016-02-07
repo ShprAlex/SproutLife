@@ -82,7 +82,7 @@ public class Stats {
         text += "\n";       
         text += "Average Max Cell#: "+String.format("%.0f", avgMaxSize);
         text += "\n";
-        text += "Average Max Territory: "+(sumMaxTerritory/ getEchosystem().getOrganisms().size());
+        text += "Average Max Territory: "+(sumMaxTerritory/ Math.max(1, getEchosystem().getOrganisms().size()));
         text += "\n";
         text += "\n";
         text += "Average Mutation #: "+String.format("%.1f", avgTotalMutations);
