@@ -20,7 +20,7 @@ I hope that others get involved with this project as well. In particular, I hope
 
 There are several reasons why Sprout Life is exciting:
 
-- **Open ended evolution** - Sprout Life allows for truly open ended evolution. We can encourage bigger organisms to dominate over smaller ones. As organisms grow in size, they also grow in terms of their computing ability. The cell patterns are programs, not just machines. It’s exciting because there is no limit to how big and complex the evolved organisms can get.
+- **Open ended evolution** - Sprout Life allows for truly open ended evolution. GOL creates behavior that exceeds it's programming. The rules specify the on/off switching of stationary cells, but this results in moving patterns. The patterns can even do computations that the cells could not. Sprout Life treats these patterns like organisms. It encourages them to evolve to be bigger. As organisms grow in size, they also grow in terms of their computing ability. It’s exciting because there is no limit to how big and complex the evolved organisms can get.
 
 - **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
