@@ -8,7 +8,7 @@ From their evolution we can see that there is a trade-off between individual ben
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
 
-[Download and run SproutLife.jar!](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) ( Requires Java )
+[Download and run SproutLife.jar!](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar)
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
 
