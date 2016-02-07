@@ -4,13 +4,11 @@ Sprout Life brings the next level of evolution to Conway’s Game of Life. GOL c
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
-
-
-[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
+[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
 
 [Download and run SproutLife.jar!](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar)
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife_2016-01-27.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2016-01-27.gif)
 
 ### Introduction
 
@@ -38,7 +36,7 @@ There are several reasons why Sprout Life is exciting:
 
 A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
 
-![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SeedSproutIllustration.png)
+![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/readme/SeedSproutIllustration.png)
 
 - **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state. [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) uses the term "dead" cells to refer to empty coordinates. Sprout Life simply considers this as empty space. This is only a clarification of terminology, it does not change the rules.
 
@@ -50,7 +48,7 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
 
 - **Reproduction** - A seed from a parent sprouts to become a new child organism. We know the identity of the parent for each child. Thus we can support inheritance, where genes pass down from parent to child. For now every organism has a single parent. Sexual reproduction can also easily be added as a result of contact between a parent and other organisms.
 
-![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutAnimation.gif)
+![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutAnimation.gif)
 
 - **Self imposed lifespan** - It turns out that having old organisms self-destruct is beneficial to their children. Removing all of a parent's cells from the board creates more room for its children and descendants to grow. New organisms develop in a predictable pattern allowing stability to arise, whereas older organisms get damaged by collision and mutation. It was exciting to discover that letting organisms control their own lifespan does not lead to run-away growth. Organisms often prefer to be small. The maximum lifespan is encoded as an integer value that can mutate from generation to generation. This kind of cell-death is another deviation from the rules of GOL.
 
@@ -58,13 +56,13 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
 
 - **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed, by random chance during an organism’s life. For evolution to work, an organism needs to live through nearly identical circumstances as its parent. If it’s lucky and has the right mutations it reproduces, if not, it dies childless. Thus beneficial mutations will propagate. What's tricky is that children may be born in different environments from their parents and from each other. For instance a second child is born in a different environment than a first child. At a cellular level where every bit matters this makes a big difference. Our implementation keeps things simple and doesn't bifurcate the genetic code, so mutations have to be beneficial across all conditions.
 
-![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-29zb.gif) 
+![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-29zb.gif) 
 
 - **Visualizing the Genome** - A lucky accident helped me come up with a beautiful way to display an organism's genome. The eyes, triangles and paw-print patterns in the GIFs are actually direct representations of an organism's recent mutations. Mutations have (x,y) coordinates, and correspond to the same space as the organism. The lucky accident was that I shrunk the dimensions of those mutations, causing them to appear bunched together in the center of the organism rather than spread out over the affected cells. All the organism's mutations across different time points are displayed simultaneously. The logo-like patterns have a deep connection with the organisms behavior, they roughly outline the shape the organism will have during its life.
  
 - **Rotation and Chirality** - It's important to keep track of which way the R-Pentomino, or potentially other sprout pattern, was facing when the organism was born. There are 8 ways to rotate a pattern, 4 rotations and 2 chiral mirror images for most patterns. The (x,y) coordinates for mutations must be rotated relative to how the seed pattern was oriented. It's also good to let the parent organism determine which direction the sprouted child is facing. A 2x2 block seed presents us with a tricky dilemma in that we don't know which way it's facing. We can resolve this issue by checking which way the parent was facing when it was born, and combining this with whether the seed is above, below, left, right, or otherwise oriented relative to the parent. Combining these two we can have the child born facing a direction relative to how the parent was facing when it was born.
  
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-29a.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-29a.gif)
 
 ### Evolution - a race to the bottom?
 
@@ -94,7 +92,7 @@ Organisms strive for order. Stable patterns arise quickly when organisms have on
 
 So what's good for the individual can in some ways be bad for the community. In our world this is a frequent occurrence requiring government intervention. An extreme but relevant example is China's one child policy. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-27t.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-27t.gif)
 
 ### Bigger bodies, bigger brains
 
@@ -154,7 +152,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 - **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. A glider gun used as a real gun to disable enemies? This is a real possibility, that I believe I've seen happen. There is lots of cool things to see and cool experiments to do. 
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/SproutLife%202016-01-28f.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-28f.gif)
 
 ### Rock Paper Scissors - Small Bigger Biggest. 
 ### Aka. The enemy of my enemy is my food.
