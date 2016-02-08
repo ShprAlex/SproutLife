@@ -56,7 +56,7 @@ public class MainControlPanel extends JPanel {
 	
 	public MainControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
-		setPreferredSize(new Dimension(260, 631));
+		setPreferredSize(new Dimension(280, 631));
 		        
 		this.panelController = panelController;
 		buildPanel();

@@ -9,16 +9,17 @@ package com.sproutlife.panel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -29,8 +30,6 @@ import javax.swing.event.ChangeListener;
 import com.sproutlife.GameController;
 import com.sproutlife.Settings;
 import com.sproutlife.action.ActionManager;
-import com.sproutlife.action.PlayGameAction;
-import com.sproutlife.action.ResetGameAction;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.step.GameStep.StepType;
@@ -54,6 +53,7 @@ public class PanelController {
     DisplayControlPanel displayControlPanel;
     SettingsControlPanel settingsControlPanel;
     StatsPanel statsPanel;
+    TipsPanel tipsPanel;
     JMenuBar gameMenu;
     BoardRenderer boardRenderer;
         
@@ -155,6 +155,13 @@ public class PanelController {
         return statsPanel;
     }
     
+    /**
+     * @return the tipsPanel
+     */
+    public TipsPanel getTipsPanel() {
+        return tipsPanel;
+    }
+    
     public JMenuBar getGameMenu() {
         return gameMenu;
     }
@@ -173,15 +180,17 @@ public class PanelController {
         displayControlPanel = new DisplayControlPanel(this);
         settingsControlPanel = new SettingsControlPanel(this);
         statsPanel = new StatsPanel(this);
-        
+        tipsPanel = new TipsPanel(this);
         ScrollPanel scrollPanel = getScrollPanel();
         
 
         JTabbedPane rightPane = new JTabbedPane();
+        rightPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         rightPane.addTab("Main", mainControlPanel);
         rightPane.addTab("Display", displayControlPanel);
         rightPane.addTab("Settings", settingsControlPanel);
         rightPane.addTab("Stats", statsPanel);
+        rightPane.addTab("Tips", tipsPanel);
 
         gameFrame.getSplitPane().setLeftComponent(scrollPanel);
         gameFrame.getSplitPane().setRightComponent(rightPane);
@@ -199,6 +208,8 @@ public class PanelController {
         initSettingsControlPanel();
         
         initSeedTypeComboBox();
+        
+        loadTipText();
     }
     
     private void initSettingsControlPanel() {
@@ -421,6 +432,16 @@ public class PanelController {
     
     public void setPlayGame(boolean playGame) {
         getActionManager().getPlayGameAction().setPlayGame(playGame);
+    }
+    
+    public void loadTipText() {
+        URL tipsURL = TipsPanel.class.getResource("/tips/tips.html");
+        try {
+            getTipsPanel().getTipsTextPane().setPage(tipsURL);
+        } catch (IOException e) {         
+            e.printStackTrace();
+        }
+
     }
     
     public void initSeedTypeComboBox() {
