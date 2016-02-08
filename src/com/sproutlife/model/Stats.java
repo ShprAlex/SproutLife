@@ -29,9 +29,13 @@ public class Stats {
     int[] maxTerriroty = new int[100];
     int sumMaxTerritory = 0;
     
-    double avgTotalMutations = 0;
-    double avgRecentMutations = 0;
+    double avgChildNumber = 0;
+    double[] avgChildAtAge = new double[10];
+    double[] childNumberPercent = new double[10];
+    double childlessPercent = 0;
     
+    double avgTotalMutations = 0;
+      
     public int c1, c2, c3, c4;
     
     public int born, die1, die2, stayed;
@@ -76,6 +80,25 @@ public class Stats {
         text += "Average Max Lifespan: "+String.format("%.1f", avgMaxLifespan/10.0+1);
         text += "\n";
         text += "\n";
+        text += "Average Child #: "+String.format("%.3f", avgChildNumber);
+        text += "\n";
+        text += "Died Childless %: "+String.format("%.1f", childlessPercent);
+        text += "\n";
+        text += "1 child %\t: "+String.format("%.1f", (childNumberPercent[0]-childNumberPercent[1]));
+        text += "\n";
+        text += "2 chilren %\t: "+String.format("%.1f", (childNumberPercent[1]-childNumberPercent[2]));
+        text += "\n";
+        text += "3 chilren %\t: "+String.format("%.1f", (childNumberPercent[2]-childNumberPercent[3]));
+        text += "\n";
+        text += "4+ chilren %\t: "+String.format("%.1f", (childNumberPercent[4]));
+        text += "\n";
+        text += "Average 1st childbirth age: "+String.format("%.1f", avgChildAtAge[0]);
+        text += "\n";
+        text += "Average 2nd childbirth age: "+String.format("%.1f", avgChildAtAge[1]);
+        text += "\n";
+        text += "Average 3rd childbirth age: "+String.format("%.1f", avgChildAtAge[2]);
+        text += "\n";
+        text += "\n";
         text += "Average Cell #: "+String.format("%.1f", avgSize);
         text += "\n";
         text += "Average Territory: "+String.format("%.1f", avgTerritory);
@@ -86,15 +109,18 @@ public class Stats {
         text += "\n";
         text += "\n";
         text += "Average Mutation #: "+String.format("%.1f", avgTotalMutations);
+
         
+
         return text;
         
     }
     
     public void update() {
-        updateAvgSize();
-        updateAvgLifespan();
-        updateAvgMutations();
+        updateSizeStats();
+        updateLifespanStats();
+        updateChildStats();
+        updateMutationStats();
     }
     
     public void printInfected() {
@@ -331,7 +357,7 @@ public class Stats {
         System.out.println(); 
     }
     
-    private void updateAvgSize() {
+    private void updateSizeStats() {
         int maxSizeSum = 0;
         int sizeSum = 0;
         int territorySum = 0;
@@ -366,7 +392,7 @@ public class Stats {
         this.avgMaxSize = maxSizeSum/ (double) getEchosystem().getOrganisms().size();
     }
     
-    private void updateAvgLifespan() {
+    private void updateLifespanStats() {
         int ageSum = 0;
         for (Organism o : getEchosystem().getOrganisms()) {
             ageSum +=o.getAge();
@@ -398,7 +424,56 @@ public class Stats {
 
     }
     
-    public void updateAvgMutations() {
+    public void updateChildStats() {
+        int sumChildNumber = 0;
+        int sumChildless = 0;
+        int[] childNumberHistogram = new int[5]; //keep track of number number organisms having x number of childern
+        int[] sumChildAge = new int[5]; //keep track of combined parent age having 1st children
+        
+        for (Organism o : getEchosystem().getRetiredOrganisms()) {
+            sumChildNumber += o.getChildren().size();
+            if (o.getChildren().size()==0) {
+                sumChildless+=1;
+            }
+            for (int ci = 0; ci<o.getChildren().size(); ci++) {
+                int parentAgeAtBirth =  o.getChildren().get(ci).getAttributes().parentAgeAtBirth;
+                
+                if (ci<4) {
+                    childNumberHistogram[ci]+=1;
+                    sumChildAge[ci]+=parentAgeAtBirth;
+                }
+                else {
+                    childNumberHistogram[4]+=1;
+                    sumChildAge[4]+=parentAgeAtBirth;
+                }
+                //assume getChildren() sorts children in order born
+                
+                
+            }
+            
+        }
+        
+        avgChildNumber = 0;
+        avgChildAtAge = new double[5];
+        childNumberPercent = new double[5];
+        
+        if (getEchosystem().getRetiredOrganisms().size()>0) {
+            avgChildNumber = sumChildNumber / (double) getEchosystem().getRetiredOrganisms().size();
+            childlessPercent = (getEchosystem().getRetiredOrganisms().size()-childNumberHistogram[0])*100.0/getEchosystem().getRetiredOrganisms().size();
+
+            for (int ci = 0; ci<4;ci++) {
+                if (childNumberHistogram[ci]>0) {
+                    avgChildAtAge[ci] = sumChildAge[ci]/(double) childNumberHistogram[ci];
+                }
+                if (sumChildNumber>0) {
+                    childNumberPercent[ci] = childNumberHistogram[ci]*100.0 / getEchosystem().getRetiredOrganisms().size();
+                }
+            }                
+
+        }
+    }
+    
+    public void updateMutationStats() {
         int mutationSum=0;
         int recentMutationSum=0;
         for (Organism o : getEchosystem().getOrganisms()) {
