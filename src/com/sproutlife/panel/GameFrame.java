@@ -14,12 +14,9 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
-/**
- * Conway's game of life is a cellular automaton devised by the mathematician
- * John Conway.
- */
+
 public class GameFrame extends JFrame {
-    private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(800, 600);
+    private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1000, 600);
     private static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(300, 300);
 
     PanelController panelController;
