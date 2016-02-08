@@ -246,7 +246,9 @@ public class PanelController {
         
         getMainControlPanel().getStepButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                getInteractionLock().writeLock().lock();
                 getGameModel().performGameStep();
+                getInteractionLock().writeLock().unlock();
                 getImageManager().repaintNewImage();
             }
         });
