@@ -43,7 +43,7 @@ public class Echosystem {
         this.board = new Board();
         this.clock = clock;
 
-        this.defaultOrgLifespan = 30;
+        this.defaultOrgLifespan = 15;
         this.retirementTimeSpan = 1000;
     }
 
