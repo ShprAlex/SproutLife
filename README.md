@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life brings the next level of evolution to Conway’s Game of Life. GOL creates self-organizing patterns that exhibit lifelike behaviors. Sprout Life allows these patterns to reproduce, mutate, and grow more advanced.
+Sprout Life is an evolutionary model that exhibits continuous growth in complexity. Our implementation builds on Conway’s Game of Life. GOL is famous for giving rise to self-organizing patterns with lifelike behaviors. We take this emergence a step further. Sprout Life treats patterns like organisms and allows them to reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
