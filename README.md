@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life models the emergence of complex life through evolution. The implementation builds on Conway’s Game of Life which is famous for having self-organizing patterns with lifelike behaviors arise from simple rules. Sprout Life take this emergence a step further, creating patterns that reproduce, mutate, and evolve to be more advanced.
+Sprout Life models the emergence of complex life through evolution. The implementation builds on Conway’s Game of Life which is famous for having self-organizing patterns with lifelike behaviors arise from simple rules. Sprout Life take this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -14,7 +14,7 @@ From their evolution we can see that there is a trade-off between individual ben
 
 There are several reasons why Sprout Life is exciting:
 
-- **Open ended evolution** - Sprout Life allows for truly open ended evolution. GOL creates behavior that exceeds it's programming. The rules specify the on/off switching of stationary cells, but this results in moving patterns. The patterns can even do computations that the cells could not. Sprout Life treats these patterns like organisms. It encourages them to evolve to be bigger. As organisms grow in size, they also grow in terms of their computing ability. It’s exciting because there is no limit to how big and complex the evolved organisms can get.
+- **Open ended evolution** - Sprout Life allows for truly open ended evolution. We want to emulate the rise of biological complexity. Our model creates self sustaining organisms. Initially these organisms are like simple proteins that can barely make copies of themselves. The organisms compete to grow larger, and we can study how greater size creates greater computational capabilities. We believe that our system allows the organisms to grow larger indefinitely, so that evolution can proceed without limit.
 
 - **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
