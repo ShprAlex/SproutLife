@@ -461,7 +461,7 @@ public class Stats {
             avgChildNumber = sumChildNumber / (double) getEchosystem().getRetiredOrganisms().size();
             childlessPercent = (getEchosystem().getRetiredOrganisms().size()-childNumberHistogram[0])*100.0/getEchosystem().getRetiredOrganisms().size();
 
-            for (int ci = 0; ci<4;ci++) {
+            for (int ci = 0; ci<5;ci++) {
                 if (childNumberHistogram[ci]>0) {
                     avgChildAtAge[ci] = sumChildAge[ci]/(double) childNumberHistogram[ci];
                 }
