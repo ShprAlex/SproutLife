@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life is an evolutionary model that exhibits continuous growth in complexity. Our implementation builds on Conway’s Game of Life. GOL is famous for giving rise to self-organizing patterns with lifelike behaviors. We take this emergence a step further. Sprout Life treats patterns like organisms and allows them to reproduce, mutate, and evolve.
+Sprout Life is a model of evolution towards greater complexity. It builds on Conway’s Game of Life, which is famous for giving rise to self-organizing patterns with lifelike behaviors. We take this emergence a step further. Sprout Life treats patterns like organisms and allows them to reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -86,9 +86,9 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 
 We want to see drama unfold in the game, and 3rd children create drama. In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. 
 
-By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can require a big energy investment to have the first two children, and litte for each additional child. Organisms with three children will dominate because having more children means they spend less energy per child on average. 
+By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can require a big energy investment to have the first two children, and little for each additional child. Organisms with three children will dominate because having more children means they spend less energy per child on average. 
 
-Organisms strive for order. Stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo. That creates more permutations of possible outcomes. It's a harder enviromnemt for our evolving organisms to optimize. 3rd children benefit their parent, but everyone ends up tripping over them. This results in chaos, a less densely populated board, and a lower population. 
+Organisms strive for order. Stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo. That creates more permutations of possible outcomes. It's a harder environment for our evolving organisms to optimize. 3rd children benefit their parent, but everyone ends up tripping over them. This results in chaos, a less densely populated board, and a lower population. 
 
 So what's good for the individual can in some ways be bad for the community. In our world this is a frequent occurrence requiring government intervention. An extreme but relevant example is China's one child policy. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
 
@@ -168,17 +168,3 @@ The relationship between small, bigger, and biggest is reminiscent of rock paper
 Another good article referencing the Belousov-Zhabotinsky reaction and a [simple algorithm](http://discovery.ucl.ac.uk/17241/1/17241.pdf) can be seen here. Note the A,B,C triple that occurs in this document as well.
 
 What's really interesting is that there is a stability present with 3 types or organisms that have a cycle of dominance that isn't present with just 2 organisms. This tendency to maintain a mixed state may eventually lead to mutually co-existing species, and even structures reminiscent of cell walls.
-
-### Working well vs. looking good (draft)
-
-Sometimes it makes sense to sacrifice the effectiveness of our evolutionary model to something that that looks more appealing.
-- Adding an extra step when sprouting seeds.
-- Displaying results on a bounded board vs. a torus. The boandaries make the movement of organisms easier to follow without them crawling and reappearing on the other side of the screen.
- 
-### The chaos at the top (draft)
-
-The longer the lifespan of the individual, the more likely it is to produce more offspring. This is usually counterbalanced by organisms wanting to be small, but it can become an issue. For this reason we add a maximum lifespan setting as a limit on the maximum self-destruct lifespan of organisms to prevent run away growth should it arise.
-
-### The search for mutual co-existence (draft)
-
-An open problem is to find co-existing species. Complexity in nature often arises through collaboration, as in the case of mitochondria.
