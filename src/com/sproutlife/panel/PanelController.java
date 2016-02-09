@@ -421,7 +421,10 @@ public class PanelController {
           
     public void updateFromSettings() {
         String lifeMode = getSettings().getString(Settings.LIFE_MODE);
-        if ("friendly".equals(lifeMode)) {
+        if ("cooperative".equals(lifeMode)) {
+            getMainControlPanel().getRdbtnCooperative().setSelected(true);
+        }
+        else if ("friendly".equals(lifeMode)) {
             getMainControlPanel().getRdbtnFriendly().setSelected(true);
         }
         else {
