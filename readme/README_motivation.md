@@ -2,7 +2,7 @@
 
 There are several reasons why Sprout Life is exciting:
 
-- **Open ended evolution** - Sprout Life emulates the rise of biological complexity. What we really want is to see bigger more advanced organisms evolving from smaller ones. Evolution of big organisms is open ended because there is no limit to how big organisms can get. Being big doesn't automatically mean being more advanced though. Big organisms need to succeed despite their size not because of it. A bigger size brings other advantages like being able to perform more advanced calculations, which is really the property we're trying to evolve.
+- **Open ended evolution** - Sprout Life emulates the rise of biological complexity. We want to see bigger more advanced organisms evolving from smaller simpler ones. Evolution of big organisms is open ended because there is no limit to how big organisms can get. Being big doesn't automatically mean being more advanced though. Big organisms need to succeed despite their size not because of it. A bigger size brings other advantages like being able to perform more advanced calculations, which is really the property we're trying to evolve.
 
 - **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
