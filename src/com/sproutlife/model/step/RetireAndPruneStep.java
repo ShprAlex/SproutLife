@@ -100,7 +100,7 @@ public class RetireAndPruneStep extends Step {
         for (Organism o : getEchosystem().getOrganisms()) {
             while (o.getParent()!=null) {
                 o=o.getParent();
-                if (getTime()-o.getTimeOfDeath()>1000) {
+                if (!o.isAlive() && (getTime()-o.getTimeOfDeath()>1000)) {
                     o.setParent(null);
                 }
             }
