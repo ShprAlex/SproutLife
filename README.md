@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life models the emergence of complex life through evolution. The implementation builds on Conway’s Game of Life which is famous for having self-organizing patterns with lifelike behaviors arise from simple rules. Sprout Life take this emergence a step further, creating patterns that reproduce, mutate, and evolve.
+Sprout Life models the evolution of complex life. The implementation builds on Conway’s Game of Life which is famous for having self-organizing patterns with lifelike behaviors emerge from simple rules. Sprout Life take this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -134,7 +134,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 - **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
 
-- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does than the cell dies or isn't born.
+- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does then the cell dies or isn't born.
 
 - **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
  
