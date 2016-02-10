@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life is a model of evolution towards greater complexity. It builds on Conway’s Game of Life, which is famous for giving rise to self-organizing patterns with lifelike behaviors. We take this emergence a step further. Sprout Life treats patterns like organisms and allows them to reproduce, mutate, and evolve.
+Sprout Life models the evolution of complex life. The implementation builds on Conway’s Game of Life which is famous for having self-organizing patterns with lifelike behaviors emerge from simple rules. Sprout Life take this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -10,21 +10,11 @@ From their evolution we can see that there is a trade-off between individual ben
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2016-01-27.gif)
 
-### Introduction
-
-Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which is somewhat related in terms of implementation. Cellular automata has always been a source of inspiration. Whenever I need a creative outlet I often find my mind wondering towards making better rule sets to model the magic of life.
-
-I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still pretty compact. It's small size makes it easier to perfect and optimize, which makes it fun.
-
-I started with a Java implementation because my initial goal was to quickly refine the design, and java is the language I'm most familiar with. Popularizing the application may be better done in Javascript. I think that current processors are fast enough to run Sprout Life using Javascript in a web browser.
-
-I hope that others get involved with this project as well. In particular, I hope that Sprout Life appeals to programmers for the same reason that GOL does - it is relatively small and self contained and produces results that look cool and are fun to talk about. 
-
 ### Motivation
 
 There are several reasons why Sprout Life is exciting:
 
-- **Open ended evolution** - Sprout Life allows for truly open ended evolution. GOL creates behavior that exceeds it's programming. The rules specify the on/off switching of stationary cells, but this results in moving patterns. The patterns can even do computations that the cells could not. Sprout Life treats these patterns like organisms. It encourages them to evolve to be bigger. As organisms grow in size, they also grow in terms of their computing ability. It’s exciting because there is no limit to how big and complex the evolved organisms can get.
+- **Open ended evolution** - Sprout Life emulates the rise of biological complexity. We want to see bigger more advanced organisms evolving from smaller simpler ones. Evolution of big organisms is open ended because there is no limit to how big organisms can get. Being big doesn't automatically mean being more advanced though. Big organisms need to succeed despite their size not because of it. A bigger size brings other advantages like being able to perform more calculations, which is really the property we're trying to evolve.
 
 - **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
 
@@ -144,7 +134,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 - **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
 
-- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does than the cell dies or isn't born.
+- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does then the cell dies or isn't born.
 
 - **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
  
@@ -168,3 +158,14 @@ The relationship between small, bigger, and biggest is reminiscent of rock paper
 Another good article referencing the Belousov-Zhabotinsky reaction and a [simple algorithm](http://discovery.ucl.ac.uk/17241/1/17241.pdf) can be seen here. Note the A,B,C triple that occurs in this document as well.
 
 What's really interesting is that there is a stability present with 3 types or organisms that have a cycle of dominance that isn't present with just 2 organisms. This tendency to maintain a mixed state may eventually lead to mutually co-existing species, and even structures reminiscent of cell walls.
+
+### About
+
+Hi, I'm [Alex Shapiro](https://twitter.com/shpralex). I've been playing around with ideas about artificial life for over 20 years, since I first started programming. I've spent a large part of my career building a network visualization product, which is somewhat related in terms of implementation. Cellular automata has always been a source of inspiration. Whenever I need a creative outlet I often find my mind wondering towards making better rule sets to model the magic of life.
+
+I had the insight that gave rise to Sprout Life in December 2015. Since then I've been obsessed with developing the project and seeing where it led. GOL can be written in 100 lines, and I thought that Sprout Life would not be much longer. It's turned out a bit bigger than I thought, but it's still pretty compact. It's small size makes it easier to perfect and optimize, which makes it fun.
+
+I started with a Java implementation because my initial goal was to quickly refine the design, and java is the language I'm most familiar with. Popularizing the application may be better done in Javascript. I think that current processors are fast enough to run Sprout Life using Javascript in a web browser.
+
+I hope that others get involved with this project as well. In particular, I hope that Sprout Life appeals to programmers for the same reason that GOL does - it is relatively small and self contained and produces results that look cool and are fun to talk about. 
+
