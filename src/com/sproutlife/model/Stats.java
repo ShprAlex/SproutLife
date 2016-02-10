@@ -380,7 +380,7 @@ public class Stats {
                 if (o.getParent().getParent()!=null) {
                     ts = Math.max(ts, o.getParent().getParent().getAttributes().getTerritorySize());
                 }
-                if (o.getParent().getAttributes().getTerritorySize()/3<100) {
+                if (o.getParent().getAttributes().getTerritorySize()/3<100 && ts/10<100) {
                     maxTerriroty[ts/10]++;
                 }
                 sumMaxTerritory+=ts;
