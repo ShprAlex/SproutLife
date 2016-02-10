@@ -374,22 +374,7 @@ public class PanelController {
                 getBoardRenderer().setOutlineSeeds(getDisplayControlPanel().getChckbxOutlineSeeds().isSelected());
                 getImageManager().repaintNewImage();
             }
-        });
-        
-        ItemListener sproutModeListener = new ItemListener() {  
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (getDisplayControlPanel().getRdbtnVisual().isSelected()) {
-                    getSettings().set(Settings.SPROUT_DELAYED_MODE, true);
-                }
-                else if(getDisplayControlPanel().getRdbtnFunctional().isSelected()) {
-                    getSettings().set(Settings.SPROUT_DELAYED_MODE, false);
-                }
-            }                      
-        };        
-        getDisplayControlPanel().getRdbtnVisual().addItemListener(sproutModeListener);
-        getDisplayControlPanel().getRdbtnFunctional().addItemListener(sproutModeListener);         
-        
+        });                  
     }
     
     public void addSettingsControlPanelListeners() {
@@ -416,6 +401,20 @@ public class PanelController {
                 getSettings().set(Settings.CHILD_THREE_ENERGY,((JSpinner) arg0.getSource()).getValue());
             }
         });
+        
+        ItemListener sproutModeListener = new ItemListener() {  
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (getSettingsControlPanel().getRdbtnVisual().isSelected()) {
+                    getSettings().set(Settings.SPROUT_DELAYED_MODE, true);
+                }
+                else if(getSettingsControlPanel().getRdbtnFunctional().isSelected()) {
+                    getSettings().set(Settings.SPROUT_DELAYED_MODE, false);
+                }
+            }                      
+        };        
+        getSettingsControlPanel().getRdbtnVisual().addItemListener(sproutModeListener);
+        getSettingsControlPanel().getRdbtnFunctional().addItemListener(sproutModeListener);      
     }
        
           
