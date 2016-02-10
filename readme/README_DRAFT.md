@@ -36,7 +36,7 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
 
 - **Organism** - An organism is a collection of cells. Organisms begin their life as a sprout, and every cell that grows from this pattern becomes part of the organism. Collisions between cells of different organisms will be discussed later.
 
-- **Reproduction** - Reproduction in cellular automata isn't new. However, when patterns reproduce it's often not clear at which step the child begins and when the parent ends. Adding Seed and Sprout patterns that lets us track the transition. Knowing exactly when a child splits off from a parent lets us determine its age. We can then add mutations to vary how it develops at each step and let those mutations to be inherited from parent to child. For now every organism has a single parent. Sexual reproduction can also easily be added as a result of contact between a parent and other organisms.
+- **Reproduction** - Reproduction in cellular automata isn't new. However, when patterns reproduce it's often not clear at which step the child begins and when the parent ends. Adding Seed and Sprout patterns that lets us track this transition. Knowing exactly when a child splits off from a parent lets us determine its age. We can then add mutations to vary how it develops at each step and let those mutations to be inherited from parent to child. For now every organism has a single parent. Sexual reproduction can also easily be added as a result of contact between a parent and other organisms.
 
 ![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutAnimation.gif)
 
