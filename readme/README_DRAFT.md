@@ -24,7 +24,7 @@ There are several reasons why Sprout Life is exciting:
 
 ### Seeds that Sprout - the key idea
 
-Reproduction in cellular automata isn't new. However, when patterns reproduce it's often not clear at which step the child begins and when the parent ends. Sprout Life clarifies this by defining specific Seed and Sprout patterns that let us track the transition. Knowing exactly when a child splits off from a parent lets us determine its age. We can then add mutations to vary how it develops at each step and let those mutations to be inherited from parent to child.
+A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve. Reproduction in cellular automata isn't new. However, when patterns reproduce it's often not clear at which step the child begins and when the parent ends. Sprout Life clarifies this by defining specific Seed and Sprout patterns that let us track the transition. Knowing exactly when a child splits off from a parent lets us determine its age. We can then add mutations to vary how it develops at each step and let those mutations to be inherited from parent to child.
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/readme/SeedSproutIllustration.png)
 
