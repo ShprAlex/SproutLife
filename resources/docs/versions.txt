@@ -7,3 +7,4 @@ Added smoothedPopulation # to stats, and updated stats panel text to html
 
 Added smoothed population density to stats.
 
+1.0.6

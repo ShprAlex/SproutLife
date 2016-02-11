@@ -18,7 +18,7 @@ public class GameController {
     
     private static final int    appMajorVersion    = 1;
     private static final int    appMinorVersion    = 0;
-    private static final int    appRevision        = 5;
+    private static final int    appRevision        = 6;
     
     private GameModel gameModel;
     
