@@ -96,7 +96,7 @@ public class Stats {
         text += buildDisplayRow("2 chilren %\t: ",String.format("%.1f", (childNumberPercent[1]-childNumberPercent[2])));
         text += buildDisplayRow("3 chilren %\t: ",String.format("%.1f", (childNumberPercent[2]-childNumberPercent[3])));
         text += buildDisplayRow("4+ chilren %\t: ",String.format("%.1f", (childNumberPercent[4])));
-        text += buildDisplayRow("Average 1st childbirth age: ",String.format("%.1f", avgChildAtAge[0]));
+        text += buildDisplayRowBold("Average 1st childbirth age: ",String.format("%.1f", avgChildAtAge[0]));
         text += buildDisplayRow("Average 2nd childbirth age: ",String.format("%.1f", avgChildAtAge[1]));
         text += buildDisplayRow("Average 3rd childbirth age: ",String.format("%.1f", avgChildAtAge[2]));
         text += BLANK_ROW;
