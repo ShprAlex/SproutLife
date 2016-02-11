@@ -16,6 +16,10 @@ import com.sproutlife.panel.PanelController;
 
 public class GameController {
     
+    private static final int    appMajorVersion    = 1;
+    private static final int    appMinorVersion    = 0;
+    private static final int    appRevision        = 5;
+    
     private GameModel gameModel;
     
     private PanelController panelController;
@@ -38,6 +42,22 @@ public class GameController {
         //game = new GameThread(frame.getGamePanel());
     }
 
+    public String getAppVersion() {
+        return ""+getAppMajorVersion()+"."+getAppMinorVersion()+"."+getAppRevision();
+    }    
+    
+    public int getAppMajorVersion() {
+        return appMajorVersion;
+    }
+    
+    public int getAppMinorVersion() {
+        return appMinorVersion;
+    }
+    
+    public int getAppRevision() {
+        return appRevision;
+    }
+    
     public void start() {
         panelController.start();
     }        

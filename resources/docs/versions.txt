@@ -1,0 +1,7 @@
+1.0.4
+
+Added display version # in main window title
+Added smoothedPopulation # to stats, and updated stats panel text to html 
+
+1.0.5
+

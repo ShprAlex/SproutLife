@@ -43,7 +43,7 @@ public class GameFrame extends JFrame {
 
     private void initFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Sprout Life - Evolving Game of Life");
+        setTitle("Sprout Life - Evolving Game of Life - V "+panelController.getGameController().getAppVersion());
         // game.setIconImage(new
         // ImageIcon(ConwaysGameOfLife.class.getResource("/images/logo.png")).getImage());
         setSize(DEFAULT_WINDOW_SIZE);
