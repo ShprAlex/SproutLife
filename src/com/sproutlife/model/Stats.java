@@ -20,6 +20,8 @@ public class Stats {
     GameModel gameModel;
     
     public double smoothedPopulation=0;
+    public double smoothedPopDensity=0;
+    public int smoothedResetTimer = 0;
     
     public double avgAge;
     public double avgLifespan;
@@ -81,7 +83,8 @@ public class Stats {
         text += START_TABLE;
         text += buildDisplayRow("Game Time: ",getTime());
         text += buildDisplayRow("Population (Organism #): ",getEchosystem().getOrganisms().size());
-        text += buildDisplayRowBold("Smoothed Population: ",(int) (smoothedPopulation+0.5)); //+0.5 to do average vs. floor
+        text += buildDisplayRow("Smoothed Population: ",(int) (smoothedPopulation+0.5)); //+0.5 to do average vs. floor
+        text += buildDisplayRowBold("Smoothed Pop Density: ",String.format("%.1f", smoothedPopDensity)); //+0.5 to do average vs. floor
         text += BLANK_ROW;        
         text += buildDisplayRow("Average Age: ",String.format("%.1f", avgAge));
         text += buildDisplayRow("Average Lifespan: ",String.format("%.1f", avgLifespan));
@@ -124,8 +127,27 @@ public class Stats {
         return buildDisplayRow(label, "<b>"+value+"</b>");
     }
     
+    
     public void updateSmoothedPopulation() {
-        smoothedPopulation = (smoothedPopulation*999+getEchosystem().getOrganisms().size())/1000;
+        int population = getEchosystem().getOrganisms().size();
+        
+        smoothedPopulation = (smoothedPopulation*999+population)/1000;
+        
+        //We expect the actual population to once in a while be within 10% of the smoothed population
+        //If it's not, something changed, so reset the smoothed population to the actual population
+        if (smoothedPopulation>0 && Math.abs(smoothedPopulation/ population - 1)>0.1) {
+            this.smoothedResetTimer++;
+        }
+        else {
+            smoothedResetTimer=0;
+        }
+        if (smoothedResetTimer>100) {
+            smoothedPopulation = population;
+            smoothedResetTimer = 0;
+        }
+            
+        smoothedPopDensity = smoothedPopulation*10000/gameModel.getBoard().getHeight()/gameModel.getBoard().getWidth();
+        
     }
     
     public void printHistogram() {

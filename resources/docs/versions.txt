@@ -5,3 +5,5 @@ Added smoothedPopulation # to stats, and updated stats panel text to html
 
 1.0.5
 
+Added smoothed population density to stats.
+
