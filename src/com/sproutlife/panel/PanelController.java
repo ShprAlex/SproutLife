@@ -437,10 +437,12 @@ public class PanelController {
     }
     
     public void loadTipText() {
-        URL tipsURL = TipsPanel.class.getResource("/tips/tips.html");
+        
         try {
+            URL tipsURL = TipsPanel.class.getResource("/tips/tips.html");
             getTipsPanel().getTipsTextPane().setPage(tipsURL);
         } catch (IOException e) {         
+            //This error probably means that /resources/ was not added to the build path
             e.printStackTrace();
         }
 

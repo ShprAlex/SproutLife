@@ -52,9 +52,9 @@ public class ImageManager {
     
     public static final Image applicationLogoImage = null; 
         
-    public static Image smallLogoImage =
-        new ImageIcon(ImageManager.class.getResource("/images/SproutLife_Logo.png")).getImage();
-    public static Image largeLogoImage = smallLogoImage;
+    public static Image smallLogoImage = null;
+       
+    public static Image largeLogoImage = null;
         
     
     private Image drawImage;
@@ -65,9 +65,19 @@ public class ImageManager {
     protected Vector<PaintImageListener> paintImageListeners;
     
     public ImageManager(PanelController panelController, LogoStyle logoStyle) {
+        
         this.panelController = panelController;
         this.logoStyle = logoStyle;
         paintImageListeners = new Vector<PaintImageListener>();
+        
+        try {
+            smallLogoImage = new ImageIcon(ImageManager.class.getResource("/images/SproutLife_Logo.png")).getImage();
+        }
+        catch (Exception ex) {
+            //This exception probably means that /resources/ should be added to the classpath
+            ex.printStackTrace();
+        }
+        largeLogoImage = smallLogoImage;
     }
     
     private boolean testAndClearImageDirtyFlag() {
