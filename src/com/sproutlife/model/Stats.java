@@ -19,6 +19,8 @@ import com.sproutlife.model.echosystem.Organism;
 public class Stats {
     GameModel gameModel;
     
+    public double smoothedPopulation=0;
+    
     public double avgAge;
     public double avgLifespan;
     public int avgMaxLifespan;
@@ -26,8 +28,10 @@ public class Stats {
     double avgSize = 0;
     double avgMaxSize = 0;
     double avgTerritory = 0;
+    double avgMaxTerritory = 0;
     int[] maxTerriroty = new int[100];
-    int sumMaxTerritory = 0;
+    //int sumMaxTerritory = 0;
+    
     
     double avgChildNumber = 0;
     double[] avgChildAtAge = new double[10];
@@ -66,54 +70,43 @@ public class Stats {
     }
     
     public String getDisplayText() {
-        String text ="";
-        text += "Game Time: "+getTime();
-        text += "\n";
-        text += "\n";
-        text += "Population (Organism #): "+getEchosystem().getOrganisms().size();
-        text += "\n";
-        text += "\n";
-        text += "Average Age: "+String.format("%.1f", avgAge);
-        text += "\n";
-        text += "Average Lifespan: "+String.format("%.1f", avgLifespan);
-        text += "\n";
-        text += "Average Max Lifespan: "+String.format("%.1f", avgMaxLifespan/10.0+1);
-        text += "\n";
-        text += "\n";
-        text += "Average Child #: "+String.format("%.3f", avgChildNumber);
-        text += "\n";
-        text += "Died Childless %: "+String.format("%.1f", childlessPercent);
-        text += "\n";
-        text += "1 child %\t: "+String.format("%.1f", (childNumberPercent[0]-childNumberPercent[1]));
-        text += "\n";
-        text += "2 chilren %\t: "+String.format("%.1f", (childNumberPercent[1]-childNumberPercent[2]));
-        text += "\n";
-        text += "3 chilren %\t: "+String.format("%.1f", (childNumberPercent[2]-childNumberPercent[3]));
-        text += "\n";
-        text += "4+ chilren %\t: "+String.format("%.1f", (childNumberPercent[4]));
-        text += "\n";
-        text += "Average 1st childbirth age: "+String.format("%.1f", avgChildAtAge[0]);
-        text += "\n";
-        text += "Average 2nd childbirth age: "+String.format("%.1f", avgChildAtAge[1]);
-        text += "\n";
-        text += "Average 3rd childbirth age: "+String.format("%.1f", avgChildAtAge[2]);
-        text += "\n";
-        text += "\n";
-        text += "Average Cell #: "+String.format("%.1f", avgSize);
-        text += "\n";
-        text += "Average Territory: "+String.format("%.1f", avgTerritory);
-        text += "\n";       
-        text += "Average Max Cell#: "+String.format("%.0f", avgMaxSize);
-        text += "\n";
-        text += "Average Max Territory: "+(sumMaxTerritory/ Math.max(1, getEchosystem().getOrganisms().size()));
-        text += "\n";
-        text += "\n";
-        text += "Average Mutation #: "+String.format("%.1f", avgTotalMutations);
-
+        final String HEADER_ROW = "<html><body style='font-family:ariel'>";        
+        final String START_TABLE = "<table width='100%' cellspacing='0' cellpadding='0'>";
+        final String END_TABLE = "</table>";
+        final String BLANK_ROW = "<tr style='height:5px;'></tr>";
+        final String FOOTER_ROW = "</body></html>";
+        String text = "";
         
-
+        text += HEADER_ROW;                
+        text += START_TABLE;
+        text += buildDisplayRow("Game Time: ",getTime());
+        text += buildDisplayRow("Population (Organism #): ",getEchosystem().getOrganisms().size());
+        text += buildDisplayRowBold("Smoothed Population: ",(int) (smoothedPopulation+0.5)); //+0.5 to do average vs. floor
+        text += BLANK_ROW;        
+        text += buildDisplayRow("Average Age: ",String.format("%.1f", avgAge));
+        text += buildDisplayRow("Average Lifespan: ",String.format("%.1f", avgLifespan));
+        text += buildDisplayRowBold("Average Self-Destruct Age: ",String.format("%.1f", avgMaxLifespan/10.0+1));
+        text += BLANK_ROW;
+        text += buildDisplayRow("Average Child #: ",String.format("%.3f", avgChildNumber));
+        text += buildDisplayRow("Died Childless %: ",String.format("%.1f", childlessPercent));
+        text += buildDisplayRow("1 child %\t: ",String.format("%.1f", (childNumberPercent[0]-childNumberPercent[1])));
+        text += buildDisplayRow("2 chilren %\t: ",String.format("%.1f", (childNumberPercent[1]-childNumberPercent[2])));
+        text += buildDisplayRow("3 chilren %\t: ",String.format("%.1f", (childNumberPercent[2]-childNumberPercent[3])));
+        text += buildDisplayRow("4+ chilren %\t: ",String.format("%.1f", (childNumberPercent[4])));
+        text += buildDisplayRow("Average 1st childbirth age: ",String.format("%.1f", avgChildAtAge[0]));
+        text += buildDisplayRow("Average 2nd childbirth age: ",String.format("%.1f", avgChildAtAge[1]));
+        text += buildDisplayRow("Average 3rd childbirth age: ",String.format("%.1f", avgChildAtAge[2]));
+        text += BLANK_ROW;
+        text += buildDisplayRow("Average Cell #: ",String.format("%.1f", avgSize));
+        text += buildDisplayRow("Average Lifetime Cell#: ",String.format("%.1f", avgMaxSize));
+        text += buildDisplayRow("Average Territory: ",String.format("%.1f", avgTerritory));        
+        text += buildDisplayRowBold("Average Lifetime Territory: ",String.format("%.1f", avgMaxTerritory));
+        text += BLANK_ROW;
+        text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations));
+        text += END_TABLE;
+        text += FOOTER_ROW;
+        
         return text;
-        
     }
     
     public void update() {
@@ -123,11 +116,16 @@ public class Stats {
         updateMutationStats();
     }
     
-    public void printInfected() {
-        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
-        System.out.print(" Avg Life  " + avgMaxLifespan);
-        System.out.println(" Infected born "+infectedCount);
-        infectedCount = 0;
+    private String buildDisplayRow(String label, Object value) {
+        return "<tr><td>"+label+"</td><td align='right'>"+value+"</td></tr>";
+    }
+    
+    private String buildDisplayRowBold(String label, Object value) {
+        return buildDisplayRow(label, "<b>"+value+"</b>");
+    }
+    
+    public void updateSmoothedPopulation() {
+        smoothedPopulation = (smoothedPopulation*999+getEchosystem().getOrganisms().size())/1000;
     }
     
     public void printHistogram() {
@@ -194,7 +192,7 @@ public class Stats {
             System.out.print(countAtLifespan[i]+" ");
         }
         
-        System.out.print(" AMC: "+sumMaxTerritory*10/getEchosystem().getOrganisms().size());
+        System.out.print(" AMC: "+(int) avgMaxTerritory);
         /*
         System.out.print(" Max cells: ");               
         for (int i=0;i<50;i++) {
@@ -361,7 +359,7 @@ public class Stats {
         int maxSizeSum = 0;
         int sizeSum = 0;
         int territorySum = 0;
-        sumMaxTerritory = 0;
+        int sumMaxTerritory = 0;
         for (Organism o : getEchosystem().getOrganisms()) {
 
             sizeSum += o.size();
@@ -386,10 +384,13 @@ public class Stats {
                 sumMaxTerritory+=ts;
             }
         }
-        
-        this.avgSize = sizeSum / (double) getEchosystem().getOrganisms().size();
-        this.avgTerritory = territorySum / (double) getEchosystem().getOrganisms().size();
-        this.avgMaxSize = maxSizeSum/ (double) getEchosystem().getOrganisms().size();
+        double population = (double) getEchosystem().getOrganisms().size();
+        if (population>0) {
+            this.avgSize = sizeSum / population;
+            this.avgTerritory = territorySum / population;
+            this.avgMaxSize = maxSizeSum/ population;
+            this.avgMaxTerritory = sumMaxTerritory/ population;
+        }
     }
     
     private void updateLifespanStats() {
