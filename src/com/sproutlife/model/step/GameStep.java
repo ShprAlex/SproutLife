@@ -80,7 +80,7 @@ public class GameStep extends Step {
         sproutStep.perform();       
         fireStepPerformed(StepType.SPROUT_STEP);
 
-        printStats();  
+        updateStats();  
         fireStepPerformed(StepType.GAME_STEP);
         
 
@@ -100,8 +100,8 @@ public class GameStep extends Step {
         
     }
     
-    private void printStats() {        
-                
+    private void updateStats() {        
+        getStats().updateSmoothedPopulation();
         if (getTime()%100==0) {
             getStats().update();
             //getStats().printChildEnergy();
