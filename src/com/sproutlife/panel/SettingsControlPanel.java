@@ -58,7 +58,7 @@ public class SettingsControlPanel extends JPanel {
 
 		ButtonGroup lifeModeButtonGroup = new ButtonGroup();
 		
-		JLabel lblMaxLifespan = new JLabel("Max lifespan");
+		JLabel lblMaxLifespan = new JLabel("Max self-destruct age");
 		GridBagConstraints gbc_lblMaxLifespan = new GridBagConstraints();
 		gbc_lblMaxLifespan.anchor = GridBagConstraints.WEST;
 		gbc_lblMaxLifespan.insets = new Insets(0, 0, 5, 5);
