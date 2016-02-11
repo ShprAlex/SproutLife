@@ -205,12 +205,14 @@ public class PanelController {
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
         
-        initSettingsControlPanel();
+        initSettingsControlPanel();              
         
         initSeedTypeComboBox();
         
-        loadTipText();
-    }
+        initStatsPanel();
+        
+        loadTipText();               
+    }   
     
     private void initSettingsControlPanel() {
         getSettingsControlPanel().getMaxLifespanSpinner().setValue(
@@ -222,6 +224,11 @@ public class PanelController {
         getSettingsControlPanel().getChildThreeEnergySpinner().setValue(
                 getSettings().getInt(Settings.CHILD_THREE_ENERGY));
                         
+    }
+    
+    private void initStatsPanel() {
+        getStatsPanel().getStatsTextPane().setContentType("text/html");
+        getStatsPanel().getStatsTextPane().setText("<html><body>Start game to see statistics.</body></html>");
     }
 
     public void addGeneralListeners() {
