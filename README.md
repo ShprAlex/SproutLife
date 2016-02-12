@@ -1,10 +1,10 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. On the one hand, cellular automata create delicate self-reproducing mechanisms. On the other hand these mechanisms have been too fragile to survive, let alone benefit from mutation. Sprout Life bridges this gap by adding the creation of "seeds" as an intermediate goal to making a full self-copy.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. On the one hand, cellular automata create delicate self-reproducing mechanisms. On the other hand these mechanisms have been too fragile to survive, let alone benefit from mutation. Sprout Life bridges this gap by adding  "seeds" as an intermediate step in the lifecycle of an organism making a full self-copy.
 
-Seeds are easy enough to make that the organisms can survive and benefit from mutation. At the same time, producing seeds is still a process. The existence of this process means we don't need to add any external goals for the organism to justify it's being alive. The organism's sole purpose is to survive and reproduce by producing seeds, and we can evolve organisms that are better at this task.
+Seeds, by design, are easy enough to make that the organisms can survive mutation. At the same time, producing seeds remains a process. The existence of this process means we don't need to add any external goals for the organism to justify it's being alive. The organism's sole purpose is to survive and reproduce by producing seeds, and we can evolve organisms that are better at this task.
 
-More interesting still is that as organisms grow they collide with each other and disrupt each other's ability to produce seeds. As it turns out, managing collisions with both friends and foes has a greater effect on an organism's success than simply being faster to create offspring.
+More interesting still is that as organisms grow they collide with each other and disrupt each other's ability to produce seeds. As it turns out, managing collisions with both friends and foes has a greater impact on an organism's success than simply being faster to create offspring.
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
 
