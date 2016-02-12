@@ -8,3 +8,8 @@ Added smoothedPopulation # to stats, and updated stats panel text to html
 Added smoothed population density to stats.
 
 1.0.6
+
+Added stats for board size per organism
+Changed default value for 3rd+ child energy for better looking initial results.
+
+1.0.7
