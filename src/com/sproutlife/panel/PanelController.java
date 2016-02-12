@@ -228,7 +228,7 @@ public class PanelController {
     
     private void initStatsPanel() {
         getStatsPanel().getStatsTextPane().setContentType("text/html");
-        getStatsPanel().getStatsTextPane().setText("<html><body>Start game to see statistics.</body></html>");
+        getStatsPanel().getStatsTextPane().setText(getGameModel().getStats().getDisplayText());
     }
 
     public void addGeneralListeners() {

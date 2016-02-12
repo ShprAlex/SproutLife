@@ -26,6 +26,7 @@ public class Stats {
     public double avgAge;
     public double avgLifespan;
     public int avgMaxLifespan;
+    public double boardSizeDivPopulation;
     
     double avgSize = 0;
     double avgMaxSize = 0;
@@ -101,9 +102,10 @@ public class Stats {
         text += buildDisplayRow("Average 3rd childbirth age: ",String.format("%.1f", avgChildAtAge[2]));
         text += BLANK_ROW;
         text += buildDisplayRow("Average Cell #: ",String.format("%.1f", avgSize));
-        text += buildDisplayRow("Average Lifetime Cell#: ",String.format("%.1f", avgMaxSize));
+        text += buildDisplayRow("Average Lifetime Cell#: ",String.format("%.1f", avgMaxSize));       
         text += buildDisplayRow("Average Territory: ",String.format("%.1f", avgTerritory));        
         text += buildDisplayRowBold("Average Lifetime Territory: ",String.format("%.1f", avgMaxTerritory));
+        text += buildDisplayRow("Board size / population: ",String.format("%.1f", boardSizeDivPopulation));
         text += BLANK_ROW;
         text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations));
         text += END_TABLE;
@@ -412,6 +414,7 @@ public class Stats {
             this.avgTerritory = territorySum / population;
             this.avgMaxSize = maxSizeSum/ population;
             this.avgMaxTerritory = sumMaxTerritory/ population;
+            this.boardSizeDivPopulation = gameModel.getBoard().getHeight()*gameModel.getBoard().getWidth()/smoothedPopulation;
         }
     }
     

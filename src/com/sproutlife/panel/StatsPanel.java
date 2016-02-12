@@ -15,6 +15,7 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class StatsPanel extends JPanel {
 	
@@ -41,6 +42,7 @@ public class StatsPanel extends JPanel {
 		setLayout(gridBagLayout);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
