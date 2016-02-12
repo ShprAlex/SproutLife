@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life models the evolution of complex life. The implementation builds on Conway’s Game of Life which is famous for having self-organizing patterns with lifelike behaviors emerge from simple rules. Sprout Life take this emergence a step further, creating patterns that reproduce, mutate, and evolve.
+Sprout Life is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having self-organizing patterns with lifelike behaviors emerge from simple rules. Sprout Life takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
 From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that greater reproductive ability and longer lifespan do not always help an organism and its descendants to thrive.
 
@@ -24,7 +24,7 @@ There are several reasons why Sprout Life is exciting:
 
 ### Seeds that Sprout - the key idea
 
-A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve. 
+A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/readme/SeedSproutIllustration.png)
 
@@ -44,7 +44,7 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
 
 - **Mutation** - There are lots of ways to implement a genetic code and mutation. An option that works well, is to have mutations be a pair of (x,y) coordinates, and a time value ((x,y),t) for each coordinate. If at age t, an organism has a mutation ((x,y),t) and it has a living cell at coordinates (x,y) then that cell is killed. Turning off a cell changes how the organism grows from that point. This is yet another deviation from GOL rules.
 
-- **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed, by random chance during an organism’s life. For evolution to work, an organism needs to live through nearly identical circumstances as its parent. If it’s lucky and has the right mutations it reproduces, if not, it dies childless. Thus beneficial mutations will propagate. What's tricky is that children may be born in different environments from their parents and from each other. For instance a second child is born in a different environment than a first child. At a cellular level where every bit matters this makes a big difference. Our implementation keeps things simple and doesn't bifurcate the genetic code, so mutations have to be beneficial across all conditions.
+- **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed. We do this by random chance during an organism’s life. Our implementation keeps things simple and doesn't bifurcate the genetic code, so mutations have to be beneficial across all conditions. For example, a first child and a second child are born at different times with different surrounding cell configurations. In our case they both follow the same genetic blueprint, even though it's tempting to take birth order into account.
 
 ![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-29zb.gif) 
 
@@ -168,4 +168,3 @@ I had the insight that gave rise to Sprout Life in December 2015. Since then I'v
 I started with a Java implementation because my initial goal was to quickly refine the design, and java is the language I'm most familiar with. Popularizing the application may be better done in Javascript. I think that current processors are fast enough to run Sprout Life using Javascript in a web browser.
 
 I hope that others get involved with this project as well. In particular, I hope that Sprout Life appeals to programmers for the same reason that GOL does - it is relatively small and self contained and produces results that look cool and are fun to talk about. 
-
