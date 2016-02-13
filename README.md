@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines, but these machines have, [mostly](https://www.youtube.com/watch?v=vbpoTZlNTiw), been too fragile to survive mutation and evolve.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines, but these machines have mostly[*](#Notes) been too fragile to survive mutation and evolve.
 
 Sprout Life simplifies the process of reproduction by keeping the "dna" of the organism in memory. To reproduce a cellular automaton performs an easier, though non-trivial task of making seed shapes. The seeds sprout new children which inherit the dna from their parent. Reproduction is the defining process that organisms perform over a lifetime. Its simpler nature makes it resilient to mutation, and the fact that it's non-trivial allows it to undergo evolution.
 
@@ -170,3 +170,7 @@ I had the insight that gave rise to Sprout Life in December 2015. Since then I'v
 I started with a Java implementation because my initial goal was to quickly refine the design, and java is the language I'm most familiar with. Popularizing the application may be better done in Javascript. I think that current processors are fast enough to run Sprout Life using Javascript in a web browser.
 
 I hope that others get involved with this project as well. In particular, I hope that Sprout Life appeals to programmers for the same reason that GOL does - it is relatively small and self contained and produces results that look cool and are fun to talk about. 
+
+### Notes
+
+[Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by Hiroki Sayama are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which makes it difficult for them to grow in complexity.
