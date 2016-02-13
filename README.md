@@ -173,4 +173,4 @@ I hope that others get involved with this project as well. In particular, I hope
 
 ### Notes
 
-[Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by Hiroki Sayama are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which makes it difficult for them to grow in complexity.
+[Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by [Hiroki Sayama](http://bingweb.binghamton.edu/~sayama/) are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which makes it difficult for them to grow in complexity.
