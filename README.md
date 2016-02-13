@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms [[1](#notes)] The game is populated by organisms that grow according to the rules of cellular automata. Organisms reproduce by creating seeds, and those seeds sprout into child organisms that inherit their parents' genes.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms [[1](#notes)]. The game is populated by organisms that grow according to the rules of cellular automata. Organisms reproduce by creating seeds, and those seeds sprout into child organisms that inherit their parents' genes.
 
 Organisms collide with each other and disrupt each other's ability to produce seeds. The pressures of producing seeds and competing with other organisms can lead them to evolve to an unlimited complexity. As it turns out, managing collisions with both friends and foes has a greater impact on an organism's success than simply being faster to create offspring.
 
