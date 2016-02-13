@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines, but these machines have been too fragile to survive mutation and evolve.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines, but these machines have mostly [[1](#notes)] been too fragile to survive mutation and evolve.
 
 Sprout Life simplifies the process of reproduction by keeping the "dna" of the organism in memory. To reproduce a cellular automaton performs an easier, though non-trivial task of making seed shapes. The seeds sprout new children which inherit the dna from their parent. Reproduction is the defining process that organisms perform over a lifetime. Its simpler nature makes it resilient to mutation, and the fact that it's non-trivial allows it to undergo evolution.
 
@@ -173,4 +173,4 @@ I hope that others get involved with this project as well. In particular, I hope
 
 ### Notes
 
-[Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by [Hiroki Sayama](http://bingweb.binghamton.edu/~sayama/) are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which makes it difficult for them to grow in complexity.
+[1] [Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by [Hiroki Sayama](http://bingweb.binghamton.edu/~sayama/) are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which makes it difficult for them to grow in complexity.
