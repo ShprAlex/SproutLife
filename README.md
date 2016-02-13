@@ -1,6 +1,6 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines, but these machines have been too fragile to survive mutation and evolve.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines, but these machines have, [mostly](https://www.youtube.com/watch?v=vbpoTZlNTiw), been too fragile to survive mutation and evolve.
 
 Sprout Life simplifies the process of reproduction by keeping the "dna" of the organism in memory. To reproduce a cellular automaton performs an easier, though non-trivial task of making seed shapes. The seeds sprout new children which inherit the dna from their parent. Reproduction is the defining process that organisms perform over a lifetime. Its simpler nature makes it resilient to mutation, and the fact that it's non-trivial allows it to undergo evolution.
 
