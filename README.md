@@ -1,8 +1,8 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges a gap between cellular automata and evolutionary algorithms [[1](#notes)]. The game is populated by organisms that grow according to the rules of cellular automata. Organisms reproduce by creating seeds, and those seeds sprout into child organisms that inherit their parents' genes.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It's a unique solution that bridges the gap between cellular automata and evolutionary algorithms [[1](#notes)]. 
 
-Organisms collide with each other and disrupt each other's ability to produce seeds. The pressures of producing seeds and competing with other organisms can lead them to evolve to an unlimited complexity. As it turns out, managing collisions with both friends and foes has a greater impact on an organism's success than simply being faster to create offspring.
+The game is populated by organisms which reproduce by producing seeds and compete for space. From their evolution we can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that faster reproduction and longer lifespan do not always help an organism and its descendants to thrive.
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
 
@@ -171,8 +171,8 @@ I hope that others get involved with this project as well. In particular, I hope
 
 ### Notes
 
-[1] Sprout life is a unique solution to bridges a gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines [[2](#notes)], but these machines have mostly [[3](#notes)] been too fragile to survive mutation and evolve. Sprout Life simplifies the process of reproduction by keeping the "dna" of the organism in memory. To reproduce a cellular automaton performs an easier, though non-trivial task of making seed shapes. Its simpler nature makes it resilient to mutation, and the fact that it's non-trivial allows it to undergo evolution.
+[1] Sprout life is a unique solution to bridges the gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines [[2](#notes)], but these machines have mostly [[3](#notes)] been too fragile to survive mutation and evolve. Sprout Life simplifies the process of reproduction by keeping the "dna" of the organism in memory. To reproduce a cellular automaton performs an easier, though non-trivial task of making seed shapes. Its simpler nature makes it resilient to mutation, and the fact that it's non-trivial allows it to undergo evolution.
 
-[2] [The History of Cellular Automata](https://www.wolframscience.com/reference/notes/876b) is that they were introduced by [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) in trying to develop an abstract model of self-reproduction in biology - a topic which had emerged from investigations in cybernetics.
+[2] [The History of Cellular Automata](https://www.wolframscience.com/reference/notes/876b) is that they were introduced by [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) in trying to develop an abstract model of self-reproduction in biology - a topic which had emerged from his investigations in cybernetics.
 
-[3] [Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by [Hiroki Sayama](http://bingweb.binghamton.edu/~sayama/) are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which makes it difficult for them to grow in complexity.
+[3] [Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by [Hiroki Sayama](http://bingweb.binghamton.edu/~sayama/) are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which limits the availability of possible beneficial mutations.
