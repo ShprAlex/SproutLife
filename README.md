@@ -169,10 +169,6 @@ I started with a Java implementation because my initial goal was to quickly refi
 
 I hope that others get involved with this project as well. In particular, I hope that Sprout Life appeals to programmers for the same reason that GOL does - it is relatively small and self contained and produces results that look cool and are fun to talk about. 
 
-### Notes
+### Wiki
 
-[1] Sprout Life is a unique solution that bridges the gap between cellular automata and evolutionary algorithms. Cellular automata were invented to model self-replicating machines [[2](#notes)], but these machines have mostly [[3](#notes)] been too fragile to survive mutation and evolve. Sprout Life simplifies the process of reproduction by keeping the DNA of the organism in memory. The cellular automaton no longer needs to make a physical copy of its DNA to reproduce. Instead it performs an easier, though non-trivial task of making seed shapes. Its simpler nature makes it resilient to mutation, and the fact that it's non-trivial allows it to undergo evolution.
-
-[2] [The History of Cellular Automata](https://en.wikipedia.org/wiki/Cellular_automaton#History) is that they were introduced by John von Neumann who design the self-replicating [Von Neumann universal constructor](https://en.wikipedia.org/wiki/Von_Neumann_universal_constructor) in the 1940s, without the use of a computer.
-
-[3] [Evoloops](https://www.youtube.com/watch?v=vbpoTZlNTiw) created by [Hiroki Sayama](http://bingweb.binghamton.edu/~sayama/) based on work by [Christopher Langton](https://en.wikipedia.org/wiki/Langton%27s_loops) are the current state of the art for evolving cellular automata. As you can see from the video link, they evolve, but grow smaller in the process. The challenge is that their DNA is physically encoded as part of the organism, which limits the availability of possible beneficial mutations.
+See more info and documentation in the [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) !
