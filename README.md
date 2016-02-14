@@ -108,4 +108,6 @@ I hope that others get involved with this project as well. In particular, I hope
 
 ### Wiki
 
-See more info and documentation in the [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) !
+* [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) for more documentation please see the Sprout Life Wiki!
+* [Collisions & Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Collisions) How collisions between organisms are handled and finally achieving growth in complexity through competitive mode.
+* [Observations on growth through Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Rock-Paper-Scissors) - Rock Paper Scissors - Small Bigger Biggest. Aka. The enemy of my enemy is my food.
