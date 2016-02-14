@@ -96,7 +96,7 @@ In essence being bigger gives an organism a bigger brain (which is also its body
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-28f.gif)
 
-### Wiki
+### Wiki & Documentation
 
 * [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) for more documentation please see the Sprout Life Wiki!
 * [Collisions & Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Collisions) How collisions between organisms are handled and finally achieving growth in complexity through competitive mode.
