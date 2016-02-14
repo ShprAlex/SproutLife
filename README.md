@@ -94,70 +94,7 @@ Patterns are programs not just machines. Skilled designers have created GOL patt
 
 In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
 
-### Collisions between organisms
-
-- **Collision** - A collision occurs when the cells of one organism are adjacent to the cells of another organism. The cells can be directly adjacent, or they could be one space apart. At locations where two organisms meet, collisions typically cause the death of cells that would have stayed alive, or prevent the birth of cells that otherwise would have been born.
-
-- **Personal vs. interpersonal** - Rules about collisions operate on an interpersonal level. We need to decide who wins and who gets damaged when two organism collide. This is in contrast to rules controlling lifespan, minimum childbearing age, seed type, etc., which operate on an individual level.
-
-- **Collision rules create subtle advantages** - Collision rules provide us with fine grained control to create favorable characteristics. We can say that it's optional for an organism to possess a particular feature, but if it does it will have a slight edge when it encounters an organism that doesn't.
-
-### Natural collision modes
-
-Collisions are unavoidable as organisms reproduce to fill the board. To keep things simple and "natural", we can respect the rules of GOL when handling collisions.
-
-- **Cooperative mode** - Cooperative mode is the most direct implementation of GOL rules. Just like GOL, a cell stays alive if it has 2 or 3 living neighbors, regardless of which organism those neighbors belong to. New cells are born when a cell has exactly 3 neighbors, but all 3 neighbors must be part of the same organism. If there are more than 3 neighbors or 3 neighbors from a mix of organisms, a cell isn't born.
-
-- **Cooperative mode - a common goal** - Cooperative mode minimizes the difference between how a cell sees its own organism and others. Because of this, stable structures are established fastest in cooperative mode. When organisms become stable, they tend to reduce their lifespan so as to create minimal growth in order to reproduce. Extra cells generated beyond the need for reproduction only get in the way.
-
-- **Friends vs. Neighbors** - Friends are defined as adjacent cells from the same organism. This is in contrast to neighbors which are adjacent cells which can be from the same or different organisms. 
-
-- **Friendly mode** - Friendly mode is a bit more advanced than cooperative mode. In friendly mode a cell stays alive if it has 2 or 3 neighbors, but at least 1 of those neighbors is a friend. The birth conditions are the same as for cooperative mode.
-
-- **Friendly mode - more personality** - The slight difference between cooperative mode and friendly mode lets cells distinguish between their own organism and others. This translates into a tendency to benefit one's own organism at the expense of collective stability. The result is that friendly mode tends to maintain organisms at their current size more so than cooperative mode where organisms tend to shrink. Evolution keeps going even as organisms stay at their current size.
-
-### Competitive Mode - first steps, defining "big"
-
-In pursuit of bigger, more sophisticated organisms it seems natural to let bigger organisms win collisions. Bigger organisms should come out undamaged and carrying on with reproduction, while smaller organisms have some cells destroyed and may be unable to procreate. However, easy definitions of "big" didn't seem to work, so it was necessary to hunt for a better metric for size comparison.
-
-- **Number of cells at the time of collision** - This was the most obvious way to check who was bigger at the time of collision. However, all organisms start as small sprouts. This means there will be lots of chances for an organism that would have been a big grown up to lose to an organism that will remain small when fully grown. In practice this wasn't moving the needle.
-
-- **Max number of cells during current life** - This helps to give an advantage to older organisms that may decline in size after hitting an early peak. Yes, organisms do peak in size early on and then get smaller, this is not just anthropomorphism.
- 
-- **Max number of cells in parent's life time** - The organism may be small now, but its parent was big. Therefore the child's size advantage during a collision will be judged by the parent. This finally started to have an effect. However, the maximum size an organism achieves is still too granular. It takes a lot to boost the maximum size more than a few cells.
-
-- **Territory size** - Territory is defined as all the coordinates ever occupied by an organism's cells during its life. If an organism creates a glider, then that glider will keep increasing the organism's territory size as it moves even though the size of the glider remains the same. Territory tends to increase with longer lifespan. This measure helps give an advantage to organisms that are even a little bit bigger.
-
-- **Max between parent's and grandparent's territory** - This heavy handed measure, judging an organism's size by the maximum size of its parent's and grandparent's sizes is finally what was settled on. Now we can make sure that bigger organisms get the upper hand in the population and that the general trend is towards evolution of bigger organisms.
-
-### Competitive Mode - finally achieving growth
-
-- **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
-
-- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does then the cell dies or isn't born.
-
-- **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
- 
-- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Even so, growth is slow. It can take 1,000 generations, which takes a 1 minute, for a change in organism size to occur. Growth is easier to achieve in organisms that are already big. Organisms that have become optimized to be small through the application of cooperative mode can resist growing larger even after competitive mode is on for a long time.
-
-- **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. A glider gun used as a real gun to disable enemies? This is a real possibility, that I believe I've seen happen. There is lots of cool things to see and cool experiments to do. 
-
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-28f.gif)
-
-### Rock Paper Scissors - Small Bigger Biggest. 
-### Aka. The enemy of my enemy is my food.
-
-This part is still a draft!
-
-The size advantage of competitive mode is constant no matter what the difference in size. If one organism is a little bigger than a competitor it benefits the same as if it were a lot bigger. However, the reproductive advantage of smaller organisms is inversely proportional to size. The smaller the organism the quicker it is to make copies of itself. 
-
-With a big enough gap in size, the reproductive advantage of being smaller will overwhelm the advantage of being bigger. The result is that a colony of a much bigger organisms will collapse when in contact with colony of smaller organisms -- unless it evolves. Larger organisms must develop an inherent advantage over much smaller organisms to survive. And they do.
-
-The relationship between small, bigger, and biggest is reminiscent of rock paper scissors. Interestingly this kind of [Cyclic cellular automata](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton) has been studied by David Griffeath and is illustrated well in this video [YouTube Video](https://www.youtube.com/watch?v=M4cV0nCIZoc).
-
-Another good article referencing the Belousov-Zhabotinsky reaction and a [simple algorithm](http://discovery.ucl.ac.uk/17241/1/17241.pdf) can be seen here. Note the A,B,C triple that occurs in this document as well.
-
-What's really interesting is that there is a stability present with 3 types or organisms that have a cycle of dominance that isn't present with just 2 organisms. This tendency to maintain a mixed state may eventually lead to mutually co-existing species, and even structures reminiscent of cell walls.
 
 ### About
 
