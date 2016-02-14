@@ -99,5 +99,5 @@ In essence being bigger gives an organism a bigger brain (which is also its body
 ### Wiki & Documentation
 
 * [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) for more documentation please see the Sprout Life Wiki!
-* [Collisions & Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Collisions) How collisions between organisms are handled and finally achieving growth in complexity through competitive mode.
-* [Observations on growth through Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Rock-Paper-Scissors) - Rock Paper Scissors - Small Bigger Biggest. Aka. The enemy of my enemy is my food.
+* [Collisions & Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Collisions) How collisions between organisms are handled and finally achieving growth through competitive mode.
+* [Observations on Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Rock-Paper-Scissors) - Rock Paper Scissors - Small Bigger Biggest. Aka. The enemy of my enemy is my food.
