@@ -1,8 +1,8 @@
 # Sprout Life
 
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It creates self-replicating cellular automata which are resilient to mutation and which undergo natural selection and growth to greater complexity. This opens up a new world of possibility for modelling the evolution of complex life.
+Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It creates self-replicating cellular automata which are resilient to mutation, and which grow more advanced through natural selection. This opens up a new world of possibility for modelling the evolution of complex life.
 
-Watching the current game quickly reveals interesting phenomena. We can see that there is a trade-off between individual benefit and collective stability. Paradoxically, it turns out that faster reproduction and longer lifespan do not always help an organism and its descendants to thrive.
+In the first few minutes of the game we create 100s of diverse species of replicators. Which replicator is the best is an open ended problem because replicators can always evolve to be more complex. Collaboration between replicators is potentially even more interesting than competition, although sustained collaboration between species has not yet been observed. For now you can watch evolution happen on a single machine. In the future it could be fun to take successful organisms from different machines and match them against each other.
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
 
