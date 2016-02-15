@@ -102,6 +102,8 @@ In essence being bigger gives an organism a bigger brain (which is also its body
 
 ### Competitive Collision Mode - finally achieving growth
 
+In pursuit of bigger, more sophisticated organisms it seems natural to let bigger organisms win collisions. Bigger organisms should come out undamaged and carrying on with reproduction, while smaller organisms have some cells destroyed and may be unable to procreate. 
+
 - **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
 
 - **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does then the cell dies or isn't born.
