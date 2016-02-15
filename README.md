@@ -96,11 +96,27 @@ In essence being bigger gives an organism a bigger brain (which is also its body
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-28f.gif)
 
-### Growth through Competition
+### Collisions between Organisms
 
-* [Collisions & Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Collisions) How collisions between organisms are handled and finally achieving growth through competitive mode.
-* [Observations on Competitive Mode](https://github.com/ShprAlex/SproutLife/wiki/Small-Bigger-Biggest) - Rock Paper Scissors - Small Bigger Biggest. Aka. The enemy of my enemy is my food.
+* [Collisions](https://github.com/ShprAlex/SproutLife/wiki/Collisions) - Please see the Sprout Life Wiki for a full description of collisions and collision modes.
+
+### Competitive Collision Mode - finally achieving growth
+
+- **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
+
+- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does then the cell dies or isn't born.
+
+- **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
+ 
+- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Even so, growth is slow. It can take 1,000 generations, which takes a 1 minute, for a change in organism size to occur. Growth is easier to achieve in organisms that are already big. Organisms that have become optimized to be small through the application of cooperative mode can resist growing larger even after competitive mode is on for a long time.
+
+- **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. A glider gun used as a real gun to disable enemies? This is a real possibility, that I believe I've seen happen. There is lots of cool things to see and cool experiments to do. 
+
+- **Next steps after achieving growth** - [Small bigger biggest](https://github.com/ShprAlex/SproutLife/wiki/Small-Bigger-Biggest) - Having achieved growth we see the emergence of interesting behavior with cycles of 3 species engaged in rock-paper-scissors style competition. Please see the wiki for more details.
 
 ### Wiki & Documentation
 
 * [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) - For more details and documentation please see the Wiki!
+
+
+
