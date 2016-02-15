@@ -112,7 +112,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
  
 - **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Even so, growth is slow. It can take 1,000 generations, which takes a 1 minute, for a change in organism size to occur. Growth is easier to achieve in organisms that are already big. Organisms that have become optimized to be small through the application of cooperative mode can resist growing larger even after competitive mode is on for a long time.
 
-- **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. `A glider gun used as a real gun to disable enemies?` This is a real possibility, that I believe I've seen happen.
+- **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. **_A glider gun used as a real gun to disable enemies?_** This is a real possibility, that I believe I've seen happen.
 
 - **Next steps after achieving growth** - [Small bigger biggest](https://github.com/ShprAlex/SproutLife/wiki/Small-Bigger-Biggest) - Having achieved growth we see the emergence of interesting behavior with cycles of 3 species engaged in rock-paper-scissors style competition. Please see the wiki for more details.
 
