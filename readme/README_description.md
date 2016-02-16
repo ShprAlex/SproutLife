@@ -1,4 +1,3 @@
-Sprout Life adds reproduction, mutation, and evolution to Conway’s Game of Life. It creates self-replicating cellular automata which are resilient to mutation, and which grow more advanced through natural selection. This opens up a new world where we can model the evolution of complex life.
+Sprout Life is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. Sprout Life takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
-In the first few minutes of the game, Sprout Life gives rise to 100s of diverse species of replicators. We can watch as the organisms evolve to compete for space and collaborate with their siblings. In future versions it could be fun to enable competitions between organisms created by multiple users.
-
+In the first few minutes of the game, Sprout Life gives rise to 100s of diverse replicating organisms. We can watch as the organisms compete for space and align with their siblings. Evolution is open ended, so more advanced organisms can always emerge. In future versions it could be fun to enable competitions between organisms collected by multiple users.
