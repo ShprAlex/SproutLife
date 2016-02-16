@@ -2,7 +2,7 @@
 
 Sprout Life is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. Sprout Life takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
-In the first few minutes of the game, Sprout Life gives rise to 100s of diverse replicating organisms. We can watch as the organisms compete for space and align with their siblings. Evolution is open ended, so more advanced organisms can always spring up. In future versions it could be fun to enable competitions between organisms collected by multiple users.
+In the first few minutes of the game, Sprout Life gives rise to 100s of diverse replicating organisms. We can watch as the organisms compete for space and align with their siblings. Evolution is open ended, so more advanced organisms continue to spring up as the program runs. In future versions it could be fun to enable competitions between organisms collected by multiple users.
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
 
