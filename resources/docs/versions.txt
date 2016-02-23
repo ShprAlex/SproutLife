@@ -13,3 +13,7 @@ Added stats for board size per organism
 Changed default value for 3rd+ child energy for better looking initial results.
 
 1.0.7
+
+Added text-based genome visualization to Stats panel, will switch to graphics later. 
+
+1.0.8 
