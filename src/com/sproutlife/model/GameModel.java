@@ -71,6 +71,7 @@ public class GameModel {
         getEchosystem().resetCells();        
         getEchosystem().pruneEmptyOrganisms();
         getEchosystem().clearRetiredOrgs();
+        getStats().reset();
         getClock().reset();
         
     }

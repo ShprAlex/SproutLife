@@ -9,7 +9,6 @@ package com.sproutlife.panel;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,9 +22,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.DefaultCaret;
 
 import com.sproutlife.GameController;
 import com.sproutlife.Settings;
@@ -229,6 +230,9 @@ public class PanelController {
     private void initStatsPanel() {
         getStatsPanel().getStatsTextPane().setContentType("text/html");
         getStatsPanel().getStatsTextPane().setText(getGameModel().getStats().getDisplayText());
+        //Fixes scroll issues on setText(), we want to keep the scroll position where it is
+        DefaultCaret caret = (DefaultCaret) getStatsPanel().getStatsTextPane().getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
     }
 
     public void addGeneralListeners() {
@@ -248,9 +252,16 @@ public class PanelController {
             public void stepPerformed(GameStepEvent event) {
                 if (event.getStepType() == StepType.STEP_BUNDLE) {
                     getImageManager().repaintNewImage();
-                    if (getGameModel().getTime()%100==0) {
-                        getStatsPanel().getStatsTextPane().setText(
-                                getGameModel().getStats().getDisplayText());
+                    
+                    if (getGameModel().getTime()%100==0) {                        
+                      
+                        SwingUtilities.invokeLater(new Runnable() {                            
+                            @Override
+                            public void run() {
+                                getStatsPanel().getStatsTextPane().setText(
+                                        getGameModel().getStats().getDisplayText());
+                            }
+                        });
                     }
                 }
             }

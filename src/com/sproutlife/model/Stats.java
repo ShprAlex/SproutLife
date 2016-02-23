@@ -9,8 +9,10 @@ package com.sproutlife.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Mutation;
@@ -33,15 +35,19 @@ public class Stats {
     double avgTerritory = 0;
     double avgMaxTerritory = 0;
     int[] maxTerriroty = new int[100];
-    //int sumMaxTerritory = 0;
-    
-    
+
+       
     double avgChildNumber = 0;
     double[] avgChildAtAge = new double[10];
     double[] childNumberPercent = new double[10];
     double childlessPercent = 0;
     
     double avgTotalMutations = 0;
+    //visualize all mutations on a 30x30 grid
+    double mutationGridtXY[][] = new double[30][30];
+
+    double mutationHistTime = 0;
+    double mutationVelocity = 0;
       
     public int c1, c2, c3, c4;
     
@@ -61,7 +67,11 @@ public class Stats {
     
     
     public Stats(GameModel gameModel) {
-        this.gameModel = gameModel;
+        this.gameModel = gameModel;        
+    }
+    
+    public void reset() {
+      
     }
     
     private Echosystem getEchosystem() {
@@ -108,6 +118,12 @@ public class Stats {
         text += buildDisplayRow("Board size / population: ",String.format("%.1f", boardSizeDivPopulation));
         text += BLANK_ROW;
         text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations));
+        
+        text += buildDisplayRow("Avg Genome, mutat prevalence: ");
+        text += buildDisplayRow("2=20%, $=95%, #=99% ");        
+        text += buildGenomeGrid();
+        
+        
         text += END_TABLE;
         text += FOOTER_ROW;
         
@@ -125,8 +141,40 @@ public class Stats {
         return "<tr><td>"+label+"</td><td align='right'>"+value+"</td></tr>";
     }
     
+    private String buildDisplayRow(String label) {
+        return "<tr><td colspan='2'>"+label+"</td></tr>";
+    }
+    
     private String buildDisplayRowBold(String label, Object value) {
         return buildDisplayRow(label, "<b>"+value+"</b>");
+    }
+    
+    private String buildGenomeGrid() {
+        String text = "";
+        //This is a temporary ascii based visualizatoin
+        //we're switching the x,y axis because the r-pentomino
+        //causes the organism to grow and mutate horizontally, and we
+        //have more room vertically.
+        for (int i=0;i<14;i++) {
+            String mutationHist = "";
+            for (int j=0;j<18;j++) {
+                if (mutationGridtXY[i][j]<1) {
+                    mutationHist+=" "+String.format("_");
+                }
+                else if (mutationGridtXY[i][j]>=9.9) {
+                    mutationHist+=" "+String.format("#");
+                }
+                else if (mutationGridtXY[i][j]>=9.5) {
+                    mutationHist+=" "+String.format("$");
+                }
+                else {
+                    mutationHist+=" "+String.format("%.0f",mutationGridtXY[i][j]);
+                }
+            }
+            text += buildDisplayRow(mutationHist);
+        }
+        return text;
+
     }
     
     
@@ -501,17 +549,40 @@ public class Stats {
     
     public void updateMutationStats() {
         int mutationSum=0;
-        int recentMutationSum=0;
+        
+        HashMap<Mutation,Integer> mutationFreq = new HashMap<Mutation,Integer>();
+        
+        for (int i=0;i<30;i++) {
+            for (int j=0;j<30;j++) {
+                mutationGridtXY[i][j]=0;               
+            }
+        }  
         for (Organism o : getEchosystem().getOrganisms()) {
-            int fromTime = getEchosystem().getTime()-2000;
+
             int toTime = getEchosystem().getTime();
-            //recentMutationSum+=o.getGenome().getRecentMutations(fromTime, toTime, o.lifespan).size();
-            mutationSum +=o.getGenome().getRecentMutations(0, toTime, o.lifespan).size();     
+
+            Collection<Mutation> mutations = o.getGenome().getRecentMutations(0, toTime, o.lifespan);
+            mutationSum +=mutations.size();
+            for (Mutation m : mutations) { 
+                Integer freq = mutationFreq.get(m);
+                if (freq==null) {
+                    freq = 0;
+                }
+                mutationFreq.put(m, freq+1);
+                //if(m.getOrganismAge()<=27) {    
+                    int mx = Math.min(13,Math.max(0, m.getLocation().x+10));
+                    int my = Math.min(20,Math.max(0,m.getLocation().y+10));
+                    mutationGridtXY[mx][my]+=1;
+                //}
+            }
         }
+        for (int i=0;i<20;i++) {
+            for (int j=0;j<20;j++) {                
+                mutationGridtXY[i][j]/=(0.1*(double) getEchosystem().getOrganisms().size());               
+            }
+        }         
         avgTotalMutations = mutationSum / (double) getEchosystem().getOrganisms().size();
-        //avgRecentMutations = recentMutationSum / (double) getEchosystem().getOrganisms().size();
-        
-        
+                
         
     }
 
