@@ -6,9 +6,9 @@ Enabling reproduction leads to the spontaneous emergence of more advanced behavi
 
 For now you can watch evolution happen by running Sprout Life on your desktop. In future versions it could be fun to enable web-based competitions between organisms collected by multiple users.
 
-[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar) 
+[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.zip) 
 
-[Download and run SproutLife.jar!](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.jar)
+[Download and run SproutLife.jar!](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.zip)
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2016-01-27.gif)
 
