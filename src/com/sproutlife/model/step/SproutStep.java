@@ -186,22 +186,12 @@ public class SproutStep extends Step {
                */
                
                //if (o.getParent()==null || Math.abs(Math.abs(o.getParent().x-s.getPosition().x)-Math.abs(o.getParent().y-s.getPosition().y))>4) {
-                   if (o.getId()==0 || (o.getAttributes().energy>=childEnergy)) { // && Math.abs(o.x-s.position.x)<18 && Math.abs(o.y-s.position.y)<18) { 
+                   if (o.getId()==0 || o.getAttributes().energy>=childEnergy) {
                        
                        sproutSeed(s, o);
                        
                        int childCount = o.getChildren().size()-1;
-                       /*
-                       if (childCount>1) {
-                           
-                           o.setLifespan(o.getAge()+1);
-                           for (Organism ch : o.getChildren()) {
-                               ch.setLifespan(o.getAge()+1);
-                           }
-                           
-                       }
-                       */
-                       //o.energy-=childEnergy ;
+
                        o.getAttributes().energy = 0;
                        
                        if(childCount>=0&&getTime()>100&&childCount<20) { //sproutSeed() above may have failed

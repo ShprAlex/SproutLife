@@ -23,7 +23,7 @@ public class Settings {
     public static String CHILD_THREE_ENERGY = "childThreeEnergy";
     //Determines whether seeds are sprouted immediately upon detection,
     //Or a step later so seed cells can be displayed before the sprout is.
-    public static String SPROUT_DELAYED_MODE = "sproutDelayedMode";       
+    public static String SPROUT_DELAYED_MODE = "sproutDelayedMode";
     
     public Settings() {
         settings = new HashMap<String, Object>();

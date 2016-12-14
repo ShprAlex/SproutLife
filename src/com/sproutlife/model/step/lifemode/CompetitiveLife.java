@@ -36,17 +36,6 @@ public class CompetitiveLife extends LifeMode {
             o = o.getParent();
         }
         
-        /*
-        if (o.getParent()!=null) {
-            val += o.getParent().getAttributes().getTerritorySize();
-            o = o.getParent();
-        }
-        /*
-        if (o.getParent()!=null) {
-            val += o.getParent().getAttributes().getTerritorySize();
-            o = o.getParent();
-        }
-        */
         return val;
     }
     
@@ -141,8 +130,6 @@ public class CompetitiveLife extends LifeMode {
 
         }
 
-
-
         return null;
         
     }
@@ -174,52 +161,5 @@ public class CompetitiveLife extends LifeMode {
             }
         }
         return bornCell;
-
-        /*
-        Organism biggestOrg = null;
-        boolean tieForBiggest = false;
-        for (Cell c : neighbors) {
-            Organism o = c.getOrganism();
-            if (biggestOrg==null ||getCompare(biggestOrg)>getCompare(o)) {
-                biggestOrg = o;
-                tieForBiggest=false;
-            }
-            else {
-                if (o!=biggestOrg && getCompare(o)==getCompare(biggestOrg)) {
-                    tieForBiggest=true;
-                }
-            }
-        }
-        for (Cell c : getBoard().getExtraNeighbors(i, j, 2)) {
-        //for (Cell c : getBoard().getExtra4Neighbors(i, j)) { 
-            Organism o = c.getOrganism();
-            if (biggestOrg==null ||getCompare(biggestOrg)>getCompare(o)) {
-                biggestOrg = o;
-                tieForBiggest=false;
-            }
-            else {
-                if (o!=biggestOrg && getCompare(o)==getCompare(biggestOrg)) {
-                    tieForBiggest=true;
-                }
-            }  
-        }
-        
-        if (tieForBiggest) {
-            return null;
-        }
-        ArrayList<Cell> biggestOrgCells = new ArrayList<Cell>();
-        for (Cell c : neighbors) {
-            if (c.getOrganism()==biggestOrg) {
-                biggestOrgCells.add(c);
-            }
-        }
-        if (biggestOrgCells.size()==3) {
-            Cell bornCell = getEchosystem().createCell(i,j,biggestOrgCells);
-            return bornCell;
-        }
-        
-        
-        return null;            
-        */
     }
 }
