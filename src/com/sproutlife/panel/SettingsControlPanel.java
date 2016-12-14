@@ -21,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.sproutlife.Settings;
+import javax.swing.SpinnerNumberModel;
 
 public class SettingsControlPanel extends JPanel {
 	
@@ -33,6 +34,8 @@ public class SettingsControlPanel extends JPanel {
 	private JPanel panel;
 	private JRadioButton rdbtnFunctional;
 	private JRadioButton rdbtnVisual;
+	private JLabel lblMutationRate;
+	private JSpinner mutationRateSpinner;
 	
 	public SettingsControlPanel(PanelController panelController) {
 		setMinimumSize(new Dimension(220, 0));	
@@ -48,9 +51,9 @@ public class SettingsControlPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {10, 89, 60, 10};
-		gridBagLayout.rowHeights = new int[]{20, 0, 15, 20, 0, 0, 15, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 15, 20, 0, 0, 0, 0, 15, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 		setLayout(gridBagLayout);
 		
 		childOneEnergySpinner = new JSpinner();
@@ -126,6 +129,23 @@ public class SettingsControlPanel extends JPanel {
 		gbc_childThreeEnergySpinner.gridx = 2;
 		gbc_childThreeEnergySpinner.gridy = 5;
 		add(childThreeEnergySpinner, gbc_childThreeEnergySpinner);
+		
+		lblMutationRate = new JLabel("Mutation Rate (0-10)");
+		GridBagConstraints gbc_lblMutationRate = new GridBagConstraints();
+		gbc_lblMutationRate.anchor = GridBagConstraints.WEST;
+		gbc_lblMutationRate.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMutationRate.gridx = 1;
+		gbc_lblMutationRate.gridy = 7;
+		add(lblMutationRate, gbc_lblMutationRate);
+		
+		mutationRateSpinner = new JSpinner();
+		mutationRateSpinner.setModel(new SpinnerNumberModel(5, 0, 10, 1));
+		GridBagConstraints gbc_mutationRateSpinner = new GridBagConstraints();
+		gbc_mutationRateSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_mutationRateSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_mutationRateSpinner.gridx = 2;
+		gbc_mutationRateSpinner.gridy = 7;
+		add(mutationRateSpinner, gbc_mutationRateSpinner);
 
 
 		lblSproutMode = new JLabel("Sprout Mode (Show Seeds)");
@@ -133,7 +153,7 @@ public class SettingsControlPanel extends JPanel {
 		gbc_lblSproutMode.anchor = GridBagConstraints.WEST;
 		gbc_lblSproutMode.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSproutMode.gridx = 1;
-		gbc_lblSproutMode.gridy = 7;
+		gbc_lblSproutMode.gridy = 9;
 		add(lblSproutMode, gbc_lblSproutMode);
 
 		panel = new JPanel();
@@ -142,7 +162,7 @@ public class SettingsControlPanel extends JPanel {
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 8;
+		gbc_panel.gridy = 10;
 		add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{30, 40, 40, 0};
@@ -196,4 +216,7 @@ public class SettingsControlPanel extends JPanel {
         return rdbtnFunctional;
     }
 
+    public JSpinner getMutationRateSpinner() {
+        return mutationRateSpinner;
+    }
 }

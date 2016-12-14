@@ -107,6 +107,22 @@ public class MutationStep extends Step {
         //int size = Math.max(2000, allCells.size());
         int repeatTimes = 1;
         int invMutationRate = 160;
+        switch (getSettings().getInt(Settings.MUTATION_RATE)) {
+                        
+            case 1: invMutationRate = 1215; break;
+            case 2: invMutationRate = 810; break;            
+            case 3: invMutationRate = 540; break;
+            case 4: invMutationRate = 360; break;
+            case 5: invMutationRate = 240; break;
+            case 6: invMutationRate = 160; break;
+            case 7: invMutationRate = 100; break;
+            case 8: invMutationRate = 70; break;
+            case 9: invMutationRate = 50; break;            
+            case 10: invMutationRate = 30; break;
+            
+            default: return; 
+            
+        }
         
         if(getEchosystem().getOrganisms().size()>invMutationRate) {
             repeatTimes = getEchosystem().getOrganisms().size()/invMutationRate;
@@ -168,9 +184,18 @@ public class MutationStep extends Step {
                 int x = c.x - org.x;
                 int y = c.y - org.y;
                 
-                boolean mutationIsAdd = (random.nextInt(3)>0);
+                if (age<25) {
+                    //continue;
+                }
                 
-                if (mutationIsAdd) {
+                boolean mutationIsAdd = (random.nextInt(7)>=4);//&& (g.getMutationCount(age)==0||age>=30);
+                /*
+                int mutationSum = 0;
+                for (int t=0;t<org.getLifespan();t++) {
+                    mutationSum+=g.getMutationCount(t);
+                }
+                */
+                if (mutationIsAdd){// &&  mutationSum<Math.sqrt(getTime()/2000.0)) {
                     //if(Math.abs(x)+Math.abs(y)+Math.abs(age)>=8) {
                         /*
                         while (g.getMutationCount(age)>5) {

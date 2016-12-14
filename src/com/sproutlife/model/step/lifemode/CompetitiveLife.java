@@ -22,14 +22,31 @@ public class CompetitiveLife extends LifeMode {
     
     public int getCompare(Organism o) {
         int val = o.getAttributes().getTerritorySize();
-        if (o.getParent()!=null) {
-            val = Math.max(val,o.getParent().getAttributes().getTerritorySize());
+        val -= o.getAttributes().collisionCount/12;
+        if (o.getParent()!=null) {        
+            val -= o.getParent().getAttributes().collisionCount/12;
+            //if (o.getAttributes().birthOrder<3) {
+                val += o.getParent().getAttributes().getTerritorySize()/4;
+                int dx = Math.max(0, Math.abs((o.x - o.getParent().x)-10));
+                int dy = Math.max(0, Math.abs((o.y - o.getParent().y)-10));
+                
+                
+                val-=(dx*dx+dy*dy)/15;
+            //}
             o = o.getParent();
         }
+        
+        /*
         if (o.getParent()!=null) {
-            val = Math.max(val,o.getParent().getAttributes().getTerritorySize());
+            val += o.getParent().getAttributes().getTerritorySize();
             o = o.getParent();
         }
+        /*
+        if (o.getParent()!=null) {
+            val += o.getParent().getAttributes().getTerritorySize();
+            o = o.getParent();
+        }
+        */
         return val;
     }
     
@@ -95,11 +112,12 @@ public class CompetitiveLife extends LifeMode {
         int friendCount = 0;
 
         for (Cell neighbor : neighbors) {            
-            if (me.getOrganism().isFamily(neighbor.getOrganism(),3)) {
+            if (me.getOrganism().isFamily(neighbor.getOrganism(),1)) {
                 friendCount++;
             }
             else {
                 if (getCompare(me.getOrganism())<getCompare(neighbor.getOrganism())) {
+                    me.getOrganism().getAttributes().collisionCount++;
                     return null;
                 }
             }
@@ -109,10 +127,11 @@ public class CompetitiveLife extends LifeMode {
             //if(getBoard().hasBiggerNeighbor25(i, j, me.getOrganism())) {
             //    return null;
             //}
-            for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
-            //for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
-                if (!me.getOrganism().isFamily(neighbor.getOrganism(),2) && 
+            //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
+            for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
+                if (!me.getOrganism().isFamily(neighbor.getOrganism(),1) && 
                         getCompare(me.getOrganism())<getCompare(neighbor.getOrganism())) {
+                    me.getOrganism().getAttributes().collisionCount++;
                     return null;
 
                 }
@@ -133,31 +152,30 @@ public class CompetitiveLife extends LifeMode {
             return null;
         }
         
-        if (neighbors.size()<3 ) {
+        if (neighbors.size()!=3 ) {
             return null;
         }
-
+        
         //Quick check to see if all neighbors are from the same organism
         Organism checkSingleOrg = neighbors.get(0).getOrganism();
-        boolean singleOrg = true;
+
         for (Cell cell : neighbors) {
             if (cell.getOrganism() != checkSingleOrg) {
-                singleOrg = false;
-                break;
-            }
-        }
-        if (singleOrg) {
-            if (neighbors.size()==3) {
-                Cell bornCell = getEchosystem().createCell(i,j,neighbors);
-                return bornCell;
-            }
-            else {
                 return null;
             }
         }
 
-     
-        
+        Cell bornCell = getEchosystem().createCell(i,j,neighbors);
+        //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
+        for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
+            if (!checkSingleOrg.isFamily(neighbor.getOrganism(),1) && 
+                    getCompare(checkSingleOrg)<getCompare(neighbor.getOrganism())) {
+                return null;
+            }
+        }
+        return bornCell;
+
+        /*
         Organism biggestOrg = null;
         boolean tieForBiggest = false;
         for (Cell c : neighbors) {
@@ -202,6 +220,6 @@ public class CompetitiveLife extends LifeMode {
         
         
         return null;            
-
+        */
     }
 }
