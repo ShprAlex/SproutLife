@@ -34,8 +34,9 @@ public class OrgAttributes {
     
     public int maxCells;
     public int parentAgeAtBirth;
-          
-
+    public int birthOrder;
+    public int collisionCount=0;
+    
     public OrgAttributes(Organism o) {
         this.territory = new HashSet<Point>();        
         this.maxCells = 0;
@@ -43,10 +44,12 @@ public class OrgAttributes {
         Organism parent = o.getParent();
         if (parent==null) {
             this.kind = (new Random()).nextInt(3); //kind = 0;
+            this.birthOrder = 0;
         }
         else {
             this.kind = parent.getAttributes().kind;
             this.parentAgeAtBirth = parent.getAge();
+            this.birthOrder = parent.getChildren().size();
         }
     }
     

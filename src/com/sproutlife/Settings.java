@@ -16,6 +16,7 @@ public class Settings {
     public static String SEED_TYPE = "seedType";
     public static String LIFE_MODE = "lifeMode";
     public static String MUTATION_ENABLED = "mutationEnabled";
+    public static String MUTATION_RATE = "mutationRate";
     public static String MAX_LIFESPAN = "maxLifespan";
     public static String CHILD_ONE_ENERGY = "childOneEnergy";
     public static String CHILD_TWO_ENERGY = "childTwoEnergy";
@@ -23,8 +24,6 @@ public class Settings {
     //Determines whether seeds are sprouted immediately upon detection,
     //Or a step later so seed cells can be displayed before the sprout is.
     public static String SPROUT_DELAYED_MODE = "sproutDelayedMode";
-    
-    
     
     public Settings() {
         settings = new HashMap<String, Object>();
@@ -37,6 +36,7 @@ public class Settings {
         set(Settings.LIFE_MODE, "cooperative");
         
     	set(Settings.MUTATION_ENABLED, true);
+    	set(Settings.MUTATION_RATE, 6); //0-10
     	
     	set(Settings.MAX_LIFESPAN, 75);
     	

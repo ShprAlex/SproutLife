@@ -57,37 +57,43 @@ public class ScrollPanel extends JPanel {
         
         innerPanel = new JPanel() {
             public void paint(Graphics g) {
-               
+
                 boolean locked = false;
                 try {
-                    locked = panelController.getInteractionLock().readLock().tryLock(1000, TimeUnit.MILLISECONDS);
-                    if (locked) {
-                    super.paint(g);
-                    Graphics2D g2 = (Graphics2D)g;
+                    boolean success=false;
+                    while(!success) {
+                        locked = panelController.getInteractionLock().readLock().tryLock(100, TimeUnit.MILLISECONDS);
+                        if (locked) {
+                            success=true;
 
-                    //original commented out - gc.getInteractionLock().readLock().lock();
-                        //paintBackShapes(g2);
-                        panelController.getImageManager().paint(g2);
-                        //paintFrontShapes(g2);
-                    }
-                    else {
-                        
-                        try {
-                                              
-                            /*
+
+                            super.paint(g);
+                            Graphics2D g2 = (Graphics2D)g;
+
+                            //original commented out - gc.getInteractionLock().readLock().lock();
+                            //paintBackShapes(g2);
+                            panelController.getImageManager().paint(g2);
+                            //paintFrontShapes(g2);
+                        }
+                        else {
+
+                            try {
+
+                                /*
                             for ( StackTraceElement[] steA : Thread.getAllStackTraces().values() ) {
                                 for ( StackTraceElement ste : steA ) {
                                     System.out.println(ste.toString());
-                                      
+
                                 }
-                                                
+
                             }
-                            */
-                            
-                        } catch ( Exception ex ) {// Catch exception if any
-                            System.err.println("Error: " + ex.getMessage());
+                                 */
+
+                            } catch ( Exception ex ) {// Catch exception if any
+                                System.err.println("Error: " + ex.getMessage());
+                            }
+                            //System.out.println("Paint lock failed");
                         }
-                        System.out.println("Paint lock failed");
                     }
                 }
                 catch(Exception ex) {

@@ -224,6 +224,9 @@ public class PanelController {
                 getSettings().getInt(Settings.CHILD_TWO_ENERGY));
         getSettingsControlPanel().getChildThreeEnergySpinner().setValue(
                 getSettings().getInt(Settings.CHILD_THREE_ENERGY));
+        
+        getSettingsControlPanel().getMutationRateSpinner().setValue(
+                getSettings().getInt(Settings.MUTATION_RATE));
                         
     }
     
@@ -257,9 +260,9 @@ public class PanelController {
                       
                         SwingUtilities.invokeLater(new Runnable() {                            
                             @Override
-                            public void run() {
+                            public void run() {                                
                                 getStatsPanel().getStatsTextPane().setText(
-                                        getGameModel().getStats().getDisplayText());
+                                        getGameModel().getStats().getDisplayText());                                
                             }
                         });
                     }
@@ -419,6 +422,13 @@ public class PanelController {
                 getSettings().set(Settings.CHILD_THREE_ENERGY,((JSpinner) arg0.getSource()).getValue());
             }
         });
+        
+        getSettingsControlPanel().getMutationRateSpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                getSettings().set(Settings.MUTATION_RATE,((JSpinner) arg0.getSource()).getValue());
+            }
+        });
+        
         
         ItemListener sproutModeListener = new ItemListener() {  
             @Override

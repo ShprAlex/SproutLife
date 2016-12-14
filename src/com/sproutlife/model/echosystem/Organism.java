@@ -29,7 +29,7 @@ import com.sproutlife.model.seed.Seed;
 
 public class Organism {
     private int id;
-    private HashSet<Cell> cells;       
+    private HashSet<Cell> cells;
     private Organism parent;
     private ArrayList<Organism> children;
     private Genome genome;
@@ -121,9 +121,24 @@ public class Organism {
         this.lifespan = lifespan;
     }
     
+    public int getBorn() {
+        return born;
+    }
+   
+    /* 
+     * @return return the time since the organism was born, even if it's dead
+     */
+    public int getTimeSinceBorn() {
+        return getClock().getTime() - this.born;
+    }
+    
+    /* 
+     * @return if the organism is alive, return the time since it was born, 
+     * otherwise, return the age at which the organism died.
+     */
     public int getAge() {
         if (isAlive()) {
-            return getClock().getTime() - this.born;
+            return getTimeSinceBorn();
         }
         else {
             return this.timeOfDeath - this.born;
@@ -168,8 +183,10 @@ public class Organism {
         return c;
     }
     
-    /*
+    /* 
      * Add a cell that's been created
+     * 
+     * @param c - cell to add
      */
     public void addCell(Cell c) {
         cells.add(c);
@@ -227,8 +244,8 @@ public class Organism {
         return false;           
     }
     
-    /*
-     * @return #of cells, should method be called getSize()?
+    /* 
+     * @return the number of cells an organism has
      */
     public int size() {
         return cells.size();

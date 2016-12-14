@@ -28,7 +28,9 @@ public class Stats {
     public double avgAge;
     public double avgLifespan;
     public int avgMaxLifespan;
+    public int gameTime = 0;
     public double boardSizeDivPopulation;
+    double lifespanHistogram[] = new double[100];
     
     double avgSize = 0;
     double avgMaxSize = 0;
@@ -43,11 +45,16 @@ public class Stats {
     double childlessPercent = 0;
     
     double avgTotalMutations = 0;
+    double avgMutationAge = 0;
     //visualize all mutations on a 30x30 grid
     double mutationGridtXY[][] = new double[30][30];
+    double mutationGridtXYold[][][] = new double[20][30][30];
 
-    double mutationHistTime = 0;
-    double mutationVelocity = 0;
+    double mutationAgeHistogram[] = new double[50];
+    
+    double mutationSpeed = 0;
+    double mutationDiversity = 0;
+    double mutationDiversityAge = 0;
       
     public int c1, c2, c3, c4;
     
@@ -92,7 +99,7 @@ public class Stats {
         
         text += HEADER_ROW;                
         text += START_TABLE;
-        text += buildDisplayRow("Game Time: ",getTime());
+        text += buildDisplayRow("Game Time: ",gameTime);
         text += buildDisplayRow("Population (Organism #): ",getEchosystem().getOrganisms().size());
         text += buildDisplayRow("Smoothed Population: ",(int) (smoothedPopulation+0.5)); //+0.5 to do average vs. floor
         text += buildDisplayRowBold("Smoothed Pop Density: ",String.format("%.1f", smoothedPopDensity)); //+0.5 to do average vs. floor
@@ -116,9 +123,16 @@ public class Stats {
         text += buildDisplayRow("Average Territory: ",String.format("%.1f", avgTerritory));        
         text += buildDisplayRowBold("Average Lifetime Territory: ",String.format("%.1f", avgMaxTerritory));
         text += buildDisplayRow("Board size / population: ",String.format("%.1f", boardSizeDivPopulation));
-        text += BLANK_ROW;
-        text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations));
+        text += BLANK_ROW;        
+        text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations)); 
+        text += buildDisplayRowBold("Mutation Diversity: ",String.format("%.1f", mutationDiversity*10));        
+        text += buildDisplayRowBold("Evolution speed (avg genome vector delta): ",String.format("%.1f", mutationSpeed));        
         
+        text += buildDisplayRow("Average Mutation Age: ",String.format("%.1f", avgMutationAge));
+        text += buildDisplayRow("Mutation Diversity Age: ",String.format("%.1f", mutationDiversityAge));
+        
+        text += buildDisplayRow("Mutation age histogram: ");
+        text += buildMutationAgeHistogram();
         text += buildDisplayRow("Avg Genome, mutat prevalence: ");
         text += buildDisplayRow("2=20%, $=95%, #=99% ");        
         text += buildGenomeGrid();
@@ -131,6 +145,7 @@ public class Stats {
     }
     
     public void update() {
+        gameTime = getTime();
         updateSizeStats();
         updateLifespanStats();
         updateChildStats();
@@ -168,7 +183,37 @@ public class Stats {
                     mutationHist+=" "+String.format("$");
                 }
                 else {
-                    mutationHist+=" "+String.format("%.0f",mutationGridtXY[i][j]);
+                    //if (Math.abs(mutationGridtXYold[12][i][j]-mutationGridtXY[i][j])>2) {
+                    //    mutationHist+=" <b>"+String.format("%.0f",mutationGridtXY[i][j])+"</b>";                        
+                    //}
+                    //else {
+                        mutationHist+=" "+String.format("%.0f",mutationGridtXY[i][j]);
+                    //}
+                }
+            }
+            text += buildDisplayRow(mutationHist);
+        }
+        return text;
+
+    }
+    
+    private String buildMutationAgeHistogram() {
+        String text = "";
+
+        for (int r=0;r<4;r++) {
+            String mutationHist = "";
+            for (int t=0;t<10;t++) {
+                if (mutationAgeHistogram[r*10+t]<0.1) {
+                    mutationHist+=" "+"__";
+                }
+                else {
+                    mutationHist+=" ";
+                    if (mutationAgeHistogram[r*10+t]+0.05<1) {
+                        mutationHist+="_";
+                    }
+                    
+                    mutationHist+=String.format("%.0f",mutationAgeHistogram[r*10+t]*10);
+                    
                 }
             }
             text += buildDisplayRow(mutationHist);
@@ -185,15 +230,16 @@ public class Stats {
         
         //We expect the actual population to once in a while be within 10% of the smoothed population
         //If it's not, something changed, so reset the smoothed population to the actual population
-        if (smoothedPopulation>0 && Math.abs(smoothedPopulation/ population - 1)>0.1) {
+        if (population>0 && Math.abs(smoothedPopulation/ population - 1)>0.1) {
             this.smoothedResetTimer++;
         }
         else {
             smoothedResetTimer=0;
         }
         if (smoothedResetTimer>100) {
-            smoothedPopulation = population;
-            smoothedResetTimer = 0;
+            smoothedPopulation = (smoothedPopulation*9+population)/10;
+            //smoothedPopulation = population;
+            //smoothedResetTimer = 0;
         }
             
         smoothedPopDensity = smoothedPopulation*10000/gameModel.getBoard().getHeight()/gameModel.getBoard().getWidth();
@@ -398,12 +444,13 @@ public class Stats {
         System.out.println(" Grid: "+gridSize+" Born: "+born+" Die1: "+die1+" Die2: "+die2+" Stayed: "+stayed);
     }
     
-    public void printGenerations() {
+    public int getOldestCommonAncestorAge() {
         HashSet<Organism> generation = new HashSet(getEchosystem().getOrganisms());
+        HashMap<Organism,Integer> descendantMap = new HashMap<Organism,Integer>();    
         
-        System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
-           
-        for (int i=1;i<60;i++) {
+        //System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
+        
+        for (int i=1;i<200;i++) {
             HashSet<Organism> parents = new HashSet<Organism>();
             HashSet<Organism> remove = new HashSet<Organism>();
             for (Organism o: generation) {
@@ -411,20 +458,64 @@ public class Stats {
                 if(o.getAge() < i*115 ) {
                     remove.add(o);
                     Organism p = o.getParent();
-                    while (p!=null && (p.getAge() < i*115)) {
+                    while (p!=null && (p.getTimeSinceBorn() < i*115)) {
+                        
+                        Integer dCount = descendantMap.get(p);
+                        if (dCount==null) {
+                            dCount =0;
+                        }
+                        descendantMap.remove(p);
+                        
                         p=p.getParent();
+                        
+                        if(p!=null){
+                            Integer pdCount = descendantMap.get(p);
+                            if (pdCount==null) {
+                                pdCount =0;
+                            }
+                            descendantMap.put(p, dCount+pdCount);
+                        }
+                        
                     }
                     
-                    if (p!=null) {                            
+                    if (p!=null) {                     
+                        Integer dCount = descendantMap.get(p);
+                        if (dCount==null) {
+                            dCount =0;
+                        }
+                        Integer odCount = descendantMap.get(o);
+                        if (odCount==null) {
+                            odCount =1;
+                        }
+                        descendantMap.put(p, dCount+odCount);
                         parents.add(p);
                     }
                 }
             }
+            
             generation.removeAll(remove);
             generation.addAll(parents);
-            System.out.print(" "+remove.size());
+
+            for (Organism r:remove) {
+                descendantMap.remove(r);
+            }
+            if (descendantMap.size()>10) {
+                int x=5;
+            }
+            for (Organism ancestor:generation) {
+                if (descendantMap.get(ancestor)>getEchosystem().getOrganisms().size()/3) {
+                    return ancestor.getTimeSinceBorn();
+                }
+            }
+            //if (remove.size()==1) {
+            //    return remove.iterator().next().getTimeSinceBorn();
+                
+            //}
+            //System.out.print(" "+remove.size());
         }
-        System.out.println(); 
+       
+        return 10000;
+        //System.out.println(); 
     }
     
     private void updateSizeStats() {
@@ -447,9 +538,7 @@ public class Stats {
             
             if(o.getParent()!=null) {
                 int ts = o.getParent().getAttributes().getTerritorySize();
-                if (o.getParent().getParent()!=null) {
-                    ts = Math.max(ts, o.getParent().getParent().getAttributes().getTerritorySize());
-                }
+
                 if (o.getParent().getAttributes().getTerritorySize()/3<100 && ts/10<100) {
                     maxTerriroty[ts/10]++;
                 }
@@ -466,10 +555,22 @@ public class Stats {
         }
     }
     
+    private int getLifespanCountOfAtLeastAge(int age) {
+        int sumLifespan = 0;
+        for (int a=lifespanHistogram.length-1;a>=age;a--) {
+            sumLifespan+=lifespanHistogram[a];
+        }
+        return sumLifespan;
+    }
+    
     private void updateLifespanStats() {
         int ageSum = 0;
-        for (Organism o : getEchosystem().getOrganisms()) {
-            ageSum +=o.getAge();
+        for (int a=0;a<lifespanHistogram.length;a++) {
+            lifespanHistogram[a]=0;
+        }
+        for (Organism o : getEchosystem().getOrganisms()) {            
+            ageSum +=o.getAge();                           
+            lifespanHistogram[o.getLifespan()]++;
         }
         if (getEchosystem().getOrganisms().size()>0) {
             this.avgAge = ageSum / (double) getEchosystem().getOrganisms().size();
@@ -549,7 +650,17 @@ public class Stats {
     
     public void updateMutationStats() {
         int mutationSum=0;
+        int mutationAgeSum=0;
+        int mutationSumX=0;
+        int mutationSumY=0;
+        int mutationSumLate=0;
+        int mutationSumLateX=0;
+        int mutationSumLateY=0;
+        double population = getEchosystem().getOrganisms().size();
         
+        double mutationDistSum = 0 ;
+        mutationDiversity = 0;
+        mutationDiversityAge = 0;
         HashMap<Mutation,Integer> mutationFreq = new HashMap<Mutation,Integer>();
         
         for (int i=0;i<30;i++) {
@@ -557,11 +668,15 @@ public class Stats {
                 mutationGridtXY[i][j]=0;               
             }
         }  
+        for (int t=0;t<mutationAgeHistogram.length;t++) {
+            mutationAgeHistogram[t]=0;
+        }               
+        
         for (Organism o : getEchosystem().getOrganisms()) {
 
             int toTime = getEchosystem().getTime();
 
-            Collection<Mutation> mutations = o.getGenome().getRecentMutations(0, toTime, o.lifespan);
+            Collection<Mutation> mutations = o.getGenome().getRecentMutations(0, toTime, 100);
             mutationSum +=mutations.size();
             for (Mutation m : mutations) { 
                 Integer freq = mutationFreq.get(m);
@@ -570,20 +685,92 @@ public class Stats {
                 }
                 mutationFreq.put(m, freq+1);
                 //if(m.getOrganismAge()<=27) {    
+                int countAtAge = getLifespanCountOfAtLeastAge(m.getOrganismAge());
                     int mx = Math.min(13,Math.max(0, m.getLocation().x+10));
                     int my = Math.min(20,Math.max(0,m.getLocation().y+10));
-                    mutationGridtXY[mx][my]+=1;
+                    //if (countAtAge>population/10.0) {
+                        mutationGridtXY[mx][my]+=1.0/population;
+                    //}
                 //}
+                mutationAgeSum+=m.getOrganismAge();
+                if (m.getOrganismAge()<mutationAgeHistogram.length) {
+                    //if (countAtAge>population/10.0) {
+                        mutationAgeHistogram[m.getOrganismAge()]+=1.0/population;
+                    //}
+                }
+                mutationSumX+=m.getLocation().x;
+                mutationSumY+=m.getLocation().y;
+                if (m.getOrganismAge()>25) {
+                    mutationSumLateX+=m.getLocation().x;
+                    mutationSumLateY+=m.getLocation().y;
+                    mutationSumLate++;
+                }
             }
         }
         for (int i=0;i<20;i++) {
             for (int j=0;j<20;j++) {                
-                mutationGridtXY[i][j]/=(0.1*(double) getEchosystem().getOrganisms().size());               
+                mutationGridtXY[i][j]/=(0.1);//*(double) getEchosystem().getOrganisms().size());
+                if(getEchosystem().getTime()%100==0) {
+                    mutationDistSum+=(mutationGridtXY[i][j]-mutationGridtXYold[12][i][j])*(mutationGridtXY[i][j]-mutationGridtXYold[12][i][j]);                  
+                     
+                    for (int t=18;t>=0;t--) {
+                        mutationGridtXYold[t+1][i][j] = (mutationGridtXYold[t+1][i][j] + mutationGridtXYold[t][i][j])/2;                        
+                    }
+                    mutationGridtXYold[0][i][j] =(mutationGridtXYold[0][i][j]+mutationGridtXY[i][j])/2;
+                     
+                }
             }
-        }         
-        avgTotalMutations = mutationSum / (double) getEchosystem().getOrganisms().size();
-                
+        }       
         
+        for (int t=0;t<mutationAgeHistogram.length;t++) {
+            //mutationAgeHistogram[t]/=(double) getEchosystem().getOrganisms().size();
+        }       
+        avgMutationAge = mutationAgeSum/(double) mutationSum;
+        
+        avgTotalMutations = mutationSum / (double) getEchosystem().getOrganisms().size();                
+        mutationSpeed = mutationDistSum;
+        
+        for (Mutation m: mutationFreq.keySet()) {
+            double countAtAge = getLifespanCountOfAtLeastAge(m.getOrganismAge());
+            double divers = 0.5-mutationFreq.get(m)/population;
+            if (0.5-Math.abs(divers)<0) {
+                System.out.println("Diversity less than 0, mf, caa "+mutationFreq.get(m)+" "+population);
+            }
+            //if(countAtAge>0) {
+                mutationDiversity+=(0.5-Math.abs(divers));//*countAtAge/population; //weigh by proportion to population
+                mutationDiversityAge+=m.getOrganismAge()*(0.5-Math.abs(divers));
+            //}
+        }
+        if( mutationDiversity>0) {
+            mutationDiversityAge/= mutationDiversity;
+        }
+        if(getEchosystem().getTime()%200==0) {
+           
+            System.out.print(getTime() + " M Speed1: "+(int)mutationSpeed);
+            System.out.print(" MDiversity: "+(int)(mutationDiversity*10));
+            System.out.print(" MAge: "+(int)(avgMutationAge*10));
+            System.out.print(" MDAgeDiff: "+(int)((mutationDiversityAge-avgMutationAge)*10));
+            //System.out.print(" OCAA "+ getOldestCommonAncestorAge());
+            System.out.print(" Pop density "+String.format("%.1f",smoothedPopDensity));
+            
+            System.out.print(" Avg Life  " + (int)avgMaxLifespan);               
+            System.out.print(" Max territory  " + (int) avgMaxTerritory);
+            System.out.print(" MutationCount " + String.format("%.1f",avgTotalMutations));
+            if (mutationSum>0) {
+                System.out.print(" Mutation X,Y " + (int) mutationSumX*100/mutationSum+" "+ (int) mutationSumY*100/mutationSum);
+            }
+            else {
+                System.out.print(" Mutation X,Y " + 0+" "+ 0);
+            }
+            if (mutationSumLate>0) {
+                System.out.print(" ML X,Y " + (int) mutationSumLateX*100/mutationSumLate+" "+ (int) mutationSumLateY*100/mutationSumLate);
+            }
+            else {
+                System.out.print(" ML X,Y " + 0+" "+ 0);
+            }
+            System.out.println();
+
+        }
     }
 
 }
