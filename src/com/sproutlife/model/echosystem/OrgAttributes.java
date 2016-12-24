@@ -28,6 +28,7 @@ public class OrgAttributes {
     // territory is used to track all visited points
     public HashSet<Point> territory;    
     int territoryRadius = 0;
+    public int cellSum = 0;
     
     //energy is used to track whether the organism's seeds will sprout.
     public int energy = 0;
