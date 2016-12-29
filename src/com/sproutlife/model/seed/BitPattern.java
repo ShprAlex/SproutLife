@@ -9,6 +9,8 @@ package com.sproutlife.model.seed;
 
 import java.awt.Point;
 
+import com.sproutlife.geometry.Rotation;
+
 public class BitPattern {
     
     protected int[][] bitPattern;
@@ -38,8 +40,8 @@ public class BitPattern {
         return bitPattern.length;
     }
     
-    public int getWidth(int rotation) {
-        if (rotation==0 || rotation==2) {
+    public int getWidth(Rotation r) {
+        if (r.getAngle()==0 || r.getAngle()==2) {
             return getWidth();
         }
         return getHeight();
@@ -49,8 +51,8 @@ public class BitPattern {
         return bitPattern[0].length;
     }
     
-    public int getHeight(int rotation) {
-        if (rotation==0 || rotation==2) {
+    public int getHeight(Rotation r) {
+        if (r.getAngle()==0 || r.getAngle()==2) {
             return getHeight();
         }
         return getWidth();
@@ -60,14 +62,14 @@ public class BitPattern {
         return bitPattern[x][y]==1;
     }
     
-    boolean getBit(int x, int y, int rotation, boolean mirror) {
-        if (mirror) {
-            x = getWidth(rotation)-x-1;
+    boolean getBit(int x, int y, Rotation r) {
+        if (r.isMirror()) {
+            x = getWidth(r)-x-1;
         }
-        switch (rotation) {
-            case 1: return getBit(getHeight(rotation)-y-1,x);
-            case 2: return getBit(getWidth(rotation)-x-1,getHeight(rotation)-y-1);
-            case 3: return getBit(y,getWidth(rotation)-x-1);
+        switch (r.getAngle()) {
+            case 1: return getBit(getHeight(r)-y-1,x);
+            case 2: return getBit(getWidth(r)-x-1,getHeight(r)-y-1);
+            case 3: return getBit(y,getWidth(r)-x-1);
              //case 0:
             default: return getBit(x,y);
         }          
@@ -77,8 +79,8 @@ public class BitPattern {
         return new Point((getWidth()-1)/2,(getHeight()-1)/2);
     }
     
-    public Point getCenter(int rotation, boolean mirror) {
-        return invRotatePoint(getCenter(), this, rotation, mirror);
+    public Point getCenter(Rotation r) {
+        return invRotatePoint(getCenter(), this, r);
     }
     
     public Point getOnBit() {
@@ -99,8 +101,8 @@ public class BitPattern {
         return null;        
     }
     
-    public Point getOnBit(int rotation, boolean mirror) {
-        return invRotatePoint(getOnBit(), this, rotation, mirror);
+    public Point getOnBit(Rotation r) {
+        return invRotatePoint(getOnBit(), this, r);
     }
     
     public static int[][] xySwitch(int[][] shape) {
@@ -119,12 +121,12 @@ public class BitPattern {
         
     }        
     
-    public static Point rotatePoint(Point point, BitPattern p1, int rotation, boolean mirror) {
+    public static Point rotatePoint(Point point, BitPattern p1, Rotation r) {
         
-        if (mirror) {
+        if (r.isMirror()) {
             point = new Point (p1.getWidth()-point.x-1,  point.y);
         }
-        switch (rotation) {
+        switch (r.getAngle()) {
 
             case 1: return new Point(p1.getHeight()-point.y-1, point.x);
 
@@ -138,9 +140,9 @@ public class BitPattern {
         }
     }
     
-    public static Point invRotatePoint(Point point, BitPattern p1, int rotation, boolean mirror) {
-        if (!mirror) {
-            switch (rotation) {
+    public static Point invRotatePoint(Point point, BitPattern p1, Rotation r) {
+        if (!r.isMirror()) {
+            switch (r.getAngle()) {
                 
                 case 1: return new Point(point.y, p1.getWidth()-point.x-1);
                 
@@ -154,7 +156,7 @@ public class BitPattern {
         }
         else {
             //In case of mirror, reflect the first parameter, not x
-            switch (rotation) {
+            switch (r.getAngle()) {
                 
                 case 1: return new Point(p1.getHeight()-point.y-1, p1.getWidth()-point.x-1);
                 
@@ -168,34 +170,34 @@ public class BitPattern {
         }
     }
     
-    public static Point invRotateOffset(Point point, BitPattern p1, BitPattern p2, int rotation, boolean mirror) {
-        Point rp = invRotatePoint(point, p1, rotation, mirror);
-        if (!mirror) {
-            if (rotation == 1) {
-                rp.y -= (p2.getHeight(rotation)-1);
+    public static Point invRotateOffset(Point point, BitPattern p1, BitPattern p2, Rotation r) {
+        Point rp = invRotatePoint(point, p1, r);
+        if (!r.isMirror()){
+            if (r.getAngle() == 1) {
+                rp.y -= (p2.getHeight(r)-1);
             }
-            else if (rotation == 2) {
-                rp.x -= (p2.getWidth(rotation)-1);
-                rp.y -= (p2.getHeight(rotation)-1);
+            else if (r.getAngle() == 2) {
+                rp.x -= (p2.getWidth(r)-1);
+                rp.y -= (p2.getHeight(r)-1);
             }
-            else if (rotation ==3 ) {
-                rp.x -= (p2.getWidth(rotation)-1);            
+            else if (r.getAngle() ==3 ) {
+                rp.x -= (p2.getWidth(r)-1);            
             }
         }
         else {
-            if (rotation == 1) {
-                rp.x -= (p2.getWidth(rotation)-1);    
-                rp.y -= (p2.getHeight(rotation)-1);
+            if (r.getAngle() == 1) {
+                rp.x -= (p2.getWidth(r)-1);    
+                rp.y -= (p2.getHeight(r)-1);
                 
             }
-            else if (rotation == 2) {                
-                rp.y -= (p2.getHeight(rotation)-1);
+            else if (r.getAngle() == 2) {                
+                rp.y -= (p2.getHeight(r)-1);
             }
-            else if (rotation ==3 ) {
+            else if (r.getAngle() ==3 ) {
                             
             }   
-            else if (rotation == 0) {
-                rp.x -= (p2.getWidth(rotation)-1);
+            else if (r.getAngle() == 0) {
+                rp.x -= (p2.getWidth(r)-1);
             }
         }        
         

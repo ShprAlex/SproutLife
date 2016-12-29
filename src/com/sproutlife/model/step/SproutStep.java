@@ -282,7 +282,7 @@ public class SproutStep extends Step {
         };  
         s.setPosition(x, y);       
         s.setParentPosition(new Point(120,120));
-        Seed randomSeed = new Seed(newPattern, s.getRotation(), s.isMirror());
+        Seed randomSeed = new Seed(newPattern, s.getRotation());
         
         randomSeed.setPosition(x, y);                      
         randomSeed.setSeedBorder(border);

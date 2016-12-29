@@ -14,7 +14,7 @@ package com.sproutlife.geometry;
 public class Rotations {
     private static Rotation[][] rotations = new Rotation[4][2]; 
 
-    public static Rotation getRotation(int angle, boolean mirror) {
+    public static Rotation get(int angle, boolean mirror) {
         Rotation r = rotations[angle][mirror?0:1];
         if (r==null) {
             r = new Rotation(angle, mirror);
@@ -26,10 +26,10 @@ public class Rotations {
     public static Rotation rotateRight(Rotation r, int angle, boolean mirror) {
         boolean newMirror = (mirror && !r.isMirror()) || (!mirror && r.isMirror());
         if (!newMirror) {
-            return getRotation(r.getAngle()+angle, newMirror);
+            return get(r.getAngle()+angle, newMirror);
         }
         else {
-            return getRotation(r.getAngle()-angle, newMirror);
+            return get(r.getAngle()-angle, newMirror);
         }
     
     }

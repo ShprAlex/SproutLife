@@ -9,6 +9,9 @@ package com.sproutlife.model.seed;
 
 import java.awt.Point;
 
+import com.sproutlife.geometry.Rotation;
+import com.sproutlife.geometry.Rotations;
+
 public class SeedSproutPattern {       
     
     protected BitPattern seedPattern;
@@ -33,11 +36,11 @@ public class SeedSproutPattern {
         return getSproutPattern().getCenter();
     }
     
-    public Point getSproutOffset(int rotation, boolean mirror) {
-        return BitPattern.invRotateOffset(getSproutOffset(), getSeedPattern(), getSproutPattern(), rotation, mirror);
+    public Point getSproutOffset(Rotation r) {
+        return BitPattern.invRotateOffset(getSproutOffset(), getSeedPattern(), getSproutPattern(), r);
     }
     
-    public Point getSproutCenter(int rotation, boolean mirror) {
-        return getSproutPattern().getCenter(rotation, mirror);
+    public Point getSproutCenter(Rotation r) {
+        return getSproutPattern().getCenter(r);
     }
 }

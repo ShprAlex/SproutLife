@@ -69,8 +69,8 @@ public class Genome {
         }
         ArrayList<Point> mutationPoints = new ArrayList<Point>(unRotated.size());
         for (Mutation m : unRotated) {
-            Point rp = rotatePoint(m.getLocation(), seed.getRotation(),
-                    seed.isMirror());
+            Point rp = rotatePoint(m.getLocation(), seed.getRotation().getAngle(),
+                    seed.getRotation().isMirror());
             mutationPoints.add(rp);
         }
         return mutationPoints;
@@ -97,8 +97,8 @@ public class Genome {
     }
 
     public Mutation addMutation(int x, int y, int organismAge, int systemTime) {
-        Point location = unRotatePoint(new Point(x, y), seed.getRotation(),
-                seed.isMirror());
+        Point location = unRotatePoint(new Point(x, y), seed.getRotation().getAngle(),
+                seed.getRotation().isMirror());
         Mutation m = new Mutation(location, organismAge, systemTime);
         addMutation(m);
         return m;
