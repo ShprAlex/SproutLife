@@ -566,11 +566,11 @@ public class Stats {
     private void updateLifespanStats() {
         int ageSum = 0;
         for (int a=0;a<lifespanHistogram.length;a++) {
-            lifespanHistogram[a]=0;
+            //lifespanHistogram[a]=0;
         }
         for (Organism o : getEchosystem().getOrganisms()) {            
             ageSum +=o.getAge();                           
-            lifespanHistogram[o.getLifespan()]++;
+            //lifespanHistogram[o.getLifespan()]++;
         }
         if (getEchosystem().getOrganisms().size()>0) {
             this.avgAge = ageSum / (double) getEchosystem().getOrganisms().size();

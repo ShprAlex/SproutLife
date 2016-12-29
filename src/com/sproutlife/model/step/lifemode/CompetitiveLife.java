@@ -19,32 +19,23 @@ public class CompetitiveLife extends LifeMode {
         super(gameModel);
         // TODO Auto-generated constructor stub
     }
-    
-    public int getCompare(Organism o) {
+
+    public int getCompare(Cell c) {
+        Organism o = c.getOrganism();
         int val = o.getAttributes().getTerritorySize();
-        val -= o.getAttributes().collisionCount/12;
-        if (o.getParent()!=null) {        
-            val -= o.getParent().getAttributes().collisionCount/12;
-            //if (o.getAttributes().birthOrder<3) {
-                val += o.getParent().getAttributes().getTerritorySize()/4;
-                int dx = Math.max(0, Math.abs((o.x - o.getParent().x)-10));
-                int dy = Math.max(0, Math.abs((o.y - o.getParent().y)-10));
-                
-                
-                val-=(dx*dx+dy*dy)/15;
-            //}
-            o = o.getParent();
-        }
-        
+        //int val = o.getParent().getAttributes().cellSum;
         return val;
     }
     
     int counter = 0;
-    public void updateCells() {        
+    public void updateCells() {
+        for (Organism o : getEchosystem().getOrganisms()) {
+            o.getAttributes().cellSum += o.getCells().size();
+        }
         
         ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
         ArrayList<Cell> deadCells = new ArrayList<Cell>();   
-        
+                              
         for (int i=0; i<getBoard().getWidth(); i++) {            
             for (int j=0; j<getBoard().getHeight(); j++) {                                   
 
@@ -101,11 +92,15 @@ public class CompetitiveLife extends LifeMode {
         int friendCount = 0;
 
         for (Cell neighbor : neighbors) {            
-            if (me.getOrganism().isFamily(neighbor.getOrganism(),1)) {
+            //if (me.getOrganism().isFamily(neighbor.getOrganism(),1)) {
+            if (me.getOrganism() == neighbor.getOrganism()) {
                 friendCount++;
             }
             else {
-                if (getCompare(me.getOrganism())<getCompare(neighbor.getOrganism())) {
+                if (neighbor.getOrganism().getParent()==me.getOrganism()) {
+                    return null;
+                }
+                else if (neighbor.getOrganism()!=me.getOrganism() &&getCompare(me)<getCompare(neighbor)) {
                     me.getOrganism().getAttributes().collisionCount++;
                     return null;
                 }
@@ -117,15 +112,19 @@ public class CompetitiveLife extends LifeMode {
             //    return null;
             //}
             //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
-            for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
-                if (!me.getOrganism().isFamily(neighbor.getOrganism(),1) && 
-                        getCompare(me.getOrganism())<getCompare(neighbor.getOrganism())) {
+            
+            for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {
+                if (neighbor.getOrganism().getParent()==me.getOrganism()) {
+                    return null;
+                }
+                else if (neighbor.getOrganism()!=me.getOrganism() && getCompare(me)<getCompare(neighbor)) {
                     me.getOrganism().getAttributes().collisionCount++;
                     return null;
 
                 }
             }
-            me.age+=1;                
+            me.age+=1;
+                           
             return me;
 
         }
@@ -154,12 +153,16 @@ public class CompetitiveLife extends LifeMode {
 
         Cell bornCell = getEchosystem().createCell(i,j,neighbors);
         //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
-        for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {            
-            if (!checkSingleOrg.isFamily(neighbor.getOrganism(),1) && 
-                    getCompare(checkSingleOrg)<getCompare(neighbor.getOrganism())) {
+
+        for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {
+            if (neighbor.getOrganism().getParent()==checkSingleOrg) {
+                return null;
+            }
+            else if (neighbor.getOrganism()!=bornCell.getOrganism() && getCompare(bornCell)<getCompare(neighbor)) {
                 return null;
             }
         }
+        
         return bornCell;
     }
 }
