@@ -10,7 +10,6 @@ package com.sproutlife.model.seed;
 import java.awt.Point;
 
 import com.sproutlife.geometry.Rotation;
-import com.sproutlife.geometry.Rotations;
 
 public class SeedSproutPattern {       
     

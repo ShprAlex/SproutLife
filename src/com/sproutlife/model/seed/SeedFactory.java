@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.sproutlife.geometry.Rotations;
 import com.sproutlife.model.seed.patterns.Bentline1RpPattern;
 import com.sproutlife.model.seed.patterns.Bentline1mRpPattern;
 import com.sproutlife.model.seed.patterns.BentlineMargin35Pattern;
@@ -177,10 +178,10 @@ public class SeedFactory {
     private static List<Seed> get4SeedRotations(SeedSproutPattern ssp) {
         ArrayList<Seed> seedRotations = new ArrayList<Seed>();
         
-        seedRotations.add(new Seed(ssp, 0));
-        seedRotations.add(new Seed(ssp, 1));
-        seedRotations.add(new Seed(ssp, 2));
-        seedRotations.add(new Seed(ssp, 3));
+        seedRotations.add(new Seed(ssp, Rotations.get(0)));
+        seedRotations.add(new Seed(ssp, Rotations.get(1)));
+        seedRotations.add(new Seed(ssp, Rotations.get(2)));
+        seedRotations.add(new Seed(ssp, Rotations.get(3)));
         
         return seedRotations;
     }
@@ -188,15 +189,15 @@ public class SeedFactory {
     private static List<Seed> get8SeedRotations(SeedSproutPattern ssp) {
         ArrayList<Seed> seedRotations = new ArrayList<Seed>();
         
-        seedRotations.add(new Seed(ssp, 0, false));
-        seedRotations.add(new Seed(ssp, 1, false));
-        seedRotations.add(new Seed(ssp, 2, false));
-        seedRotations.add(new Seed(ssp, 3, false));
+        seedRotations.add(new Seed(ssp, Rotations.get(0, false)));
+        seedRotations.add(new Seed(ssp, Rotations.get(1, false)));
+        seedRotations.add(new Seed(ssp, Rotations.get(2, false)));
+        seedRotations.add(new Seed(ssp, Rotations.get(3, false)));
         
-        seedRotations.add(new Seed(ssp, 0, true));
-        seedRotations.add(new Seed(ssp, 1, true));
-        seedRotations.add(new Seed(ssp, 2, true));
-        seedRotations.add(new Seed(ssp, 3, true));
+        seedRotations.add(new Seed(ssp, Rotations.get(0, true)));
+        seedRotations.add(new Seed(ssp, Rotations.get(1, true)));
+        seedRotations.add(new Seed(ssp, Rotations.get(2, true)));
+        seedRotations.add(new Seed(ssp, Rotations.get(3, true)));
         
         return seedRotations;
     }

@@ -23,6 +23,14 @@ public class Rotations {
         return r;
     }
     
+    public static Rotation get(int angle) {
+        return get(angle, false);
+    }
+    
+    public static Rotation get() {
+        return get(0, false);
+    }
+    
     public static Rotation rotateRight(Rotation r, int angle, boolean mirror) {
         boolean newMirror = (mirror && !r.isMirror()) || (!mirror && r.isMirror());
         if (!newMirror) {

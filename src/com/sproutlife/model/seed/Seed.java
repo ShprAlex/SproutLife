@@ -25,18 +25,10 @@ public class Seed {
     public Seed(SeedSproutPattern pattern, Rotation r) {    
         this.pattern = pattern;
         this.rotation = r;
-    } 
-    
-    public Seed(SeedSproutPattern pattern, int rotation, boolean mirror) {    
-        this(pattern, Rotations.get(rotation, mirror));
-    } 
-    
-    public Seed(SeedSproutPattern pattern, int rotation) {    
-        this(pattern, rotation , false);
-    }     
+    }      
     
     public Seed(SeedSproutPattern pattern) {
-        this(pattern, 0 , false);
+        this(pattern, Rotations.get());
     }
      
     public Rotation getRotation() {
