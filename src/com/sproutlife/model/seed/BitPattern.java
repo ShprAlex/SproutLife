@@ -60,10 +60,6 @@ public class BitPattern {
         return bitPattern[x][y]==1;
     }
     
-    boolean getBit(int x, int y, int rotation) {        
-        return getBit(x, y, rotation, false);
-    }
-    
     boolean getBit(int x, int y, int rotation, boolean mirror) {
         if (mirror) {
             x = getWidth(rotation)-x-1;
@@ -79,10 +75,6 @@ public class BitPattern {
         
     public Point getCenter() {        
         return new Point((getWidth()-1)/2,(getHeight()-1)/2);
-    }
-    
-    public Point getCenter(int rotation) {
-        return getCenter(rotation, false);
     }
     
     public Point getCenter(int rotation, boolean mirror) {
@@ -105,10 +97,6 @@ public class BitPattern {
             }    
         }
         return null;        
-    }
-    
-    public Point getOnBit(int rotation) {
-        return invRotatePoint(getOnBit(), this, rotation, false);
     }
     
     public Point getOnBit(int rotation, boolean mirror) {
@@ -178,10 +166,6 @@ public class BitPattern {
                 
             }
         }
-    }
-    
-    public static Point invRotateOffset(Point point, BitPattern p1, BitPattern p2, int rotation) {
-        return invRotateOffset(point, p1, p2, rotation, false);
     }
     
     public static Point invRotateOffset(Point point, BitPattern p1, BitPattern p2, int rotation, boolean mirror) {

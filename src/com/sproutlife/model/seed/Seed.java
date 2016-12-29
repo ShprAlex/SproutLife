@@ -133,7 +133,4 @@ public class Seed {
         Point onOffset = this.getSeedOnBit();        
         return new Point(pos.x+onOffset.x,pos.y+onOffset.y);
     }
-    
-     
-
 }
