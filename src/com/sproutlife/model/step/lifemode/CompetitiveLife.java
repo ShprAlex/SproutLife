@@ -22,18 +22,8 @@ public class CompetitiveLife extends LifeMode {
 
     public int getCompare(Cell c) {
         Organism o = c.getOrganism();
-        //int val = o.getAge()*o.getCells().size();
-        int val = o.getAttributes().cellSum;//*2-o.getAttributes().getTerritorySize();
-        //*o.getCells().size()*o.getAttributes().getTerritorySize();
-        if (o.getParent()!=null && o.getParent().isAlive()) {
-            //val+=o.getParent().getAttributes().cellSum;
-            
-            //    System.out.println(o.getAttributes().cellSum+" "+ o.getParent().getCells().size()*5);
-            //}
-            //val+=o.getParent().getAge();
-            
-            
-        }
+        int val = o.getAttributes().getTerritorySize();
+        //int val = o.getParent().getAttributes().cellSum;
         return val;
     }
     
