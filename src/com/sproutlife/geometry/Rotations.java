@@ -7,6 +7,10 @@
  *******************************************************************************/
 package com.sproutlife.geometry;
 
+import java.awt.Point;
+
+import com.sproutlife.model.seed.BitPattern;
+
 /**
  * @author Alex Shapiro
  *
@@ -40,5 +44,88 @@ public class Rotations {
             return get(r.getAngle()-angle, newMirror);
         }
     
+    }
+    
+    public static Point rotatePoint(Point point, BitPattern p1, Rotation r) {
+        
+        if (r.isMirror()) {
+            point = new Point (p1.getWidth()-point.x-1,  point.y);
+        }
+        switch (r.getAngle()) {
+
+            case 1: return new Point(p1.getHeight()-point.y-1, point.x);
+
+            case 2: return new Point(p1.getWidth()-point.x-1, p1.getHeight()-point.y-1);
+            
+            case 3: return new Point(point.y, p1.getWidth()-point.x-1);
+             
+            //Case 0:
+            default: return point; 
+
+        }
+    }
+    
+    public static Point invRotatePoint(Point point, BitPattern p1, Rotation r) {
+        if (!r.isMirror()) {
+            switch (r.getAngle()) {
+                
+                case 1: return new Point(point.y, p1.getWidth()-point.x-1);
+                
+                case 2: return new Point(p1.getWidth()-point.x-1, p1.getHeight()-point.y-1);
+                
+                case 3: return new Point(p1.getHeight()-point.y-1, point.x); 
+                //Case 0:
+                default: return point; 
+                
+            }
+        }
+        else {
+            //In case of mirror, reflect the first parameter, not x
+            switch (r.getAngle()) {
+                
+                case 1: return new Point(p1.getHeight()-point.y-1, p1.getWidth()-point.x-1);
+                
+                case 2: return new Point(point.x, p1.getHeight()-point.y-1);
+                
+                case 3: return new Point(point.y, point.x); 
+                //Case 0:
+                default: return new Point(p1.getWidth()-point.x-1, point.y); 
+                
+            }
+        }
+    }
+    
+    public static Point invRotateOffset(Point point, BitPattern p1, BitPattern p2, Rotation r) {
+        Point rp = invRotatePoint(point, p1, r);
+        if (!r.isMirror()){
+            if (r.getAngle() == 1) {
+                rp.y -= (p2.getHeight(r)-1);
+            }
+            else if (r.getAngle() == 2) {
+                rp.x -= (p2.getWidth(r)-1);
+                rp.y -= (p2.getHeight(r)-1);
+            }
+            else if (r.getAngle() ==3 ) {
+                rp.x -= (p2.getWidth(r)-1);            
+            }
+        }
+        else {
+            if (r.getAngle() == 1) {
+                rp.x -= (p2.getWidth(r)-1);    
+                rp.y -= (p2.getHeight(r)-1);
+                
+            }
+            else if (r.getAngle() == 2) {                
+                rp.y -= (p2.getHeight(r)-1);
+            }
+            else if (r.getAngle() ==3 ) {
+                            
+            }   
+            else if (r.getAngle() == 0) {
+                rp.x -= (p2.getWidth(r)-1);
+            }
+        }        
+        
+        return rp;
     }
 }

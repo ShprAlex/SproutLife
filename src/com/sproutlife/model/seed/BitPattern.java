@@ -10,6 +10,7 @@ package com.sproutlife.model.seed;
 import java.awt.Point;
 
 import com.sproutlife.geometry.Rotation;
+import com.sproutlife.geometry.Rotations;
 
 public class BitPattern {
     
@@ -63,16 +64,8 @@ public class BitPattern {
     }
     
     boolean getBit(int x, int y, Rotation r) {
-        if (r.isMirror()) {
-            x = getWidth(r)-x-1;
-        }
-        switch (r.getAngle()) {
-            case 1: return getBit(getHeight(r)-y-1,x);
-            case 2: return getBit(getWidth(r)-x-1,getHeight(r)-y-1);
-            case 3: return getBit(y,getWidth(r)-x-1);
-             //case 0:
-            default: return getBit(x,y);
-        }          
+        Point rp = Rotations.rotatePoint(new Point(x,y), this, r);
+        return getBit(rp.x, rp.y);       
     }
         
     public Point getCenter() {        
@@ -80,7 +73,7 @@ public class BitPattern {
     }
     
     public Point getCenter(Rotation r) {
-        return invRotatePoint(getCenter(), this, r);
+        return Rotations.invRotatePoint(getCenter(), this, r);
     }
     
     public Point getOnBit() {
@@ -102,7 +95,7 @@ public class BitPattern {
     }
     
     public Point getOnBit(Rotation r) {
-        return invRotatePoint(getOnBit(), this, r);
+        return Rotations.invRotatePoint(getOnBit(), this, r);
     }
     
     public static int[][] xySwitch(int[][] shape) {
@@ -119,90 +112,5 @@ public class BitPattern {
         
         return newShape;  
         
-    }        
-    
-    public static Point rotatePoint(Point point, BitPattern p1, Rotation r) {
-        
-        if (r.isMirror()) {
-            point = new Point (p1.getWidth()-point.x-1,  point.y);
-        }
-        switch (r.getAngle()) {
-
-            case 1: return new Point(p1.getHeight()-point.y-1, point.x);
-
-            case 2: return new Point(p1.getWidth()-point.x-1, p1.getHeight()-point.y-1);
-            
-            case 3: return new Point(point.y, p1.getWidth()-point.x-1);
-             
-            //Case 0:
-            default: return point; 
-
-        }
     }
-    
-    public static Point invRotatePoint(Point point, BitPattern p1, Rotation r) {
-        if (!r.isMirror()) {
-            switch (r.getAngle()) {
-                
-                case 1: return new Point(point.y, p1.getWidth()-point.x-1);
-                
-                case 2: return new Point(p1.getWidth()-point.x-1, p1.getHeight()-point.y-1);
-                
-                case 3: return new Point(p1.getHeight()-point.y-1, point.x); 
-                //Case 0:
-                default: return point; 
-                
-            }
-        }
-        else {
-            //In case of mirror, reflect the first parameter, not x
-            switch (r.getAngle()) {
-                
-                case 1: return new Point(p1.getHeight()-point.y-1, p1.getWidth()-point.x-1);
-                
-                case 2: return new Point(point.x, p1.getHeight()-point.y-1);
-                
-                case 3: return new Point(point.y, point.x); 
-                //Case 0:
-                default: return new Point(p1.getWidth()-point.x-1, point.y); 
-                
-            }
-        }
-    }
-    
-    public static Point invRotateOffset(Point point, BitPattern p1, BitPattern p2, Rotation r) {
-        Point rp = invRotatePoint(point, p1, r);
-        if (!r.isMirror()){
-            if (r.getAngle() == 1) {
-                rp.y -= (p2.getHeight(r)-1);
-            }
-            else if (r.getAngle() == 2) {
-                rp.x -= (p2.getWidth(r)-1);
-                rp.y -= (p2.getHeight(r)-1);
-            }
-            else if (r.getAngle() ==3 ) {
-                rp.x -= (p2.getWidth(r)-1);            
-            }
-        }
-        else {
-            if (r.getAngle() == 1) {
-                rp.x -= (p2.getWidth(r)-1);    
-                rp.y -= (p2.getHeight(r)-1);
-                
-            }
-            else if (r.getAngle() == 2) {                
-                rp.y -= (p2.getHeight(r)-1);
-            }
-            else if (r.getAngle() ==3 ) {
-                            
-            }   
-            else if (r.getAngle() == 0) {
-                rp.x -= (p2.getWidth(r)-1);
-            }
-        }        
-        
-        return rp;
-    }
-
-
 }
