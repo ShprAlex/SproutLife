@@ -37,7 +37,7 @@ public class Seed {
     
     public Point getPosition() {        
         return position;        
-    }    
+    }
     
     public void setPosition(int x, int y) {
         this.position = new Point(x,y);
@@ -81,11 +81,11 @@ public class Seed {
     }       
     
     public boolean getSeedBit(int x, int y) {       
-        return getSeedPattern().getBit(x, y, getRotation());
+        return getSeedPattern().getBit(x, y, rotation);
     }
     
     public boolean getSproutBit(int x, int y) {       
-        return getSproutPattern().getBit(x, y, getRotation());
+        return getSproutPattern().getBit(x, y, rotation);
     }
      
     public int getSeedWidth() {
@@ -106,10 +106,21 @@ public class Seed {
         
     public Point getSproutOffset() {
         return pattern.getSproutOffset(rotation);
-    }      
+    }
     
-    public Point getSproutCenter() {
-        return pattern.getSproutCenter(rotation);
+    public Point getSproutPosition() {
+        Point sproutOffset = getSproutOffset();
+        return new Point(position.x + sproutOffset.x, position.y + sproutOffset.y);
+    }
+    
+    public Point getSproutCenter() {        
+        Point sproutOffset = getSproutOffset();
+        Point sproutCenter = getSproutPattern().getCenter(rotation);       
+
+        int orgX = getPosition().x+sproutOffset.x+sproutCenter.x;
+        int orgY = getPosition().y+sproutOffset.y+sproutCenter.y;
+        
+        return new Point(orgX, orgY);        
     }
     
     public Point getSeedOnBit() {

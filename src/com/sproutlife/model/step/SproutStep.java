@@ -363,14 +363,17 @@ public class SproutStep extends Step {
         int seedWidth = seed.getSeedWidth();
         int seedHeight = seed.getSeedHeight();
         
-        int sproutX = seedX + seed.getSproutOffset().x;
-        int sproutY = seedY + seed.getSproutOffset().y;
+        Point sproutPosition = seed.getSproutPosition();
+        Point sproutCenter = seed.getSproutCenter();
+        
+        int sproutX = sproutPosition.x;
+        int sproutY = sproutPosition.y;
 
         int sproutWidth = seed.getSproutWidth();
         int sproutHeight = seed.getSproutHeight();
 
-        int newOrgX = sproutX + seed.getSproutCenter().x;
-        int newOrgY = sproutY + seed.getSproutCenter().y;
+        int newOrgX = sproutCenter.x;
+        int newOrgY = sproutCenter.y;
         
         if (seedX < 0 || seedY < 0
                 || seedX + seedWidth > getBoard().getWidth() - 1
