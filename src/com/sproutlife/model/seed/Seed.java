@@ -81,31 +81,31 @@ public class Seed {
     }       
     
     public boolean getSeedBit(int x, int y) {       
-        return getSeedPattern().getBit(x, y, rotation);
+        return getSeedPattern().getBit(x, y, getRotation());
     }
     
     public boolean getSproutBit(int x, int y) {       
-        return getSproutPattern().getBit(x, y, rotation);
+        return getSproutPattern().getBit(x, y, getRotation());
     }
      
     public int getSeedWidth() {
-        return getSeedPattern().getWidth(rotation);
+        return getSeedPattern().getWidth(getRotation());
     }
     
     public int getSeedHeight() {
-        return getSeedPattern().getHeight(rotation);
+        return getSeedPattern().getHeight(getRotation());
     }
         
     public int getSproutWidth() {
-        return getSproutPattern().getWidth(rotation);
+        return getSproutPattern().getWidth(getRotation());
     }
         
     public int getSproutHeight() {
-        return getSproutPattern().getHeight(rotation);
+        return getSproutPattern().getHeight(getRotation());
     }
         
     public Point getSproutOffset() {
-        return pattern.getSproutOffset(rotation);
+        return pattern.getSproutOffset(getRotation());
     }
     
     public Point getSproutPosition() {
@@ -115,7 +115,7 @@ public class Seed {
     
     public Point getSproutCenter() {        
         Point sproutOffset = getSproutOffset();
-        Point sproutCenter = getSproutPattern().getCenter(rotation);       
+        Point sproutCenter = getSproutPattern().getCenter(getRotation());       
 
         int orgX = getPosition().x+sproutOffset.x+sproutCenter.x;
         int orgY = getPosition().y+sproutOffset.y+sproutCenter.y;
@@ -124,7 +124,7 @@ public class Seed {
     }
     
     public Point getSeedOnBit() {
-        return pattern.getSeedPattern().getOnBit(rotation);
+        return pattern.getSeedPattern().getOnBit(getRotation());
     }
     
     public Point getSeedOnPosition() {

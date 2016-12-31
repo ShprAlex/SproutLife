@@ -23,7 +23,9 @@ public class SymmetricSeed extends Seed {
         
     @Override
     public Rotation getRotation() {
-        
+        if (getParentPosition()==null) {
+            return Rotations.get(0, false);
+        }
         int ox = getParentPosition().x;
         int oy = getParentPosition().y;
         
