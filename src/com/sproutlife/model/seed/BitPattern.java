@@ -64,7 +64,7 @@ public class BitPattern {
     }
     
     boolean getBit(int x, int y, Rotation r) {
-        Point rp = Rotations.rotatePoint(new Point(x,y), this, r);
+        Point rp = Rotations.invRotatePoint(new Point(x,y), this, r);
         return getBit(rp.x, rp.y);       
     }
         
@@ -73,7 +73,7 @@ public class BitPattern {
     }
     
     public Point getCenter(Rotation r) {
-        return Rotations.invRotatePoint(getCenter(), this, r);
+        return Rotations.rotatePoint(getCenter(), this, r);
     }
     
     public Point getOnBit() {
@@ -95,7 +95,7 @@ public class BitPattern {
     }
     
     public Point getOnBit(Rotation r) {
-        return Rotations.invRotatePoint(getOnBit(), this, r);
+        return Rotations.rotatePoint(getOnBit(), this, r);
     }
     
     public static int[][] xySwitch(int[][] shape) {

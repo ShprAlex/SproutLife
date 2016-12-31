@@ -37,7 +37,7 @@ public class SeedSproutPattern {
     }
     
     public Point getSproutOffset(Rotation r) {
-        return Rotations.invRotateOffset(getSproutOffset(), getSeedPattern(), getSproutPattern(), r);
+        return Rotations.rotateOffset(getSproutOffset(), getSeedPattern(), getSproutPattern(), r);
     }
     
     public Point getSproutCenter(Rotation r) {

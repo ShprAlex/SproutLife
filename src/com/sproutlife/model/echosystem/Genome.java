@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.sproutlife.geometry.Rotations;
 import com.sproutlife.model.seed.Seed;
 
 /**
@@ -69,8 +70,7 @@ public class Genome {
         }
         ArrayList<Point> mutationPoints = new ArrayList<Point>(unRotated.size());
         for (Mutation m : unRotated) {
-            Point rp = rotatePoint(m.getLocation(), seed.getRotation().getAngle(),
-                    seed.getRotation().isMirror());
+            Point rp = Rotations.rotatePoint(m.getLocation(), seed.getRotation());
             mutationPoints.add(rp);
         }
         return mutationPoints;
@@ -97,8 +97,7 @@ public class Genome {
     }
 
     public Mutation addMutation(int x, int y, int organismAge, int systemTime) {
-        Point location = unRotatePoint(new Point(x, y), seed.getRotation().getAngle(),
-                seed.getRotation().isMirror());
+        Point location = Rotations.invRotatePoint(new Point(x, y), seed.getRotation());
         Mutation m = new Mutation(location, organismAge, systemTime);
         addMutation(m);
         return m;
@@ -125,55 +124,4 @@ public class Genome {
         }
         return recentMutations;
     }
-
-    public static Point unRotatePoint(Point point, int rotation, boolean mirror) {
-        if (mirror) {
-            point = new Point(-point.x, point.y);
-        }
-        switch (rotation) {
-        // case 0:
-            default:
-                return new Point(point.x, point.y);
-
-            case 1:
-                return new Point(-point.y, point.x);
-            case 2:
-                return new Point(-point.x, -point.y);
-            case 3:
-                return new Point(point.y, -point.x);
-
-        }
-    }
-
-    public static Point rotatePoint(Point point, int rotation, boolean mirror) {
-        if (!mirror) {
-            switch (rotation) {
-            // case 0:
-                default:
-                    return new Point(point.x, point.y);
-                case 1:
-                    return new Point(point.y, -point.x);
-                case 2:
-                    return new Point(-point.x, -point.y);
-                case 3:
-                    return new Point(-point.y, point.x);
-
-            }
-        }
-        else { // mirror == true
-            switch (rotation) {
-            // case 0:
-                default:
-                    return new Point(-point.x, point.y);
-
-                case 1:
-                    return new Point(-point.y, -point.x);
-                case 2:
-                    return new Point(point.x, -point.y);
-                case 3:
-                    return new Point(point.y, point.x);
-            }
-        }
-    }
-
 }
