@@ -9,8 +9,8 @@ package com.sproutlife.model.seed;
 
 import java.awt.Point;
 
-import com.sproutlife.geometry.Rotation;
-import com.sproutlife.geometry.Rotations;
+import com.sproutlife.model.rotations.Rotation;
+import com.sproutlife.model.rotations.Rotations;
 
 public class BitPattern {
     

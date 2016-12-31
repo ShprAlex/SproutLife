@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.sproutlife.geometry.Rotations;
+import com.sproutlife.model.rotations.Rotations;
 import com.sproutlife.model.seed.patterns.Bentline1RpPattern;
 import com.sproutlife.model.seed.patterns.Bentline1mRpPattern;
 import com.sproutlife.model.seed.patterns.BentlineMargin35Pattern;

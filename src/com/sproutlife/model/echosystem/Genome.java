@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import com.sproutlife.geometry.Rotations;
+import com.sproutlife.model.rotations.Rotations;
 import com.sproutlife.model.seed.Seed;
 
 /**
