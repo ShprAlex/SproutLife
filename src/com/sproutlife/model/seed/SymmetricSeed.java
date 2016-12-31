@@ -9,6 +9,9 @@ package com.sproutlife.model.seed;
 
 import java.awt.Point;
 
+import com.sproutlife.model.rotations.Rotation;
+import com.sproutlife.model.rotations.Rotations;
+
 public class SymmetricSeed extends Seed {       
     
     public SymmetricSeed(SeedSproutPattern pattern) {
@@ -19,35 +22,30 @@ public class SymmetricSeed extends Seed {
     
         
     @Override
-    public int getRotation() {
-        
+    public Rotation getRotation() {
+        if (getParentPosition()==null) {
+            return Rotations.get(0, false);
+        }
         int ox = getParentPosition().x;
         int oy = getParentPosition().y;
         
         Point farCorner = getFarCorner();
                         
         if(farCorner.x >= ox && farCorner.y > oy) {
-            
-            return 2;
+            return Rotations.get(2, false);
 
         }
         if(farCorner.y >= oy && farCorner.x < ox) {
-            
-            return 1;
-
+            return Rotations.get(1, false);
         }
         if(farCorner.x <= ox && farCorner.y < oy) {
-            
-            return 0;
-
+            return Rotations.get(0, false);
         }
 
         if(farCorner.y <= oy && farCorner.x > ox) {
-            
-            return 3;
+            return Rotations.get(3, false);
         }
-        
-        return 0;
+        return Rotations.get(0, false);
     }
     
     @Override

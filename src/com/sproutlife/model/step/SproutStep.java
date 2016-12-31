@@ -102,11 +102,11 @@ public class SproutStep extends Step {
     }
         
     private int seedDistSq(Seed s, Organism o) {
-    	return (s.getPosition().x-o.x)*(s.getPosition().x-o.x)+(s.getPosition().y-o.y)*(s.getPosition().y-o.y);
+    	return (s.getSproutCenter().x-o.x)*(s.getSproutCenter().x-o.x)+(s.getSproutCenter().y-o.y)*(s.getSproutCenter().y-o.y);
     }
     
     private int innerProduct(Seed s1, Seed s2, Organism o) {
-    	return (s1.getPosition().x-o.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-o.y)*(s1.getPosition().y-s2.getPosition().y);
+    	return (s1.getSproutCenter().x-o.x)*(s1.getSproutCenter().x-s2.getSproutCenter().x) - (s1.getSproutCenter().y-o.y)*(s1.getSproutCenter().y-s2.getSproutCenter().y);
     }
     
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {
@@ -282,7 +282,7 @@ public class SproutStep extends Step {
         };  
         s.setPosition(x, y);       
         s.setParentPosition(new Point(120,120));
-        Seed randomSeed = new Seed(newPattern, s.getRotation(), s.isMirror());
+        Seed randomSeed = new Seed(newPattern, s.getRotation());
         
         randomSeed.setPosition(x, y);                      
         randomSeed.setSeedBorder(border);
@@ -356,22 +356,25 @@ public class SproutStep extends Step {
     }    
     
     public void sproutSeed(Seed seed, Organism seedOrg) {  
-                        
+
+        Point sproutPosition = seed.getSproutPosition();
+        Point sproutCenter = seed.getSproutCenter();
+        
         int seedX = seed.getPosition().x;
         int seedY = seed.getPosition().y;
+        
+        int sproutX = sproutPosition.x;
+        int sproutY = sproutPosition.y;
 
+        int newOrgX = sproutCenter.x;
+        int newOrgY = sproutCenter.y;
+        
         int seedWidth = seed.getSeedWidth();
         int seedHeight = seed.getSeedHeight();
-        
-        int sproutX = seedX + seed.getSproutOffset().x;
-        int sproutY = seedY + seed.getSproutOffset().y;
-
+ 
         int sproutWidth = seed.getSproutWidth();
         int sproutHeight = seed.getSproutHeight();
-
-        int newOrgX = sproutX + seed.getSproutCenter().x;
-        int newOrgY = sproutY + seed.getSproutCenter().y;
-        
+                
         if (seedX < 0 || seedY < 0
                 || seedX + seedWidth > getBoard().getWidth() - 1
                 || seedY + seedHeight > getBoard().getHeight() - 1

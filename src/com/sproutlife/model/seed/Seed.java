@@ -10,50 +10,38 @@ package com.sproutlife.model.seed;
 import java.awt.Point;
 
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.model.rotations.Rotation;
+import com.sproutlife.model.rotations.Rotations;
 
 public class Seed {
     
     protected SeedSproutPattern pattern;       
     public Point position = null;    
-    public int rotation = 0;    
+    public Rotation rotation;    
     public int seedBorder = 1;   
-    public boolean mirror;
     public Point parentPosition;
     //Organism organism;   
-           
-    public Seed(SeedSproutPattern pattern, int rotation, boolean mirror) {    
+
+    public Seed(SeedSproutPattern pattern, Rotation r) {    
         this.pattern = pattern;
-        this.rotation = rotation;
-        this.mirror = mirror;
-    } 
-    
-    public Seed(SeedSproutPattern pattern, int rotation) {    
-        this(pattern, rotation , false);
-    }     
+        this.rotation = r;
+    }      
     
     public Seed(SeedSproutPattern pattern) {
-        this(pattern, 0 , false);
+        this(pattern, Rotations.get());
     }
      
-    public int getRotation() {
+    public Rotation getRotation() {
         return rotation;
-    }
-    
-    public boolean isMirror() {
-        return mirror;
     }
     
     public Point getPosition() {        
         return position;        
-    }    
+    }
     
     public void setPosition(int x, int y) {
         this.position = new Point(x,y);
-    }             
-    
-    public void setMirror(boolean mirror) {
-        this.mirror = mirror;
-    }     
+    }                  
     
     public int getSeedBorder() {
         return seedBorder;
@@ -93,39 +81,50 @@ public class Seed {
     }       
     
     public boolean getSeedBit(int x, int y) {       
-        return getSeedPattern().getBit(x, y, getRotation(), isMirror());
+        return getSeedPattern().getBit(x, y, getRotation());
     }
     
     public boolean getSproutBit(int x, int y) {       
-        return getSproutPattern().getBit(x, y, getRotation(), isMirror());
+        return getSproutPattern().getBit(x, y, getRotation());
     }
      
     public int getSeedWidth() {
-        return getSeedPattern().getWidth(rotation);
+        return getSeedPattern().getWidth(getRotation());
     }
     
     public int getSeedHeight() {
-        return getSeedPattern().getHeight(rotation);
+        return getSeedPattern().getHeight(getRotation());
     }
         
     public int getSproutWidth() {
-        return getSproutPattern().getWidth(rotation);
+        return getSproutPattern().getWidth(getRotation());
     }
         
     public int getSproutHeight() {
-        return getSproutPattern().getHeight(rotation);
+        return getSproutPattern().getHeight(getRotation());
     }
         
     public Point getSproutOffset() {
-        return pattern.getSproutOffset(getRotation(), isMirror());
-    }      
+        return pattern.getSproutOffset(getRotation());
+    }
     
-    public Point getSproutCenter() {
-        return pattern.getSproutCenter(rotation, mirror);
+    public Point getSproutPosition() {
+        Point sproutOffset = getSproutOffset();
+        return new Point(position.x + sproutOffset.x, position.y + sproutOffset.y);
+    }
+    
+    public Point getSproutCenter() {        
+        Point sproutOffset = getSproutOffset();
+        Point sproutCenter = getSproutPattern().getCenter(getRotation());       
+
+        int orgX = getPosition().x+sproutOffset.x+sproutCenter.x;
+        int orgY = getPosition().y+sproutOffset.y+sproutCenter.y;
+        
+        return new Point(orgX, orgY);        
     }
     
     public Point getSeedOnBit() {
-        return pattern.getSeedPattern().getOnBit(rotation, mirror);
+        return pattern.getSeedPattern().getOnBit(getRotation());
     }
     
     public Point getSeedOnPosition() {
@@ -133,7 +132,4 @@ public class Seed {
         Point onOffset = this.getSeedOnBit();        
         return new Point(pos.x+onOffset.x,pos.y+onOffset.y);
     }
-    
-     
-
 }
