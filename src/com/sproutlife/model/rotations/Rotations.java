@@ -83,39 +83,29 @@ public class Rotations {
             }
         }
     }
-       
-    public static Point offsetToBoard(Point point, BitPattern bp1, BitPattern bp2, Rotation r) {
-        Point rp = toBoard(point, bp1, r);
-        if (!r.isMirror()){
-            if (r.getAngle() == 1) {
-                rp.y -= (bp2.getHeight(r)-1);
-            }
-            else if (r.getAngle() == 2) {
-                rp.x -= (bp2.getWidth(r)-1);
-                rp.y -= (bp2.getHeight(r)-1);
-            }
-            else if (r.getAngle() ==3 ) {
-                rp.x -= (bp2.getWidth(r)-1);            
-            }
-        }
-        else {
-            if (r.getAngle() == 1) {
-                rp.x -= (bp2.getWidth(r)-1);    
-                rp.y -= (bp2.getHeight(r)-1);
-                
-            }
-            else if (r.getAngle() == 2) {                
-                rp.y -= (bp2.getHeight(r)-1);
-            }
-            else if (r.getAngle() ==3 ) {
-                            
-            }   
-            else if (r.getAngle() == 0) {
-                rp.x -= (bp2.getWidth(r)-1);
-            }
-        }        
+    
+    public static Point translate(Point p, int tx, int ty) {
+        return new Point(p.x+tx,p.y+ty);
+    }
+    
+    public static Point translate(Point p, Point t) {
+        return translate(p, t.x, t.y);
+    }
+    
+    public static Point offsetToBoard(Point offset, BitPattern bp1, BitPattern bp2, Rotation r) {
+        Point p2a = offset;
+        Point p2b = translate(offset, bp2.getWidth() - 1, 0);
+        Point p2c = translate(offset, 0, bp2.getHeight() - 1);
+        Point p2d = translate(offset, bp2.getWidth() - 1, bp2.getHeight() - 1);
         
-        return rp;
+        Point rp2a = toBoard(p2a, bp1, r);
+        Point rp2b = toBoard(p2b, bp1, r);
+        Point rp2c = toBoard(p2c, bp1, r);
+        Point rp2d = toBoard(p2d, bp1, r);
+
+        int minx = Math.min(Math.min(rp2a.x, rp2b.x), Math.min(rp2c.x, rp2d.x));
+        int miny = Math.min(Math.min(rp2a.y, rp2b.y), Math.min(rp2c.y, rp2d.y));
+        return new Point(minx, miny);        
     }
     
     public static Point fromBoard(Point point, Rotation r) {

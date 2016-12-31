@@ -30,17 +30,5 @@ public class SeedSproutPattern {
     
     public Point getSproutOffset() {
         return sproutOffset;
-    }
-    
-    public Point getSproutCenter() {
-        return getSproutPattern().getCenter();
-    }
-    
-    public Point getSproutOffset(Rotation r) {
-        return Rotations.offsetToBoard(getSproutOffset(), getSeedPattern(), getSproutPattern(), r);
-    }
-    
-    public Point getSproutCenter(Rotation r) {
-        return getSproutPattern().getCenter(r);
-    }
+    }   
 }
