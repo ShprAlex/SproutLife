@@ -70,7 +70,7 @@ public class Genome {
         }
         ArrayList<Point> mutationPoints = new ArrayList<Point>(unRotated.size());
         for (Mutation m : unRotated) {
-            Point rp = Rotations.rotatePoint(m.getLocation(), seed.getRotation());
+            Point rp = Rotations.toBoard(m.getLocation(), seed.getRotation());
             mutationPoints.add(rp);
         }
         return mutationPoints;
@@ -97,7 +97,7 @@ public class Genome {
     }
 
     public Mutation addMutation(int x, int y, int organismAge, int systemTime) {
-        Point location = Rotations.invRotatePoint(new Point(x, y), seed.getRotation());
+        Point location = Rotations.fromBoard(new Point(x, y), seed.getRotation());
         Mutation m = new Mutation(location, organismAge, systemTime);
         addMutation(m);
         return m;

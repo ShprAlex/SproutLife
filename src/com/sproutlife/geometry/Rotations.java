@@ -35,18 +35,7 @@ public class Rotations {
         return get(0, false);
     }
     
-    public static Rotation rotate(Rotation r, int angle, boolean mirror) {
-        boolean newMirror = (mirror && !r.isMirror()) || (!mirror && r.isMirror());
-        if (!newMirror) {
-            return get(r.getAngle()+angle, newMirror);
-        }
-        else {
-            return get(r.getAngle()-angle, newMirror);
-        }
-    
-    }
-    
-    public static Point invRotatePoint(Point point, BitPattern p1, Rotation r) {
+    public static Point fromBoard(Point point, BitPattern p1, Rotation r) {
         
         if (r.isMirror()) {
             point = new Point (p1.getWidth()-point.x-1,  point.y);
@@ -65,7 +54,7 @@ public class Rotations {
         }
     }
     
-    public static Point rotatePoint(Point point, BitPattern p1, Rotation r) {
+    public static Point toBoard(Point point, BitPattern p1, Rotation r) {
         if (!r.isMirror()) {
             switch (r.getAngle()) {
                 
@@ -95,8 +84,8 @@ public class Rotations {
         }
     }
     
-    public static Point rotateOffset(Point point, BitPattern p1, BitPattern p2, Rotation r) {
-        Point rp = rotatePoint(point, p1, r);
+    public static Point offsetToBoard(Point point, BitPattern p1, BitPattern p2, Rotation r) {
+        Point rp = toBoard(point, p1, r);
         if (!r.isMirror()){
             if (r.getAngle() == 1) {
                 rp.y -= (p2.getHeight(r)-1);
@@ -129,7 +118,7 @@ public class Rotations {
         return rp;
     }
     
-    public static Point invRotatePoint(Point point, Rotation r) {
+    public static Point fromBoard(Point point, Rotation r) {
         if (r.isMirror()) {
             point = new Point(-point.x, point.y);
         }
@@ -148,7 +137,7 @@ public class Rotations {
         }
     }
 
-    public static Point rotatePoint(Point point, Rotation r) {
+    public static Point toBoard(Point point, Rotation r) {
         if (!r.isMirror()) {
             switch (r.getAngle()) {
             // case 0:
