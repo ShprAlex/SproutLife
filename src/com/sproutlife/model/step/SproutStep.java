@@ -102,11 +102,11 @@ public class SproutStep extends Step {
     }
         
     private int seedDistSq(Seed s, Organism o) {
-    	return (s.getPosition().x-o.x)*(s.getPosition().x-o.x)+(s.getPosition().y-o.y)*(s.getPosition().y-o.y);
+    	return (s.getSproutCenter().x-o.x)*(s.getSproutCenter().x-o.x)+(s.getSproutCenter().y-o.y)*(s.getSproutCenter().y-o.y);
     }
     
     private int innerProduct(Seed s1, Seed s2, Organism o) {
-    	return (s1.getPosition().x-o.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-o.y)*(s1.getPosition().y-s2.getPosition().y);
+    	return (s1.getSproutCenter().x-o.x)*(s1.getSproutCenter().x-s2.getSproutCenter().x) - (s1.getSproutCenter().y-o.y)*(s1.getSproutCenter().y-s2.getSproutCenter().y);
     }
     
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {
