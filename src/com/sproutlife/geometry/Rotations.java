@@ -38,15 +38,15 @@ public class Rotations {
     public static Point fromBoard(Point point, BitPattern p1, Rotation r) {
         
         if (r.isMirror()) {
-            point = new Point (p1.getWidth()-point.x-1,  point.y);
+            point = new Point (p1.getWidth(r)-point.x-1,  point.y);
         }
         switch (r.getAngle()) {
 
-            case 1: return new Point(p1.getHeight()-point.y-1, point.x);
+            case 1: return new Point(p1.getHeight(r)-point.y-1, point.x);
 
-            case 2: return new Point(p1.getWidth()-point.x-1, p1.getHeight()-point.y-1);
+            case 2: return new Point(p1.getWidth(r)-point.x-1, p1.getHeight(r)-point.y-1);
             
-            case 3: return new Point(point.y, p1.getWidth()-point.x-1);
+            case 3: return new Point(point.y, p1.getWidth(r)-point.x-1);
              
             //Case 0:
             default: return point; 
