@@ -105,7 +105,11 @@ public class Seed {
     }
         
     public Point getSproutOffset() {
-        return pattern.getSproutOffset(getRotation());
+        return Rotations.offsetToBoard(
+                pattern.getSproutOffset(), 
+                getSeedPattern(), 
+                getSproutPattern(), 
+                getRotation());
     }
     
     public Point getSproutPosition() {
@@ -114,13 +118,13 @@ public class Seed {
     }
     
     public Point getSproutCenter() {        
-        Point sproutOffset = getSproutOffset();
+        Point sproutPosition = getSproutPosition();
         Point sproutCenter = getSproutPattern().getCenter(getRotation());       
 
-        int orgX = getPosition().x+sproutOffset.x+sproutCenter.x;
-        int orgY = getPosition().y+sproutOffset.y+sproutCenter.y;
+        int ssX = sproutPosition.x+sproutCenter.x;
+        int ssY = sproutPosition.y+sproutCenter.y;
         
-        return new Point(orgX, orgY);        
+        return new Point(ssX, ssY);        
     }
     
     public Point getSeedOnBit() {
