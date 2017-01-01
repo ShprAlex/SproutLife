@@ -10,7 +10,6 @@ package com.sproutlife.model.echosystem;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -18,16 +17,14 @@ import com.sproutlife.model.rotations.Rotations;
 import com.sproutlife.model.seed.Seed;
 
 /**
- * A Genome is a collection of mutations Mutations are stored in an un-rotated
- * state. We un-rotate a coordinate when adding it from the board and rotate it
- * back when returning it. Taking into account that the mutation may now belong
- * to a child that's facing a different direction than its parent.
+ * A Genome is a collection of Mutations.
  * 
  * @author Alex Shapiro
  */
 
 public class Genome {
-
+    
+    // map of age -> list of mutations at age
     HashMap<Integer, ArrayList<Mutation>> mutations;
     Seed seed;
 
@@ -39,10 +36,10 @@ public class Genome {
         this.mutations = new HashMap<Integer, ArrayList<Mutation>>();
 
         // Clone mutations
-        for (Integer i : mutations.keySet()) {
+        for (Integer age : mutations.keySet()) {
             ArrayList<Mutation> cloneList = new ArrayList<Mutation>(
-                    mutations.get(i));
-            this.mutations.put(i, cloneList);
+                    mutations.get(age));
+            this.mutations.put(age, cloneList);
         }
     }
 

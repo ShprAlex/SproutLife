@@ -11,8 +11,8 @@ import java.awt.Point;
 
 
 /**
- * A Mutation is location relative to the organism's location. The mutation is
- * affective when an organism is a specific age.
+ * A Mutation is a location + time relative to the organism's birth coordinates. 
+ * If an organism has a cell under the mutation point, the cell dies.
  * 
  * @author Alex Shapiro
  */
