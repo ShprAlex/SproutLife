@@ -479,8 +479,9 @@ public class PanelController {
     public void initSeedTypeComboBox() {
         JComboBox<SeedType> seedCb = ( JComboBox<SeedType>)getMainControlPanel().getSeedTypeComboBox();
         seedCb.addItem(SeedType.Bentline1_RPentomino);
-        seedCb.addItem(SeedType.Bentline1m_RPentomino);
+        seedCb.addItem(SeedType.Bentline1m_RPentomino);        
         seedCb.addItem(SeedType.Bentline_U3x3);
+        seedCb.addItem(SeedType.Bentline1_Plus);
         seedCb.addItem(SeedType.Square2_RPentomino);
         seedCb.addItem(SeedType.L2_RPentomino);
         seedCb.addItem(SeedType.L2B1_RPentomino);

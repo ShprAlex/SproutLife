@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.sproutlife.model.rotations.Rotations;
+import com.sproutlife.model.seed.patterns.Bentline1PlusPattern;
 import com.sproutlife.model.seed.patterns.Bentline1RpPattern;
 import com.sproutlife.model.seed.patterns.Bentline1mRpPattern;
 import com.sproutlife.model.seed.patterns.BentlineMargin35Pattern;
@@ -42,6 +43,7 @@ public class SeedFactory {
         Boxlid3_RPentomino ("Boxlid3 to R-Pentomino"),        
         Boxhat_RPentomino ("Boxhat to R-Pentomino"),
         Bentline1_RPentomino ("Bentline1 to R-Pentomino"),
+        Bentline1_Plus ("Bentline1 to Plus"),
         Bentline1m_RPentomino ("Bentline1m to R-Pentomino"),
         Bentline_U3x3 ("Bentline to U 3x3"),
         BentlineMargin35_RPentomino ("BentlineM35 to R-Pentomino"),
@@ -122,6 +124,7 @@ public class SeedFactory {
         patterns.put(SeedType.Bentline_U3x3, new BentlineU3x3());
         patterns.put(SeedType.Boxhat_RPentomino, new BoxhatRpPattern());
         patterns.put(SeedType.Bentline1_RPentomino, new Bentline1RpPattern());
+        patterns.put(SeedType.Bentline1_Plus, new Bentline1PlusPattern());
         patterns.put(SeedType.Bentline1m_RPentomino, new Bentline1mRpPattern());
         patterns.put(SeedType.BentlineMargin35_RPentomino, new BentlineMargin35Pattern());
         patterns.put(SeedType.Onebit_RPentomino, new OnebitRpPattern());
