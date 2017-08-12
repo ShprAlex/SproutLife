@@ -7,22 +7,44 @@
  *******************************************************************************/
 package com.sproutlife.model;
 
+/**
+ * This class is used to manage the time in the game.
+ * 
+ * @author Alex Shapiro
+ */
 public class GameClock {
-    int time;
-    
-    public GameClock() {
-        time = 0;
-    }
-   
-    public int getTime() {
-        return time;
-    }
-      
-    void increment() {
-        time++;
-    }
-    
-    void reset() {
-        this.time = 0;
-    }       
+	/**
+	 * Discrete time internal counter.
+	 */
+	private int time;
+
+	/**
+	 * Construction without parameters.
+	 */
+	public GameClock() {
+		time = 0;
+	}
+
+	/**
+	 * Time getter.
+	 * 
+	 * @return Discrete time value.
+	 */
+	public int getTime() {
+		return time;
+	}
+
+	/**
+	 * Increments discrete time value.
+	 */
+	void increment() {
+		time++;
+	}
+
+	/**
+	 * Resets discrete time value.
+	 */
+	void reset() {
+		this.time = 0;
+	}
 }
