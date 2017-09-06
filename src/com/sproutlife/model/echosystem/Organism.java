@@ -266,12 +266,12 @@ public class Organism {
     }
     
     public int getTimeOfDeath() {
-		return timeOfDeath;
-	}
-    
+        return timeOfDeath;
+    }
+
     public void setTimeOfDeath(int timeOfDeath) {
-		this.timeOfDeath = timeOfDeath;
-	}
+        this.timeOfDeath = timeOfDeath;
+    }
     
     public boolean equals(Organism t) {
         // TODO Auto-generated method stub

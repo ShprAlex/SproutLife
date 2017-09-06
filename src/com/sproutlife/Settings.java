@@ -28,38 +28,38 @@ public class Settings {
     public Settings() {
         settings = new HashMap<String, Object>();
         initSettings();
-	}
-    
+    }
+
     public void initSettings() {
         set(Settings.SEED_TYPE, SeedType.Bentline1_RPentomino.toString());
-        
+
         set(Settings.LIFE_MODE, "cooperative");
-        
-    	set(Settings.MUTATION_ENABLED, true);
-    	set(Settings.MUTATION_RATE, 6); //0-10
-    	
-    	set(Settings.MAX_LIFESPAN, 75);
-    	
+
+        set(Settings.MUTATION_ENABLED, true);
+        set(Settings.MUTATION_RATE, 6); //0-10
+
+        set(Settings.MAX_LIFESPAN, 75);
+
         set(Settings.CHILD_ONE_ENERGY, 0);
         set(Settings.CHILD_TWO_ENERGY, 0);
         set(Settings.CHILD_THREE_ENERGY, 2);
-        
+
         set(Settings.SPROUT_DELAYED_MODE, false);
 
     }
-    
+
     public void set(String s, Object o) {
-    	settings.put(s, o);
+        settings.put(s, o);
     }
-    
+
     public boolean getBoolean(String s) {
-    	return (Boolean) settings.get(s);
+        return (Boolean) settings.get(s);
     }
 
     public int getInt(String s) {
-    	return (Integer) settings.get(s);
+        return (Integer) settings.get(s);
     }
-    
+
     public String getString(String s) {
         return (String) settings.get(s);
     }

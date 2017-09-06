@@ -338,15 +338,15 @@ public class Stats {
     
     public void printChildEnergy() {
         printHistogram();
-       
+
         System.out.print(" Avg Life " + avgMaxLifespan);        
         int allEnergy = 0;                     
         int childSum = 0;
         for (int i=0;i<5;i++) {
-        	childSum +=sproutNumber[i];
+            childSum +=sproutNumber[i];
         }
         if (childSum>0) {
-        	System.out.print(" AVC: "+avgMaxLifespan*getEchosystem().getOrganisms().size()/childSum);
+            System.out.print(" AVC: "+avgMaxLifespan*getEchosystem().getOrganisms().size()/childSum);
         }
         System.out.print(" RM count: "+getRecentMutationCount(getEchosystem().getTime(),5000));
         System.out.print(" CE:");
@@ -355,28 +355,28 @@ public class Stats {
                 System.out.print(" 0");
                 continue;
             }
-            
+
             int e = childEnergy[i]*10/sproutNumber[i];
             if (i>0 && sproutNumber[i-1]>0 ) {
                 e-=(childEnergy[i-1]*10/sproutNumber[i-1]);
             }
             if(i==0) {
-            	allEnergy+=e;
+                allEnergy+=e;
             }
             else {
-            	if (sproutNumber[0]>0) {
-            		allEnergy+=e*sproutNumber[i]/sproutNumber[0];
-            	}
+                if (sproutNumber[0]>0) {
+                    allEnergy+=e*sproutNumber[i]/sproutNumber[0];
+                }
             }
             //childEnergy[0]*10/sproutNumber[0];
             //childEnergy[1]*10/sproutNumber[0]
             //childEnergy[0]*10*sproutNumber[1]/sproutNumber[0]/sproutNumber[0];
-            
+
             //childEnergy[0]*10;
             //childEnergy[1]*10]
             //childEnergy[0]*10*sproutNumber[1]/sproutNumber[0];
 
-            
+
             System.out.print(" "+e);
         }
         
@@ -415,26 +415,26 @@ public class Stats {
     }
     
     private int getRecentMutationCount(int fromAge, int toAge) {
-    	HashSet<Mutation> recentMutations = new HashSet<Mutation>();
-    	HashMap<Mutation,Integer> totalRM = new HashMap<Mutation,Integer>();
-    	
-    	for (Organism o: getEchosystem().getOrganisms()) {
-    	    int fromTime = getEchosystem().getTime()-fromAge;
-    	    int toTime = getEchosystem().getTime()-toAge;
-    	    for(Mutation m: o.getGenome().getRecentMutations(fromTime, toTime, o.lifespan)) {
-    	        recentMutations.add(m);
-    	        Integer mCount = totalRM.get(m);
-    	        if (mCount==null) {
-    	            mCount = 0;
-    	        }
-    	        mCount++;
-    	        totalRM.put(m, mCount);
-    	    }
-    	}
-    	int totalCount = 0;
-    	for (Integer mc : totalRM.values()) {
-    	    totalCount +=mc;
-    	}
+        HashSet<Mutation> recentMutations = new HashSet<Mutation>();
+        HashMap<Mutation,Integer> totalRM = new HashMap<Mutation,Integer>();
+
+        for (Organism o: getEchosystem().getOrganisms()) {
+            int fromTime = getEchosystem().getTime()-fromAge;
+            int toTime = getEchosystem().getTime()-toAge;
+            for(Mutation m: o.getGenome().getRecentMutations(fromTime, toTime, o.lifespan)) {
+                recentMutations.add(m);
+                Integer mCount = totalRM.get(m);
+                if (mCount==null) {
+                    mCount = 0;
+                }
+                mCount++;
+                totalRM.put(m, mCount);
+            }
+        }
+        int totalCount = 0;
+        for (Integer mc : totalRM.values()) {
+            totalCount +=mc;
+        }
         return totalCount;//recentMutations.size();
     }
     

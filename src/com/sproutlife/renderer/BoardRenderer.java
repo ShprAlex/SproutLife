@@ -233,11 +233,11 @@ public class BoardRenderer {
     }
 
 
-    private void paintCells(Graphics2D g) {	
+    private void paintCells(Graphics2D g) {
 
         Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
         for (Organism o : orgs) {
-            cellRenderer.paintCells(g, o);			
+            cellRenderer.paintCells(g, o);
         } 
     }
 
@@ -256,7 +256,7 @@ public class BoardRenderer {
 
         for (Organism o : orgs) {
             tailRenderer.paintTail(g, o);
-        }		
+        }
     }
 
     private void paintGenomes(Graphics2D g) {
