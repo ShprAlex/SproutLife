@@ -22,114 +22,114 @@ import com.sproutlife.model.step.GameStepListener;
  */
 public class GameModel {
 
-	private Echosystem echosystem;
+    private Echosystem echosystem;
 
-	private GameClock clock;
+    private GameClock clock;
 
-	private GameStep gameStep;
+    private GameStep gameStep;
 
-	private GameThread gameThread;
+    private GameThread gameThread;
 
-	private Settings settings;
+    private Settings settings;
 
-	private Stats stats;
+    private Stats stats;
 
-	/**
-	 * GameModel Constructor
-	 */
-	public GameModel(Settings settings, ReentrantReadWriteLock interactionLock) {
-		this.settings = settings;
-		this.clock = new GameClock();
-		echosystem = new Echosystem(clock);
-		gameStep = new GameStep(this);
-		gameThread = new GameThread(this, interactionLock);
+    /**
+     * GameModel Constructor
+     */
+    public GameModel(Settings settings, ReentrantReadWriteLock interactionLock) {
+        this.settings = settings;
+        this.clock = new GameClock();
+        echosystem = new Echosystem(clock);
+        gameStep = new GameStep(this);
+        gameThread = new GameThread(this, interactionLock);
 		stats = new Stats(this);
-	}
+    }
 
 	
-	public void performGameStep() {
-		incrementTime();
-		gameStep.perform();
-	}
-	public Echosystem getEchosystem() {
-		return echosystem;
-	}
-
-	public Board getBoard() {
-		return echosystem.getBoard();
+    public void performGameStep() {
+        incrementTime();
+        gameStep.perform();
+    }
+    public Echosystem getEchosystem() {
+        return echosystem;
 	}
 
-	public int getTime() {
-		return clock.getTime();
+    public Board getBoard() {
+        return echosystem.getBoard();
 	}
 
-	public GameClock getClock() {
-		return clock;
-	}
+    public int getTime() {
+        return clock.getTime();
+    }
 
-	private void incrementTime() {
-		clock.increment();
-	}
+    public GameClock getClock() {
+        return clock;
+    }
 
-	/**
-	 * Resets current game.
-	 */
-	public void resetGame() {
-		getEchosystem().resetCells();
-		getEchosystem().pruneEmptyOrganisms();
-		getEchosystem().clearRetiredOrgs();
-		getStats().reset();
-		getClock().reset();
-	}
+    private void incrementTime() {
+        clock.increment();
+    }
 
-	public Stats getStats() {
-		return stats;
-	}
+    /**
+     * Resets current game.
+     */
+    public void resetGame() {
+        getEchosystem().resetCells();
+        getEchosystem().pruneEmptyOrganisms();
+        getEchosystem().clearRetiredOrgs();
+        getStats().reset();
+        getClock().reset();
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
 	
-	public Settings getSettings() {
-		return settings;
+    public Settings getSettings() {
+        return settings;
+    }
+
+    /**
+     * Game play mode flag setter.
+     *
+     * @param playGame
+     *            True if the play mode is on, false otherwise.
+     */
+    public void setPlayGame(boolean playGame) {
+        gameThread.setPlayGame(playGame);
 	}
 
-	/**
-	 * Game play mode flag setter.
-	 *
-	 * @param playGame
-	 *            True if the play mode is on, false otherwise.
-	 */
-	public void setPlayGame(boolean playGame) {
-		gameThread.setPlayGame(playGame);
-	}
+    public GameThread getGameThread() {
+        return gameThread;
+    }
 
-	public GameThread getGameThread() {
-		return gameThread;
-	}
-
-	/**
-	 * Checks whether or not a game is played.
-	 *
-	 * @return boolean value.
-	 */
-	public boolean getPlayGame() {
-		return gameThread.getPlayGame();
-	}
+    /**
+     * Checks whether or not a game is played.
+     *
+     * @return boolean value.
+     */
+    public boolean getPlayGame() {
+        return gameThread.getPlayGame();
+        }
 	
-	public void setGameStepListener(GameStepListener l) {
-		if (gameThread == null) {
-			return;
-		}
+    public void setGameStepListener(GameStepListener l) {
+        if (gameThread == null) {
+            return;
+        }
 
-		gameThread.setGameStepListener(l);
-		gameStep.setGameStepListener(l);
-	}
+        gameThread.setGameStepListener(l);
+        gameStep.setGameStepListener(l);
+    }
 
-	/**
-	 * Sets settings with the following parameters.
-	 *
-	 * @param s
-	 * @param o
-	 */
-	public void set(String key, Object value) {
-		getSettings().set(key, value);
-	}
+    /**
+     * Sets settings with the following parameters.
+     *
+     * @param s
+     * @param o
+     */
+    public void set(String key, Object value) {
+        getSettings().set(key, value);
+    }
 
 }
