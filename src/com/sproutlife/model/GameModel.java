@@ -43,21 +43,21 @@ public class GameModel {
         echosystem = new Echosystem(clock);
         gameStep = new GameStep(this);
         gameThread = new GameThread(this, interactionLock);
-		stats = new Stats(this);
+        stats = new Stats(this);
     }
 
-	
+
     public void performGameStep() {
         incrementTime();
         gameStep.perform();
     }
     public Echosystem getEchosystem() {
         return echosystem;
-	}
+    }
 
     public Board getBoard() {
         return echosystem.getBoard();
-	}
+    }
 
     public int getTime() {
         return clock.getTime();
@@ -85,7 +85,7 @@ public class GameModel {
     public Stats getStats() {
         return stats;
     }
-	
+
     public Settings getSettings() {
         return settings;
     }
@@ -98,7 +98,7 @@ public class GameModel {
      */
     public void setPlayGame(boolean playGame) {
         gameThread.setPlayGame(playGame);
-	}
+    }
 
     public GameThread getGameThread() {
         return gameThread;
@@ -112,7 +112,7 @@ public class GameModel {
     public boolean getPlayGame() {
         return gameThread.getPlayGame();
         }
-	
+
     public void setGameStepListener(GameStepListener l) {
         if (gameThread == null) {
             return;
