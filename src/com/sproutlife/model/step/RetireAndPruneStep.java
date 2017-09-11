@@ -39,53 +39,52 @@ public class RetireAndPruneStep extends Step {
     }
         
     public void perform() {
-    	
-    	//pruneInitialSpinners(); 
-    	retireOrganisms() ;    	
-    	pruneRetiredOrganisms();    	
-    	pruneEmptyOrganisms();
-    	pruneParentTree();
+        //pruneInitialSpinners(); 
+        retireOrganisms() ;
+        pruneRetiredOrganisms();
+        pruneEmptyOrganisms();
+        pruneParentTree();
     }
     
     /*
      * Prune early organisms that only go in circles without reproducing
      */
     private void pruneInitialSpinners() {
-    	if (getTime()>10000) {
-    		return;
-    	}
-      	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
-    	pruneOrgs.addAll(getEchosystem().getOrganisms());
-    	for (Organism org : pruneOrgs) {
-    		Organism parent = org.getParent();
-    		boolean hasCousins = false;
-    		for (int i=0;i<15 && parent!=null;i++) {    			
-    			if (parent.getChildren().size()>1) {
-    				hasCousins = true;
-    			}
-    			parent = parent.getParent();
-    		}
-    		if (!hasCousins && parent!=null) {
-    			getEchosystem().removeOrganism(org);
-    		}
-    	}
-    	
+        if (getTime()>10000) {
+            return;
+        }
+        HashSet<Organism> pruneOrgs = new HashSet<Organism>();
+        pruneOrgs.addAll(getEchosystem().getOrganisms());
+        for (Organism org : pruneOrgs) {
+            Organism parent = org.getParent();
+            boolean hasCousins = false;
+            for (int i=0;i<15 && parent!=null;i++) {
+                if (parent.getChildren().size()>1) {
+                    hasCousins = true;
+                }
+                parent = parent.getParent();
+            }
+            if (!hasCousins && parent!=null) {
+                getEchosystem().removeOrganism(org);
+            }
+        }
+
     }
     
     public void retireOrganisms() {
-    	HashSet<Organism> retireOrgs = new HashSet<Organism>();
-    	retireOrgs.addAll(getOrganisms());
-    	for (Organism o : retireOrgs) {
-    	    if (o.getAge()>Math.min(o.lifespan,getSettings().getInt(Settings.MAX_LIFESPAN))) {
-    	        getEchosystem().retireOrganism(o);
-    	    }
-    	}
+        HashSet<Organism> retireOrgs = new HashSet<Organism>();
+        retireOrgs.addAll(getOrganisms());
+        for (Organism o : retireOrgs) {
+            if (o.getAge()>Math.min(o.lifespan,getSettings().getInt(Settings.MAX_LIFESPAN))) {
+                getEchosystem().retireOrganism(o);
+            }
+        }
     }
     
     public void pruneRetiredOrganisms() {
-    	HashSet<Organism> pruneOrgs = new HashSet<Organism>();
-    	pruneOrgs.addAll(getEchosystem().getRetiredOrganisms());
-    	for (Organism org : pruneOrgs) {    	
+        HashSet<Organism> pruneOrgs = new HashSet<Organism>();
+        pruneOrgs.addAll(getEchosystem().getRetiredOrganisms());
+        for (Organism org : pruneOrgs) {
             if (org.getTimeOfDeath()<getTime()- getEchosystem().getRetirementTimeSpan()) {
                 getEchosystem().removeRetired(org);
             }

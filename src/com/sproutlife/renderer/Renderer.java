@@ -15,7 +15,7 @@ public abstract class Renderer {
     protected BoardRenderer boardRenderer;
 
     public Renderer(GameModel gameModel, BoardRenderer boardRenderer) {
-        this.gameModel = gameModel;	  
+        this.gameModel = gameModel;
         this.boardRenderer = boardRenderer;
     }
 

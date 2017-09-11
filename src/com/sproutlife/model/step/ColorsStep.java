@@ -21,8 +21,7 @@ public class ColorsStep extends Step {
     }
         
     public void perform() {
-    	    	
-    	splitColors();
+        splitColors();
     }
     
     private void splitColors() {

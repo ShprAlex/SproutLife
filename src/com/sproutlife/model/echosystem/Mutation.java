@@ -42,13 +42,13 @@ public class Mutation extends Object {
     }
     
     @Override
-    public int hashCode() {    	
-    	return location.hashCode();
+    public int hashCode() {
+        return location.hashCode();
     }
     
     @Override
     public boolean equals(Object arg2) {
-    	Mutation m2 = (Mutation) arg2;
-    	return getLocation().equals(m2.getLocation()) && getOrganismAge()==m2.getOrganismAge();
+        Mutation m2 = (Mutation) arg2;
+        return getLocation().equals(m2.getLocation()) && getOrganismAge()==m2.getOrganismAge();
     }
 }

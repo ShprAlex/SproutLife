@@ -18,7 +18,7 @@ public class BentlineMargin35Pattern extends SeedSproutPattern {
     public BentlineMargin35Pattern() {        
         {                    
             this.seedPattern = new BitPattern(new int[][]                                             
-            	   {{0,0,0,0,0},
+                   {{0,0,0,0,0},
                     {0,1,1,0,0},                         
                     {0,0,0,1,0}},
                   true);

@@ -37,7 +37,7 @@ public abstract class Step {
     }
     
     public Collection<Organism> getOrganisms() {
-    	return getEchosystem().getOrganisms();
+        return getEchosystem().getOrganisms();
     }
     
     public Board getBoard() {
@@ -49,7 +49,7 @@ public abstract class Step {
     }        
     
     public Settings getSettings() {
-    	return getGameModel().getSettings();
+        return getGameModel().getSettings();
     }
     
     public abstract void perform();

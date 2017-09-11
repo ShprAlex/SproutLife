@@ -65,12 +65,12 @@ public class SproutStep extends Step {
     }
         
     public int getChildEnergy(Organism org, int childNumber) {
-    	switch (childNumber) {
-    		case 1: return getSettings().getInt(Settings.CHILD_ONE_ENERGY);
-    		case 2: return getSettings().getInt(Settings.CHILD_TWO_ENERGY);
-    		case 3: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
-    		default: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
-    	}
+        switch (childNumber) {
+            case 1: return getSettings().getInt(Settings.CHILD_ONE_ENERGY);
+            case 2: return getSettings().getInt(Settings.CHILD_TWO_ENERGY);
+            case 3: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
+            default: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
+        }
     }      
     
     public void perform() {
@@ -102,11 +102,11 @@ public class SproutStep extends Step {
     }
         
     private int seedDistSq(Seed s, Organism o) {
-    	return (s.getSproutCenter().x-o.x)*(s.getSproutCenter().x-o.x)+(s.getSproutCenter().y-o.y)*(s.getSproutCenter().y-o.y);
+        return (s.getSproutCenter().x-o.x)*(s.getSproutCenter().x-o.x)+(s.getSproutCenter().y-o.y)*(s.getSproutCenter().y-o.y);
     }
-    
+
     private int innerProduct(Seed s1, Seed s2, Organism o) {
-    	return (s1.getSproutCenter().x-o.x)*(s1.getSproutCenter().x-s2.getSproutCenter().x) - (s1.getSproutCenter().y-o.y)*(s1.getSproutCenter().y-s2.getSproutCenter().y);
+        return (s1.getSproutCenter().x-o.x)*(s1.getSproutCenter().x-s2.getSproutCenter().x) - (s1.getSproutCenter().y-o.y)*(s1.getSproutCenter().y-s2.getSproutCenter().y);
     }
     
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {
@@ -130,9 +130,9 @@ public class SproutStep extends Step {
                         //Sprout the seeds closer first, there might not be energy for all seeds to sprout.
                         //Smaller organisms look better
                         if (d1==d2) {
-                        	int ip = innerProduct(s1,s2,fo);
-                        	//s1.getPosition().x-fo.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-fo.y)*(s1.getPosition().y-s2.getPosition().y);
-                        	return ip;                     
+                            int ip = innerProduct(s1,s2,fo);
+                            //s1.getPosition().x-fo.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-fo.y)*(s1.getPosition().y-s2.getPosition().y);
+                            return ip;                     
                         }                        
                         return d1-d2;
                     }
@@ -140,12 +140,12 @@ public class SproutStep extends Step {
                 //int q = 1;
                 
                 Seed s1 = seedList.get(0);
-            	Seed s2 = seedList.get(1);
-            	if (seedDistSq(s1, fo)==seedDistSq(s2, fo)) {
-            		if (innerProduct(s1,s2,fo)==0) {
-            			continue;
-            		}
-            	}
+                Seed s2 = seedList.get(1);
+                if (seedDistSq(s1, fo)==seedDistSq(s2, fo)) {
+                    if (innerProduct(s1,s2,fo)==0) {
+                        continue;
+                    }
+                }
             }            
 
             for (Seed s : seedList) {
@@ -160,10 +160,10 @@ public class SproutStep extends Step {
                
                int childEnergy;
                if (o.getChildren()!=null) {
-            	   childEnergy = getChildEnergy(o, o.getChildren().size()+1);
+                   childEnergy = getChildEnergy(o, o.getChildren().size()+1);
                }
                else {
-            	   childEnergy = getChildEnergy(o, 1);
+                   childEnergy = getChildEnergy(o, 1);
                }
                /*
                if (o.getKind()==0) {

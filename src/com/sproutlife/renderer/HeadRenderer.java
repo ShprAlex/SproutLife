@@ -17,7 +17,7 @@ import com.sproutlife.model.echosystem.Organism;
 public class HeadRenderer extends Renderer {
 
     public HeadRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
-        super(gameModel, boardRenderer);		
+        super(gameModel, boardRenderer);
     }
 
     public void paintHead(Graphics2D g, Organism o) {
