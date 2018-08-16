@@ -36,7 +36,7 @@ public class CooperativeLife extends LifeMode {
             return null;
         }
         
-        if (neighbors.size()<3 || neighbors.size()>6) {
+        if (neighbors.size() != 3) {
             return null;
         }
 
@@ -50,13 +50,8 @@ public class CooperativeLife extends LifeMode {
             }
         }
         if (singleOrg) {
-            if (neighbors.size()==3) {
-                Cell bornCell = getEchosystem().createCell(i,j,neighbors);
-                return bornCell;
-            }
-            else {
-                return null;
-            }
+            Cell bornCell = getEchosystem().createCell(i,j,neighbors);
+            return bornCell;
         }        
         
         return null;
