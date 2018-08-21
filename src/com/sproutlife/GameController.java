@@ -17,8 +17,8 @@ import com.sproutlife.panel.PanelController;
 public class GameController {
     
     private static final int    appMajorVersion    = 1;
-    private static final int    appMinorVersion    = 0;
-    private static final int    appRevision        = 8;
+    private static final int    appMinorVersion    = 1;
+    private static final int    appRevision        = 0;
     
     private GameModel gameModel;
     
