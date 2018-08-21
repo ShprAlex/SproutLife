@@ -16,7 +16,7 @@ import com.sproutlife.model.step.GameStep;
 import com.sproutlife.model.step.GameStepListener;
 
 /**
- * This is a class used to manage the game model essentials.
+ * GameModel contains the game state
  *
  * @author Alex Shapiro
  */
@@ -34,9 +34,6 @@ public class GameModel {
 
     private Stats stats;
 
-    /**
-     * GameModel Constructor
-     */
     public GameModel(Settings settings, ReentrantReadWriteLock interactionLock) {
         this.settings = settings;
         this.clock = new GameClock();
@@ -46,11 +43,11 @@ public class GameModel {
         stats = new Stats(this);
     }
 
-
     public void performGameStep() {
         incrementTime();
         gameStep.perform();
     }
+
     public Echosystem getEchosystem() {
         return echosystem;
     }
@@ -90,12 +87,6 @@ public class GameModel {
         return settings;
     }
 
-    /**
-     * Game play mode flag setter.
-     *
-     * @param playGame
-     *            True if the play mode is on, false otherwise.
-     */
     public void setPlayGame(boolean playGame) {
         gameThread.setPlayGame(playGame);
     }
@@ -111,7 +102,7 @@ public class GameModel {
      */
     public boolean getPlayGame() {
         return gameThread.getPlayGame();
-        }
+    }
 
     public void setGameStepListener(GameStepListener l) {
         if (gameThread == null) {
@@ -122,12 +113,6 @@ public class GameModel {
         gameStep.setGameStepListener(l);
     }
 
-    /**
-     * Sets settings with the following parameters.
-     *
-     * @param s
-     * @param o
-     */
     public void set(String key, Object value) {
         getSettings().set(key, value);
     }
