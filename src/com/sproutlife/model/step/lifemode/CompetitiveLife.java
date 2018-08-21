@@ -9,6 +9,7 @@ package com.sproutlife.model.step.lifemode;
 
 import java.util.ArrayList;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
@@ -17,22 +18,22 @@ public class CompetitiveLife extends LifeMode {
     
     public CompetitiveLife(GameModel gameModel) {
         super(gameModel);
-        // TODO Auto-generated constructor stub
     }
 
-    public int getCompare(Cell c) {
-        Organism o = c.getOrganism();
-        int val = o.getAttributes().getTerritorySize();
-        //int val = o.getParent().getAttributes().cellSum;
-        return val;
+    public double getCompare(Cell c1, Cell c2) {
+        Organism o1 = c1.getOrganism();
+        Organism o2 = c2.getOrganism();
+        if (o1.getParent()!=null && o2.getParent()!=null) {
+            return o1.getParent().getAttributes().cellSum - o2.getParent().getAttributes().cellSum;
+        }
+        return o1.getAttributes().cellSum - o2.getAttributes().cellSum;
     }
     
-    int counter = 0;
     public void updateCells() {
         for (Organism o : getEchosystem().getOrganisms()) {
             o.getAttributes().cellSum += o.getCells().size();
         }
-        
+
         ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
         ArrayList<Cell> deadCells = new ArrayList<Cell>();   
                               
@@ -92,45 +93,28 @@ public class CompetitiveLife extends LifeMode {
         int friendCount = 0;
 
         for (Cell neighbor : neighbors) {            
-            //if (me.getOrganism().isFamily(neighbor.getOrganism(),1)) {
             if (me.getOrganism() == neighbor.getOrganism()) {
                 friendCount++;
             }
-            else {
-                if (neighbor.getOrganism().getParent()==me.getOrganism()) {
-                    return null;
-                }
-                else if (neighbor.getOrganism()!=me.getOrganism() &&getCompare(me)<getCompare(neighbor)) {
-                    me.getOrganism().getAttributes().collisionCount++;
-                    return null;
-                }
+            else if (getCompare(me, neighbor)<0) {
+                me.getOrganism().getAttributes().collisionCount++;
+                return null;
             }
         }
 
         if ((friendCount == 2 || friendCount==3)) {
-            //if(getBoard().hasBiggerNeighbor25(i, j, me.getOrganism())) {
-            //    return null;
-            //}
-            //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
-            
             for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {
-                if (neighbor.getOrganism().getParent()==me.getOrganism()) {
-                    return null;
-                }
-                else if (neighbor.getOrganism()!=me.getOrganism() && getCompare(me)<getCompare(neighbor)) {
+                if (neighbor.getOrganism()!=me.getOrganism() && neighbor.getOrganism()!=me.getOrganism().getParent()
+                        && getCompare(me, neighbor)<0) {
                     me.getOrganism().getAttributes().collisionCount++;
                     return null;
-
                 }
             }
             me.age+=1;
-                           
             return me;
-
         }
 
         return null;
-        
     }
 
     public Cell getBorn(ArrayList<Cell> neighbors, int i, int j) {
@@ -141,24 +125,20 @@ public class CompetitiveLife extends LifeMode {
         if (neighbors.size()!=3 ) {
             return null;
         }
+
+        Organism checkSingleOrg = neighbors.get(0).getOrganism();
         
         //Quick check to see if all neighbors are from the same organism
-        Organism checkSingleOrg = neighbors.get(0).getOrganism();
-
         for (Cell cell : neighbors) {
             if (cell.getOrganism() != checkSingleOrg) {
                 return null;
             }
         }
-
         Cell bornCell = getEchosystem().createCell(i,j,neighbors);
-        //for (Cell  neighbor : getBoard().getExtraNeighbors(i, j, 2)) {
 
         for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {
-            if (neighbor.getOrganism().getParent()==checkSingleOrg) {
-                return null;
-            }
-            else if (neighbor.getOrganism()!=bornCell.getOrganism() && getCompare(bornCell)<getCompare(neighbor)) {
+            if (neighbor.getOrganism()!=bornCell.getOrganism() && neighbor.getOrganism()!=bornCell.getOrganism().getParent()
+                    && getCompare(bornCell, neighbor)<0) {
                 return null;
             }
         }
