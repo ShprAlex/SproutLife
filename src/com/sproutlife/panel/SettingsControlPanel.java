@@ -27,9 +27,9 @@ public class SettingsControlPanel extends JPanel {
 
     PanelController panelController;
     private JSpinner maxLifespanSpinner;
-    private JSpinner childOneEnergySpinner;
-    private JSpinner childTwoEnergySpinner;
-    private JSpinner childThreeEnergySpinner;
+    private JSpinner childOneParentAgeSpinner;
+    private JSpinner childTwoParentAgeSpinner;
+    private JSpinner childThreeParentAgeSpinner;
     private JLabel lblSproutMode;
     private JPanel panel;
     private JRadioButton rdbtnFunctional;
@@ -56,8 +56,8 @@ public class SettingsControlPanel extends JPanel {
         gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
         setLayout(gridBagLayout);
 
-        childOneEnergySpinner = new JSpinner();
-        childOneEnergySpinner.setPreferredSize(new Dimension(50, 20));
+        childOneParentAgeSpinner = new JSpinner();
+        childOneParentAgeSpinner.setPreferredSize(new Dimension(50, 20));
 
         ButtonGroup lifeModeButtonGroup = new ButtonGroup();
 
@@ -79,7 +79,7 @@ public class SettingsControlPanel extends JPanel {
         gbc_maxLifespanSpinner.gridy = 1;
         add(maxLifespanSpinner, gbc_maxLifespanSpinner);
 
-        JLabel childOneEnergyLabel = new JLabel("Min childbearing age");
+        JLabel childOneEnergyLabel = new JLabel("Min age for 1st child");
         GridBagConstraints gbc_childOneEnergyLabel = new GridBagConstraints();
         gbc_childOneEnergyLabel.anchor = GridBagConstraints.WEST;
         gbc_childOneEnergyLabel.insets = new Insets(0, 0, 5, 5);
@@ -92,12 +92,12 @@ public class SettingsControlPanel extends JPanel {
         gbc_childOneEnergySpinner.insets = new Insets(0, 0, 5, 5);
         gbc_childOneEnergySpinner.gridx = 2;
         gbc_childOneEnergySpinner.gridy = 3;
-        add(childOneEnergySpinner, gbc_childOneEnergySpinner);
+        add(childOneParentAgeSpinner, gbc_childOneEnergySpinner);
 
-        childTwoEnergySpinner = new JSpinner();
-        childTwoEnergySpinner.setPreferredSize(new Dimension(50, 20));
+        childTwoParentAgeSpinner = new JSpinner();
+        childTwoParentAgeSpinner.setPreferredSize(new Dimension(50, 20));
 
-        JLabel childTwoEnergyLabel = new JLabel("Min 1st - 2nd child age");
+        JLabel childTwoEnergyLabel = new JLabel("Min age for 2nd child");
         GridBagConstraints gbc_childTwoEnergyLabel = new GridBagConstraints();
         gbc_childTwoEnergyLabel.anchor = GridBagConstraints.WEST;
         gbc_childTwoEnergyLabel.insets = new Insets(0, 0, 5, 5);
@@ -110,12 +110,12 @@ public class SettingsControlPanel extends JPanel {
         gbc_childTwoEnergySpinner.insets = new Insets(0, 0, 5, 5);
         gbc_childTwoEnergySpinner.gridx = 2;
         gbc_childTwoEnergySpinner.gridy = 4;
-        add(childTwoEnergySpinner, gbc_childTwoEnergySpinner);
+        add(childTwoParentAgeSpinner, gbc_childTwoEnergySpinner);
 
-        childThreeEnergySpinner = new JSpinner();
-        childThreeEnergySpinner.setPreferredSize(new Dimension(50, 20));
+        childThreeParentAgeSpinner = new JSpinner();
+        childThreeParentAgeSpinner.setPreferredSize(new Dimension(50, 20));
 
-        JLabel childThreeEnergyLabel = new JLabel("Min age btw ++ children");
+        JLabel childThreeEnergyLabel = new JLabel("Min age for 3+ chilren");
         GridBagConstraints gbc_childThreeEnergyLabel = new GridBagConstraints();
         gbc_childThreeEnergyLabel.anchor = GridBagConstraints.WEST;
         gbc_childThreeEnergyLabel.insets = new Insets(0, 0, 5, 5);
@@ -128,7 +128,7 @@ public class SettingsControlPanel extends JPanel {
         gbc_childThreeEnergySpinner.anchor = GridBagConstraints.NORTH;
         gbc_childThreeEnergySpinner.gridx = 2;
         gbc_childThreeEnergySpinner.gridy = 5;
-        add(childThreeEnergySpinner, gbc_childThreeEnergySpinner);
+        add(childThreeParentAgeSpinner, gbc_childThreeEnergySpinner);
 
         lblMutationRate = new JLabel("Mutation Rate (0-10)");
         GridBagConstraints gbc_lblMutationRate = new GridBagConstraints();
@@ -199,14 +199,14 @@ public class SettingsControlPanel extends JPanel {
         return maxLifespanSpinner;
     }
 
-    public JSpinner getChildOneEnergySpinner() {
-        return childOneEnergySpinner;
+    public JSpinner getChildOneParentAgeSpinner() {
+        return childOneParentAgeSpinner;
     }
-    public JSpinner getChildTwoEnergySpinner() {
-        return childTwoEnergySpinner;
+    public JSpinner getChildTwoParentAgeSpinner() {
+        return childTwoParentAgeSpinner;
     }
-    public JSpinner getChildThreeEnergySpinner() {
-        return childThreeEnergySpinner;
+    public JSpinner getChildThreeParentAgeSpinner() {
+        return childThreeParentAgeSpinner;
     }
 
     public JRadioButton getRdbtnVisual() {

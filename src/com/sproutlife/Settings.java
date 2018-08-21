@@ -18,9 +18,9 @@ public class Settings {
     public static String MUTATION_ENABLED = "mutationEnabled";
     public static String MUTATION_RATE = "mutationRate";
     public static String MAX_LIFESPAN = "maxLifespan";
-    public static String CHILD_ONE_ENERGY = "childOneEnergy";
-    public static String CHILD_TWO_ENERGY = "childTwoEnergy";
-    public static String CHILD_THREE_ENERGY = "childThreeEnergy";
+    public static String CHILD_ONE_PARENT_AGE = "childOneParentAge";
+    public static String CHILD_TWO_PARENT_AGE = "childTwoParentAge";
+    public static String CHILD_THREE_PARENT_AGE = "childThreeParentAge";
     //Determines whether seeds are sprouted immediately upon detection,
     //Or a step later so seed cells can be displayed before the sprout is.
     public static String SPROUT_DELAYED_MODE = "sproutDelayedMode";
@@ -40,9 +40,9 @@ public class Settings {
 
         set(Settings.MAX_LIFESPAN, 75);
 
-        set(Settings.CHILD_ONE_ENERGY, 0);
-        set(Settings.CHILD_TWO_ENERGY, 0);
-        set(Settings.CHILD_THREE_ENERGY, 2);
+        set(Settings.CHILD_ONE_PARENT_AGE, 0);
+        set(Settings.CHILD_TWO_PARENT_AGE, 0);
+        set(Settings.CHILD_THREE_PARENT_AGE, 0);
 
         set(Settings.SPROUT_DELAYED_MODE, false);
 

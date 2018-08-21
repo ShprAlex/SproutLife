@@ -63,22 +63,9 @@ public class SproutStep extends Step {
     public int getSeedBorder() {
         return seedBorder;
     }
-        
-    public int getChildEnergy(Organism org, int childNumber) {
-        switch (childNumber) {
-            case 1: return getSettings().getInt(Settings.CHILD_ONE_ENERGY);
-            case 2: return getSettings().getInt(Settings.CHILD_TWO_ENERGY);
-            case 3: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
-            default: return getSettings().getInt(Settings.CHILD_THREE_ENERGY);
-        }
-    }      
     
     public void perform() {
         this.setSeedType(getSettings().getString(Settings.SEED_TYPE));
-        
-        for (Organism o : getEchosystem().getOrganisms()) {
-            o.getAttributes().energy = o.getAttributes().energy +1;
-        }
         
         if (getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE)) {                        
             
@@ -95,58 +82,47 @@ public class SproutStep extends Step {
             
             sproutSeeds(seeds);
         }
-        
+
         if (getEchosystem().getOrganisms().size()<12) {
             sproutRandomSeed();
         }
     }
-        
-    private int seedDistSq(Seed s, Organism o) {
-        return (s.getSproutCenter().x-o.x)*(s.getSproutCenter().x-o.x)+(s.getSproutCenter().y-o.y)*(s.getSproutCenter().y-o.y);
+
+    public int getMinParentAge(Organism org, int childNumber) {
+        switch (childNumber) {
+            case 1: return getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE);
+            case 2: return getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE);
+            case 3: return getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE);
+            default: return 0;
+        }
     }
 
-    private int innerProduct(Seed s1, Seed s2, Organism o) {
-        return (s1.getSproutCenter().x-o.x)*(s1.getSproutCenter().x-s2.getSproutCenter().x) - (s1.getSproutCenter().y-o.y)*(s1.getSproutCenter().y-s2.getSproutCenter().y);
+    public boolean checkMinAgeToHaveChildren(Organism org, int seedCount) {
+        int childNumberToBe = seedCount;
+        if (org.getChildren()!=null) {
+            childNumberToBe += org.getChildren().size();
+        }
+
+        // for loop in case user set min age for 1 child > min age for 2 children
+        for (int n = 1; n <= childNumberToBe && n <=3; n++) {
+            if (org.getAge()+1<getMinParentAge(org,n)) {
+                return false;
+            }
+        }
+        return true;
     }
-    
+
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {
-        //Math.max(10,getEchosystem().getOrganisms().size()/10);        
         
         for (Organism o: seeds.keySet()) {
             if(!o.isAlive()) {
                 continue;
             }
             ArrayList<Seed> seedList = seeds.get(o);
-            if (seedList.size()>1) {
-                final Organism fo = o;
-                Collections.sort(seedList,new Comparator<Seed>() {
-                    @Override
-                    public int compare(Seed s1, Seed s2) {
-                        
-                        //int d1 = (s1.getPosition().x-fo.x)*(s1.getPosition().x-fo.x)+(s1.getPosition().y-fo.y)*(s1.getPosition().y-fo.y);
-                        //int d2 = (s2.getPosition().x-fo.x)*(s2.getPosition().x-fo.x)+(s2.getPosition().y-fo.y)*(s2.getPosition().y-fo.y);
-                        int d1 = seedDistSq(s1, fo);
-                        int d2 = seedDistSq(s2, fo);
-                        //Sprout the seeds closer first, there might not be energy for all seeds to sprout.
-                        //Smaller organisms look better
-                        if (d1==d2) {
-                            int ip = innerProduct(s1,s2,fo);
-                            //s1.getPosition().x-fo.x)*(s1.getPosition().x-s2.getPosition().x) - (s1.getPosition().y-fo.y)*(s1.getPosition().y-s2.getPosition().y);
-                            return ip;                     
-                        }                        
-                        return d1-d2;
-                    }
-                });
-                //int q = 1;
-                
-                Seed s1 = seedList.get(0);
-                Seed s2 = seedList.get(1);
-                if (seedDistSq(s1, fo)==seedDistSq(s2, fo)) {
-                    if (innerProduct(s1,s2,fo)==0) {
-                        continue;
-                    }
-                }
-            }            
+
+            if (!checkMinAgeToHaveChildren(o, seedList.size())) {
+                continue;
+            }
 
             for (Seed s : seedList) {
                Point seedOnPosition = s.getSeedOnPosition();
@@ -155,51 +131,18 @@ public class SproutStep extends Step {
                
                if (c==null) {
                    //Should almost never happen, only if seeds overlapped.
-                   //continue;
+                   continue;
                }
                
-               int childEnergy;
-               if (o.getChildren()!=null) {
-                   childEnergy = getChildEnergy(o, o.getChildren().size()+1);
-               }
-               else {
-                   childEnergy = getChildEnergy(o, 1);
-               }
-               /*
-               if (o.getKind()==0) {
-                   Organism infector = o;
-                   
-                   for (int i =0;i<7;i++) {
-                       if (infector.bornFromInfected) {
-                           break;
-                       }
-                       else {
-                           if (infector.getParent()!=null) {
-                               infector= infector.getParent();
-                           }
-                       }
-                   }
-                   if (!infector.bornFromInfected && infector.getParent()!=null) { 
-                       continue;
-                   }
-               }
-               */
+               sproutSeed(s, o);
                
-               //if (o.getParent()==null || Math.abs(Math.abs(o.getParent().x-s.getPosition().x)-Math.abs(o.getParent().y-s.getPosition().y))>4) {
-                   if (o.getId()==0 || o.getAttributes().energy>=childEnergy) {
-                       
-                       sproutSeed(s, o);
-                       
-                       int childCount = o.getChildren().size()-1;
+               // update stats
+               int childCount = o.getChildren().size()-1;
+               if(childCount>=0&&getTime()>100&&childCount<20) { //sproutSeed() above may have failed
+                   getStats().childEnergy[childCount]+=o.getAge();
+                   getStats().sproutNumber[childCount]++;
+               }
 
-                       o.getAttributes().energy = 0;
-                       
-                       if(childCount>=0&&getTime()>100&&childCount<20) { //sproutSeed() above may have failed
-                           getStats().childEnergy[childCount]+=o.getAge();
-                           getStats().sproutNumber[childCount]++;
-                       }
-                   }
-               //}
                
             }
         }
@@ -349,6 +292,7 @@ public class SproutStep extends Step {
                 }
             }
         }
+
         for (Cell c: seedCells) {
             c.setMarkedAsSeed(true);
         }

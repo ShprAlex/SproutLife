@@ -30,9 +30,6 @@ public class OrgAttributes {
     int territoryRadius = 0;
     public int cellSum = 0;
     
-    //energy is used to track whether the organism's seeds will sprout.
-    public int energy = 0;
-    
     public int maxCells;
     public int parentAgeAtBirth;
     public int birthOrder;

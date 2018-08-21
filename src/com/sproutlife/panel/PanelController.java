@@ -218,12 +218,12 @@ public class PanelController {
     private void initSettingsControlPanel() {
         getSettingsControlPanel().getMaxLifespanSpinner().setValue(
                 getSettings().getInt(Settings.MAX_LIFESPAN));
-        getSettingsControlPanel().getChildOneEnergySpinner().setValue(
-                getSettings().getInt(Settings.CHILD_ONE_ENERGY));
-        getSettingsControlPanel().getChildTwoEnergySpinner().setValue(
-                getSettings().getInt(Settings.CHILD_TWO_ENERGY));
-        getSettingsControlPanel().getChildThreeEnergySpinner().setValue(
-                getSettings().getInt(Settings.CHILD_THREE_ENERGY));
+        getSettingsControlPanel().getChildOneParentAgeSpinner().setValue(
+                getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE));
+        getSettingsControlPanel().getChildTwoParentAgeSpinner().setValue(
+                getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE));
+        getSettingsControlPanel().getChildThreeParentAgeSpinner().setValue(
+                getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
         
         getSettingsControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
@@ -405,21 +405,21 @@ public class PanelController {
             }
         });
         
-        getSettingsControlPanel().getChildOneEnergySpinner().addChangeListener(new ChangeListener() {
+        getSettingsControlPanel().getChildOneParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                getSettings().set(Settings.CHILD_ONE_ENERGY,((JSpinner) arg0.getSource()).getValue());
+                getSettings().set(Settings.CHILD_ONE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getSettingsControlPanel().getChildTwoEnergySpinner().addChangeListener(new ChangeListener() {
+        getSettingsControlPanel().getChildTwoParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                getSettings().set(Settings.CHILD_TWO_ENERGY,((JSpinner) arg0.getSource()).getValue());
+                getSettings().set(Settings.CHILD_TWO_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getSettingsControlPanel().getChildThreeEnergySpinner().addChangeListener(new ChangeListener() {
+        getSettingsControlPanel().getChildThreeParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                getSettings().set(Settings.CHILD_THREE_ENERGY,((JSpinner) arg0.getSource()).getValue());
+                getSettings().set(Settings.CHILD_THREE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
