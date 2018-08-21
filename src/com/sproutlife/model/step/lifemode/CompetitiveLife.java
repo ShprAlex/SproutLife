@@ -33,10 +33,6 @@ public class CompetitiveLife extends LifeMode {
     public void updateCells() {
         isStronglyCompetitive = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
 
-        for (Organism o : getEchosystem().getOrganisms()) {
-            o.getAttributes().cellSum += o.getCells().size();
-        }
-
         ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
         ArrayList<Cell> deadCells = new ArrayList<Cell>();   
                               

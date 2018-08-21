@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
+import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.step.lifemode.CompetitiveLife;
 import com.sproutlife.model.step.lifemode.CooperativeLife;
 import com.sproutlife.model.step.lifemode.FriendlyLife;
@@ -36,6 +37,11 @@ public class LifeStep extends Step {
     public void perform() {
         initStats();
         updateLifeMode();
+
+        for (Organism o : getEchosystem().getOrganisms()) {
+            o.getAttributes().cellSum += o.getCells().size();
+        }
+
         if (lifeMode == competitiveLife) {
             ((CompetitiveLife) competitiveLife).updateCells();
         }
@@ -112,7 +118,7 @@ public class LifeStep extends Step {
 
     }     
     
-    private void initStats() {                
+    private void initStats() {
         getStats().born =0;
         getStats().die1 =0;
         getStats().die2 =0;

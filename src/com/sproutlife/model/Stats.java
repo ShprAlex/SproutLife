@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import org.junit.experimental.max.MaxCore;
+
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
@@ -30,17 +32,17 @@ public class Stats {
     public int avgMaxLifespan;
     public int gameTime = 0;
     public double boardSizeDivPopulation;
-    double lifespanHistogram[] = new double[100];
+    double lifespanHistogram[] = new double[300];
     
     double avgSize = 0;
     double avgMaxSize = 0;
-    double avgTerritory = 0;
-    double avgMaxTerritory = 0;
-    int[] maxTerriroty = new int[100];
-
+    double avgCellSum = 0;
+    double avgParentCellSum = 0;
+    double[] avgCellsAtAge = new double[300];
        
     double avgChildNumber = 0;
     double[] avgChildAtAge = new double[10];
+    double[] parentAgeAtBirthHist = new double[300];
     double[] childNumberPercent = new double[10];
     double childlessPercent = 0;
     
@@ -50,7 +52,7 @@ public class Stats {
     double mutationGridtXY[][] = new double[30][30];
     double mutationGridtXYold[][][] = new double[20][30][30];
 
-    double mutationAgeHistogram[] = new double[50];
+    double mutationAgeHistogram[] = new double[300];
     
     double mutationSpeed = 0;
     double mutationDiversity = 0;
@@ -69,8 +71,8 @@ public class Stats {
     
     public int infectedCount =0;
     
-    public int[] childEnergy = new int[100];
-    public int[] sproutNumber = new int[100];
+    public int[] childEnergy = new int[300];
+    public int[] sproutNumber = new int[300];
     
     
     public Stats(GameModel gameModel) {
@@ -114,15 +116,12 @@ public class Stats {
         text += buildDisplayRow("2 chilren %\t: ",String.format("%.1f", (childNumberPercent[1]-childNumberPercent[2])));
         text += buildDisplayRow("3 chilren %\t: ",String.format("%.1f", (childNumberPercent[2]-childNumberPercent[3])));
         text += buildDisplayRow("4+ chilren %\t: ",String.format("%.1f", (childNumberPercent[4])));
-        text += buildDisplayRowBold("Average 1st childbirth age: ",String.format("%.1f", avgChildAtAge[0]));
-        text += buildDisplayRow("Average 2nd childbirth age: ",String.format("%.1f", avgChildAtAge[1]));
-        text += buildDisplayRow("Average 3rd childbirth age: ",String.format("%.1f", avgChildAtAge[2]));
         text += BLANK_ROW;
-        text += buildDisplayRow("Average Cell #: ",String.format("%.1f", avgSize));
-        text += buildDisplayRow("Average Lifetime Cell#: ",String.format("%.1f", avgMaxSize));       
-        text += buildDisplayRow("Average Territory: ",String.format("%.1f", avgTerritory));        
-        text += buildDisplayRowBold("Average Lifetime Territory: ",String.format("%.1f", avgMaxTerritory));
-        text += buildDisplayRow("Board size / population: ",String.format("%.1f", boardSizeDivPopulation));
+        text += buildDisplayRow("Average Cell #: ",String.format("%.1f", avgSize));       
+        text += buildDisplayRow("Avg Current Life Cell Sum: ",String.format("%.0f", avgCellSum));        
+        text += buildDisplayRowBold("Avg Lifetime Cell Sum: ",String.format("%.0f", avgParentCellSum));        
+        text += buildDisplayRow("% Child born at parent age histogram: ");
+        text += buildParentAgeAtBirthHistogram("_");
         text += BLANK_ROW;        
         text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations)); 
         text += buildDisplayRowBold("Mutation Diversity: ",String.format("%.1f", mutationDiversity*10));        
@@ -221,8 +220,33 @@ public class Stats {
         return text;
 
     }
+
+    private String buildParentAgeAtBirthHistogram(String delimiter) {
+        String text = "";
+        
+        String mutationHist = "";
+        for (int t=0;t<75;t++) {
+            double v = parentAgeAtBirthHist[t];
+
+            if (v<1) {
+                mutationHist+=" "+"__";
+            }
+            else {
+                mutationHist+=" ";
+                if (v+0.5<10) {
+                    mutationHist+=delimiter;
+                }
+                
+                mutationHist+=String.format("%.0f",v);
+                
+            }
+        }
+        text += buildDisplayRow(mutationHist);
     
-    
+        return text;
+
+    }
+
     public void updateSmoothedPopulation() {
         int population = getEchosystem().getOrganisms().size();
         
@@ -310,7 +334,7 @@ public class Stats {
             System.out.print(countAtLifespan[i]+" ");
         }
         
-        System.out.print(" AMC: "+(int) avgMaxTerritory);
+        System.out.print(" AMC: "+(int) avgParentCellSum);
         /*
         System.out.print(" Max cells: ");               
         for (int i=0;i<50;i++) {
@@ -521,12 +545,13 @@ public class Stats {
     private void updateSizeStats() {
         int maxSizeSum = 0;
         int sizeSum = 0;
-        int territorySum = 0;
-        int sumMaxTerritory = 0;
+        int combinedCellSum = 0;
+        int combinedParentCellSum = 0;
         for (Organism o : getEchosystem().getOrganisms()) {
 
             sizeSum += o.size();
-            territorySum +=o.getAttributes().getTerritorySize();
+            combinedCellSum +=o.getAttributes().cellSum;
+
             if(o.getParent()!=null) {
                 int ms = o.getParent().getAttributes().maxCells;
                 if (o.getParent().getParent()!=null) {
@@ -536,21 +561,29 @@ public class Stats {
                 maxSizeSum+=ms;
             }
             
-            if(o.getParent()!=null) {
-                int ts = o.getParent().getAttributes().getTerritorySize();
-
-                if (o.getParent().getAttributes().getTerritorySize()/3<100 && ts/10<100) {
-                    maxTerriroty[ts/10]++;
-                }
-                sumMaxTerritory+=ts;
+            if(o.getParent()!=null && o.getParent().getParent()!=null) {
+                int ts = o.getParent().getAttributes().cellSum;
+                combinedParentCellSum+=ts;
+            }
+        }
+        int maxCellsAtAge[] = new int[1000]; 
+        for (Organism o : getEchosystem().getOrganisms()) {
+            maxCellsAtAge[o.getAge()] = Math.max(maxCellsAtAge[o.getAge()], o.getCells().size());
+        }
+        for (int i=0;i<100;i++) {
+            if (maxCellsAtAge[i]>0) {
+                avgCellsAtAge[i]=(avgCellsAtAge[i]*9+maxCellsAtAge[i])/10;
+            }
+            else {
+                avgCellsAtAge[i]=(avgCellsAtAge[i]*99+maxCellsAtAge[i])/10;
             }
         }
         double population = (double) getEchosystem().getOrganisms().size();
         if (population>0) {
             this.avgSize = sizeSum / population;
-            this.avgTerritory = territorySum / population;
+            this.avgCellSum = combinedCellSum / population;
             this.avgMaxSize = maxSizeSum/ population;
-            this.avgMaxTerritory = sumMaxTerritory/ population;
+            this.avgParentCellSum = combinedParentCellSum/ population;
             this.boardSizeDivPopulation = gameModel.getBoard().getHeight()*gameModel.getBoard().getWidth()/smoothedPopulation;
         }
     }
@@ -604,7 +637,7 @@ public class Stats {
         int sumChildless = 0;
         int[] childNumberHistogram = new int[5]; //keep track of number number organisms having x number of childern
         int[] sumChildAge = new int[5]; //keep track of combined parent age having 1st children
-        
+        parentAgeAtBirthHist = new double[100]; 
         for (Organism o : getEchosystem().getRetiredOrganisms()) {
             sumChildNumber += o.getChildren().size();
             if (o.getChildren().size()==0) {
@@ -612,7 +645,8 @@ public class Stats {
             }
             for (int ci = 0; ci<o.getChildren().size(); ci++) {
                 int parentAgeAtBirth =  o.getChildren().get(ci).getAttributes().parentAgeAtBirth;
-                
+                parentAgeAtBirth = Math.min(parentAgeAtBirth, 74);
+                parentAgeAtBirthHist[parentAgeAtBirth]++;
                 if (ci<4) {
                     childNumberHistogram[ci]+=1;
                     sumChildAge[ci]+=parentAgeAtBirth;
@@ -633,6 +667,11 @@ public class Stats {
         childNumberPercent = new double[5];
         
         if (getEchosystem().getRetiredOrganisms().size()>0) {
+            if (sumChildNumber>0) {
+                for (int i=0;i<100;i++) {
+                    parentAgeAtBirthHist[i] *= (100.0/sumChildNumber);
+                }
+            }
             avgChildNumber = sumChildNumber / (double) getEchosystem().getRetiredOrganisms().size();
             childlessPercent = (getEchosystem().getRetiredOrganisms().size()-childNumberHistogram[0])*100.0/getEchosystem().getRetiredOrganisms().size();
 
@@ -744,7 +783,7 @@ public class Stats {
         if( mutationDiversity>0) {
             mutationDiversityAge/= mutationDiversity;
         }
-        if(getEchosystem().getTime()%200==0) {
+        if(getEchosystem().getTime()%2000==0) {
            
             System.out.print(getTime() + " M Speed1: "+(int)mutationSpeed);
             System.out.print(" MDiversity: "+(int)(mutationDiversity*10));
@@ -754,8 +793,9 @@ public class Stats {
             System.out.print(" Pop density "+String.format("%.1f",smoothedPopDensity));
             
             System.out.print(" Avg Life  " + (int)avgMaxLifespan);               
-            System.out.print(" Max territory  " + (int) avgMaxTerritory);
+            System.out.print(" Max cellSum " + (int) avgParentCellSum);
             System.out.print(" MutationCount " + String.format("%.1f",avgTotalMutations));
+            /*
             if (mutationSum>0) {
                 System.out.print(" Mutation X,Y " + (int) mutationSumX*100/mutationSum+" "+ (int) mutationSumY*100/mutationSum);
             }
@@ -768,6 +808,8 @@ public class Stats {
             else {
                 System.out.print(" ML X,Y " + 0+" "+ 0);
             }
+            */
+            System.out.print(" "+buildParentAgeAtBirthHistogram(" "));
             System.out.println();
 
         }
