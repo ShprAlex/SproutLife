@@ -56,6 +56,7 @@ public class LifeStep extends Step {
             this.lifeMode = cooperativeLife;
         }
         else {
+            // we use competitiveLife for both competitive1 and competitive2
             this.lifeMode = competitiveLife;
         }
     }

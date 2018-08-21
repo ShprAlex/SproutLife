@@ -15,6 +15,7 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class CompetitiveLife extends LifeMode {
+    private boolean isStronglyCompetitive = false;
     
     public CompetitiveLife(GameModel gameModel) {
         super(gameModel);
@@ -23,13 +24,15 @@ public class CompetitiveLife extends LifeMode {
     public double getCompare(Cell c1, Cell c2) {
         Organism o1 = c1.getOrganism();
         Organism o2 = c2.getOrganism();
-        if (o1.getParent()!=null && o2.getParent()!=null) {
+        if (isStronglyCompetitive && o1.getParent()!=null && o2.getParent()!=null) {
             return o1.getParent().getAttributes().cellSum - o2.getParent().getAttributes().cellSum;
         }
         return o1.getAttributes().cellSum - o2.getAttributes().cellSum;
     }
     
     public void updateCells() {
+        isStronglyCompetitive = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
+
         for (Organism o : getEchosystem().getOrganisms()) {
             o.getAttributes().cellSum += o.getCells().size();
         }

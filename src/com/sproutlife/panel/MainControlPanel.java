@@ -39,12 +39,11 @@ public class MainControlPanel extends JPanel {
     PanelController panelController;
     private JSlider zoomSlider;
     private JRadioButton rdbtnFriendly;
-    private JRadioButton rdbtnCompetitive;
+    private JRadioButton rdbtnCompetitive1;
     private JButton startPauseButton;
     private JButton stepButton;
     private JSlider speedSlider;
     private JButton resetButton;
-    private JRadioButton rdbtnCooperative;
     private JSpinner boardWidthSpinner;
     private JSpinner boardHeightSpinner;
     private JCheckBox autoSizeGridCheckbox;
@@ -52,6 +51,7 @@ public class MainControlPanel extends JPanel {
     private JLabel imageWidthHeightLabel;
     private JLabel lblSeedType;
     private JComboBox seedTypeComboBox;
+    private JRadioButton rdbtnCompetitive2;
 
 
     public MainControlPanel(PanelController panelController) {
@@ -205,58 +205,56 @@ public class MainControlPanel extends JPanel {
         gbc_lifeModePanel.gridy = 11;
         add(lifeModePanel, gbc_lifeModePanel);
         GridBagLayout gbl_lifeModePanel = new GridBagLayout();
-        gbl_lifeModePanel.columnWidths = new int[]{30, 40, 40};
-        gbl_lifeModePanel.rowHeights = new int[]{23, 0};
-        gbl_lifeModePanel.columnWeights = new double[]{1.0, 0.0, 0.0};
-        gbl_lifeModePanel.rowWeights = new double[]{0.0, 0.0};
+        gbl_lifeModePanel.columnWidths = new int[]{40};
+        gbl_lifeModePanel.rowHeights = new int[]{23, 0, 0};
+        gbl_lifeModePanel.columnWeights = new double[]{0.0};
+        gbl_lifeModePanel.rowWeights = new double[]{0.0, 0.0, 0.0};
         lifeModePanel.setLayout(gbl_lifeModePanel);
-
-        rdbtnCooperative = new JRadioButton("Cooperative");
-        rdbtnCooperative.setToolTipText("<html>"+
-                "Tends towards order and<br>"+
-                "synchronization. Cells<br>"+
-                "don't differentiate between<br>"+
-                "their own organism and others</html>");
-        GridBagConstraints gbc_rdbtnCooperative = new GridBagConstraints();
-        gbc_rdbtnCooperative.anchor = GridBagConstraints.WEST;
-        gbc_rdbtnCooperative.insets = new Insets(0, 0, 5, 5);
-        gbc_rdbtnCooperative.gridx = 1;
-        gbc_rdbtnCooperative.gridy = 0;
-        lifeModePanel.add(rdbtnCooperative, gbc_rdbtnCooperative);
-        lifeModeButtonGroup.add(rdbtnCooperative);
 
         rdbtnFriendly = new JRadioButton("Friendly");
         rdbtnFriendly.setToolTipText("<html>"+
-                "Cells know which one is their<br>"+
-                "organism, but tolerate some<br>"+
-                "contact from other organisms.<br>"+
-                "Maintains complexity."+
+                "Collisions are independent of<br>"+
+                "organism size.<br>"+ 
                 "</html>");
         rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnFriendly = new GridBagConstraints();
         gbc_rdbtnFriendly.anchor = GridBagConstraints.WEST;
         gbc_rdbtnFriendly.insets = new Insets(0, 0, 5, 0);
-        gbc_rdbtnFriendly.gridx = 2;
+        gbc_rdbtnFriendly.gridx = 0;
         gbc_rdbtnFriendly.gridy = 0;
         lifeModePanel.add(rdbtnFriendly, gbc_rdbtnFriendly);
         lifeModeButtonGroup.add(rdbtnFriendly);
 
-        rdbtnCompetitive = new JRadioButton("Competitive");
-        rdbtnCompetitive.setToolTipText("<html>"+
-                "Grow bigger. Cells know which<br>"+
-                "other cells are in their organism<br>"+
-                "and its family, and will kill<br>"+
-                "adjacet cells from smaller<br>"+
-                "unrelated organisms."+     
+        rdbtnCompetitive1 = new JRadioButton("Competitive1");
+        rdbtnCompetitive1.setToolTipText("<html>"+
+                "Bigger organisms destroy cells<br>"+
+                "from smaller organisms based<br>"+
+                "on the current size of both<br>"+
+                "(weakly competitive)"+
                 "</html>");
-        rdbtnCompetitive.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        rdbtnCompetitive1.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnCompetitive = new GridBagConstraints();
-        gbc_rdbtnCompetitive.insets = new Insets(0, 0, 0, 5);
+        gbc_rdbtnCompetitive.insets = new Insets(0, 0, 5, 0);
         gbc_rdbtnCompetitive.anchor = GridBagConstraints.WEST;
-        gbc_rdbtnCompetitive.gridx = 1;
+        gbc_rdbtnCompetitive.gridx = 0;
         gbc_rdbtnCompetitive.gridy = 1;
-        lifeModePanel.add(rdbtnCompetitive, gbc_rdbtnCompetitive);
-        lifeModeButtonGroup.add(rdbtnCompetitive);
+        lifeModePanel.add(rdbtnCompetitive1, gbc_rdbtnCompetitive);
+        lifeModeButtonGroup.add(rdbtnCompetitive1);
+
+        rdbtnCompetitive2 = new JRadioButton("Competitive2");
+        rdbtnCompetitive2.setToolTipText("<html>"+
+                "Bigger organisms destroy cells<br>"+
+                "from smaller organisms based<br>"+
+                "on the size of their parents<br>"+
+                "(strongly competitive)"+
+                "</html>");
+        rdbtnCompetitive2.setAlignmentX(1.0f);
+        GridBagConstraints gbc_radioButton = new GridBagConstraints();
+        gbc_radioButton.anchor = GridBagConstraints.WEST;
+        gbc_radioButton.gridx = 0;
+        gbc_radioButton.gridy = 2;
+        lifeModePanel.add(rdbtnCompetitive2, gbc_radioButton);
+        lifeModeButtonGroup.add(rdbtnCompetitive2);
 
         JLabel lblGrid = new JLabel("Grid");
         GridBagConstraints gbc_lblGrid = new GridBagConstraints();
@@ -360,8 +358,11 @@ public class MainControlPanel extends JPanel {
     public JRadioButton getRdbtnFriendly() {
         return rdbtnFriendly;
     }
-    public JRadioButton getRdbtnCompetitive() {
-        return rdbtnCompetitive;
+    public JRadioButton getRdbtnCompetitive1() {
+        return rdbtnCompetitive1;
+    }
+    public JRadioButton getRdbtnCompetitive2() {
+        return rdbtnCompetitive2;
     }
     public JButton getStartPauseButton() {
         return startPauseButton;
@@ -374,9 +375,6 @@ public class MainControlPanel extends JPanel {
     }
     public JButton getResetButton() {
         return resetButton;
-    }
-    public JRadioButton getRdbtnCooperative() {
-        return rdbtnCooperative;
     }
     public JSpinner getBoardWidthSpinner() {
         return boardWidthSpinner;

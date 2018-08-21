@@ -334,17 +334,17 @@ public class PanelController {
                 if (getMainControlPanel().getRdbtnFriendly().isSelected()) {
                     getSettings().set(Settings.LIFE_MODE, "friendly");
                 }
-                else if(getMainControlPanel().getRdbtnCooperative().isSelected()) {
-                    getSettings().set(Settings.LIFE_MODE, "cooperative");
+                else if(getMainControlPanel().getRdbtnCompetitive1().isSelected()) {
+                    getSettings().set(Settings.LIFE_MODE, "competitive1");
                 }
                 else {
-                    getSettings().set(Settings.LIFE_MODE, "competitive");
+                    getSettings().set(Settings.LIFE_MODE, "competitive2");
                 }
             }                      
-        };        
-        getMainControlPanel().getRdbtnCompetitive().addItemListener(lifeModeListener);
+        };
         getMainControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
-        getMainControlPanel().getRdbtnCooperative().addItemListener(lifeModeListener);
+        getMainControlPanel().getRdbtnCompetitive2().addItemListener(lifeModeListener);
+        getMainControlPanel().getRdbtnCompetitive1().addItemListener(lifeModeListener);
         
         getMainControlPanel().getSeedTypeComboBox().addActionListener(new ActionListener() {
             
@@ -448,14 +448,14 @@ public class PanelController {
           
     public void updateFromSettings() {
         String lifeMode = getSettings().getString(Settings.LIFE_MODE);
-        if ("cooperative".equals(lifeMode)) {
-            getMainControlPanel().getRdbtnCooperative().setSelected(true);
-        }
-        else if ("friendly".equals(lifeMode)) {
+        if ("friendly".equals(lifeMode)) {
             getMainControlPanel().getRdbtnFriendly().setSelected(true);
         }
+        else if ("competitive1".equals(lifeMode)) {
+            getMainControlPanel().getRdbtnCompetitive1().setSelected(true);
+        }
         else {
-            getMainControlPanel().getRdbtnCompetitive().setSelected(true);
+            getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
         }
         
     }
