@@ -36,14 +36,7 @@ public class MutationStep extends Step {
     } 
     
     private void doExistingMutations() {
-        HashMap<Mutation, Integer> popularMutations = new HashMap<Mutation, Integer>();
-        
-        Mutation frequentMutation = null;
-        int maxFreq = 0;
-        
-        //getStats().mutationCount=0;
-        //getStats().mutationMiss=0;
-                        
+
         for (Organism o : getEchosystem().getOrganisms()) {
            
            int age = o.getAge();
@@ -62,23 +55,8 @@ public class MutationStep extends Step {
                Cell c = getBoard().getCell(p);
                if (c!=null) {
                    if (c.getOrganism()==o) {
-                       boolean result = getEchosystem().removeCell(c);
+                       getEchosystem().removeCell(c);
                        c.getOrganism().removeFromTerritory(c);
-                       //getBoard().removeCell(c);
-                       Mutation m = o.getGenome().getMutation(age, pi);
-                       Integer freq = popularMutations.get(m);
-                       if (freq==null) {
-                           freq = 0;
-                       }
-                       else {
-                           freq = freq;
-                       }
-                       popularMutations.put(m, freq+1);
-                       if (freq+1>maxFreq) {
-                           maxFreq = freq+1;
-                           frequentMutation = m;
-                       }
-                       
                    }
                    else {
                        getStats().mutationMiss++;
@@ -90,10 +68,6 @@ public class MutationStep extends Step {
                
            }
         }        
-        if (getStats().freqMuteFreq < maxFreq) {
-            getStats().freqMutation = frequentMutation;
-            getStats().freqMuteFreq = maxFreq;
-        }
     }
     
     private void addNewMutations() {
@@ -101,8 +75,6 @@ public class MutationStep extends Step {
         if (allCells.size()==0) {
             return;
         }
-        
-       
 
         //int size = Math.max(2000, allCells.size());
         int repeatTimes = 1;
