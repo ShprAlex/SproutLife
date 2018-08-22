@@ -36,7 +36,6 @@ public class MutationStep extends Step {
     } 
     
     private void doExistingMutations() {
-
         for (Organism o : getEchosystem().getOrganisms()) {
            
            int age = o.getAge();
@@ -70,17 +69,15 @@ public class MutationStep extends Step {
         }        
     }
     
-    private void addNewMutations() {
-        ArrayList<Cell> allCells = getEchosystem().getCells();
-        if (allCells.size()==0) {
-            return;
-        }
-
-        //int size = Math.max(2000, allCells.size());
-        int repeatTimes = 1;
-        int invMutationRate = 160;
+    /*
+     * getCreateMutationCount
+     * We typically add around 1 mutation at each time step of the game
+     * For a high mutation rate, and a large number of organisms, we add several mutations
+     * For a low mutation rate and a low number of organisms, we randomly add 0 or 1 mutations
+     */
+    int getCreateMutationCount() {
+        int invMutationRate;
         switch (getSettings().getInt(Settings.MUTATION_RATE)) {
-                        
             case 1: invMutationRate = 1215; break;
             case 2: invMutationRate = 810; break;            
             case 3: invMutationRate = 540; break;
@@ -89,126 +86,127 @@ public class MutationStep extends Step {
             case 6: invMutationRate = 160; break;
             case 7: invMutationRate = 100; break;
             case 8: invMutationRate = 70; break;
-            case 9: invMutationRate = 50; break;            
+            case 9: invMutationRate = 50; break;
             case 10: invMutationRate = 30; break;
-            
-            default: return; 
-            
+            default: return 1;
         }
-        
-        if(getEchosystem().getOrganisms().size()>invMutationRate) {
-            repeatTimes = getEchosystem().getOrganisms().size()/invMutationRate;
+
+        // lots of organisms
+        if(getEchosystem().getOrganisms().size()>=invMutationRate) {
+            return getEchosystem().getOrganisms().size()/invMutationRate;
         }
-        if (getEchosystem().getOrganisms().size()<invMutationRate/3 ) {
-            repeatTimes = random.nextInt(10)==0 ? 1:0;
+        // very few organism
+        else if (getEchosystem().getOrganisms().size()<invMutationRate/3 ) {
+            return random.nextInt(10)==0 ? 1:0;
         }
+        // some organisms
         else if (getEchosystem().getOrganisms().size()<invMutationRate ) {
-            repeatTimes = random.nextInt(3)==0 ? 1:0;
+            return random.nextInt(3)==0 ? 1:0;
         }
-        
-        for (int repeat=0;repeat<repeatTimes;repeat++) {
-            
-            int size = allCells.size();
-            int mutationIndex = (new Random()).nextInt(size); 
-            if (mutationIndex>=allCells.size()) {
-                return;
-            }
-           
-            Cell c = allCells.get(mutationIndex);
-            Organism org = c.getOrganism();           
-            
-            int rand6 = random.nextInt(6);
-            int decreaseOdds = 3;
-            
-            //if("friendly".equals(getSettings().getString(Settings.LIFE_MODE))) {
-            //    decreaseOdds = 4; //50% odds of decreasing vs. 33% odds of increasing    
-            //}
-            
-            if (rand6 <=1 && org.lifespan<getSettings().getInt(Settings.MAX_LIFESPAN)) {
-                
+
+        return 1;
+    }
+
+    /*
+     * mutateLifespan  returns true if lifespan was mutated.
+     *
+     */
+    private boolean mutateLifespan(Organism org) {
+        int rand3 = random.nextInt(3);
+
+        if (rand3 == 0 ) {
+            if(org.lifespan<getSettings().getInt(Settings.MAX_LIFESPAN)) {
+                // increase lifespan
                 org.lifespan +=1;
-                if (random.nextInt(2)==1) {
-                    continue;
-                }
+                return true;
             }
-            else if (rand6<=decreaseOdds) {
-                //2,3 33%
-                org.lifespan -=1;
-                if (random.nextInt(2)==1) {
-                    continue;
-                }
+        }
+        else if (rand3 == 1) {
+            // decrease lifespan
+            org.lifespan -=1;
+            return true;
+        }
+
+        // else if rand3 == 2, do nothing
+        return false;
+    }
+
+    private void addMutation(Cell c) {
+        Organism org = c.getOrganism();
+        Genome g = org.getGenome();
+        int age = org.getAge();
+        int x = c.x - org.x;
+        int y = c.y - org.y;
+
+        Mutation m = org.addMutation(x, y);
+
+        for (Organism childOrg : org.getChildren()) {
+            //Pretend the parent had this mutation when giving birth to it's children
+            //It's ok because the children are not yet old enough to have
+            //encountered this mutation
+            childOrg.getGenome().addMutation(m);
+        }
+    }
+
+    /*
+     * removeMutation  remove a random mutation at the organisms current age
+     */
+    private boolean removeMutation(Organism org) {
+        Genome g = org.getGenome();
+        int age = org.getAge();
+
+        if(g.getMutationCount(age)==0) {
+            // if the organism doesn't have any mutations at the age it is now,
+            // do nothing
+            return false;
+        }
+
+        int indexAtAge = random.nextInt(g.getMutationCount(age));
+        Mutation removeM = g.getMutation(age, indexAtAge);
+        g.removeMutation(removeM);
+        for (Organism childOrg : org.getChildren()) {
+            //Pretend the parent didn't have this mutation when giving birth to it's children
+            //It's ok because the children are not yet old enough to have
+            //encountered this mutation
+            childOrg.getGenome().removeMutation(removeM);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void addNewMutations() {
+        ArrayList<Cell> cellsFromAllOrganisms = getEchosystem().getCells();
+        if (cellsFromAllOrganisms.size()==0) {
+            return;
+        }
+
+        int createMutationCount = getCreateMutationCount();
+
+        for (int repeat=0; repeat<createMutationCount; repeat++) {
+            
+            int size = cellsFromAllOrganisms.size();
+            int mutationIndex = random.nextInt(size);
+
+            Cell randomCell = cellsFromAllOrganisms.get(mutationIndex);
+            
+            boolean mutatedLifespan = mutateLifespan(randomCell.getOrganism());
+            if (mutatedLifespan && random.nextInt(2)==0) {
+                // if we mutated the lifespan, 50% chance we're done mutating stuff this time
+                continue;
+            }
+            
+            // we're more likely to remove a mutation than to add one
+            boolean mutationIsAdd = (random.nextInt(7)>=4);
+
+            if (mutationIsAdd){
+                addMutation(randomCell);
+                // existing mutations remove cells, so do it for this new mutation too
+                getEchosystem().removeCell(randomCell);
+                
             }
             else {
-              
-                //do nothing
-            }
-            
-            /*
-            if (org.lifespan>160) {
-                org.lifespan=160;
-            }
-            */
-            
-            
-            if (org.getId()!=0) {            
-                Genome g = org.getGenome();
-                int age = org.getAge();
-                int x = c.x - org.x;
-                int y = c.y - org.y;
-                
-                if (age<25) {
-                    //continue;
-                }
-                
-                boolean mutationIsAdd = (random.nextInt(7)>=4);//&& (g.getMutationCount(age)==0||age>=30);
-                /*
-                int mutationSum = 0;
-                for (int t=0;t<org.getLifespan();t++) {
-                    mutationSum+=g.getMutationCount(t);
-                }
-                */
-                if (mutationIsAdd){// &&  mutationSum<Math.sqrt(getTime()/2000.0)) {
-                    //if(Math.abs(x)+Math.abs(y)+Math.abs(age)>=8) {
-                        /*
-                        while (g.getMutationCount(age)>5) {
-                            int removeIndex = (new Random()).nextInt(g.getMutationCount(age));
-                            
-                            g.removeMutation(g.getMutation(age, removeIndex));                        
-                        } 
-                        */                   
-                        Mutation m = org.addMutation(x, y);                       
-                        
-                        for (Organism childOrg : org.getChildren()) {
-                            //Ok because, children are not yet old enough to have 
-                            //encountered this mutation
-                            
-                            childOrg.getGenome().addMutation(m);                            
-                        }
-                        //experiment
-                        if (org.getParent()!=null && random.nextInt(3)==0) {
-                            org.getParent().getGenome().addMutation(m);
-                        }
-            
-                        getEchosystem().removeCell(c);
-                        //getBoard().removeCell(c);            
-                    //}
-                }
-                else { //remove random mutation
-                    if(g.getMutationCount(age)>0) {
-
-                        int removeIndex = random.nextInt(g.getMutationCount(age));
-                        Mutation removeM = g.getMutation(age, removeIndex);
-                        g.removeMutation(removeM);
-                        for (Organism childOrg : org.getChildren()) {
-                            //Ok because, children are not yet old enough to have 
-                            //encountered this mutation
-                            //if (childOrg.getGenome().getMutationCount(age)<10) {
-                                
-                            childOrg.getGenome().removeMutation(removeM);
-                            //}
-                        }
-                    }
-                }
+                removeMutation(randomCell.getOrganism());
             }
         }
 
