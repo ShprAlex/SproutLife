@@ -169,10 +169,9 @@ public class MutationStep extends Step {
             //It's ok because the children are not yet old enough to have
             //encountered this mutation
             childOrg.getGenome().removeMutation(removeM);
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     private void addNewMutations() {
