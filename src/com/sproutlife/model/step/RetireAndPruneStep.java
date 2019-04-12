@@ -7,29 +7,11 @@
  *******************************************************************************/
 package com.sproutlife.model.step;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.model.seed.BitPattern;
-import com.sproutlife.model.seed.Seed;
-import com.sproutlife.model.seed.SeedFactory;
-import com.sproutlife.model.seed.SymmetricSeed;
-import com.sproutlife.model.seed.SeedFactory.SeedType;
-import com.sproutlife.model.seed.SeedSproutPattern;
 
 public class RetireAndPruneStep extends Step {
     GameModel gameModel;    

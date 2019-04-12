@@ -20,7 +20,6 @@ import java.util.HashSet;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 public class BoardRenderer {
     

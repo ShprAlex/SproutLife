@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.junit.experimental.max.MaxCore;
-
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
