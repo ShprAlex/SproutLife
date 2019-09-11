@@ -55,26 +55,26 @@ public class CellRenderer extends Renderer {
     }
 
     private Color getColor(Organism o) {
-        int age;
-
         if (o.isAlive()) {
-            int grayC = 100;
+            return o.getColor();
+            /*int grayC = 100;
             switch (o.getAttributes().kind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(grayC-10, 255, grayC-10);
                 case 2: return new Color(grayC, grayC ,255);
-            }
+            }*/
         }
         else if (getPaintRetiredCells()) {
-            age = getGameModel().getTime()-o.getTimeOfDeath();
-            int ageC = Math.min(255,120+age*10);
+            int age = getGameModel().getTime()-o.getTimeOfDeath();
+            Color c = o.getColor();
+            return new Color(Math.min(255, age*10+c.getRed()), Math.min(255, age*10+c.getGreen()), Math.min(255, age*10+c.getBlue()));
+            /*int ageC = Math.min(255,120+age*10);
             switch (o.getAttributes().kind) {
                 case 0: return new Color(255, ageC, ageC);
                 case 1: return new Color(ageC, 255, ageC);
                 case 2: return new Color(ageC, ageC ,255);
-            }
+            }*/
         }
-
         return null;
     }
 }

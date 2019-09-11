@@ -8,6 +8,7 @@
 package com.sproutlife.model.echosystem;
 
 import java.awt.Point;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -41,6 +42,7 @@ public class Organism {
     // Lifespan isn's age, but a self destruct value above
     // which the organism is removed
     public int lifespan; 
+    public Color color; // Color of the organism when rendered
     private int born; //Game time when the organism was born.
     private boolean alive = true;
     private int timeOfDeath;         
@@ -72,6 +74,7 @@ public class Organism {
             parent.addChild(this);
             this.genome = parent.getGenome().clone();
             this.lifespan = parent.lifespan;
+            this.color = parent.color;
         }
         this.genome.setSeed(this.seed);        
     }
@@ -119,6 +122,14 @@ public class Organism {
     
     public void setLifespan(int lifespan) {
         this.lifespan = lifespan;
+    }
+
+    public Color getColor() {
+    	return color;
+    }
+
+    public void setColor(Color color) {
+    	this.color = color;
     }
     
     public int getBorn() {

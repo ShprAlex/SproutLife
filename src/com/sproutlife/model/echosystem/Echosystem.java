@@ -8,6 +8,7 @@
 package com.sproutlife.model.echosystem;
 
 import java.awt.Dimension;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -168,6 +169,18 @@ public class Echosystem {
         if (parent == null) {
             newOrg.setLifespan(getDefaultOrgLifespan());// +(new
                                                         // Random()).nextInt(3));
+            int grayC = 100;
+            switch (newOrg.getAttributes().kind) {
+                case 0:
+                    newOrg.setColor(new Color(255, grayC, grayC));
+                    break;
+                case 1:
+                    newOrg.setColor(new Color(grayC-10, 255, grayC-10));
+                    break;
+                case 2:
+                    newOrg.setColor(new Color(grayC, grayC ,255));
+                    break;
+            }
         }
 
         organisms.add(newOrg);

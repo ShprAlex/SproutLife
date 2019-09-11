@@ -43,11 +43,14 @@ public class HeadRenderer extends Renderer {
     }
 
     private Color getColor(Organism o) {
-        switch (o.getAttributes().kind) {
+        Color c = o.getColor();
+        return new Color(c.getRed(), c.getGreen(), c.getBlue(), 128);
+        //return new Color(Math.min(255, c.getRed()+100), Math.min(255, c.getGreen()+100), Math.min(255, c.getBlue()+100));
+        /*switch (o.getAttributes().kind) {
             case 0: return new Color(255, 176, 176);
             case 1: return new Color(186, 255, 186);
             case 2: return new Color(186, 186 ,255);
-        }
+        }*/
         /*
         switch (o.getKind()) {
             case 0: return new Color(255,0,0, 80);
@@ -55,6 +58,6 @@ public class HeadRenderer extends Renderer {
             case 2: return new Color(0,60,255, 80);
         }
         */
-        return null; 
+        //return null; 
     }
 }

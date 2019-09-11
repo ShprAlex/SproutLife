@@ -8,6 +8,7 @@
 package com.sproutlife.model.step;
 
 import java.awt.Point;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -131,6 +132,34 @@ public class MutationStep extends Step {
         return false;
     }
 
+    private boolean mutateColor(Organism org) {
+        int COLOR_MUTATION_RATE = 32;
+        int VISIBLE_BIAS = 16;
+        Color col = org.getColor();
+
+        switch (random.nextInt(9)) {
+            case 0:
+                org.setColor(new Color(Math.max(col.getRed()-COLOR_MUTATION_RATE, VISIBLE_BIAS), col.getGreen(), col.getBlue()));
+                return true;
+            case 1:
+                org.setColor(new Color(Math.min(col.getRed()+COLOR_MUTATION_RATE, 255-VISIBLE_BIAS), col.getGreen(), col.getBlue()));
+                return true;
+            case 2:
+                org.setColor(new Color(col.getRed(), Math.max(col.getGreen()-COLOR_MUTATION_RATE, VISIBLE_BIAS), col.getBlue()));
+                return true;
+            case 3:
+                org.setColor(new Color(col.getRed(), Math.min(col.getGreen()+COLOR_MUTATION_RATE, 255-VISIBLE_BIAS), col.getBlue()));
+                return true;
+            case 4:
+                org.setColor(new Color(col.getRed(), col.getGreen(), Math.max(col.getBlue()-COLOR_MUTATION_RATE, VISIBLE_BIAS)));
+                return true;
+            case 5:
+                org.setColor(new Color(col.getRed(), col.getGreen(), Math.min(col.getBlue()+COLOR_MUTATION_RATE, 255-VISIBLE_BIAS)));
+                return true;
+        }
+        return false;
+    }
+
     private void addMutation(Cell c) {
         Organism org = c.getOrganism();
         Genome g = org.getGenome();
@@ -189,6 +218,8 @@ public class MutationStep extends Step {
 
             Cell randomCell = cellsFromAllOrganisms.get(mutationIndex);
             
+            boolean mutatedColor = mutateColor(randomCell.getOrganism());
+
             boolean mutatedLifespan = mutateLifespan(randomCell.getOrganism());
             if (mutatedLifespan && random.nextInt(2)==0) {
                 // if we mutated the lifespan, 50% chance we're done mutating stuff this time

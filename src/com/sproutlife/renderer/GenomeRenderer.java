@@ -128,14 +128,16 @@ public class GenomeRenderer extends Renderer {
     private Color getColor(Organism o) {
         //return Color.white;
 
-        int grayC = 200;
+        /*int grayC = 200;
         switch (o.getAttributes().kind) {
             case 0: return new Color(255, 186, 186);
             case 1: return new Color(grayC, 255, grayC);
             case 2: return new Color(grayC+10, grayC+10,255);
         }
-        return null;
+        return null;*/
 
-
+        Color c = o.getColor();
+        return new Color(c.getRed(), c.getGreen(), c.getBlue(), 128);
+        //return new Color(Math.min(255, c.getRed()+100), Math.min(255, c.getGreen()+100), Math.min(255, c.getBlue()+100));
     }
 }
