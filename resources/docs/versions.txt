@@ -1,19 +1,22 @@
-1.0.4
+0.4.0
 
 Added display version # in main window title
 Added smoothedPopulation # to stats, and updated stats panel text to html 
 
-1.0.5
+0.5.0
 
 Added smoothed population density to stats.
 
-1.0.6
+0.6.0
 
 Added stats for board size per organism
 Changed default value for 3rd+ child energy for better looking initial results.
 
-1.0.7
+0.7.0
 
 Added text-based genome visualization to Stats panel, will switch to graphics later. 
 
-1.0.8 
+0.12.1
+
+Cleanup of resources
+Switch major app version down to 0 from 1
