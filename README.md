@@ -12,14 +12,15 @@ For now you can watch evolution happen by running Sprout Life on your desktop. I
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2016-01-27.gif)
 
-### Compiling and Running the project
+### Compiling and Running
 
-You can compile and run Sprout Live with `Java 1.8`
+You can compile and run Sprout Life with `Java 1.8`
 
 [Install Maven](https://maven.apache.org/install.html)
 
 `mvn package` to build an executable jar
-`mvn exec
+
+`mvn exec:java` to run the application
 
 ### Motivation
 
