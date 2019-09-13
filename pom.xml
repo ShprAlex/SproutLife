@@ -24,12 +24,6 @@
 			<resource>
 				<directory>${resources.dir}</directory>
 			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-			</resource>
 		</resources>
 		<plugins>
 			<plugin>
