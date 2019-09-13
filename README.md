@@ -6,17 +6,15 @@ Enabling reproduction spontaneously leads to more advanced behaviors. Surviving 
 
 For now you can watch evolution happen by running Sprout Life on your desktop. In future versions it could be fun to enable web-based competitions between organisms collected by multiple users.
 
-[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.zip) 
-
-[Download and run SproutLife.jar!](https://github.com/ShprAlex/SproutLife/raw/master/lib/SproutLife.zip)
-
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2016-01-27.gif)
 
 ### Compiling and Running
 
+[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/archive/v0.12.1.zip)
+
 You can compile and run Sprout Life with `Java 1.8`
 
-[Install Maven](https://maven.apache.org/install.html)
+[Install Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
 
 `mvn package` to build an executable jar
 
