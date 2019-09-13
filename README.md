@@ -14,7 +14,7 @@ For now you can watch evolution happen by running Sprout Life on your desktop. I
 
 You can compile and run Sprout Life with `Java 1.8`
 
-[Download Sprout Life code](https://github.com/ShprAlex/SproutLife/archive/v0.12.1.zip) and unzip the folder contents in a local directory.
+[Download Sprout Life](https://github.com/ShprAlex/SproutLife/archive/v0.12.1.zip) code and unzip the folder contents in a local directory.
 
 [Download maven](https://maven.apache.org/download.cgi) and follow the [maven installation instructions](https://maven.apache.org/install.html)
 
