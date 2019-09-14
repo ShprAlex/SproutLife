@@ -8,6 +8,7 @@
 package com.sproutlife.renderer;
 
 import com.sproutlife.model.GameModel;
+import com.sproutlife.renderer.colors.ColorModel;
 
 public abstract class Renderer {
     
@@ -29,5 +30,9 @@ public abstract class Renderer {
     
     public BoardRenderer getBoardRenderer() {
         return boardRenderer;
+    }
+    
+    public ColorModel getColorModel() {
+    	return boardRenderer.getColorModel();
     }
 }

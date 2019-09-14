@@ -20,6 +20,8 @@ import java.util.HashSet;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.renderer.colors.ColorModel;
+import com.sproutlife.renderer.colors.DefaultColorModel;
 
 public class BoardRenderer {
     
@@ -27,6 +29,7 @@ public class BoardRenderer {
     private int defaultBlockSize = 3;  
 
     private GameModel gameModel;
+    private ColorModel colorModel;
     
     private CellRenderer cellRenderer;
     private HeadRenderer headRenderer;
@@ -50,6 +53,8 @@ public class BoardRenderer {
         
         this.BLOCK_SIZE = this.defaultBlockSize;
         this.gameModel = gameModel;
+        
+        this.colorModel = new DefaultColorModel();
    
         this.cellRenderer = new CellRenderer(gameModel, this);
         this.headRenderer = new HeadRenderer(gameModel, this);
@@ -87,12 +92,15 @@ public class BoardRenderer {
         if (getPaintGenomeLayer()) {
             paintGenomes(g);
         }
-        
     }   
     
     public GameModel getGameModel() {
         return gameModel;
     }       
+    
+    public ColorModel getColorModel() {
+		return colorModel;
+	}
     
     public void setPaintCellLayer(boolean paint) {
         this.paintCellLayer = paint;

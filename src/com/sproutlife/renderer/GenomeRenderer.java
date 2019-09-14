@@ -28,10 +28,9 @@ public class GenomeRenderer extends Renderer {
 
         int BLOCK_SIZE = getBlockSize();
 
-        //Paint white background under black mutation points
+        //Paint light background under black mutation points
+        g.setColor(getGenomeBackgroundColor(o));
 
-        g.setColor(getColor(o));
-        //g.setColor(new Color(255,255,255,120));
         if (BLOCK_SIZE>1) {
             int countP=0;
             for (Point p: filteredMutationPoints) {
@@ -42,23 +41,16 @@ public class GenomeRenderer extends Renderer {
                 }
 
                 if (BLOCK_SIZE>1 || !oneSmaller) {
-
-
                     paintBlock(g,o.x,o.y,p.x,p.y,0,1,oneSmaller);
                     paintBlock(g,o.x,o.y,p.x,p.y,1,0,oneSmaller);
-
                 }
                 else {
-
                     paintBlock(g,o.x,o.y,p.x,p.y,1,1,oneSmaller);
-
                 }
             }
         }
 
         //Paint mutation points on top of background
-
-
         g.setColor(Color.black);
         int countP=0;
         for (Point p: filteredMutationPoints) {
@@ -105,7 +97,7 @@ public class GenomeRenderer extends Renderer {
         ArrayList<Point> filteredMutationPoints = new ArrayList<Point>();
         for (int age = 0;age<40;age++) {
             ArrayList<Point> mutationPoints = o.getGenome().getMutationPoints( age);
-            int timeLimit = 15000;//Math.max(10000,getGameModel().getClock()/3);
+            int timeLimit = 15000;
 
             for (int i = 0;i<mutationPoints.size();i++) {
                 Point p = mutationPoints.get(i);
@@ -113,29 +105,13 @@ public class GenomeRenderer extends Renderer {
                 int mutationAge = getGameModel().getEchosystem().getTime()-o.getGenome().getMutation(age, i).getGameTime();
                 if(mutationAge<timeLimit) {
                     filteredMutationPoints.add(p);
-
-                    //g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*o.x)+(BLOCK_SIZE*p.x/2), BLOCK_SIZE + (BLOCK_SIZE*o.y)+(BLOCK_SIZE*p.y/2), BLOCK_SIZE, BLOCK_SIZE);
-                    if (mutationAge<500) {
-                        //g.setColor(Color.gray);
-                    }
-
                 }
             }
         }
         return filteredMutationPoints;
     }
 
-    private Color getColor(Organism o) {
-        //return Color.white;
-
-        int grayC = 200;
-        switch (o.getAttributes().kind) {
-            case 0: return new Color(255, 186, 186);
-            case 1: return new Color(grayC, 255, grayC);
-            case 2: return new Color(grayC+10, grayC+10,255);
-        }
-        return null;
-
-
+    private Color getGenomeBackgroundColor(Organism o) {
+    	return getColorModel().getGenomeBackgroundColor(o);
     }
 }
