@@ -48,13 +48,14 @@ public class TailRenderer extends Renderer {
     public void drawLine(Graphics2D g, Organism o1, Organism o2) {
         drawLine(g, o1.x, o1.y, o2.x , o2.y);
     }
-    
+
     public void drawLine(Graphics2D g, int x1, int y1, int x2, int y2) {
         int BLOCK_SIZE = getBlockSize();
-        g.drawLine(BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * x1),
-                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * y1), BLOCK_SIZE
-                        + BLOCK_SIZE / 2 + (BLOCK_SIZE * x2), BLOCK_SIZE
-                        + BLOCK_SIZE / 2 + (BLOCK_SIZE * y2));
+        g.drawLine(
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * x1),
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * y1),
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * x2),
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * y2));
     }
 
     private Color getColor(Organism o) {

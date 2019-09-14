@@ -53,20 +53,20 @@ public class BoardRenderer {
         
         this.BLOCK_SIZE = this.defaultBlockSize;
         this.gameModel = gameModel;
-        
+
         this.colorModel = new DefaultColorModel();
-   
+
         this.cellRenderer = new CellRenderer(gameModel, this);
         this.headRenderer = new HeadRenderer(gameModel, this);
         this.tailRenderer = new TailRenderer(gameModel, this);
         this.genomeRenderer = new GenomeRenderer(gameModel, this);
-        
+
         this.paintCellLayer = true;
         this.paintHeadLayer = true;
         this.paintTailLayer = true;
         this.paintGenomeLayer = true;
         this.outlineSeeds = false;
-        
+
         this.transform = new AffineTransform();        
     } 
     
@@ -101,7 +101,7 @@ public class BoardRenderer {
     public ColorModel getColorModel() {
 		return colorModel;
 	}
-    
+
     public void setPaintCellLayer(boolean paint) {
         this.paintCellLayer = paint;
     }
@@ -203,7 +203,6 @@ public class BoardRenderer {
         int h = (int) getRendererBounds().height;
         g.fillRect(x, y, w, h);
     }
-
 
     private void paintCells(Graphics2D g) {
         Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();

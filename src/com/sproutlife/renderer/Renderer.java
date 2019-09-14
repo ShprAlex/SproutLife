@@ -11,7 +11,7 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.renderer.colors.ColorModel;
 
 public abstract class Renderer {
-    
+
     protected GameModel gameModel;
     protected BoardRenderer boardRenderer;
 
@@ -23,16 +23,16 @@ public abstract class Renderer {
     public int getBlockSize() {
         return boardRenderer.getBlockSize();
     }      
-    
+
     public GameModel getGameModel() {
         return gameModel;
     }
-    
+
     public BoardRenderer getBoardRenderer() {
         return boardRenderer;
     }
-    
+
     public ColorModel getColorModel() {
-    	return boardRenderer.getColorModel();
+        return boardRenderer.getColorModel();
     }
 }
