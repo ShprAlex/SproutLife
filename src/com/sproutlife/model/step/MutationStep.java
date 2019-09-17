@@ -88,7 +88,7 @@ public class MutationStep extends Step {
             case 8: invMutationRate = 70; break;
             case 9: invMutationRate = 50; break;
             case 10: invMutationRate = 30; break;
-            default: return 1;
+            default: return 0;
         }
 
         // lots of organisms
