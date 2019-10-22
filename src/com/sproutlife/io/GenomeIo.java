@@ -111,8 +111,8 @@ public class GenomeIo {
     }
 
     public static void loadOrganisms(BufferedReader reader, GameModel gameModel, int kind) throws IOException {
-        String seedTypeString = gameModel.getSettings().getString(Settings.SEED_TYPE);
-        SeedType seedType = getSeedType(seedTypeString);
+        String seedTypeName = gameModel.getSettings().getString(Settings.SEED_TYPE);
+        SeedType seedType = SeedType.get(seedTypeName);
 
         String line = reader.readLine();
         while (line != null && !line.startsWith("Saved Organisms")) {
@@ -149,14 +149,4 @@ public class GenomeIo {
             }
         }
     }
-
-    public static SeedType getSeedType(String seedTypeString) {
-        for (SeedType st : SeedType.values()) {
-            if (st.toString().equals(seedTypeString)) {
-                return st;
-            }
-        }
-        return null;
-    }
-
 }

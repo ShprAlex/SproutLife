@@ -452,6 +452,11 @@ public class PanelController {
             getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
         }
         
+        SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
+        JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getMainControlPanel().getSeedTypeComboBox();
+        if (seedType!=null) {
+            seedCb.setSelectedItem(seedType);
+        }
     }
     
     public void setPlayGame(boolean playGame) {
@@ -471,7 +476,7 @@ public class PanelController {
     }
     
     public void initSeedTypeComboBox() {
-        JComboBox<SeedType> seedCb = ( JComboBox<SeedType>)getMainControlPanel().getSeedTypeComboBox();
+        JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getMainControlPanel().getSeedTypeComboBox();
         seedCb.addItem(SeedType.Bentline1_RPentomino);
         seedCb.addItem(SeedType.Bentline1m_RPentomino);        
         seedCb.addItem(SeedType.Bentline_U3x3);
