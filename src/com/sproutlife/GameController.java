@@ -36,10 +36,6 @@ public class GameController {
         gameModel = new GameModel(settings, interactionLock);
         
         panelController = new PanelController(this);
-
-        //frame = new GameFrame(this);
-
-        //game = new GameThread(frame.getGamePanel());
     }
 
     public String getAppVersion() {
