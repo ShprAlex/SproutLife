@@ -205,31 +205,14 @@ public class PanelController {
         getMainControlPanel().getZoomSlider().setValue(-3);        
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
-        
-        initSettingsControlPanel();              
-        
+
         initSeedTypeComboBox();
-        
+
         initStatsPanel();
-        
+
         loadTipText();               
     }   
-    
-    private void initSettingsControlPanel() {
-        getSettingsControlPanel().getMaxLifespanSpinner().setValue(
-                getSettings().getInt(Settings.MAX_LIFESPAN));
-        getSettingsControlPanel().getChildOneParentAgeSpinner().setValue(
-                getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE));
-        getSettingsControlPanel().getChildTwoParentAgeSpinner().setValue(
-                getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE));
-        getSettingsControlPanel().getChildThreeParentAgeSpinner().setValue(
-                getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
-        
-        getSettingsControlPanel().getMutationRateSpinner().setValue(
-                getSettings().getInt(Settings.MUTATION_RATE));
-                        
-    }
-    
+
     private void initStatsPanel() {
         getStatsPanel().getStatsTextPane().setContentType("text/html");
         getStatsPanel().getStatsTextPane().setText(getGameModel().getStats().getDisplayText());
@@ -447,6 +430,17 @@ public class PanelController {
        
           
     public void updateFromSettings() {
+        getSettingsControlPanel().getMaxLifespanSpinner().setValue(
+                getSettings().getInt(Settings.MAX_LIFESPAN));
+        getSettingsControlPanel().getChildOneParentAgeSpinner().setValue(
+                getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE));
+        getSettingsControlPanel().getChildTwoParentAgeSpinner().setValue(
+                getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE));
+        getSettingsControlPanel().getChildThreeParentAgeSpinner().setValue(
+                getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
+        getSettingsControlPanel().getMutationRateSpinner().setValue(
+                getSettings().getInt(Settings.MUTATION_RATE));
+
         String lifeMode = getSettings().getString(Settings.LIFE_MODE);
         if ("friendly".equals(lifeMode)) {
             getMainControlPanel().getRdbtnFriendly().setSelected(true);
@@ -490,8 +484,6 @@ public class PanelController {
         seedCb.addItem(SeedType.OnebitB1_RPentomino);
         seedCb.addItem(SeedType.Glider_RPentomino);
         seedCb.addItem(SeedType.RPentomino_RPentomino);
-        
-        
     }
         
     public void updateSpeedValue(int value) {
@@ -514,8 +506,6 @@ public class PanelController {
         }
         getGameModel().getGameThread().setSleepDelay(sleepDelay);
         getGameModel().getGameThread().setIterations(iterations);
-
-   
     }
     
     public void updateZoomValue(int value) {
@@ -534,21 +524,14 @@ public class PanelController {
                 case -1 : getBoardRenderer().setBlockSize(5); break;                        
             }               
         }
-        //updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
-        //double zoom = Math.pow(1.1, value);
+
         getBoardRenderer().setZoom(zoom);          
         getScrollController().setScalingZoomFactor(zoom);
-        //getScrollController().updateScrollBars();
-        
-        updateImageWidthHeightLabel();
 
-        //getImageManager().repaintNewGraphImage();
+        updateImageWidthHeightLabel();
     }
     
     public void updateBoardSizeFromPanelSize(Dimension d) {
-        //d.width-=40;
-        //d.height-=40;
-
         getInteractionLock().writeLock().lock();
          
         getBoardRenderer().setBounds(d);
@@ -576,7 +559,6 @@ public class PanelController {
         updateImageWidthHeightLabel();
         
         getImageManager().repaintNewImage();
-
     }    
     
     public void updateBoardSize(int width, int height) {
