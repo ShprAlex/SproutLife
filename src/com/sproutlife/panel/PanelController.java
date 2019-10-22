@@ -382,6 +382,13 @@ public class PanelController {
             }
         });
 
+        dcp.getSpinnerTailLength().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                int length = (int) ((JSpinner) arg0.getSource()).getValue();
+                getBoardRenderer().getTailRenderer().setTailLength(length);
+            }
+        });
+        
         ItemListener backgroundThemeListener = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

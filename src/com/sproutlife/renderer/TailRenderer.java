@@ -16,33 +16,31 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class TailRenderer extends Renderer {
+    int tailLength = 9;
 
     public TailRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
         super(gameModel, boardRenderer);
     }
 
     public void paintTail(Graphics2D g, Organism o) {
+        Organism parent = o.getParent();
+        if (parent == null) {
+            return;
+        }
 
         int BLOCK_SIZE = getBlockSize();
+        ((Graphics2D) g).setStroke(new BasicStroke(BLOCK_SIZE * 4 / 5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g.setColor(getColor(o));
 
-        Organism parent = o.getParent();
-
-        ((Graphics2D) g).setStroke(new BasicStroke(BLOCK_SIZE * 4 / 5));
-
-        if (parent != null) {
-            Organism gParent = parent.getParent();
-            if (gParent != null) {
-                g.setColor(getColor(o));
-                drawLine(g, parent, gParent);
-            }
+        for (int tl = 0; tl<tailLength && parent!=null; tl++) {
+            drawLine(g, o.x, o.y, parent.x, parent.y);
+            o = parent;
+            parent = parent.getParent();
         }
+    }
 
-        if (parent != null) {
-            
-            g.setColor(getColor(o));
-            drawLine(g, o.x, o.y, parent.x, parent.y);            
-        }
-
+    public void setTailLength(int tailLength) {
+        this.tailLength = tailLength;
     }
 
     public void drawLine(Graphics2D g, Organism o1, Organism o2) {

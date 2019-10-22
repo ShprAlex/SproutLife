@@ -68,8 +68,8 @@ public class BoardRenderer {
         this.outlineSeeds = false;
 
         this.transform = new AffineTransform();        
-    } 
-    
+    }
+
     public void paint(Graphics2D g) {               
         
         if (getZoom()!=1) {
@@ -101,6 +101,22 @@ public class BoardRenderer {
     public ColorModel getColorModel() {
 		return colorModel;
 	}
+
+    public CellRenderer getCellRenderer() {
+        return cellRenderer;
+    }
+
+    public HeadRenderer getHeadRenderer() {
+        return headRenderer;
+    }
+
+    public TailRenderer getTailRenderer() {
+        return tailRenderer;
+    }
+
+    public GenomeRenderer getGenomeRenderer() {
+        return genomeRenderer;
+    }
 
     public void setPaintCellLayer(boolean paint) {
         this.paintCellLayer = paint;
