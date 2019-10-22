@@ -61,6 +61,15 @@ public class SeedFactory {
            return this.name;
         }
         
+        public static SeedType get(String name) {
+            for (SeedType st : SeedType.values()) {
+                if (st.toString().equals(name)) {
+                    return st;
+                }
+            }
+            return null;
+        }
+
         /*
          * 8 way symmetry. Looks the same way under rotation and also mirroring.
          * 

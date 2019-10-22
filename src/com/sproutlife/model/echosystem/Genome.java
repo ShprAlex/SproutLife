@@ -80,6 +80,10 @@ public class Genome {
         return mutations.get(age).size();
     }
 
+    public ArrayList<Mutation> getMutations(int organismAge) {
+        return mutations.get(organismAge);
+    }
+
     public Mutation getMutation(int age, int mutationIndex) {
         return mutations.get(age).get(mutationIndex);
     }

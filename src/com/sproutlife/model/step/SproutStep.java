@@ -18,6 +18,7 @@ import java.util.Random;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
+import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.BitPattern;
 import com.sproutlife.model.seed.Seed;
@@ -134,7 +135,7 @@ public class SproutStep extends Step {
                    continue;
                }
                
-               sproutSeed(s, o);
+               sproutSeed(s, o, getEchosystem());
                
                // update stats
                int childCount = o.getChildren().size()-1;
@@ -203,37 +204,7 @@ public class SproutStep extends Step {
     
 
     private void sproutRandomSeed() {
-        int x = (new Random()).nextInt(getBoard().getWidth());
-        int y = (new Random()).nextInt(getBoard().getHeight());
-        int border = getSeedBorder();                
- 
-        List<Seed> seedRotations = SeedFactory.getSeedRotations(getSeedType());
-        Seed s = seedRotations.get((new Random()).nextInt(seedRotations.size()));
-       
-        SeedSproutPattern pattern = s.getSeedSproutPattern();
-        final int seedWidth = pattern.getSeedPattern().getWidth();
-        final int seedHeight = pattern.getSeedPattern().getWidth();
-        final BitPattern currentSproutPattern = pattern.getSproutPattern();
-        SeedSproutPattern newPattern = new SeedSproutPattern() {                
-            {
-                this.seedPattern = new BitPattern(new int[seedWidth][seedHeight]);
-
-                this.sproutPattern = currentSproutPattern;
-
-                this.sproutOffset = new Point(0,0);
-            }        
-        };  
-        s.setPosition(x, y);       
-        s.setParentPosition(new Point(120,120));
-        Seed randomSeed = new Seed(newPattern, s.getRotation());
-        
-        randomSeed.setPosition(x, y);                      
-        randomSeed.setSeedBorder(border);
-        randomSeed.setParentPosition(new Point(x+1,y+1));
-        
-        sproutSeed(randomSeed,null);
-        
-        
+        sproutRandomSeed(getSeedType(), getEchosystem());
     }
     
     public boolean checkAndMarkSeed(Seed seed) {
@@ -297,9 +268,39 @@ public class SproutStep extends Step {
             c.setMarkedAsSeed(true);
         }
         return true;
-    }    
-    
-    public void sproutSeed(Seed seed, Organism seedOrg) {  
+    }
+
+    public static Organism sproutRandomSeed(SeedType seedType, Echosystem echosystem) {
+        int x = (new Random()).nextInt(echosystem.getBoard().getWidth());
+        int y = (new Random()).nextInt(echosystem.getBoard().getHeight());
+
+        List<Seed> seedRotations = SeedFactory.getSeedRotations(seedType);
+        Seed s = seedRotations.get((new Random()).nextInt(seedRotations.size()));
+
+        SeedSproutPattern pattern = s.getSeedSproutPattern();
+        final int seedWidth = pattern.getSeedPattern().getWidth();
+        final int seedHeight = pattern.getSeedPattern().getWidth();
+        final BitPattern currentSproutPattern = pattern.getSproutPattern();
+        SeedSproutPattern newPattern = new SeedSproutPattern() {
+            {
+                this.seedPattern = new BitPattern(new int[seedWidth][seedHeight]);
+
+                this.sproutPattern = currentSproutPattern;
+
+                this.sproutOffset = new Point(0, 0);
+            }
+        };
+        s.setPosition(x, y);
+        s.setParentPosition(new Point(120, 120));
+        Seed randomSeed = new Seed(newPattern, s.getRotation());
+
+        randomSeed.setPosition(x, y);
+        randomSeed.setParentPosition(new Point(x + 1, y + 1));
+
+        return sproutSeed(randomSeed, null, echosystem);
+    }
+
+    public static Organism sproutSeed(Seed seed, Organism seedOrg, Echosystem echosystem) {
 
         Point sproutPosition = seed.getSproutPosition();
         Point sproutCenter = seed.getSproutCenter();
@@ -320,10 +321,10 @@ public class SproutStep extends Step {
         int sproutHeight = seed.getSproutHeight();
                 
         if (seedX < 0 || seedY < 0
-                || seedX + seedWidth > getBoard().getWidth() - 1
-                || seedY + seedHeight > getBoard().getHeight() - 1
-                || sproutX + sproutWidth > getBoard().getWidth() - 1
-                || sproutY + sproutHeight > getBoard().getHeight() - 1
+                || seedX + seedWidth > echosystem.getBoard().getWidth() - 1
+                || seedY + seedHeight > echosystem.getBoard().getHeight() - 1
+                || sproutX + sproutWidth > echosystem.getBoard().getWidth() - 1
+                || sproutY + sproutHeight > echosystem.getBoard().getHeight() - 1
                 || sproutX < 0 || sproutY < 0) {
             
             //Clear the seed flag from cells before returning null
@@ -332,18 +333,18 @@ public class SproutStep extends Step {
                     c.setMarkedAsSeed(false);
                 }
             }
-            return;
+            return null;
         }  
     
-        Organism newOrg = getEchosystem().createOrganism(newOrgX, newOrgY, seedOrg, seed);
+        Organism newOrg = echosystem.createOrganism(newOrgX, newOrgY, seedOrg, seed);
         
         //Remove old seed
         for (int x=0;x<seedWidth;x++) {
             for (int y=0; y<seedHeight;y++) {
                 if (seed.getSeedBit(x, y)) {
-                    Cell rc = getBoard().getCell(seedX+x, seedY+y);
+                    Cell rc = echosystem.getBoard().getCell(seedX+x, seedY+y);
 
-                    getEchosystem().removeCell(rc);
+                    echosystem.removeCell(rc);
                     //getBoard().clearCell(seedX+x,seedY+y);              
                 }
             }
@@ -355,18 +356,18 @@ public class SproutStep extends Step {
                 int i = sproutX+si;
                 int j = sproutY+sj;
                 
-                Cell c = getBoard().getCell(i, j);
+                Cell c = echosystem.getBoard().getCell(i, j);
                 
                 if (c!=null) {   
                     //Only happens when border improperly configured 
                     //and/or successively sprouted seeds overlap each other
-                    getEchosystem().removeCell(c);
+                    echosystem.removeCell(c);
                     //getBoard().clearCell(i, j);
                 }
                 
                 if (seed.getSproutBit(si, sj)) {
                     
-                    Cell newC = getEchosystem().addCell(i,j,newOrg);                     
+                    Cell newC = echosystem.addCell(i,j,newOrg);
 
                 }
                 else {
@@ -374,6 +375,6 @@ public class SproutStep extends Step {
                 }
             }
         }
+        return newOrg;
     }  
-
 }
