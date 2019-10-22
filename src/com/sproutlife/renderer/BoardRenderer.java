@@ -26,7 +26,7 @@ import com.sproutlife.renderer.colors.DefaultColorModel;
 public class BoardRenderer {
     
     private int BLOCK_SIZE;  
-    private int defaultBlockSize = 3;  
+    private int defaultBlockSize = 3;
 
     private GameModel gameModel;
     private ColorModel colorModel;
@@ -196,7 +196,7 @@ public class BoardRenderer {
     }
 
     private void paintBackground(Graphics g) {      
-        g.setColor(new Color(255,255,255));
+        g.setColor(getColorModel().getBackgroundColor());
         int x = (int) getRendererBounds().x;
         int y = (int) getRendererBounds().y;
         int w = (int) getRendererBounds().width;

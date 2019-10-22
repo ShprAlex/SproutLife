@@ -44,6 +44,7 @@ import com.sproutlife.panel.gamepanel.ScrollPanelController;
 import com.sproutlife.panel.gamepanel.handler.DefaultHandlerSet;
 import com.sproutlife.panel.gamepanel.handler.InteractionHandler;
 import com.sproutlife.renderer.BoardRenderer;
+import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 
 public class PanelController {
     GameController gameController;
@@ -340,7 +341,8 @@ public class PanelController {
     }
       
     public void addDisplayControlPanelListeners() {
-        getDisplayControlPanel().getChckbxCellLayer().addItemListener(new ItemListener() {            
+        DisplayControlPanel dcp = getDisplayControlPanel();
+        dcp.getChckbxCellLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintCellLayer(getDisplayControlPanel().getChckbxCellLayer().isSelected());
@@ -348,7 +350,7 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxGenomeLayer().addItemListener(new ItemListener() {            
+        dcp.getChckbxGenomeLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintGenomeLayer(getDisplayControlPanel().getChckbxGenomeLayer().isSelected());
@@ -356,7 +358,7 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxOrgHeadLayer().addItemListener(new ItemListener() {            
+        dcp.getChckbxOrgHeadLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintHeadLayer(getDisplayControlPanel().getChckbxOrgHeadLayer().isSelected());
@@ -364,7 +366,7 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxOrgTailLayer().addItemListener(new ItemListener() {            
+        dcp.getChckbxOrgTailLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintTailLayer(getDisplayControlPanel().getChckbxOrgTailLayer().isSelected());
@@ -372,13 +374,30 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxOutlineSeeds().addItemListener(new ItemListener() {            
+        dcp.getChckbxOutlineSeeds().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setOutlineSeeds(getDisplayControlPanel().getChckbxOutlineSeeds().isSelected());
                 getImageManager().repaintNewImage();
             }
-        });                  
+        });
+
+        ItemListener backgroundThemeListener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (dcp.getRdbtnBackgroundWhite().isSelected()) {
+                    getSettings().set(Settings.BACKGROUND_THEME, "white");
+                    getBoardRenderer().getColorModel().setBackgroundTheme(BackgroundTheme.white);
+                } else {
+                    getSettings().set(Settings.BACKGROUND_THEME, "black");
+                    getBoardRenderer().getColorModel().setBackgroundTheme(BackgroundTheme.black);
+                }
+                getImageManager().repaintNewImage();
+            }
+        };
+
+        dcp.getRdbtnBackgroundBlack().addItemListener(backgroundThemeListener);
+        dcp.getRdbtnBackgroundWhite().addItemListener(backgroundThemeListener);
     }
     
     public void addSettingsControlPanelListeners() {
@@ -441,17 +460,25 @@ public class PanelController {
         getSettingsControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
 
-        String lifeMode = getSettings().getString(Settings.LIFE_MODE);
-        if ("friendly".equals(lifeMode)) {
-            getMainControlPanel().getRdbtnFriendly().setSelected(true);
+        switch (getSettings().getString(Settings.LIFE_MODE)) {
+            case "friendly":
+                getMainControlPanel().getRdbtnFriendly().setSelected(true);
+                break;
+            case "competitive1":
+                getMainControlPanel().getRdbtnCompetitive1().setSelected(true);
+                break;
+            default:
+                getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
         }
-        else if ("competitive1".equals(lifeMode)) {
-            getMainControlPanel().getRdbtnCompetitive1().setSelected(true);
+
+        switch (getSettings().getString(Settings.BACKGROUND_THEME)) {
+            case "white":
+                getDisplayControlPanel().getRdbtnBackgroundWhite().setSelected(true);
+                break;
+            default:
+                getDisplayControlPanel().getRdbtnBackgroundBlack().setSelected(true);
         }
-        else {
-            getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
-        }
-        
+
         SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
         JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getMainControlPanel().getSeedTypeComboBox();
         if (seedType!=null) {
