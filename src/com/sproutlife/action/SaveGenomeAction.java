@@ -30,7 +30,6 @@ public class SaveGenomeAction extends AbstractAction {
     public SaveGenomeAction(PanelController controller, String name) {
         super(name);
         this.controller = controller;
-        
     }
     
     public SaveGenomeAction(PanelController controller) {
