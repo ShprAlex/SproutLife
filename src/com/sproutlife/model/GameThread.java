@@ -65,6 +65,10 @@ public class GameThread {
         this.autoAdjust = autoAdjust;
     }
     
+    public boolean getAutoAdjust() {
+        return autoAdjust;
+    }
+
     public void setSleepDelay(int sleepDelay) {
         this.sleepDelay = sleepDelay;
     }
@@ -72,7 +76,7 @@ public class GameThread {
     public void setIterations(int iterations) {
         this.iterations = iterations;
     }
-    
+
     /*
      * Only expecting one gameStepListener for now, therefore a "set" method
      */
@@ -115,7 +119,7 @@ public class GameThread {
     }
 
     
-    private int getIterations() {
+    public int getIterations() {
         if (!autoAdjust) {
             return this.iterations;
         }

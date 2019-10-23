@@ -7,6 +7,7 @@
  *******************************************************************************/
 package com.sproutlife.panel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -57,6 +59,7 @@ public class PanelController {
     StatsPanel statsPanel;
     TipsPanel tipsPanel;
     JMenuBar gameMenu;
+    GameToolbar gameToolbar;
     BoardRenderer boardRenderer;
         
     ScrollPanelController scrollController;
@@ -168,6 +171,10 @@ public class PanelController {
         return gameMenu;
     }
     
+    public GameToolbar getGameToolbar() {
+        return gameToolbar;
+    }
+
     public Settings getSettings() {
         return getGameController().getSettings();
     }
@@ -176,6 +183,7 @@ public class PanelController {
         gameFrame = new GameFrame(this);
         gameMenu = new GameMenu(this);
         gameFrame.setJMenuBar(gameMenu);
+        gameToolbar = new GameToolbar(this);
         
         boardRenderer = new BoardRenderer(getGameModel());
         mainControlPanel = new MainControlPanel(this);
@@ -194,7 +202,11 @@ public class PanelController {
         rightPane.addTab("Stats", statsPanel);
         rightPane.addTab("Tips", tipsPanel);
 
-        gameFrame.getSplitPane().setLeftComponent(scrollPanel);
+        JPanel gamePanel = new JPanel(new BorderLayout());
+        gamePanel.add(scrollPanel, BorderLayout.CENTER);
+        gamePanel.add(gameToolbar, BorderLayout.NORTH);
+
+        gameFrame.getSplitPane().setLeftComponent(gamePanel);
         gameFrame.getSplitPane().setRightComponent(rightPane);
     }
     
@@ -203,7 +215,7 @@ public class PanelController {
         gameFrame.setVisible(true);  
         getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
-        getMainControlPanel().getZoomSlider().setValue(-3);        
+        getGameToolbar().getZoomSlider().setValue(-3);
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
 
@@ -240,13 +252,21 @@ public class PanelController {
                 if (event.getStepType() == StepType.STEP_BUNDLE) {
                     getImageManager().repaintNewImage();
                     
-                    if (getGameModel().getTime()%100==0) {                        
-                      
+                    if (getGameModel().getTime()%100==0) {
                         SwingUtilities.invokeLater(new Runnable() {                            
                             @Override
                             public void run() {                                
                                 getStatsPanel().getStatsTextPane().setText(
-                                        getGameModel().getStats().getDisplayText());                                
+                                        getGameModel().getStats().getDisplayText());
+
+                                if (getGameModel().getGameThread().getIterations()>=2 &&
+                                        getGameModel().getGameThread().getAutoAdjust() &&
+                                        getGameModel().getTime()>5000) {
+                                    getGameToolbar().getSpeedSlider().setValue(1);
+                                    getGameModel().getGameThread().setAutoAdjust(false);
+                                    getDisplayControlPanel().getChckbxCellLayer().setSelected(false);
+                                    getDisplayControlPanel().getChckbxGenomeLayer().setSelected(false);
+                                }
                             }
                         });
                     }
@@ -257,7 +277,7 @@ public class PanelController {
     }
     
     private void addMainControlPanelListeners() {
-        getMainControlPanel().getStartPauseButton().setAction(
+        getGameToolbar().getStartPauseButton().setAction(
                 getActionManager().getPlayGameAction()); 
         
         getMainControlPanel().getStepButton().addActionListener(new ActionListener() {
@@ -272,7 +292,7 @@ public class PanelController {
         getMainControlPanel().getResetButton().setAction(
                 getActionManager().getResetGameAction());
                                         
-        getMainControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
+        getGameToolbar().getZoomSlider().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateZoomValue(value);
@@ -280,7 +300,7 @@ public class PanelController {
             }
         });
         
-        getMainControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
+        getGameToolbar().getSpeedSlider().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateSpeedValue(value);
