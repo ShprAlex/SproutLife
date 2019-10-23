@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class HeadRenderer extends Renderer {
@@ -22,13 +21,32 @@ public class HeadRenderer extends Renderer {
 
     public void paintHead(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
-
+        int rectSize = BLOCK_SIZE*3;
         g.setColor(getColor(o));
-        if (o.getCells().size()>0) {
-            int rectSize = BLOCK_SIZE*3;
-            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*(o.x-1)), BLOCK_SIZE + (BLOCK_SIZE*(o.y-1)), rectSize, rectSize);
+        double ox = o.x;
+        double oy = o.y;
+        for (Organism ch : o.getChildren()) {
+            if (ch.isAlive()) {
+                return;
+            }
         }
 
+        Organism parent = o.getParent();
+        if (parent!=null) {
+            int paab = o.getAttributes().parentAgeAtBirth;
+            if (parent.getParent()!=null) {
+                // average of parent and grandparent age of having child.
+                paab = (paab + o.getParent().getAttributes().parentAgeAtBirth)/2;
+            }
+            double scale = 1.0*Math.min(o.getAge(),paab)/paab;
+            if (o.getChildren().size()>0) {
+                scale = 1;
+            }
+            ox = parent.x+((o.x-parent.x)*scale);
+            oy = parent.y+((o.y-parent.y)*scale);
+        }
+
+        g.fillRect(BLOCK_SIZE + (int) (BLOCK_SIZE*(ox-1)), BLOCK_SIZE + (int) (BLOCK_SIZE*(oy-1)), rectSize, rectSize);
     }
 
     private Color getColor(Organism o) {
