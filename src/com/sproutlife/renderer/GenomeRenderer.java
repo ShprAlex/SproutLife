@@ -13,7 +13,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class GenomeRenderer extends Renderer {
@@ -23,14 +22,35 @@ public class GenomeRenderer extends Renderer {
     }
 
     public void paintGenome(Graphics2D g, Organism o) {
+        for (Organism ch : o.getChildren()) {
+            // if we hide the parent when a child is born, it looks like the parent became the child.
+            if (ch.isAlive()) {
+                return;
+            }
+        }
 
         ArrayList<Point> filteredMutationPoints = getFilteredMutationPoints(o);
-
         int BLOCK_SIZE = getBlockSize();
+
+        double adjx = 0;
+        double adjy = 0;
+        Organism parent = o.getParent();
+        if (parent!=null) {
+            int paab = o.getAttributes().parentAgeAtBirth;
+            if (parent.getParent()!=null) {
+                // average of parent and grandparent age of having child.
+                paab = (paab + o.getParent().getAttributes().parentAgeAtBirth)/2;
+            }
+            double scale = 1.0*Math.min(o.getAge(),paab)/paab;
+            if (o.getChildren().size()>0) {
+                scale = 1;
+            }
+            adjx = parent.x+((o.x-parent.x)*scale)-o.x;
+            adjy = parent.y+((o.y-parent.y)*scale)-o.y;
+        }
 
         //Paint light background under black mutation points
         g.setColor(getGenomeBackgroundColor(o));
-
         if (BLOCK_SIZE>1) {
             int countP=0;
             for (Point p: filteredMutationPoints) {
@@ -41,11 +61,11 @@ public class GenomeRenderer extends Renderer {
                 }
 
                 if (BLOCK_SIZE>1 || !oneSmaller) {
-                    paintBlock(g,o.x,o.y,p.x,p.y,0,1,oneSmaller);
-                    paintBlock(g,o.x,o.y,p.x,p.y,1,0,oneSmaller);
+                    paintBlock(g,o.x,o.y,p.x,p.y,adjx, adjy, 0,1,oneSmaller);
+                    paintBlock(g,o.x,o.y,p.x,p.y,adjx, adjy, 1,0,oneSmaller);
                 }
                 else {
-                    paintBlock(g,o.x,o.y,p.x,p.y,1,1,oneSmaller);
+                    paintBlock(g,o.x,o.y,p.x,p.y,adjx, adjy, 1,1,oneSmaller);
                 }
             }
         }
@@ -62,16 +82,16 @@ public class GenomeRenderer extends Renderer {
 
             if (BLOCK_SIZE>3&&!oneSmaller || BLOCK_SIZE>4) {
 
-                paintBlock(g,o.x,o.y,p.x,p.y,0,-1,oneSmaller);
-                paintBlock(g,o.x,o.y,p.x,p.y,-1,0,oneSmaller);
+                paintBlock(g,o.x,o.y,p.x,p.y,adjx, adjy,0,-1, oneSmaller);
+                paintBlock(g,o.x,o.y,p.x,p.y,adjx, adjy,-1,0, oneSmaller);
             }
             else {
-                paintBlock(g,o.x,o.y,p.x,p.y,0,0,oneSmaller);
+                paintBlock(g,o.x,o.y,p.x,p.y,adjx, adjy,0,0, oneSmaller);
             }
         }
     }
 
-    public void paintBlock(Graphics2D g, int x, int y, int mx, int my, int dx, int dy, boolean oneSmaller) {
+    public void paintBlock(Graphics2D g, int x, int y, int mx, int my, double adjx, double adjy, int dx, int dy, boolean oneSmaller) {
 
         int BLOCK_SIZE = getBlockSize();            
         double mbs = BLOCK_SIZE/3.5;
@@ -79,8 +99,8 @@ public class GenomeRenderer extends Renderer {
             mbs = BLOCK_SIZE/4.25;
         }
 
-        int rx = BLOCK_SIZE + (BLOCK_SIZE*x)+(int)(mx*mbs)-dx;
-        int ry = BLOCK_SIZE + (BLOCK_SIZE*y)+(int)(my*mbs)-dy;
+        int rx = BLOCK_SIZE + (int) (BLOCK_SIZE*(x+adjx))+(int)(mx*mbs)-dx;
+        int ry = BLOCK_SIZE + (int) (BLOCK_SIZE*(y+adjy))+(int)(my*mbs)-dy;
         int rw = BLOCK_SIZE+dx*2;
         int rh = BLOCK_SIZE+dy*2;
 

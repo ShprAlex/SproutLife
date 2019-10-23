@@ -12,50 +12,71 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class TailRenderer extends Renderer {
+    int tailLength = 9;
 
     public TailRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
         super(gameModel, boardRenderer);
     }
 
+    public void setTailLength(int tailLength) {
+        this.tailLength = tailLength;
+    }
+
     public void paintTail(Graphics2D g, Organism o) {
-
         int BLOCK_SIZE = getBlockSize();
-
         Organism parent = o.getParent();
+        ((Graphics2D) g).setStroke(new BasicStroke(BLOCK_SIZE * 4 / 5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-        ((Graphics2D) g).setStroke(new BasicStroke(BLOCK_SIZE * 4 / 5));
+        if (parent==null) {
+            return;
+        }
 
-        if (parent != null) {
-            Organism gParent = parent.getParent();
-            if (gParent != null) {
-                g.setColor(getColor(o));
-                drawLine(g, parent, gParent);
+        for (Organism ch : o.getChildren()) {
+            if(ch.isAlive()) {
+                return;
             }
         }
 
-        if (parent != null) {
-            
-            g.setColor(getColor(o));
-            drawLine(g, o.x, o.y, parent.x, parent.y);            
+        g.setColor(getColor(o));
+        if (o.isAlive()) {
+            int paab = o.getAttributes().parentAgeAtBirth;
+            if (parent.getParent()!=null) {
+                // average of parent and grandparent age of having child.
+                paab = (paab + o.getParent().getAttributes().parentAgeAtBirth)/2;
+            }
+            double scale = 1.0*Math.min(o.getAge(),paab)/paab;
+            if (o.getChildren().size()>0) {
+                scale = 1;
+            }
+            double ox = parent.x+((o.x-parent.x)*scale);
+            double oy = parent.y+((o.y-parent.y)*scale);
+            drawLine(g, ox, oy, parent.x, parent.y);
         }
 
+        o = parent;
+        parent = parent.getParent();
+
+        for (int tl = 1; tl<tailLength && parent!=null; tl++) {
+            drawLine(g, o.x, o.y, parent.x, parent.y);
+            o = parent;
+            parent = parent.getParent();
+        }
     }
 
     public void drawLine(Graphics2D g, Organism o1, Organism o2) {
         drawLine(g, o1.x, o1.y, o2.x , o2.y);
     }
 
-    public void drawLine(Graphics2D g, int x1, int y1, int x2, int y2) {
+    public void drawLine(Graphics2D g, double x1, double y1, double x2, double y2) {
         int BLOCK_SIZE = getBlockSize();
         g.drawLine(
-                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * x1),
-                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * y1),
-                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * x2),
-                BLOCK_SIZE + BLOCK_SIZE / 2 + (BLOCK_SIZE * y2));
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (int) (BLOCK_SIZE * x1),
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (int) (BLOCK_SIZE * y1),
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (int) (BLOCK_SIZE * x2),
+                BLOCK_SIZE + BLOCK_SIZE / 2 + (int) (BLOCK_SIZE * y2));
     }
 
     private Color getColor(Organism o) {

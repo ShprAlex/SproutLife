@@ -7,6 +7,7 @@
  *******************************************************************************/
 package com.sproutlife.panel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -44,6 +46,7 @@ import com.sproutlife.panel.gamepanel.ScrollPanelController;
 import com.sproutlife.panel.gamepanel.handler.DefaultHandlerSet;
 import com.sproutlife.panel.gamepanel.handler.InteractionHandler;
 import com.sproutlife.renderer.BoardRenderer;
+import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 
 public class PanelController {
     GameController gameController;
@@ -56,6 +59,7 @@ public class PanelController {
     StatsPanel statsPanel;
     TipsPanel tipsPanel;
     JMenuBar gameMenu;
+    GameToolbar gameToolbar;
     BoardRenderer boardRenderer;
         
     ScrollPanelController scrollController;
@@ -167,6 +171,10 @@ public class PanelController {
         return gameMenu;
     }
     
+    public GameToolbar getGameToolbar() {
+        return gameToolbar;
+    }
+
     public Settings getSettings() {
         return getGameController().getSettings();
     }
@@ -175,6 +183,7 @@ public class PanelController {
         gameFrame = new GameFrame(this);
         gameMenu = new GameMenu(this);
         gameFrame.setJMenuBar(gameMenu);
+        gameToolbar = new GameToolbar(this);
         
         boardRenderer = new BoardRenderer(getGameModel());
         mainControlPanel = new MainControlPanel(this);
@@ -193,7 +202,11 @@ public class PanelController {
         rightPane.addTab("Stats", statsPanel);
         rightPane.addTab("Tips", tipsPanel);
 
-        gameFrame.getSplitPane().setLeftComponent(scrollPanel);
+        JPanel gamePanel = new JPanel(new BorderLayout());
+        gamePanel.add(scrollPanel, BorderLayout.CENTER);
+        gamePanel.add(gameToolbar, BorderLayout.NORTH);
+
+        gameFrame.getSplitPane().setLeftComponent(gamePanel);
         gameFrame.getSplitPane().setRightComponent(rightPane);
     }
     
@@ -202,7 +215,7 @@ public class PanelController {
         gameFrame.setVisible(true);  
         getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
-        getMainControlPanel().getZoomSlider().setValue(-3);        
+        getGameToolbar().getZoomSlider().setValue(-3);
         updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
 
@@ -239,13 +252,21 @@ public class PanelController {
                 if (event.getStepType() == StepType.STEP_BUNDLE) {
                     getImageManager().repaintNewImage();
                     
-                    if (getGameModel().getTime()%100==0) {                        
-                      
+                    if (getGameModel().getTime()%100==0) {
                         SwingUtilities.invokeLater(new Runnable() {                            
                             @Override
                             public void run() {                                
                                 getStatsPanel().getStatsTextPane().setText(
-                                        getGameModel().getStats().getDisplayText());                                
+                                        getGameModel().getStats().getDisplayText());
+
+                                if (getGameModel().getGameThread().getIterations()>=2 &&
+                                        getGameModel().getGameThread().getAutoAdjust() &&
+                                        getGameModel().getTime()>5000) {
+                                    getGameToolbar().getSpeedSlider().setValue(1);
+                                    getGameModel().getGameThread().setAutoAdjust(false);
+                                    getDisplayControlPanel().getChckbxCellLayer().setSelected(false);
+                                    getDisplayControlPanel().getChckbxGenomeLayer().setSelected(false);
+                                }
                             }
                         });
                     }
@@ -256,7 +277,7 @@ public class PanelController {
     }
     
     private void addMainControlPanelListeners() {
-        getMainControlPanel().getStartPauseButton().setAction(
+        getGameToolbar().getStartPauseButton().setAction(
                 getActionManager().getPlayGameAction()); 
         
         getMainControlPanel().getStepButton().addActionListener(new ActionListener() {
@@ -271,7 +292,7 @@ public class PanelController {
         getMainControlPanel().getResetButton().setAction(
                 getActionManager().getResetGameAction());
                                         
-        getMainControlPanel().getZoomSlider().addChangeListener(new ChangeListener() {            
+        getGameToolbar().getZoomSlider().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateZoomValue(value);
@@ -279,7 +300,7 @@ public class PanelController {
             }
         });
         
-        getMainControlPanel().getSpeedSlider().addChangeListener(new ChangeListener() {            
+        getGameToolbar().getSpeedSlider().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateSpeedValue(value);
@@ -340,7 +361,8 @@ public class PanelController {
     }
       
     public void addDisplayControlPanelListeners() {
-        getDisplayControlPanel().getChckbxCellLayer().addItemListener(new ItemListener() {            
+        DisplayControlPanel dcp = getDisplayControlPanel();
+        dcp.getChckbxCellLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintCellLayer(getDisplayControlPanel().getChckbxCellLayer().isSelected());
@@ -348,7 +370,7 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxGenomeLayer().addItemListener(new ItemListener() {            
+        dcp.getChckbxGenomeLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintGenomeLayer(getDisplayControlPanel().getChckbxGenomeLayer().isSelected());
@@ -356,7 +378,7 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxOrgHeadLayer().addItemListener(new ItemListener() {            
+        dcp.getChckbxOrgHeadLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintHeadLayer(getDisplayControlPanel().getChckbxOrgHeadLayer().isSelected());
@@ -364,7 +386,7 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxOrgTailLayer().addItemListener(new ItemListener() {            
+        dcp.getChckbxOrgTailLayer().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setPaintTailLayer(getDisplayControlPanel().getChckbxOrgTailLayer().isSelected());
@@ -372,13 +394,37 @@ public class PanelController {
             }
         });
         
-        getDisplayControlPanel().getChckbxOutlineSeeds().addItemListener(new ItemListener() {            
+        dcp.getChckbxOutlineSeeds().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 getBoardRenderer().setOutlineSeeds(getDisplayControlPanel().getChckbxOutlineSeeds().isSelected());
                 getImageManager().repaintNewImage();
             }
-        });                  
+        });
+
+        dcp.getSpinnerTailLength().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                int length = (int) ((JSpinner) arg0.getSource()).getValue();
+                getBoardRenderer().getTailRenderer().setTailLength(length);
+            }
+        });
+        
+        ItemListener backgroundThemeListener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (dcp.getRdbtnBackgroundWhite().isSelected()) {
+                    getSettings().set(Settings.BACKGROUND_THEME, "white");
+                    getBoardRenderer().getColorModel().setBackgroundTheme(BackgroundTheme.white);
+                } else {
+                    getSettings().set(Settings.BACKGROUND_THEME, "black");
+                    getBoardRenderer().getColorModel().setBackgroundTheme(BackgroundTheme.black);
+                }
+                getImageManager().repaintNewImage();
+            }
+        };
+
+        dcp.getRdbtnBackgroundBlack().addItemListener(backgroundThemeListener);
+        dcp.getRdbtnBackgroundWhite().addItemListener(backgroundThemeListener);
     }
     
     public void addSettingsControlPanelListeners() {
@@ -441,17 +487,25 @@ public class PanelController {
         getSettingsControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
 
-        String lifeMode = getSettings().getString(Settings.LIFE_MODE);
-        if ("friendly".equals(lifeMode)) {
-            getMainControlPanel().getRdbtnFriendly().setSelected(true);
+        switch (getSettings().getString(Settings.LIFE_MODE)) {
+            case "friendly":
+                getMainControlPanel().getRdbtnFriendly().setSelected(true);
+                break;
+            case "competitive1":
+                getMainControlPanel().getRdbtnCompetitive1().setSelected(true);
+                break;
+            default:
+                getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
         }
-        else if ("competitive1".equals(lifeMode)) {
-            getMainControlPanel().getRdbtnCompetitive1().setSelected(true);
+
+        switch (getSettings().getString(Settings.BACKGROUND_THEME)) {
+            case "white":
+                getDisplayControlPanel().getRdbtnBackgroundWhite().setSelected(true);
+                break;
+            default:
+                getDisplayControlPanel().getRdbtnBackgroundBlack().setSelected(true);
         }
-        else {
-            getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
-        }
-        
+
         SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
         JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getMainControlPanel().getSeedTypeComboBox();
         if (seedType!=null) {

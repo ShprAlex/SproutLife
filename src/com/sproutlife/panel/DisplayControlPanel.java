@@ -18,6 +18,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import java.awt.FlowLayout;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class DisplayControlPanel extends JPanel {
 
@@ -29,13 +34,21 @@ public class DisplayControlPanel extends JPanel {
     private JCheckBox chckbxOrgTailLayer;
     private JLabel lblDrawLayers;
     private JCheckBox chckbxOutlineSeeds;
+    private JLabel lblBackground;
+    private JPanel panel;
+    private JRadioButton rdbtnBackgroundWhite;
+    private JRadioButton rdbtnBackgroundBlack;
+    private final ButtonGroup buttonGroupBackground = new ButtonGroup();
+    private Component verticalStrut;
+    private JSpinner spinnerTailLength;
+    private Box horizontalBox_1;
 
 
 
 
     public DisplayControlPanel(PanelController panelController) {
         setMinimumSize(new Dimension(220, 0));
-        setPreferredSize(new Dimension(260, 631));
+        setPreferredSize(new Dimension(280, 631));
 
         this.panelController = panelController;
         buildPanel();
@@ -46,10 +59,10 @@ public class DisplayControlPanel extends JPanel {
     public void buildPanel() {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] {10, 30, 100, 10};
+        gridBagLayout.columnWidths = new int[] {10, 30, 100};
         gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0};
-        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0};
         setLayout(gridBagLayout);
 
         lblDrawLayers = new JLabel("Draw Layers");
@@ -64,7 +77,7 @@ public class DisplayControlPanel extends JPanel {
         GridBagConstraints gbc_panel_2 = new GridBagConstraints();
         gbc_panel_2.gridwidth = 2;
         gbc_panel_2.anchor = GridBagConstraints.WEST;
-        gbc_panel_2.insets = new Insets(0, 30, 5, 5);
+        gbc_panel_2.insets = new Insets(0, 30, 5, 0);
         gbc_panel_2.fill = GridBagConstraints.VERTICAL;
         gbc_panel_2.gridx = 1;
         gbc_panel_2.gridy = 2;
@@ -82,13 +95,57 @@ public class DisplayControlPanel extends JPanel {
         chckbxOrgHeadLayer = new JCheckBox("Org Head Layer");
         chckbxOrgHeadLayer.setSelected(true);
         panel_2.add(chckbxOrgHeadLayer);
+        
+        horizontalBox_1 = Box.createHorizontalBox();
+        horizontalBox_1.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel_2.add(horizontalBox_1);
 
-        chckbxOrgTailLayer = new JCheckBox("Org Tail Layer");
+        chckbxOrgTailLayer = new JCheckBox("Org Tail Layer, Length");
+        horizontalBox_1.add(chckbxOrgTailLayer);
         chckbxOrgTailLayer.setSelected(true);
-        panel_2.add(chckbxOrgTailLayer);
-
-        chckbxOutlineSeeds = new JCheckBox("Outline Seeds & Young");
-        panel_2.add(chckbxOutlineSeeds);
+        
+        spinnerTailLength = new JSpinner();
+        spinnerTailLength.setModel(new SpinnerNumberModel(9, 1, 20, 1));
+        horizontalBox_1.add(spinnerTailLength);
+        
+                chckbxOutlineSeeds = new JCheckBox("Outline Seeds & Young");
+                panel_2.add(chckbxOutlineSeeds);
+        
+        verticalStrut = Box.createVerticalStrut(20);
+        GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
+        gbc_verticalStrut.insets = new Insets(0, 0, 5, 5);
+        gbc_verticalStrut.gridx = 0;
+        gbc_verticalStrut.gridy = 3;
+        add(verticalStrut, gbc_verticalStrut);
+        
+        lblBackground = new JLabel("Background Theme");
+        GridBagConstraints gbc_lblBackground = new GridBagConstraints();
+        gbc_lblBackground.gridwidth = 2;
+        gbc_lblBackground.anchor = GridBagConstraints.NORTHWEST;
+        gbc_lblBackground.insets = new Insets(0, 0, 5, 0);
+        gbc_lblBackground.gridx = 1;
+        gbc_lblBackground.gridy = 4;
+        add(lblBackground, gbc_lblBackground);
+        
+        panel = new JPanel();
+        GridBagConstraints gbc_panel = new GridBagConstraints();
+        gbc_panel.fill = GridBagConstraints.VERTICAL;
+        gbc_panel.anchor = GridBagConstraints.WEST;
+        gbc_panel.gridwidth = 2;
+        gbc_panel.insets = new Insets(0, 30, 5, 0);
+        gbc_panel.gridx = 1;
+        gbc_panel.gridy = 5;
+        add(panel, gbc_panel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        rdbtnBackgroundBlack = new JRadioButton("Black");
+        buttonGroupBackground.add(rdbtnBackgroundBlack);
+        rdbtnBackgroundBlack.setSelected(true);
+        panel.add(rdbtnBackgroundBlack);
+        
+        rdbtnBackgroundWhite = new JRadioButton("White");
+        buttonGroupBackground.add(rdbtnBackgroundWhite);
+        panel.add(rdbtnBackgroundWhite);
 
     }
 
@@ -106,5 +163,14 @@ public class DisplayControlPanel extends JPanel {
     }
     public JCheckBox getChckbxOutlineSeeds() {
         return chckbxOutlineSeeds;
+    }
+    public JRadioButton getRdbtnBackgroundBlack() {
+        return rdbtnBackgroundBlack;
+    }
+    public JRadioButton getRdbtnBackgroundWhite() {
+        return rdbtnBackgroundWhite;
+    }
+    public JSpinner getSpinnerTailLength() {
+        return spinnerTailLength;
     }
 }

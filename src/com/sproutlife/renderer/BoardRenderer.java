@@ -26,7 +26,7 @@ import com.sproutlife.renderer.colors.DefaultColorModel;
 public class BoardRenderer {
     
     private int BLOCK_SIZE;  
-    private int defaultBlockSize = 3;  
+    private int defaultBlockSize = 3;
 
     private GameModel gameModel;
     private ColorModel colorModel;
@@ -68,8 +68,8 @@ public class BoardRenderer {
         this.outlineSeeds = false;
 
         this.transform = new AffineTransform();        
-    } 
-    
+    }
+
     public void paint(Graphics2D g) {               
         
         if (getZoom()!=1) {
@@ -101,6 +101,22 @@ public class BoardRenderer {
     public ColorModel getColorModel() {
 		return colorModel;
 	}
+
+    public CellRenderer getCellRenderer() {
+        return cellRenderer;
+    }
+
+    public HeadRenderer getHeadRenderer() {
+        return headRenderer;
+    }
+
+    public TailRenderer getTailRenderer() {
+        return tailRenderer;
+    }
+
+    public GenomeRenderer getGenomeRenderer() {
+        return genomeRenderer;
+    }
 
     public void setPaintCellLayer(boolean paint) {
         this.paintCellLayer = paint;
@@ -196,7 +212,7 @@ public class BoardRenderer {
     }
 
     private void paintBackground(Graphics g) {      
-        g.setColor(new Color(255,255,255));
+        g.setColor(getColorModel().getBackgroundColor());
         int x = (int) getRendererBounds().x;
         int y = (int) getRendererBounds().y;
         int w = (int) getRendererBounds().width;

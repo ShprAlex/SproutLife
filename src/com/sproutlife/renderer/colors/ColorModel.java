@@ -12,11 +12,22 @@ import java.awt.Color;
 import com.sproutlife.model.echosystem.Organism;
 
 public interface ColorModel {
-	public Color getCellColor(Organism o);
+    public static enum BackgroundTheme {
+        black,
+        white;
+    }
 
-	public Color getHeadColor(Organism o);
+    public BackgroundTheme getBackgroundTheme();
 
-	public Color getTailColor(Organism o);
+    public void setBackgroundTheme(BackgroundTheme t);
 
-	public Color getGenomeBackgroundColor(Organism o);
+    public Color getBackgroundColor();
+
+    public Color getCellColor(Organism o);
+
+    public Color getHeadColor(Organism o);
+
+    public Color getTailColor(Organism o);
+
+    public Color getGenomeBackgroundColor(Organism o);
 }

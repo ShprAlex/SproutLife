@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 
 
 public class GameFrame extends JFrame {
@@ -34,7 +35,6 @@ public class GameFrame extends JFrame {
         splitPane.setResizeWeight(1);
         splitPane.setOneTouchExpandable(true);
         add(splitPane);
-        
     }
     
     public JSplitPane getSplitPane() {
