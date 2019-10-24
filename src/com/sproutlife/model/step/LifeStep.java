@@ -73,16 +73,16 @@ public class LifeStep extends Step {
         ArrayList<Cell> deadCells = new ArrayList<Cell>();  
 
         
-        for (int i=0; i<getBoard().getWidth(); i++) {            
-            for (int j=0; j<getBoard().getHeight(); j++) {                                   
+        for (int x=0; x<getBoard().getWidth(); x++) {
+            for (int y=0; y<getBoard().getHeight(); y++) {
                 
-                Cell me = getBoard().getCell(i,j);
+                Cell me = getBoard().getCell(x,y);
                 
                 if (me == null) {
-                    if (getBoard().hasNeighbors(i, j)) {
-                        ArrayList<Cell> neighbors = getBoard().getNeighbors(i, j);
+                    if (getBoard().hasNeighbors(x, y)) {
+                        ArrayList<Cell> neighbors = getBoard().getNeighbors(x, y);
 
-                        Cell result = getLifeMode().getBorn(neighbors, i, j);
+                        Cell result = getLifeMode().getBorn(neighbors, x, y);
 
                         if (result != null) {
 
@@ -92,8 +92,8 @@ public class LifeStep extends Step {
                     }
                 }
                 else {                    
-                    ArrayList<Cell> neighbors = getBoard().getNeighbors(i,j);
-                    Cell result = getLifeMode().keepAlive(me,neighbors,i,j);
+                    ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
+                    Cell result = getLifeMode().keepAlive(me,neighbors,x,y);
                     if (result!=null) {
                         getStats().stayed++;                       
                     }
