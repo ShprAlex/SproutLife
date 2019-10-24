@@ -10,6 +10,7 @@ package com.sproutlife.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -328,7 +329,10 @@ public class PanelController {
         getMainControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 getBoardRenderer().setDefaultBlockSize(getBoardRenderer().getBlockSize());
-                updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());                                               
+                Rectangle bounds = getScrollPanel().getViewportRectangle();
+                bounds.x+=20;
+                bounds.y+=20;
+                updateBoardSizeFromPanelSize(bounds);
             }
         });
         
@@ -591,25 +595,27 @@ public class PanelController {
     }
     
     public void updateBoardSizeFromPanelSize(Dimension d) {
+        updateBoardSizeFromPanelSize(new Rectangle(0, 0, d.width,d.height));
+    }
+
+    public void updateBoardSizeFromPanelSize(Rectangle r) {
         getInteractionLock().writeLock().lock();
-         
-        getBoardRenderer().setBounds(d);
-                
-        int boardWidth = (d.width-40)/getBoardRenderer().getDefaultBlockSize()-2;
-        int boardHeight = (d.height-40)/getBoardRenderer().getDefaultBlockSize()-2;
+        int boardWidth = (r.width-40)/getBoardRenderer().getDefaultBlockSize()-2;
+        int boardHeight = (r.height-40)/getBoardRenderer().getDefaultBlockSize()-2;
+        int x = r.x/getBoardRenderer().getDefaultBlockSize();
+        int y = r.y/getBoardRenderer().getDefaultBlockSize();
+
+        boardWidth=Math.max(1, boardWidth);
+        boardHeight=Math.max(1, boardHeight);
+        getGameModel().getEchosystem().updateBoard(new Rectangle(x,y,boardWidth, boardHeight));
         
+        getBoardRenderer().setBounds(new Dimension(r.width, r.height));
         boolean autoSizeGrid = getMainControlPanel().getAutoSizeGridCheckbox().isSelected();
         if (autoSizeGrid) {
             getMainControlPanel().getBoardWidthSpinner().setValue(boardWidth);
             getMainControlPanel().getBoardHeightSpinner().setValue(boardHeight);
         }
-        
         getMainControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
-
-        Dimension boardSize = new Dimension(boardWidth,boardHeight);
-        boardSize.width=Math.max(1, boardSize.width);
-        boardSize.height=Math.max(1, boardSize.height);
-        getGameModel().getEchosystem().setBoardSize(boardSize);
 
         getInteractionLock().writeLock().unlock();
 

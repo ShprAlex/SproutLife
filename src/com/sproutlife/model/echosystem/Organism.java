@@ -59,9 +59,7 @@ public class Organism {
         this.born = clock.getTime();
         this.parent = parent;
         this.children = new ArrayList<Organism>();
-        this.x = x;
-        this.y = y;
-        this.location = new Point(x,y);
+        this.setLocation(x, y);
         this.seed = seed;
         this.genome = new Genome();
         this.cells = new HashSet<Cell>();        
@@ -79,7 +77,13 @@ public class Organism {
     public int getId() {
         return id;
     }
-    
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.location = new Point(x,y);
+    }
+
     public Point getLocation() {
         return location;
     }   

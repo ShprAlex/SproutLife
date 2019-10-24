@@ -57,42 +57,16 @@ public class ScrollPanel extends JPanel {
         
         innerPanel = new JPanel() {
             public void paint(Graphics g) {
-
-                boolean locked = false;
+                boolean gotLock = false;
                 try {
                     boolean success=false;
                     while(!success) {
-                        locked = panelController.getInteractionLock().readLock().tryLock(100, TimeUnit.MILLISECONDS);
-                        if (locked) {
+                        gotLock = panelController.getInteractionLock().readLock().tryLock(100, TimeUnit.MILLISECONDS);
+                        if (gotLock) {
                             success=true;
-
-
                             super.paint(g);
                             Graphics2D g2 = (Graphics2D)g;
-
-                            //original commented out - gc.getInteractionLock().readLock().lock();
-                            //paintBackShapes(g2);
                             panelController.getImageManager().paint(g2);
-                            //paintFrontShapes(g2);
-                        }
-                        else {
-
-                            try {
-
-                                /*
-                            for ( StackTraceElement[] steA : Thread.getAllStackTraces().values() ) {
-                                for ( StackTraceElement ste : steA ) {
-                                    System.out.println(ste.toString());
-
-                                }
-
-                            }
-                                 */
-
-                            } catch ( Exception ex ) {// Catch exception if any
-                                System.err.println("Error: " + ex.getMessage());
-                            }
-                            //System.out.println("Paint lock failed");
                         }
                     }
                 }
@@ -100,7 +74,7 @@ public class ScrollPanel extends JPanel {
                     ex.printStackTrace();
                 }
                 finally {
-                    if (locked) {
+                    if (gotLock) {
                         panelController.getInteractionLock().readLock().unlock();
                     }
                 }
@@ -148,7 +122,6 @@ public class ScrollPanel extends JPanel {
         add(hScrollBar);
         
         JPanel cornerPanel = new JPanel();
-        //cornerPanel.setBorder(new LineBorder(Color.black));
         layoutCons.gridx = 100;
         layoutCons.gridy = 100;
         layoutCons.gridwidth = GridBagConstraints.REMAINDER;
@@ -165,7 +138,15 @@ public class ScrollPanel extends JPanel {
     public Dimension getViewportSize() {
         return new Dimension(innerPanel.getWidth(),innerPanel.getHeight());
     }
-    
+
+    public Rectangle getViewportRectangle() {
+        return new Rectangle(
+                hScrollModel.getValue(),
+                vScrollModel.getValue(),
+                innerPanel.getWidth(),
+                innerPanel.getHeight());
+    }
+
     public void addMouseListener(MouseListener ml) {
         innerPanel.addMouseListener(ml);
     }
@@ -205,37 +186,7 @@ public class ScrollPanel extends JPanel {
         removeMouseWheelListener(panelController.getInteractionHandler());
         
     }
-    /*
-    public void addBackShape(ShapeRenderer shape) {
-        backShapes.add(shape);
-    }
-    
-    public void removeBackShape(ShapeRenderer shape) {
-        backShapes.remove(shape);
-    }
-    
-    public void addFrontShape(ShapeRenderer shape) {
-        frontShapes.add(shape);
-    }
-    
-    public void removeFrontShape(ShapeRenderer shape) {
-        frontShapes.remove(shape);
-    }
-    
-    private void paintBackShapes(Graphics2D g2) {
-        paintShapes(backShapes, g2);
-    }
-    
-    private void paintFrontShapes(Graphics2D g2) {
-        paintShapes(frontShapes, g2);
-    }
-    
-    private void paintShapes(Vector<ShapeRenderer> shapes, Graphics2D g2) {
-        for ( ShapeRenderer shape : shapes ) {
-            shape.paint(g2);
-        }
-    }
-    */
+
     protected void update(final int minX, final int maxX, final int xValue, final int xExtent,
                           final int minY, final int maxY, final int yValue, final int yExtent) {
         Runnable updater = new Runnable() {
@@ -320,29 +271,4 @@ public class ScrollPanel extends JPanel {
     public interface ViewportMovedListener {
         public void viewportMoved(int viewportX, int viewportY);
     }
-    /*
-    public static class DecoratedShape implements ShapeRenderer {
-        private Shape shape;
-        private Color color;
-        private Stroke stroke;
-
-        public void paint( Graphics2D g2 ) {
-            g2.setColor(color);
-            g2.setStroke(stroke);
-            g2.draw(shape);
-        }
-
-        public DecoratedShape(Shape shape, Color color, Stroke stroke) {
-            this.shape = shape;
-            this.color = color;
-            this.stroke = stroke;
-        }
-
-        public Shape getShape() { return shape; }
-
-        public Color getColor() { return color; }
-
-        public Stroke getStroke() { return stroke; }
-    }
-    */
 }

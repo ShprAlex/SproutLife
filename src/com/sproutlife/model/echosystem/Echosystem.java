@@ -8,10 +8,11 @@
 package com.sproutlife.model.echosystem;
 
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Random;
 
 import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
@@ -183,13 +184,11 @@ public class Echosystem {
     }
 
     /*
-     * A retired organims is really dead, maybe the function should be renamed.
+     * A "retired" organism is actually dead, maybe the function should be renamed.
      * Retired organisms hang around in a separate list for statistics purposes.
      */
     public void retireOrganism(Organism o) {
-
         for (Cell c : o.getCells()) {
-
             getBoard().removeCell(c);
         }
         o.setAlive(false);
@@ -203,23 +202,31 @@ public class Echosystem {
         retiredOrganisms.remove(o);
     }
 
-    public void updateBoard() {
+    public void updateBoard(Rectangle bounds) {
+        getBoard().setSize(new Dimension(bounds.width, bounds.height));
 
         getBoard().resetBoard();
 
         ArrayList<Cell> removeList = new ArrayList<Cell>(0);
 
         for (Organism o : getOrganisms()) {
+            Point ol = o.getLocation();
+            o.setLocation(ol.x-bounds.x , ol.y-bounds.y);
             for (Cell current : o.getCells()) {
-                if (current.x < 0 || current.x >= getBoard().getWidth()
-                        || current.y < 0 || current.y >= getBoard().getHeight()) {
+                if (current.x < bounds.x || current.x >= getBoard().getWidth()+bounds.x
+                        || current.y < bounds.y || current.y >= getBoard().getHeight()+bounds.y) {
                     removeList.add(current);
                 }
                 else {
+                    Point cl = current.getLocation();
+                    current.setLocation(new Point(cl.x-bounds.x, cl.y-bounds.y));
                     getBoard().setCell(current);
-                    // gameBoard[current.x+1][current.y+1] = current;
                 }
             }
+        }
+        for (Organism o : getRetiredOrganisms()) {
+            Point ol = o.getLocation();
+            o.setLocation(ol.x-bounds.x , ol.y-bounds.y);
         }
         for (Cell r : removeList) {
             removeCell(r, false);
@@ -258,22 +265,13 @@ public class Echosystem {
         HashSet<Organism> pruneOrgs = new HashSet<Organism>();
         pruneOrgs.addAll(getOrganisms());
         for (Organism org : pruneOrgs) {
-
             if (org.getCells().size() == 0) {
                 retireOrganism(org);
-                //org.setAlive(false);
-                //removeOrganism(org);
             }
         }
     }
 
     public void clearRetiredOrgs() {
         getRetiredOrganisms().clear();
-    }
-    
-    public void setBoardSize(Dimension d) {
-        getBoard().setSize(d);
-        updateBoard();
-
     }
 }
