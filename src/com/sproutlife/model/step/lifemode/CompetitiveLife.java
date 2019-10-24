@@ -33,21 +33,19 @@ public class CompetitiveLife extends LifeMode {
     public void updateCells() {
         isStronglyCompetitive = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
 
-        ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
-        ArrayList<Cell> deadCells = new ArrayList<Cell>();   
+        ArrayList<Cell> bornCells = new ArrayList<Cell>();
+        ArrayList<Cell> deadCells = new ArrayList<Cell>();
                               
-        for (int i=0; i<getBoard().getWidth(); i++) {            
-            for (int j=0; j<getBoard().getHeight(); j++) {                                   
+        for (int x=0; x<getBoard().getWidth(); x++) {
+            for (int y=0; y<getBoard().getHeight(); y++) {
 
-                Cell me = getBoard().getCell(i,j);
+                Cell me = getBoard().getCell(x,y);
                 Cell result = null;
                 boolean wasBorn = false;
+                ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
 
-                if (getBoard().hasNeighbors(i,j)) {
-                    ArrayList<Cell> neighbors = getBoard().getNeighbors(i,j);
-
-                    result = getBorn(neighbors,i,j);
-
+                if (getBoard().hasNeighbors(x,y)) {
+                    result = getBorn(neighbors,x,y);
                     if (result!=null) {
                         if(me==null || me.getOrganism()!=result.getOrganism()) {
                             bornCells.add(result);
@@ -61,9 +59,7 @@ public class CompetitiveLife extends LifeMode {
                 }
 
                 if (me!=null && !wasBorn){
-
-                    ArrayList<Cell> neighbors = getBoard().getNeighbors(i,j);
-                    result = keepAlive(me,neighbors,i,j);
+                    result = keepAlive(me,neighbors,x,y);
                     if (result!=null) {
                         getStats().stayed++;
                     }
@@ -87,7 +83,7 @@ public class CompetitiveLife extends LifeMode {
  
     } 
     
-    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int i, int j) {        
+    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
         
         int friendCount = 0;
 
@@ -102,7 +98,7 @@ public class CompetitiveLife extends LifeMode {
         }
 
         if ((friendCount == 2 || friendCount==3)) {
-            for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {
+            for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
                 if (neighbor.getOrganism()!=me.getOrganism() && neighbor.getOrganism()!=me.getOrganism().getParent()
                         && getCompare(me, neighbor)<0) {
                     me.getOrganism().getAttributes().collisionCount++;
@@ -116,8 +112,8 @@ public class CompetitiveLife extends LifeMode {
         return null;
     }
 
-    public Cell getBorn(ArrayList<Cell> neighbors, int i, int j) {
-        if (i<0||i>getBoard().getWidth()-1||j<0||j>getBoard().getHeight()-1) {
+    public Cell getBorn(ArrayList<Cell> neighbors, int x, int y) {
+        if (x<0||x>getBoard().getWidth()-1||y<0||y>getBoard().getHeight()-1) {
             return null;
         }
         
@@ -133,9 +129,9 @@ public class CompetitiveLife extends LifeMode {
                 return null;
             }
         }
-        Cell bornCell = getEchosystem().createCell(i,j,neighbors);
+        Cell bornCell = getEchosystem().createCell(x,y,neighbors);
 
-        for (Cell neighbor : getBoard().getExtra12Neighbors(i, j)) {
+        for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
             if (neighbor.getOrganism()!=bornCell.getOrganism() && neighbor.getOrganism()!=bornCell.getOrganism().getParent()
                     && getCompare(bornCell, neighbor)<0) {
                 return null;

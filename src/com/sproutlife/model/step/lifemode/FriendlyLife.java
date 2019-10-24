@@ -18,7 +18,7 @@ public class FriendlyLife extends CooperativeLife {
         super(gameModel);        
     }
     
-    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int i, int j) {
+    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
 
         int friendCount = 0;
 

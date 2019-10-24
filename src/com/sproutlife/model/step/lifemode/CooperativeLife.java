@@ -20,7 +20,7 @@ public class CooperativeLife extends LifeMode {
         // TODO Auto-generated constructor stub
     }
     
-    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int i, int j) {
+    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
         
         if ((neighbors.size() == 2 || neighbors.size()==3)) { 
             me.age+=1;                
@@ -31,8 +31,8 @@ public class CooperativeLife extends LifeMode {
         
     }
 
-    public Cell getBorn(ArrayList<Cell> neighbors, int i, int j) {
-        if (i<0||i>getBoard().getWidth()-1||j<0||j>getBoard().getHeight()-1) {
+    public Cell getBorn(ArrayList<Cell> neighbors, int x, int y) {
+        if (x<0||x>getBoard().getWidth()-1||y<0||y>getBoard().getHeight()-1) {
             return null;
         }
         
@@ -50,7 +50,7 @@ public class CooperativeLife extends LifeMode {
             }
         }
         if (singleOrg) {
-            Cell bornCell = getEchosystem().createCell(i,j,neighbors);
+            Cell bornCell = getEchosystem().createCell(x,y,neighbors);
             return bornCell;
         }        
         
