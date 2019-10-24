@@ -194,7 +194,7 @@ public class Organism {
      */
     public void addCell(Cell c) {
         cells.add(c);
-        
+
         getAttributes().territory.add(c);
         int dist = (c.x-this.x)*(c.x-this.x)+(c.y-this.y)*(c.y-this.y);
         if (getAttributes().territoryRadius<dist) {

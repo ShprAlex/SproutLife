@@ -26,9 +26,7 @@ import com.sproutlife.model.seed.SeedSproutPattern;
 
 public class SproutStep extends Step {
     SeedType seedType;
-    
-    int seedBorder = 1;
-    
+    boolean isSproutDelayedMode = false;
     HashMap<Organism,ArrayList<Seed>> savedSeeds;
     
     public SproutStep(GameModel gameModel) {
@@ -42,31 +40,19 @@ public class SproutStep extends Step {
     public SeedType getSeedType() {
         return seedType;
     }    
-    
-    public void setSeedBorder(int seedBorder) {
-        this.seedBorder = seedBorder;
-    }
-    
-    public int getSeedBorder() {
-        return seedBorder;
-    }
-    
+
     public void perform() {
-        this.setSeedType(SeedType.get(getSettings().getString(Settings.SEED_TYPE)));
-        
-        if (getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE)) {                        
-            
+        setSeedType(SeedType.get(getSettings().getString(Settings.SEED_TYPE)));
+        this.isSproutDelayedMode = getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE);
+        if (isSproutDelayedMode) {                        
             if (this.savedSeeds!=null) {
                 sproutSeeds(this.savedSeeds);
             }
-            
-            savedSeeds = findSeeds();
-            
+            savedSeeds = findSeeds();            
         }
         else { 
             //simple way of doing things, makes it harder to display seeds;
             HashMap<Organism,ArrayList<Seed>> seeds = findSeeds();
-            
             sproutSeeds(seeds);
         }
     }
@@ -112,7 +98,7 @@ public class SproutStep extends Step {
                 
                Cell c = getBoard().getCell(seedOnPosition);
                
-               if (c==null) {
+               if (c==null && !isSproutDelayedMode) {
                    //Should almost never happen, only if seeds overlapped.
                    continue;
                }
@@ -159,8 +145,6 @@ public class SproutStep extends Step {
     }          
 
     private Seed checkAndMarkSeed(Cell topLeftCell) {
-        int border = getSeedBorder();                
-
         for (Seed s : SeedFactory.getSeedRotations(getSeedType())) {
             
             Point seedOnBit = s.getSeedOnBit();
@@ -173,7 +157,6 @@ public class SproutStep extends Step {
             }
             
             s.setPosition(x, y);                      
-            s.setSeedBorder(border);
             s.setParentPosition(topLeftCell.getOrganism().getLocation());
             
             if(checkAndMarkSeed(s)) {          
@@ -193,7 +176,6 @@ public class SproutStep extends Step {
         int seedWidth = seed.getSeedWidth();
         int seedHeight = seed.getSeedHeight();
         int border = seed.getSeedBorder();
-
 
         //Check seed bounds
         if( i+seedWidth>=getBoard().getWidth() || j+seedHeight>=getBoard().getHeight()) {            
