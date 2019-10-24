@@ -9,8 +9,6 @@ package com.sproutlife.model.step;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -27,9 +25,6 @@ import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.seed.SeedSproutPattern;
 
 public class SproutStep extends Step {
-    
-    //LifeStep life;
-    
     SeedType seedType;
     
     int seedBorder = 1;
@@ -43,16 +38,7 @@ public class SproutStep extends Step {
     public void setSeedType(SeedType seedType) {
         this.seedType = seedType;
     }
-    
-    public void setSeedType(String seedTypeString) {
-        for (SeedType st : SeedType.values()) {
-            if (st.toString().equals(seedTypeString)) {
-                setSeedType(st);
-                return;
-            }
-        }
-    }
-    
+
     public SeedType getSeedType() {
         return seedType;
     }    
@@ -66,7 +52,7 @@ public class SproutStep extends Step {
     }
     
     public void perform() {
-        this.setSeedType(getSettings().getString(Settings.SEED_TYPE));
+        this.setSeedType(SeedType.get(getSettings().getString(Settings.SEED_TYPE)));
         
         if (getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE)) {                        
             
@@ -82,10 +68,6 @@ public class SproutStep extends Step {
             HashMap<Organism,ArrayList<Seed>> seeds = findSeeds();
             
             sproutSeeds(seeds);
-        }
-
-        if (getEchosystem().getOrganisms().size()<12) {
-            sproutRandomSeed();
         }
     }
 
@@ -201,12 +183,7 @@ public class SproutStep extends Step {
         return null;
 
     }
-    
 
-    private void sproutRandomSeed() {
-        sproutRandomSeed(getSeedType(), getEchosystem());
-    }
-    
     public boolean checkAndMarkSeed(Seed seed) {
 
         ArrayList<Cell> seedCells = new ArrayList<Cell>();        

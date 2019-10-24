@@ -7,12 +7,7 @@
  *******************************************************************************/
 package com.sproutlife.model.step;
 
-import java.util.Random;
-
-import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.model.seed.SeedFactory.SeedType;
 
 public class GameStep extends Step {
     
@@ -28,9 +23,10 @@ public class GameStep extends Step {
     
     GameStepListener gameStepListener;
     
-    LifeStep lifeStep;    
-    SproutStep sproutStep;    
-    MutationStep mutationStep;    
+    LifeStep lifeStep;
+    SproutStep sproutStep;
+    MutationStep mutationStep;
+    PreReproductionStep preReproductionStep;
     RetireAndPruneStep retireAndPruneStep;
     ColorsStep colorsStep;
        
@@ -40,34 +36,18 @@ public class GameStep extends Step {
         lifeStep = new LifeStep(gameModel);
         sproutStep = new SproutStep(gameModel);
         mutationStep = new MutationStep(gameModel);
+        preReproductionStep = new PreReproductionStep(gameModel);
         retireAndPruneStep = new RetireAndPruneStep(gameModel);
         colorsStep = new ColorsStep(gameModel);
-        
-        //Mutation m = new Mutation(new Point(1,-2),5);
-        //gameModel.getEchosystem().getOrganisms().iterator().next().getGenetics().addMutation(m);
     }
             
     
     public void perform() {       
-        
-       // initStats();       
-        
         retireAndPruneStep.perform();   
         fireStepPerformed(StepType.PRUNE_STEP);
         
         colorsStep.perform();
         fireStepPerformed(StepType.COLOR_STEP);
-                
-        
-        if(getEchosystem().getOrganisms().size()<40) {
-            if (getTime()%200==0) {
-                int lifespan = Math.max(16,getEchosystem().getDefaultOrgLifespan());                          
-                if (lifespan>getSettings().getInt(Settings.MAX_LIFESPAN)) {
-                    lifespan = 15;
-                }
-                getEchosystem().setDefaultOrgLifespan(lifespan+1);
-            }            
-        }              
         
         lifeStep.perform();
         fireStepPerformed(StepType.LIFE_STEP);
@@ -75,16 +55,16 @@ public class GameStep extends Step {
         mutationStep.perform();
         fireStepPerformed(StepType.MUTATION_STEP);
 
-                
-        sproutStep.setSeedBorder(1);
+        preReproductionStep.perform();
+        //pre-reproduction sprouts random seeds, so we can bundle it with the sproutStep event
+
         sproutStep.perform();       
         fireStepPerformed(StepType.SPROUT_STEP);
 
         updateStats();  
         fireStepPerformed(StepType.GAME_STEP);
-        
+    }
 
-    }    
     /*
      * Only expecting one gameStepListener for now, therefore a "set" method
      */
@@ -97,15 +77,12 @@ public class GameStep extends Step {
             GameStepEvent event = new GameStepEvent(stepType);
             gameStepListener.stepPerformed(event);
         }
-        
     }
     
     private void updateStats() {        
         getStats().updateSmoothedPopulation();
         if (getTime()%100==0) {
             getStats().update();
-            //getStats().printChildEnergy();
-
         }             
     }   
 
