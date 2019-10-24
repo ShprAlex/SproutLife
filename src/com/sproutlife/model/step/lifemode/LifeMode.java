@@ -25,7 +25,9 @@ public abstract class LifeMode {
     public LifeMode(GameModel gameModel) {
         this.gameModel = gameModel;     
     }
-      
+
+    public abstract void perform();
+
     public abstract Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y);
     
     public abstract Cell getBorn(ArrayList<Cell> neighbors, int x, int y);

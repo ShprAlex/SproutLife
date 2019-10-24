@@ -21,6 +21,17 @@ public class CompetitiveLife extends LifeMode {
         super(gameModel);
     }
 
+    public void perform() {
+        updateMetrics();
+        updateCells();
+    }
+
+    public void updateMetrics() {
+        for (Organism o : getEchosystem().getOrganisms()) {
+            o.getAttributes().cellSum += o.getCells().size();
+        }
+    }
+
     public double getCompare(Cell c1, Cell c2) {
         Organism o1 = c1.getOrganism();
         Organism o2 = c2.getOrganism();
@@ -29,7 +40,7 @@ public class CompetitiveLife extends LifeMode {
         }
         return o1.getAttributes().cellSum - o2.getAttributes().cellSum;
     }
-    
+
     public void updateCells() {
         isStronglyCompetitive = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
 

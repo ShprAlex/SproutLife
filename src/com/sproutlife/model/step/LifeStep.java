@@ -18,13 +18,12 @@ import com.sproutlife.model.step.lifemode.CooperativeLife;
 import com.sproutlife.model.step.lifemode.FriendlyLife;
 import com.sproutlife.model.step.lifemode.LifeMode;
 
-public class LifeStep extends Step {     
-  
+public class LifeStep extends Step {
     LifeMode cooperativeLife;
     LifeMode friendlyLife;
     LifeMode competitiveLife;
     LifeMode lifeMode;
-                      
+
     public LifeStep(GameModel gameModel) {
         super(gameModel); 
         cooperativeLife = new CooperativeLife(gameModel);
@@ -33,27 +32,20 @@ public class LifeStep extends Step {
         
         lifeMode = friendlyLife;
     }
-    
+
     public void perform() {
         initStats();
         updateLifeMode();
-
         for (Organism o : getEchosystem().getOrganisms()) {
             o.getAttributes().cellSum += o.getCells().size();
         }
-
-        if (lifeMode == competitiveLife) {
-            ((CompetitiveLife) competitiveLife).updateCells();
-        }
-        else {
-            updateCells();
-        }
+        lifeMode.perform();
     }
-    
+
     public LifeMode getLifeMode() {
         return lifeMode;
     }
-    
+
     private void updateLifeMode() {
         if("friendly".equals(getSettings().getString(Settings.LIFE_MODE))) {
             this.lifeMode = friendlyLife;
@@ -66,58 +58,7 @@ public class LifeStep extends Step {
             this.lifeMode = competitiveLife;
         }
     }
-    
-    public void updateCells() {        
-  
-        ArrayList<Cell> bornCells = new ArrayList<Cell>(); 
-        ArrayList<Cell> deadCells = new ArrayList<Cell>();  
 
-        
-        for (int x=0; x<getBoard().getWidth(); x++) {
-            for (int y=0; y<getBoard().getHeight(); y++) {
-                
-                Cell me = getBoard().getCell(x,y);
-                
-                if (me == null) {
-                    if (getBoard().hasNeighbors(x, y)) {
-                        ArrayList<Cell> neighbors = getBoard().getNeighbors(x, y);
-
-                        Cell result = getLifeMode().getBorn(neighbors, x, y);
-
-                        if (result != null) {
-
-                            bornCells.add(result);
-                            getStats().born++;
-                        }
-                    }
-                }
-                else {                    
-                    ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
-                    Cell result = getLifeMode().keepAlive(me,neighbors,x,y);
-                    if (result!=null) {
-                        getStats().stayed++;                       
-                    }
-                    else {
-                        deadCells.add(me);
-                    }
-
-                }           
-            }
-        }
-        
-        //Remove cells before adding cells to avoid Organism having duplicate cells,
-        //Orgs don't do Contains checks for speed
-        for (Cell c: deadCells) {
-            getEchosystem().removeCell(c);
-            
-        }
-       
-        for (Cell c: bornCells) {
-            getEchosystem().addCell(c);
-        }
-
-    }     
-    
     private void initStats() {
         getStats().born =0;
         getStats().die1 =0;
