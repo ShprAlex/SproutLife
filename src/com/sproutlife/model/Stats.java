@@ -35,7 +35,7 @@ public class Stats {
     double avgSize = 0;
     double avgMaxSize = 0;
     double avgCellSum = 0;
-    double avgParentCellSum = 0;
+    double avgCompetitiveScore = 0;
     double[] avgCellsAtAge = new double[300];
 
     double avgChildNumber = 0;
@@ -114,7 +114,7 @@ public class Stats {
         text += BLANK_ROW;
         text += buildDisplayRow("Average Cell #: ",String.format("%.1f", avgSize));       
         text += buildDisplayRow("Avg Current Life Cell Sum: ",String.format("%.0f", avgCellSum));        
-        text += buildDisplayRowBold("Avg Lifetime Cell Sum: ",String.format("%.0f", avgParentCellSum));        
+        text += buildDisplayRowBold("Avg Competitive Score: ",String.format("%.0f", avgCompetitiveScore));
         text += buildDisplayRow("% Child born at parent age histogram: ");
         text += buildParentAgeAtBirthHistogram("_");
         text += BLANK_ROW;        
@@ -330,7 +330,7 @@ public class Stats {
             System.out.print(countAtLifespan[i]+" ");
         }
         
-        System.out.print(" AMC: "+(int) avgParentCellSum);
+        System.out.print(" ACS: "+(int) avgCompetitiveScore);
         /*
         System.out.print(" Max cells: ");               
         for (int i=0;i<50;i++) {
@@ -359,7 +359,7 @@ public class Stats {
     public void printChildEnergy() {
         printHistogram();
 
-        System.out.print(" Avg Life " + avgMaxLifespan);        
+        System.out.print(" Avg Life " + avgMaxLifespan);
         int allEnergy = 0;                     
         int childSum = 0;
         for (int i=0;i<5;i++) {
@@ -417,7 +417,7 @@ public class Stats {
     public void printMutations() {              
         
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
-        System.out.print(" Avg Life  " + avgMaxLifespan);               
+        System.out.print(" Avg Life  " + avgMaxLifespan);
         System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
         System.out.print(" Mutations: " + mutationCount +" Hit: "+(mutationCount-mutationMiss) + " Percent "+(int) (mutationMiss*100/(mutationCount+0.1)));
         System.out.println();
@@ -536,26 +536,23 @@ public class Stats {
         int maxSizeSum = 0;
         int sizeSum = 0;
         int combinedCellSum = 0;
-        int combinedParentCellSum = 0;
+        int competitiveScoreSum = 0;
         for (Organism o : getEchosystem().getOrganisms()) {
-
             sizeSum += o.size();
             combinedCellSum +=o.getAttributes().cellSum;
-
             if(o.getParent()!=null) {
                 int ms = o.getParent().getAttributes().maxCells;
                 if (o.getParent().getParent()!=null) {
                     ms = Math.max(ms, o.getParent().getAttributes().maxCells);
                 }
-
                 maxSizeSum+=ms;
             }
-            
-            if(o.getParent()!=null && o.getParent().getParent()!=null) {
-                int ts = o.getParent().getAttributes().cellSum;
-                combinedParentCellSum+=ts;
-            }
+            competitiveScoreSum+=o.getAttributes().competitiveScore;
         }
+        for (Organism o : getEchosystem().getRetiredOrganisms()) {
+            competitiveScoreSum+=o.getAttributes().competitiveScore;
+        }
+
         int maxCellsAtAge[] = new int[1000]; 
         for (Organism o : getEchosystem().getOrganisms()) {
             maxCellsAtAge[o.getAge()] = Math.max(maxCellsAtAge[o.getAge()], o.getCells().size());
@@ -569,11 +566,12 @@ public class Stats {
             }
         }
         double population = (double) getEchosystem().getOrganisms().size();
+        double historicalPopulation = population + getEchosystem().getRetiredOrganisms().size();
         if (population>0) {
             this.avgSize = sizeSum / population;
             this.avgCellSum = combinedCellSum / population;
             this.avgMaxSize = maxSizeSum/ population;
-            this.avgParentCellSum = combinedParentCellSum/ population;
+            this.avgCompetitiveScore = competitiveScoreSum/ historicalPopulation;
             this.boardSizeDivPopulation = gameModel.getBoard().getHeight()*gameModel.getBoard().getWidth()/smoothedPopulation;
         }
     }
@@ -758,8 +756,8 @@ public class Stats {
             System.out.print(" MAge: "+(int)(avgMutationAge*10));
             System.out.print(" MDAgeDiff: "+(int)((mutationDiversityAge-avgMutationAge)*10));
             System.out.print(" Pop density "+String.format("%.1f",smoothedPopDensity));
-            System.out.print(" Avg Life  " + (int)avgMaxLifespan);               
-            System.out.print(" Max cellSum " + (int) avgParentCellSum);
+            System.out.print(" Avg Life  " + (int) avgMaxLifespan);
+            System.out.print(" Comp Score " + (int) avgCompetitiveScore);
             System.out.print(" MutationCount " + String.format("%.1f",avgTotalMutations));
 
             System.out.print(" "+buildParentAgeAtBirthHistogram(" "));

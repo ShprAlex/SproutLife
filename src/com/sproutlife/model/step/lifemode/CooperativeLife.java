@@ -20,7 +20,16 @@ public class CooperativeLife extends LifeMode {
     }
 
     public void perform() {
+        updateMetrics();
         updateCells();
+    }
+
+    public void updateMetrics() {
+        for (Organism o: getEchosystem().getOrganisms()) {
+            o.getAttributes().maxCells = Math.max(o.getCells().size(), o.getAttributes().maxCells);
+            o.getAttributes().cellSum += o.getCells().size();
+            o.getAttributes().competitiveScore = o.getAttributes().cellSum ;
+        }
     }
 
     public void updateCells() {

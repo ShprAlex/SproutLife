@@ -26,19 +26,23 @@ public class OrgAttributes {
     public int kind = 0;
 
     // territory is used to track all visited points
-    public HashSet<Point> territory;    
-    int territoryRadius = 0;
+    public HashSet<Point> territory;
+    // territoryProduct is the sum of territory size at every timestep
+    public int territoryProduct = 0;
+    public int competitiveScore = 0;
     public int cellSum = 0;
-    
+
     public int maxCells;
     public int parentAgeAtBirth;
     public int birthOrder;
     public int collisionCount=0;
-    
+
+    public int singleChildPathLength=0;
+
     public OrgAttributes(Organism o) {
         this.territory = new HashSet<Point>();        
         this.maxCells = 0;
-        
+
         Organism parent = o.getParent();
         if (parent==null) {
             this.kind = (new Random()).nextInt(3); //kind = 0;
@@ -50,7 +54,7 @@ public class OrgAttributes {
             this.birthOrder = parent.getChildren().size();
         }
     }
-    
+
     public int getTerritorySize() {
         return territory.size();
     }

@@ -27,18 +27,34 @@ public class CompetitiveLife extends LifeMode {
     }
 
     public void updateMetrics() {
-        for (Organism o : getEchosystem().getOrganisms()) {
+        for (Organism o: getEchosystem().getOrganisms()) {
+            o.getAttributes().maxCells = Math.max(o.getCells().size(), o.getAttributes().maxCells);
             o.getAttributes().cellSum += o.getCells().size();
+            o.getAttributes().territory.addAll(o.getCells());
+            o.getAttributes().territoryProduct += o.getAttributes().getTerritorySize();
+            updateCompetitiveScore(o);
+        }
+    }
+
+    private void updateCompetitiveScore(Organism o) {
+        if (!isStronglyCompetitive || o.getParent()==null) {
+            o.getAttributes().competitiveScore = o.getAttributes().cellSum;
+        }
+        else {
+            int pl = calculateSingleChildPathLength(o);
+            Organism p = o.getParent();
+            int siblingScore = (p != null ? p.getChildren().size() : 1);
+            if (pl>6) {
+                siblingScore+=1;
+            }
+            o.getAttributes().competitiveScore = (int) (p.getAttributes().territoryProduct / siblingScore);
         }
     }
 
     public double getCompare(Cell c1, Cell c2) {
         Organism o1 = c1.getOrganism();
         Organism o2 = c2.getOrganism();
-        if (isStronglyCompetitive && o1.getParent()!=null && o2.getParent()!=null) {
-            return o1.getParent().getAttributes().cellSum - o2.getParent().getAttributes().cellSum;
-        }
-        return o1.getAttributes().cellSum - o2.getAttributes().cellSum;
+        return o1.getAttributes().competitiveScore - o2.getAttributes().competitiveScore;
     }
 
     public void updateCells() {
@@ -49,7 +65,6 @@ public class CompetitiveLife extends LifeMode {
                               
         for (int x=0; x<getBoard().getWidth(); x++) {
             for (int y=0; y<getBoard().getHeight(); y++) {
-
                 Cell me = getBoard().getCell(x,y);
                 Cell result = null;
                 boolean wasBorn = false;
@@ -68,7 +83,6 @@ public class CompetitiveLife extends LifeMode {
                         }
                     }
                 }
-
                 if (me!=null && !wasBorn){
                     result = keepAlive(me,neighbors,x,y);
                     if (result!=null) {
@@ -77,25 +91,21 @@ public class CompetitiveLife extends LifeMode {
                     else {
                         deadCells.add(me);
                     }
-
                 }           
             }
-        }       
-        
+        }
+
         //Remove cells before adding cells to avoid Organism having duplicate cells,
         //Orgs don't do Contains checks for speed
         for (Cell c: deadCells) {
             getEchosystem().removeCell(c);            
         }
-       
         for (Cell c: bornCells) {
             getEchosystem().addCell(c);
         }
- 
     } 
-    
+
     public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
-        
         int friendCount = 0;
 
         for (Cell neighbor : neighbors) {            
@@ -127,7 +137,7 @@ public class CompetitiveLife extends LifeMode {
         if (x<0||x>getBoard().getWidth()-1||y<0||y>getBoard().getHeight()-1) {
             return null;
         }
-        
+
         if (neighbors.size()!=3 ) {
             return null;
         }
@@ -148,7 +158,21 @@ public class CompetitiveLife extends LifeMode {
                 return null;
             }
         }
-        
+
         return bornCell;
+    }
+
+    private int calculateSingleChildPathLength(Organism o) {
+        Organism p = o.getParent();
+        if (p==null || p.getChildren().size()>1) {
+            return 0;
+        }
+        if (!p.isAlive()) {
+            if (o.getAttributes().singleChildPathLength == 0) {
+                o.getAttributes().singleChildPathLength = 1 + calculateSingleChildPathLength(p);
+            }
+            return o.getAttributes().singleChildPathLength;
+        }
+        return 1+calculateSingleChildPathLength(p);
     }
 }
