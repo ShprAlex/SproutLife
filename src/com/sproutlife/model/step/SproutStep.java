@@ -44,11 +44,11 @@ public class SproutStep extends Step {
     public void perform() {
         setSeedType(SeedType.get(getSettings().getString(Settings.SEED_TYPE)));
         this.isSproutDelayedMode = getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE);
-        if (isSproutDelayedMode) {                        
+        if (isSproutDelayedMode) {
             if (this.savedSeeds!=null) {
                 sproutSeeds(this.savedSeeds);
             }
-            savedSeeds = findSeeds();            
+            savedSeeds = findSeeds();
         }
         else { 
             //simple way of doing things, makes it harder to display seeds;
