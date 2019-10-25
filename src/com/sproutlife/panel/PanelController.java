@@ -283,7 +283,7 @@ public class PanelController {
         getGameToolbar().getStartPauseButton().setAction(
                 getActionManager().getPlayGameAction()); 
         
-        getMainControlPanel().getStepButton().addActionListener(new ActionListener() {
+        getGameToolbar().getStepButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 getInteractionLock().writeLock().lock();
                 getGameModel().performGameStep();
@@ -292,7 +292,7 @@ public class PanelController {
             }
         });
                 
-        getMainControlPanel().getResetButton().setAction(
+        getGameToolbar().getResetButton().setAction(
                 getActionManager().getResetGameAction());
                                         
         getGameToolbar().getZoomSlider().addChangeListener(new ChangeListener() {

@@ -30,8 +30,6 @@ public class MainControlPanel extends JPanel {
     PanelController panelController;
     private JRadioButton rdbtnFriendly;
     private JRadioButton rdbtnCompetitive1;
-    private JButton stepButton;
-    private JButton resetButton;
     private JSpinner boardWidthSpinner;
     private JSpinner boardHeightSpinner;
     private JCheckBox autoSizeGridCheckbox;
@@ -56,51 +54,10 @@ public class MainControlPanel extends JPanel {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {10, 100, 100, 80, 10};
-        gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 0, 15, 0, 0, 15, 0, 31, 15, 0, 15, 0};
+        gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 31, 15, 0, 15, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
-
-        JPanel panel_1 = new JPanel();
-        GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-        gbc_panel_1.anchor = GridBagConstraints.NORTH;
-        gbc_panel_1.gridwidth = 3;
-        gbc_panel_1.insets = new Insets(0, 0, 5, 5);
-        gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_panel_1.gridx = 1;
-        gbc_panel_1.gridy = 1;
-        add(panel_1, gbc_panel_1);
-        GridBagLayout gbl_panel_1 = new GridBagLayout();
-        gbl_panel_1.columnWidths = new int[]{0, 0};
-        gbl_panel_1.rowHeights = new int[]{0};
-        gbl_panel_1.columnWeights = new double[]{1.0, 1.0};
-        gbl_panel_1.rowWeights = new double[]{0.0};
-        panel_1.setLayout(gbl_panel_1);
-
-        resetButton = new JButton("Reset");
-        resetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-
-        stepButton = new JButton("Step");
-        GridBagConstraints gbc_stepButton = new GridBagConstraints();
-        gbc_stepButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_stepButton.insets = new Insets(0, 0, 0, 5);
-        gbc_stepButton.gridx = 0;
-        gbc_stepButton.gridy = 0;
-        panel_1.add(stepButton, gbc_stepButton);
-        stepButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            }
-        });
-        stepButton.setPreferredSize(new Dimension(100, 23));
-        GridBagConstraints gbc_resetButton = new GridBagConstraints();
-        gbc_resetButton.fill = GridBagConstraints.HORIZONTAL;
-        gbc_resetButton.gridx = 1;
-        gbc_resetButton.gridy = 0;
-        panel_1.add(resetButton, gbc_resetButton);
-        resetButton.setPreferredSize(new Dimension(100, 23));
 
         JPanel lifeModePanel = new JPanel();
         ButtonGroup lifeModeButtonGroup = new ButtonGroup();
@@ -110,7 +67,7 @@ public class MainControlPanel extends JPanel {
         gbc_lblSeedType.anchor = GridBagConstraints.WEST;
         gbc_lblSeedType.insets = new Insets(0, 0, 5, 5);
         gbc_lblSeedType.gridx = 1;
-        gbc_lblSeedType.gridy = 3;
+        gbc_lblSeedType.gridy = 1;
         add(lblSeedType, gbc_lblSeedType);
 
         seedTypeComboBox = new JComboBox();
@@ -119,7 +76,7 @@ public class MainControlPanel extends JPanel {
         gbc_seedTypeComboBox.insets = new Insets(0, 0, 5, 5);
         gbc_seedTypeComboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_seedTypeComboBox.gridx = 2;
-        gbc_seedTypeComboBox.gridy = 3;
+        gbc_seedTypeComboBox.gridy = 1;
         add(seedTypeComboBox, gbc_seedTypeComboBox);
 
 
@@ -129,7 +86,7 @@ public class MainControlPanel extends JPanel {
         gbc_lblLifeMode.anchor = GridBagConstraints.WEST;
         gbc_lblLifeMode.insets = new Insets(0, 0, 5, 5);
         gbc_lblLifeMode.gridx = 1;
-        gbc_lblLifeMode.gridy = 7;
+        gbc_lblLifeMode.gridy = 3;
         add(lblLifeMode, gbc_lblLifeMode);
         GridBagConstraints gbc_lifeModePanel = new GridBagConstraints();
         gbc_lifeModePanel.gridwidth = 3;
@@ -137,7 +94,7 @@ public class MainControlPanel extends JPanel {
         gbc_lifeModePanel.insets = new Insets(0, 0, 5, 5);
         gbc_lifeModePanel.fill = GridBagConstraints.HORIZONTAL;
         gbc_lifeModePanel.gridx = 1;
-        gbc_lifeModePanel.gridy = 8;
+        gbc_lifeModePanel.gridy = 4;
         add(lifeModePanel, gbc_lifeModePanel);
         GridBagLayout gbl_lifeModePanel = new GridBagLayout();
         gbl_lifeModePanel.columnWidths = new int[]{40};
@@ -196,7 +153,7 @@ public class MainControlPanel extends JPanel {
         gbc_lblGrid.anchor = GridBagConstraints.WEST;
         gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
         gbc_lblGrid.gridx = 1;
-        gbc_lblGrid.gridy = 10;
+        gbc_lblGrid.gridy = 6;
         add(lblGrid, gbc_lblGrid);
 
         JPanel panel = new JPanel();
@@ -205,7 +162,7 @@ public class MainControlPanel extends JPanel {
         gbc_panel.insets = new Insets(0, 0, 5, 5);
         gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.gridx = 1;
-        gbc_panel.gridy = 11;
+        gbc_panel.gridy = 7;
         add(panel, gbc_panel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{30, 40, 40};
@@ -269,7 +226,7 @@ public class MainControlPanel extends JPanel {
         gbc_lblImage_1.anchor = GridBagConstraints.WEST;
         gbc_lblImage_1.insets = new Insets(0, 0, 5, 5);
         gbc_lblImage_1.gridx = 1;
-        gbc_lblImage_1.gridy = 13;
+        gbc_lblImage_1.gridy = 9;
         add(lblImage_1, gbc_lblImage_1);
 
         imageWidthHeightLabel = new JLabel("100, 100");
@@ -278,7 +235,7 @@ public class MainControlPanel extends JPanel {
         gbc_imageWidthHeightLabel.anchor = GridBagConstraints.EAST;
         gbc_imageWidthHeightLabel.insets = new Insets(0, 0, 5, 5);
         gbc_imageWidthHeightLabel.gridx = 3;
-        gbc_imageWidthHeightLabel.gridy = 13;
+        gbc_imageWidthHeightLabel.gridy = 9;
         add(imageWidthHeightLabel, gbc_imageWidthHeightLabel);
 
     }
@@ -295,12 +252,6 @@ public class MainControlPanel extends JPanel {
     }
     public JRadioButton getRdbtnCompetitive2() {
         return rdbtnCompetitive2;
-    }
-    public JButton getStepButton() {
-        return stepButton;
-    }
-    public JButton getResetButton() {
-        return resetButton;
     }
     public JSpinner getBoardWidthSpinner() {
         return boardWidthSpinner;

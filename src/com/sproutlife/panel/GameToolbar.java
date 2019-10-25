@@ -43,6 +43,8 @@ public class GameToolbar extends JPanel {
     private JSlider speedSlider;
     private Component horizontalStrut;
     private Component horizontalStrut_1;
+    private JButton stepButton;
+    private JButton resetButton;
 
 
     public GameToolbar(PanelController panelController) {
@@ -56,7 +58,7 @@ public class GameToolbar extends JPanel {
      */
     public void buildPanel() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        
+
         horizontalStrut = Box.createHorizontalStrut(20);
         add(horizontalStrut);
 
@@ -65,6 +67,7 @@ public class GameToolbar extends JPanel {
         //lblZoom.setMinimumSize(new Dimension(100, 14));
 
         zoomSlider = new JSlider();
+        zoomSlider.setPreferredSize(new Dimension(100, 29));
         add(zoomSlider);
         zoomSlider.setMinorTickSpacing(1);
         zoomSlider.setMinimum(-5);
@@ -75,17 +78,26 @@ public class GameToolbar extends JPanel {
         add(speedLabel);
 
         speedSlider = new JSlider();
+        speedSlider.setPreferredSize(new Dimension(100, 29));
         speedSlider.setSnapToTicks(true);
         add(speedSlider);
         speedSlider.setMinimum(-5);
         speedSlider.setMaximum(4);
         speedSlider.setValue(-2);
-        
-                startPauseButton = new JButton("Start");
-                add(startPauseButton);
-                startPauseButton.setMaximumSize(new Dimension(200, 23));
-                startPauseButton.setPreferredSize(new Dimension(100, 23));
-        
+
+        startPauseButton = new JButton("Start");
+        add(startPauseButton);
+        startPauseButton.setMaximumSize(new Dimension(200, 23));
+        startPauseButton.setPreferredSize(new Dimension(80, 29));
+
+        stepButton = new JButton("Step");
+        stepButton.setPreferredSize(new Dimension(80, 29));
+        add(stepButton);
+
+        resetButton = new JButton("Reset");
+        resetButton.setPreferredSize(new Dimension(80, 29));
+        add(resetButton);
+
         horizontalStrut_1 = Box.createHorizontalStrut(20);
         add(horizontalStrut_1);
 
@@ -105,5 +117,11 @@ public class GameToolbar extends JPanel {
 
     public JSlider getSpeedSlider() {
         return speedSlider;
+    }
+    public JButton getStepButton() {
+        return stepButton;
+    }
+    public JButton getResetButton() {
+        return resetButton;
     }
 }

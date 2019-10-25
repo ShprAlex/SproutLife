@@ -17,7 +17,7 @@ import javax.swing.JToolBar;
 
 
 public class GameFrame extends JFrame {
-    private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1000, 600);
+    private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1080, 675);
     private static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(300, 300);
 
     PanelController panelController;
