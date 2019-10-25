@@ -28,7 +28,7 @@ public class OrgAttributes {
     // territory is used to track all visited points
     public HashSet<Point> territory;
     // territoryProduct is the sum of territory size at every timestep
-    public int territoryProduct = 0;
+    public double territoryProduct = 0;
     public int competitiveScore = 0;
     public int cellSum = 0;
 

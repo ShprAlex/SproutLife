@@ -265,6 +265,8 @@ public class PanelController {
                                         getGameModel().getTime()>5000) {
                                     getGameToolbar().getSpeedSlider().setValue(1);
                                     getGameModel().getGameThread().setAutoAdjust(false);
+                                }
+                                if (getGameModel().getTime()>=5000 && getGameModel().getTime()<=5200) {
                                     getDisplayControlPanel().getChckbxCellLayer().setSelected(false);
                                     getDisplayControlPanel().getChckbxGenomeLayer().setSelected(false);
                                 }
@@ -438,6 +440,12 @@ public class PanelController {
             }
         });
         
+        getSettingsControlPanel().getTargetAgeSpinner().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                getSettings().set(Settings.TARGET_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
+            }
+        });
+
         getSettingsControlPanel().getChildOneParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.CHILD_ONE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
@@ -477,11 +485,12 @@ public class PanelController {
         getSettingsControlPanel().getRdbtnVisual().addItemListener(sproutModeListener);
         getSettingsControlPanel().getRdbtnFunctional().addItemListener(sproutModeListener);      
     }
-       
-          
+
     public void updateFromSettings() {
         getSettingsControlPanel().getMaxLifespanSpinner().setValue(
                 getSettings().getInt(Settings.MAX_LIFESPAN));
+        getSettingsControlPanel().getTargetAgeSpinner().setValue(
+                getSettings().getInt(Settings.TARGET_LIFESPAN));
         getSettingsControlPanel().getChildOneParentAgeSpinner().setValue(
                 getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE));
         getSettingsControlPanel().getChildTwoParentAgeSpinner().setValue(

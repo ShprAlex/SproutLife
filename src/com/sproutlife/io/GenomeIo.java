@@ -49,6 +49,7 @@ public class GenomeIo {
         Settings s = gameModel.getSettings();
         writer.println(Settings.SEED_TYPE + " : " + s.getString(Settings.SEED_TYPE));
         writer.println(Settings.MAX_LIFESPAN + " : " + s.getInt(Settings.MAX_LIFESPAN));
+        writer.println(Settings.TARGET_LIFESPAN + " : " + s.getInt(Settings.TARGET_LIFESPAN));
     }
 
     private static void saveOrganisms(PrintWriter writer, GameModel gameModel) throws IOException {

@@ -19,6 +19,7 @@ public class Settings {
     public static String MUTATION_ENABLED = "mutationEnabled";
     public static String MUTATION_RATE = "mutationRate";
     public static String MAX_LIFESPAN = "maxLifespan";
+    public static String TARGET_LIFESPAN = "targetLifespan";
     public static String CHILD_ONE_PARENT_AGE = "childOneParentAge";
     public static String CHILD_TWO_PARENT_AGE = "childTwoParentAge";
     public static String CHILD_THREE_PARENT_AGE = "childThreeParentAge";
@@ -42,6 +43,7 @@ public class Settings {
         set(Settings.MUTATION_RATE, 6); //0-10
 
         set(Settings.MAX_LIFESPAN, 75);
+        set(Settings.TARGET_LIFESPAN, 35);
 
         set(Settings.CHILD_ONE_PARENT_AGE, 0);
         set(Settings.CHILD_TWO_PARENT_AGE, 0);

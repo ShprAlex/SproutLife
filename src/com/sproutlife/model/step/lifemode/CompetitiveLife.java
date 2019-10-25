@@ -27,11 +27,18 @@ public class CompetitiveLife extends LifeMode {
     }
 
     public void updateMetrics() {
+        int targetAge = getSettings().getInt(Settings.TARGET_LIFESPAN);
         for (Organism o: getEchosystem().getOrganisms()) {
             o.getAttributes().maxCells = Math.max(o.getCells().size(), o.getAttributes().maxCells);
             o.getAttributes().cellSum += o.getCells().size();
             o.getAttributes().territory.addAll(o.getCells());
-            o.getAttributes().territoryProduct += o.getAttributes().getTerritorySize();
+            if (o.getAge()<=targetAge) {
+                o.getAttributes().territoryProduct += o.getAttributes().getTerritorySize();
+            }
+            else {
+                double decreaseByFraction = (o.getAge()-targetAge)*(o.getAge()-targetAge)/400.0;
+                o.getAttributes().territoryProduct -= o.getAttributes().getTerritorySize()*decreaseByFraction;
+            }
             updateCompetitiveScore(o);
         }
     }
