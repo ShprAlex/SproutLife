@@ -14,7 +14,7 @@ import java.awt.Graphics2D;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 
-public class TailRenderer extends Renderer {
+public class TailRenderer extends OrganismRenderer {
     int tailLength = 9;
 
     public TailRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
@@ -25,7 +25,7 @@ public class TailRenderer extends Renderer {
         this.tailLength = tailLength;
     }
 
-    public void paintTail(Graphics2D g, Organism o) {
+    public void render(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
         Organism parent = o.getParent();
         ((Graphics2D) g).setStroke(new BasicStroke(BLOCK_SIZE * 4 / 5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));

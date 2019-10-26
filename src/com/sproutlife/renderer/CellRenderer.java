@@ -14,12 +14,12 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
-public class CellRenderer extends Renderer {
+public class CellRenderer extends OrganismRenderer {
     public CellRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
         super(gameModel, boardRenderer);
     }
 
-    public void paintCells(Graphics2D g, Organism o) {
+    public void render(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
         if (getBoardRenderer().getOutlineSeeds()) {
             for (Cell c: o.getCells()) {

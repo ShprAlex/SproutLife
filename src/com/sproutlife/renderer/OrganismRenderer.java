@@ -7,18 +7,23 @@
  *******************************************************************************/
 package com.sproutlife.renderer;
 
+import java.awt.Graphics2D;
+
 import com.sproutlife.model.GameModel;
+import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.renderer.colors.ColorModel;
 
-public abstract class Renderer {
+public abstract class OrganismRenderer {
 
     protected GameModel gameModel;
     protected BoardRenderer boardRenderer;
 
-    public Renderer(GameModel gameModel, BoardRenderer boardRenderer) {
+    public OrganismRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
         this.gameModel = gameModel;
         this.boardRenderer = boardRenderer;
     }
+
+    public abstract void render(Graphics2D g, Organism o);
 
     public int getBlockSize() {
         return boardRenderer.getBlockSize();

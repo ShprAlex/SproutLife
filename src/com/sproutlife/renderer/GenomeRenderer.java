@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 
-public class GenomeRenderer extends Renderer {
+public class GenomeRenderer extends OrganismRenderer {
 
     public GenomeRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
         super(gameModel, boardRenderer);
     }
 
-    public void paintGenome(Graphics2D g, Organism o) {
+    public void render(Graphics2D g, Organism o) {
         for (Organism ch : o.getChildren()) {
             // if we hide the parent when a child is born, it looks like the parent became the child.
             if (ch.isAlive()) {

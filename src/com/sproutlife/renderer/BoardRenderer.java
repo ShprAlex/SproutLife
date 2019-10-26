@@ -7,18 +7,14 @@
  *******************************************************************************/
 package com.sproutlife.renderer;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.renderer.colors.ColorModel;
 import com.sproutlife.renderer.colors.DefaultColorModel;
@@ -71,26 +67,24 @@ public class BoardRenderer {
     }
 
     public void paint(Graphics2D g) {               
-        
+
         if (getZoom()!=1) {
             g.setTransform(transform);
         }
 
         paintBackground(g);             
-        
+
         if (getPaintHeadLayer()) {
-            paintOrgHeads(g);
+            paintLayer(g, getHeadRenderer());
         }
         if (getPaintTailLayer()) {
-            paintOrgTails(g);
+            paintLayer(g, getTailRenderer());
         }
-        
         if (getPaintCellLayer()) {
-            paintCells(g);
+            paintLayer(g, getCellRenderer());
         }
-        
         if (getPaintGenomeLayer()) {
-            paintGenomes(g);
+            paintLayer(g, getGenomeRenderer());
         }
     }   
     
@@ -220,31 +214,10 @@ public class BoardRenderer {
         g.fillRect(x, y, w, h);
     }
 
-    private void paintCells(Graphics2D g) {
+    private void paintLayer(Graphics2D g, OrganismRenderer renderer) {
         Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
         for (Organism o : orgs) {
-            cellRenderer.paintCells(g, o);
-        } 
-    }
-
-    public void paintOrgHeads(Graphics2D g) {
-        Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
-        for (Organism o : orgs) {
-            headRenderer.paintHead(g, o);
-        }
-    }
-
-    public void paintOrgTails(Graphics2D g) {
-        Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
-        for (Organism o : orgs) {
-            tailRenderer.paintTail(g, o);
-        }
-    }
-
-    private void paintGenomes(Graphics2D g) {
-        Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
-        for (Organism o : orgs) {
-            genomeRenderer.paintGenome(g,o);
+            renderer.render(g, o);
         }
     }
 }

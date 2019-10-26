@@ -13,13 +13,13 @@ import java.awt.Graphics2D;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 
-public class HeadRenderer extends Renderer {
+public class HeadRenderer extends OrganismRenderer {
 
     public HeadRenderer(GameModel gameModel, BoardRenderer boardRenderer) {
         super(gameModel, boardRenderer);
     }
 
-    public void paintHead(Graphics2D g, Organism o) {
+    public void render(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
         int rectSize = BLOCK_SIZE*3;
         g.setColor(getColor(o));
