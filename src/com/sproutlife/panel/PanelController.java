@@ -68,6 +68,7 @@ public class PanelController {
     ScrollPanelController scrollController;
     ImageManager imageManager;
     InteractionHandler interactionHandler;
+    BoardSizeHandler boardSizeHandler;
       
     public PanelController(GameController gameController) {
         this.gameController = gameController;
@@ -76,7 +77,8 @@ public class PanelController {
         interactionHandler.setHandlerSet(new DefaultHandlerSet(this));
 
         this.scrollController = new ScrollPanelController(this);
-        this.imageManager = new ImageManager(this,  LogoStyle.Small);               
+        this.imageManager = new ImageManager(this,  LogoStyle.Small);
+        this.boardSizeHandler = new BoardSizeHandler(this);
 
         buildPanels();
         initComponents();
@@ -176,7 +178,11 @@ public class PanelController {
     public Settings getSettings() {
         return getGameController().getSettings();
     }
-    
+
+    public BoardSizeHandler getBoardSizeHandler() {
+        return boardSizeHandler;
+    }
+
     public void buildPanels() {
         gameFrame = new GameFrame(this);
         gameMenu = new GameMenu(this);
@@ -219,7 +225,7 @@ public class PanelController {
         getBoardRenderer().setDefaultBlockSize(3);
         updateZoomValue(-3);
         getGameToolbar().getZoomSlider().setValue(-3);
-        updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize());
+        getBoardSizeHandler().updateBoardSizeFromImageSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
 
         initSeedTypeComboBox();
@@ -243,7 +249,7 @@ public class PanelController {
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
                 if (getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
-                    updateBoardSizeFromPanelSize(new Dimension(viewportWidth, viewportHeight));
+                    getBoardSizeHandler().updateBoardSizeFromImageSize(new Dimension(viewportWidth, viewportHeight));
                 } 
                                                 
             }
@@ -322,7 +328,7 @@ public class PanelController {
                 getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);                
                 int width =  (int) getMainControlPanel().getBoardWidthSpinner().getValue();
                 int height = (int) getMainControlPanel().getBoardHeightSpinner().getValue();
-                updateBoardSize(width, height);
+                getBoardSizeHandler().updateBoardSize(width, height);
             }
         });
         
@@ -330,7 +336,7 @@ public class PanelController {
             public void stateChanged(ChangeEvent arg0) {
                 int width =  (int) getMainControlPanel().getBoardWidthSpinner().getValue();
                 int height = (int) getMainControlPanel().getBoardHeightSpinner().getValue();
-                updateBoardSize(width, height);
+                getBoardSizeHandler().updateBoardSize(width, height);
             }
         });
         
@@ -340,7 +346,7 @@ public class PanelController {
                 Rectangle bounds = getScrollPanel().getViewportRectangle();
                 bounds.x+=20;
                 bounds.y+=20;
-                updateBoardSizeFromPanelSize(bounds);
+                getBoardSizeHandler().updateBoardSizeFromImageSize(bounds);
             }
         });
         
@@ -605,53 +611,6 @@ public class PanelController {
         getBoardRenderer().setZoom(zoom);          
         getScrollController().setScalingZoomFactor(zoom);
 
-        updateImageWidthHeightLabel();
-    }
-    
-    public void updateBoardSizeFromPanelSize(Dimension d) {
-        updateBoardSizeFromPanelSize(new Rectangle(0, 0, d.width,d.height));
-    }
-
-    public void updateBoardSizeFromPanelSize(Rectangle r) {
-        getInteractionLock().writeLock().lock();
-        int boardWidth = (r.width-40)/getBoardRenderer().getDefaultBlockSize()-2;
-        int boardHeight = (r.height-40)/getBoardRenderer().getDefaultBlockSize()-2;
-        int x = r.x/getBoardRenderer().getDefaultBlockSize();
-        int y = r.y/getBoardRenderer().getDefaultBlockSize();
-
-        boardWidth=Math.max(1, boardWidth);
-        boardHeight=Math.max(1, boardHeight);
-        getGameModel().getEchosystem().updateBoard(new Rectangle(x,y,boardWidth, boardHeight));
-        
-        getBoardRenderer().setBounds(new Dimension(r.width, r.height));
-        boolean autoSizeGrid = getMainControlPanel().getAutoSizeGridCheckbox().isSelected();
-        if (autoSizeGrid) {
-            getMainControlPanel().getBoardWidthSpinner().setValue(boardWidth);
-            getMainControlPanel().getBoardHeightSpinner().setValue(boardHeight);
-        }
-        getMainControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
-
-        getInteractionLock().writeLock().unlock();
-
-        getScrollController().updateScrollBars();
-        
-        updateImageWidthHeightLabel();
-        
-        getImageManager().repaintNewImage();
-    }    
-    
-    public void updateBoardSize(int width, int height) {
-        int displayWidth = (width+2)*getBoardRenderer().getDefaultBlockSize()+40;
-        int displayHeight = (height+2)*getBoardRenderer().getDefaultBlockSize()+40;
-        updateBoardSizeFromPanelSize(new Dimension(displayWidth,displayHeight));
-    }
-    
-    public void updateImageWidthHeightLabel() {
-        int imageWidth = (int) getScrollController().getRendererRectangle().getWidth();       
-        int imageHeight = (int) getScrollController().getRendererRectangle().getHeight();
-        imageWidth = Math.min(imageWidth,getScrollPanel().getViewportSize().width);
-        imageHeight = Math.min(imageHeight,getScrollPanel().getViewportSize().height);
-        
-        getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+        getBoardSizeHandler().updateImageWidthHeightLabel();
     }
 }

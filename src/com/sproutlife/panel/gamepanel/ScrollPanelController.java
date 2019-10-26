@@ -323,7 +323,7 @@ public class ScrollPanelController {
             rendererBounds = null;
             rendererBounds = gc.getBoardRenderer().getRendererBounds();
             if (rendererBounds == null) {
-                gc.updateBoardSizeFromPanelSize(getScrollPanel().getViewportSize()); 
+                gc.getBoardSizeHandler().updateBoardSizeFromImageSize(getScrollPanel().getViewportSize());
                 rendererBounds = gc.getBoardRenderer().getRendererBounds();
             }
             
