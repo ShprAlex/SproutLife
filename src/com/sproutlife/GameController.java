@@ -69,9 +69,4 @@ public class GameController {
     public Settings getSettings() {
         return settings;
     }
-
-    public void set(String s, Object o) {
-        getSettings().set(s,o);
-    }    
-
 }
