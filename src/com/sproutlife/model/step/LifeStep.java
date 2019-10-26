@@ -36,9 +36,6 @@ public class LifeStep extends Step {
     public void perform() {
         initStats();
         updateLifeMode();
-        for (Organism o : getEchosystem().getOrganisms()) {
-            o.getAttributes().cellSum += o.getCells().size();
-        }
         lifeMode.perform();
     }
 
