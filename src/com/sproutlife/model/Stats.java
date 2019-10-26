@@ -39,7 +39,6 @@ public class Stats {
     double[] avgCellsAtAge = new double[300];
 
     double avgChildNumber = 0;
-    double[] avgChildAtAge = new double[10];
     double[] parentAgeAtBirthHist = new double[300];
     double[] childNumberPercent = new double[10];
     double childlessPercent = 0;
@@ -610,49 +609,39 @@ public class Stats {
     
     public void updateChildStats() {
         int sumChildNumber = 0;
-        int sumChildless = 0;
+
         int[] childNumberHistogram = new int[5]; //keep track of number number organisms having x number of childern
-        int[] sumChildAge = new int[5]; //keep track of combined parent age having 1st children
         parentAgeAtBirthHist = new double[100]; 
         for (Organism o : getEchosystem().getRetiredOrganisms()) {
             sumChildNumber += o.getChildren().size();
-            if (o.getChildren().size()==0) {
-                sumChildless+=1;
-            }
+            int parentAgeAtBirth =  o.getAttributes().parentAgeAtBirth;
+            parentAgeAtBirth = Math.min(parentAgeAtBirth, 74);
+            parentAgeAtBirthHist[parentAgeAtBirth]++;
+
             for (int ci = 0; ci<o.getChildren().size(); ci++) {
-                int parentAgeAtBirth =  o.getChildren().get(ci).getAttributes().parentAgeAtBirth;
-                parentAgeAtBirth = Math.min(parentAgeAtBirth, 74);
-                parentAgeAtBirthHist[parentAgeAtBirth]++;
                 if (ci<4) {
                     childNumberHistogram[ci]+=1;
-                    sumChildAge[ci]+=parentAgeAtBirth;
                 }
                 else {
                     childNumberHistogram[4]+=1;
-                    sumChildAge[4]+=parentAgeAtBirth;
                 }
-                //assume getChildren() sorts children in order born
             }
-            
         }
-        
+
         avgChildNumber = 0;
-        avgChildAtAge = new double[5];
         childNumberPercent = new double[5];
+        int retiredOrgSize = getEchosystem().getRetiredOrganisms().size();
         
         if (getEchosystem().getRetiredOrganisms().size()>0) {
             if (sumChildNumber>0) {
                 for (int i=0;i<100;i++) {
-                    parentAgeAtBirthHist[i] *= (100.0/sumChildNumber);
+                    parentAgeAtBirthHist[i] *= (100.0/retiredOrgSize);
                 }
             }
             avgChildNumber = sumChildNumber / (double) getEchosystem().getRetiredOrganisms().size();
             childlessPercent = (getEchosystem().getRetiredOrganisms().size()-childNumberHistogram[0])*100.0/getEchosystem().getRetiredOrganisms().size();
 
             for (int ci = 0; ci<5;ci++) {
-                if (childNumberHistogram[ci]>0) {
-                    avgChildAtAge[ci] = sumChildAge[ci]/(double) childNumberHistogram[ci];
-                }
                 if (sumChildNumber>0) {
                     childNumberPercent[ci] = childNumberHistogram[ci]*100.0 / getEchosystem().getRetiredOrganisms().size();
                 }
@@ -759,7 +748,6 @@ public class Stats {
             System.out.print(" Avg Life  " + (int) avgMaxLifespan);
             System.out.print(" Comp Score " + (int) avgCompetitiveScore);
             System.out.print(" MutationCount " + String.format("%.1f",avgTotalMutations));
-
             System.out.print(" "+buildParentAgeAtBirthHistogram(" "));
             System.out.println();
         }
