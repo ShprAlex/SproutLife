@@ -18,11 +18,12 @@ public class ActionManager {
     
     private PlayGameAction playGameAction;
     private ResetGameAction resetGameAction;
+    private ExportGifAction exportGifAction;
 
     public ActionManager(PanelController controller) {
         this.controller = controller;
     }
-    
+
     /**
      * @return the playGameAction
      */
@@ -32,7 +33,7 @@ public class ActionManager {
         }
         return playGameAction;
     }
-    
+
     /**
      * @return the resetGameAction
      */
@@ -41,6 +42,13 @@ public class ActionManager {
             resetGameAction = new ResetGameAction(controller);
         }        
         return resetGameAction;
+    }
+
+    public ExportGifAction getExportGifAction() {
+        if (exportGifAction == null) {
+            exportGifAction = new ExportGifAction(controller);
+        }
+        return exportGifAction;
     }
 
 }

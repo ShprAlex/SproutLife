@@ -7,9 +7,9 @@
  *******************************************************************************/
 package com.sproutlife.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import javax.swing.SwingUtilities;
 
 import com.sproutlife.model.step.GameStep.StepType;
 import com.sproutlife.model.step.GameStepEvent;
@@ -17,23 +17,24 @@ import com.sproutlife.model.step.GameStepListener;
 
 public class GameThread {
     private boolean playGame = false;
-    
+
     Thread innerThread;
-    
-    GameStepListener gameStepListener;
-    
+
+    List<GameStepListener> gameStepListeners;
+
     GameModel gameModel;
     ReentrantReadWriteLock interactionLock;
-    
+
     int sleepDelay;
     int iterations;
-    
+
     boolean superSlowIntro;
     boolean slowIntro;
     boolean autoAdjust;
-    
+
     public GameThread(GameModel gameModel, ReentrantReadWriteLock interactionLock) {     
         this.gameModel = gameModel;
+        this.gameStepListeners = new ArrayList<>();
         this.interactionLock = interactionLock;
         
         this.autoAdjust = true;
@@ -42,29 +43,27 @@ public class GameThread {
         
         superSlowIntro = false;
         slowIntro = true;
-        
     }
 
     private GameModel getGameModel() {
         return gameModel;
     }
-        
+
     public void setPlayGame(boolean playGame) {
         this.playGame = playGame;
         if (playGame) {
             new InnerGameThread().start();
         }
     }    
-    
+
     public boolean getPlayGame() {
         return playGame;
     }
 
-
     public void setAutoAdjust(boolean autoAdjust) {
         this.autoAdjust = autoAdjust;
     }
-    
+
     public boolean getAutoAdjust() {
         return autoAdjust;
     }
@@ -72,25 +71,26 @@ public class GameThread {
     public void setSleepDelay(int sleepDelay) {
         this.sleepDelay = sleepDelay;
     }
-    
+
     public void setIterations(int iterations) {
         this.iterations = iterations;
     }
 
-    /*
-     * Only expecting one gameStepListener for now, therefore a "set" method
-     */
-    public void setGameStepListener(GameStepListener gameStepListener) {
-        this.gameStepListener = gameStepListener;
+    public void addGameStepListener(GameStepListener gameStepListener) {
+        gameStepListeners.add(gameStepListener);
     }
-    
+
+    public void removeGameStepListener(GameStepListener gameStepListener) {
+        gameStepListeners.remove(gameStepListener);
+    }
+
     private void fireStepBundlePerformed() {
-        if (gameStepListener!=null) {
+        for (GameStepListener gsl : gameStepListeners) {
             GameStepEvent event = new GameStepEvent(StepType.STEP_BUNDLE);
-            gameStepListener.stepPerformed(event);
+            gsl.stepPerformed(event);
         }       
     }
-        
+
     private int getSleepDelay() {
         if (!autoAdjust) {
             return sleepDelay;
