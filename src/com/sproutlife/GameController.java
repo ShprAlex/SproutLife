@@ -13,10 +13,6 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.panel.PanelController;
 
 public class GameController {
-    private static final int    appMajorVersion    = 0;
-    private static final int    appMinorVersion    = 12;
-    private static final int    appRevision        = 1;
-    
     private GameModel gameModel;
     private PanelController panelController;
     private Settings settings;
@@ -28,26 +24,6 @@ public class GameController {
         gameModel = new GameModel(settings, interactionLock);
         panelController = new PanelController(this);
     }
-
-    public String getAppVersion() {
-        return ""+getAppMajorVersion()+"."+getAppMinorVersion()+"."+getAppRevision();
-    }    
-
-    public int getAppMajorVersion() {
-        return appMajorVersion;
-    }
-
-    public int getAppMinorVersion() {
-        return appMinorVersion;
-    }
-
-    public int getAppRevision() {
-        return appRevision;
-    }
-
-    public void start() {
-        panelController.start();
-    }        
 
     public GameModel getGameModel() {
         return gameModel;

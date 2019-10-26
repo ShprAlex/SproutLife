@@ -12,8 +12,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
+
+import com.sproutlife.SproutLife;
 
 
 public class GameFrame extends JFrame {
@@ -21,31 +21,17 @@ public class GameFrame extends JFrame {
     private static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(300, 300);
 
     PanelController panelController;
-    JSplitPane splitPane = new JSplitPane();
 
     public GameFrame(PanelController panelController) {
-
         this.panelController = panelController;
-
         initFrame();
-
         setLayout(new BorderLayout(0, 0));
-
-        splitPane = new JSplitPane();
-        splitPane.setResizeWeight(1);
-        splitPane.setOneTouchExpandable(true);
-        add(splitPane);
-    }
-    
-    public JSplitPane getSplitPane() {
-        return splitPane;
     }
 
     private void initFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Sprout Life - Evolving Game of Life - V "+panelController.getGameController().getAppVersion());
-        // game.setIconImage(new
-        // ImageIcon(ConwaysGameOfLife.class.getResource("/images/logo.png")).getImage());
+        setTitle("Sprout Life - Evolving Game of Life - V " + SproutLife.getAppVersion());
+
         setSize(DEFAULT_WINDOW_SIZE);
         setMinimumSize(MINIMUM_WINDOW_SIZE);
         setLocation(

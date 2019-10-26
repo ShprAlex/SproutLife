@@ -24,6 +24,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
@@ -52,6 +53,7 @@ import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 public class PanelController {
     GameController gameController;
     GameFrame gameFrame;
+    JSplitPane splitPane;
     ActionManager actionManager;
  
     MainControlPanel mainControlPanel;
@@ -69,31 +71,25 @@ public class PanelController {
       
     public PanelController(GameController gameController) {
         this.gameController = gameController;
-        
         this.actionManager = new ActionManager(this);
-        
         this.interactionHandler = new InteractionHandler(this); 
         interactionHandler.setHandlerSet(new DefaultHandlerSet(this));
-        
-        this.scrollController = new ScrollPanelController(this);
 
+        this.scrollController = new ScrollPanelController(this);
         this.imageManager = new ImageManager(this,  LogoStyle.Small);               
-        
-        buildPanels();            
-    }
-    
-    public void start() {
+
+        buildPanels();
         initComponents();
-        
+
         addGeneralListeners();
         addToolbarListeners();
         addMainControlPanelListeners();
         addDisplayControlPanelListeners();
         addSettingsControlPanelListeners();
-        
+
         updateFromSettings();
     }
-    
+
     public GameController getGameController() {
         return gameController;
     };   
@@ -208,8 +204,13 @@ public class PanelController {
         gamePanel.add(scrollPanel, BorderLayout.CENTER);
         gamePanel.add(gameToolbar, BorderLayout.NORTH);
 
-        gameFrame.getSplitPane().setLeftComponent(gamePanel);
-        gameFrame.getSplitPane().setRightComponent(rightPane);
+        splitPane = new JSplitPane();
+        splitPane.setResizeWeight(1);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setLeftComponent(gamePanel);
+        splitPane.setRightComponent(rightPane);
+
+        gameFrame.add(splitPane);
     }
     
     private void initComponents() {
