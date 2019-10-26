@@ -86,6 +86,7 @@ public class PanelController {
         initComponents();
         
         addGeneralListeners();
+        addToolbarListeners();
         addMainControlPanelListeners();
         addDisplayControlPanelListeners();
         addSettingsControlPanelListeners();
@@ -279,7 +280,7 @@ public class PanelController {
                                       
     }
     
-    private void addMainControlPanelListeners() {
+    private void addToolbarListeners() {
         getGameToolbar().getStartPauseButton().setAction(
                 getActionManager().getPlayGameAction()); 
         
@@ -294,7 +295,9 @@ public class PanelController {
                 
         getGameToolbar().getResetButton().setAction(
                 getActionManager().getResetGameAction());
-                                        
+
+        getGameToolbar().getGifStopRecordingButton().setAction(getActionManager().getExportGifAction());
+
         getGameToolbar().getZoomSlider().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
@@ -310,7 +313,9 @@ public class PanelController {
 
             }
         });
-        
+    }
+
+    private void addMainControlPanelListeners() {
         getMainControlPanel().getBoardWidthSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {                
                 getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);                
@@ -357,7 +362,6 @@ public class PanelController {
         getMainControlPanel().getRdbtnCompetitive1().addItemListener(lifeModeListener);
         
         getMainControlPanel().getSeedTypeComboBox().addActionListener(new ActionListener() {
-            
             @Override
             public void actionPerformed(ActionEvent e) {
                getSettings().set(Settings.SEED_TYPE, getMainControlPanel().getSeedTypeComboBox().getSelectedItem().toString());

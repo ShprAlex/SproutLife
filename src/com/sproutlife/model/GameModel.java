@@ -109,7 +109,7 @@ public class GameModel {
             return;
         }
 
-        gameThread.setGameStepListener(l);
+        gameThread.addGameStepListener(l);
         gameStep.setGameStepListener(l);
     }
 

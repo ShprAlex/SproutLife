@@ -22,7 +22,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import com.sproutlife.Settings;
-import com.sproutlife.action.ExportGifAction;
 import com.sproutlife.action.ExportPngAction;
 import com.sproutlife.action.LoadGenomeAction;
 import com.sproutlife.action.SaveGenomeAction;
@@ -32,13 +31,12 @@ import com.sproutlife.panel.gamepanel.ScrollPanel;
 public class GameMenu extends JMenuBar implements ActionListener {
     PanelController controller;
     
-    //private JMenuBar mb_menu;
-    private JMenu m_file, m_game;
-    private JMenuItem mi_file_exit;
-    private JMenuItem mi_game_play, mi_game_step, mi_game_stop, mi_game_reset;
+    private JMenu fileMenu;
+    private JMenu gameMenu;
+    private JMenuItem exitMenuItem;
+    private JMenuItem stepGameMenuItem;
     
     private Action enableMutationAction;
-    
     
     public GameMenu(PanelController controller) {
         this.controller = controller;
@@ -55,65 +53,43 @@ public class GameMenu extends JMenuBar implements ActionListener {
     }
 
     private void initMenu() {
-        // Setup menu
-        //mb_menu = new JMenuBar();
-        
-        m_file = new JMenu("File");
-        this.add(m_file);
-        m_game = new JMenu("Game");
-        this.add(m_game);
-        //m_help = new JMenu("Help");
-        //this.add(m_help);
-        mi_file_exit = new JMenuItem("Exit");
-        mi_file_exit.addActionListener(this);
-        m_file.add(new SaveGenomeAction(controller));
-        m_file.add(new LoadGenomeAction(controller));
-        m_file.add(new ExportPngAction(controller));
-        m_file.add(new ExportGifAction(controller));
-        m_file.add(new JSeparator());
-        m_file.add(mi_file_exit);
+        fileMenu = new JMenu("File");
+        this.add(fileMenu);
+        gameMenu = new JMenu("Game");
+        this.add(gameMenu);
 
-        mi_game_play = new JMenuItem(controller.getActionManager().getPlayGameAction());                        
-        mi_game_step = new JMenuItem("Step");
-        mi_game_step.addActionListener(this);
-        mi_game_reset = new JMenuItem(controller.getActionManager().getResetGameAction());
+        exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(this);
+        fileMenu.add(new SaveGenomeAction(controller));
+        fileMenu.add(new LoadGenomeAction(controller));
+        fileMenu.add(new ExportPngAction(controller));
+        fileMenu.add(controller.getActionManager().getExportGifAction());
+        fileMenu.add(new JSeparator());
+        fileMenu.add(exitMenuItem);
 
+        stepGameMenuItem = new JMenuItem("Step");
+        stepGameMenuItem.addActionListener(this);
 
-        m_game.add(new JSeparator());
-        m_game.add(mi_game_play);
-        m_game.add(mi_game_step);
-        m_game.add(new JMenuItem(this.enableMutationAction));
-        m_game.add(mi_game_reset);
-
+        gameMenu.add(controller.getActionManager().getPlayGameAction());
+        gameMenu.add(stepGameMenuItem);
+        gameMenu.add(controller.getActionManager().getResetGameAction());
+        gameMenu.add(this.enableMutationAction);
     }
-    
-    public void setPlayGame(boolean playGame) {
-        getGameModel().setPlayGame(playGame);
-        
-        if (playGame) {
-            mi_game_play.setEnabled(false);
-            mi_game_stop.setEnabled(true);                        
- 
-        } else {
-            mi_game_play.setEnabled(true);
-            mi_game_stop.setEnabled(false);        
-        }
-    }        
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource().equals(mi_file_exit)) {
-            // Exit the game
+        if (ae.getSource().equals(exitMenuItem)) {
             System.exit(0);
-        } else if (ae.getSource().equals(mi_game_step)) {
+        } else if (ae.getSource().equals(stepGameMenuItem)) {
+            controller.getInteractionLock().writeLock().lock();
             getGameModel().performGameStep();
-            getScrollPanel().repaint();
+            controller.getInteractionLock().writeLock().unlock();
+            controller.getImageManager().repaintNewImage();
         } 
     }
     
     private void initActions() {
         this.enableMutationAction = new AbstractAction("Disable Mutations") {
-            
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean enabled = getGameModel().getSettings().getBoolean(Settings.MUTATION_ENABLED);               

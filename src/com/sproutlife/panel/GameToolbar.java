@@ -9,31 +9,15 @@ package com.sproutlife.panel;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JToolBar;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.sproutlife.GameController;
-import com.sproutlife.Settings;
-
 import javax.swing.JSlider;
-import javax.swing.JRadioButton;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GameToolbar extends JPanel {
 
@@ -45,6 +29,7 @@ public class GameToolbar extends JPanel {
     private Component horizontalStrut_1;
     private JButton stepButton;
     private JButton resetButton;
+    private JButton gifStopRecordingButton;
 
 
     public GameToolbar(PanelController panelController) {
@@ -85,6 +70,10 @@ public class GameToolbar extends JPanel {
         speedSlider.setMaximum(4);
         speedSlider.setValue(-2);
 
+        gifStopRecordingButton = new JButton("GIF - Stop Rec.");
+        gifStopRecordingButton.setVisible(false);
+        add(gifStopRecordingButton);
+
         startPauseButton = new JButton("Start");
         add(startPauseButton);
         startPauseButton.setMaximumSize(new Dimension(200, 23));
@@ -123,5 +112,8 @@ public class GameToolbar extends JPanel {
     }
     public JButton getResetButton() {
         return resetButton;
+    }
+    public JButton getGifStopRecordingButton() {
+        return gifStopRecordingButton;
     }
 }

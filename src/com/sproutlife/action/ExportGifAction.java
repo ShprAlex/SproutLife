@@ -8,19 +8,15 @@
 package com.sproutlife.action;
 
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageOutputStream;
-import javax.imageio.stream.ImageOutputStream;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import com.sproutlife.io.GifSequenceWriter;
+import com.sproutlife.io.SproutLifeGifWriter;
 import com.sproutlife.panel.PanelController;
 
 @SuppressWarnings("serial")
@@ -30,6 +26,7 @@ public class ExportGifAction extends AbstractAction {
     protected String defaultFileName = "SproutLife";
     
     private JFileChooser chooser = null;
+    private Runnable stopRecordingCallback = null;
     
     public ExportGifAction(PanelController controller, String name) {
         super(name);
@@ -69,83 +66,43 @@ public class ExportGifAction extends AbstractAction {
     }
     
     public void actionPerformed(ActionEvent e) {
+        if (stopRecordingCallback!=null) {
+            stopRecordingCallback.run();
+            stopRecordingCallback=null;
+            this.putValue(NAME, "Save Gif");
+            controller.getGameToolbar().getGifStopRecordingButton().setVisible(false);
+            return;
+        }
+
         initChooser();
         controller.getScrollController().updateScrollBars();
         controller.setPlayGame(false);
 
         int returnVal = chooser.showSaveDialog(controller.getGameFrame());
-        File saveFile;
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            saveFile = chooser.getSelectedFile();
-            String fileName = saveFile.getName();
-            if (fileName.indexOf(".") < 0) {
-                try {
-                    String filePath = saveFile.getPath();
-                    saveFile = new File(filePath + ".gif");
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-            final File finalSaveFile = saveFile;
-            new Thread() {
-                
-                @Override
-                public void run() {
-                    try {
-                        saveImage(finalSaveFile);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(controller.getGameFrame(), "Image is too large, or nothing to draw");
-                    }
-                    
-                }
-            }.start();
-            
-
+        if (returnVal != JFileChooser.APPROVE_OPTION) {
+            return;
         }
-    }    
-    
-    public void saveImage(File saveFile) throws Exception {
 
-        int width = (int) controller.getBoardRenderer().getRendererBounds().getWidth();
-        width = Math.min(width,controller.getScrollPanel().getViewportSize().width);
-        int height = width*9/16;
-        BufferedImage firstImage = controller.getImageManager().getCroppedExportImage(width, height);
-        
-
-        // create a new BufferedOutputStream with the last argument
-        ImageOutputStream output = 
-                new FileImageOutputStream(saveFile);
-
-        // create a gif sequence with the type of the first image, 1 second
-        // between frames, which loops continuously
-        GifSequenceWriter writer = 
-                new GifSequenceWriter(output, firstImage.getType(), 1, true);
-
-        // write out the first image to our sequence...
-        writer.writeToSequence(firstImage);
-        
-        for(int i=0; i<200; i++) {
-            int skipFrames = 4;
-            if (controller.getBoardRenderer().getBlockSize()==4) {
-                skipFrames = 2;
+        File saveFile = chooser.getSelectedFile();
+        String fileName = saveFile.getName();
+        if (fileName.indexOf(".") < 0) {
+            try {
+                String filePath = saveFile.getPath();
+                saveFile = new File(filePath + ".gif");
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            if (controller.getBoardRenderer().getBlockSize()>4) {
-                skipFrames = 1;
-            }
-            for(int j=0; j<skipFrames; j++) {
-                controller.getInteractionLock().writeLock().lock();
-                controller.getGameModel().performGameStep();
-                controller.getInteractionLock().writeLock().unlock();
-                controller.getImageManager().repaintNewImage();
-            }
-            
-            BufferedImage nextImage = controller.getImageManager().getCroppedExportImage(width, height);
-            writer.writeToSequence(nextImage);
         }
-        
-        writer.close();
-        output.close();
 
-             
+        try {
+            stopRecordingCallback = SproutLifeGifWriter.saveImage(saveFile, controller);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(controller.getGameFrame(), ex.getMessage());
+        }
+
+        this.putValue(NAME, "Stop Recording Gif");
+        controller.getGameToolbar().getGifStopRecordingButton().setVisible(true);
+        controller.getGameToolbar().getGifStopRecordingButton().setText("GIF Stop Rec.");
     }
 }
