@@ -9,8 +9,6 @@ package com.sproutlife.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -39,7 +37,6 @@ import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.panel.gamepanel.ImageManager;
 import com.sproutlife.panel.gamepanel.ImageManager.LogoStyle;
 import com.sproutlife.panel.gamepanel.ScrollPanel;
-import com.sproutlife.panel.gamepanel.ScrollPanel.ViewportResizedListener;
 import com.sproutlife.panel.gamepanel.ScrollPanelController;
 import com.sproutlife.panel.gamepanel.handler.DefaultHandlerSet;
 import com.sproutlife.panel.gamepanel.handler.InteractionHandler;
@@ -84,6 +81,7 @@ public class PanelController {
         addMainControlPanelListeners();
         addDisplayControlPanelListeners();
         addSettingsControlPanelListeners();
+        boardSizeHandler.addListeners();
 
         updateFromSettings();
     }
@@ -241,15 +239,6 @@ public class PanelController {
 
     public void addGeneralListeners() {
         getScrollPanel().enableMouseListeners();
-        
-        getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
-            public void viewportResized(int viewportWidth, int viewportHeight) {
-                if (getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
-                    getBoardSizeHandler().updateBoardSizeFromImageSize(
-                            new Dimension(viewportWidth, viewportHeight));
-                }
-            }
-        });
 
         getGameModel().setGameStepListener(new DefaultGameStepListener(this));
     }
@@ -290,33 +279,6 @@ public class PanelController {
     }
 
     private void addMainControlPanelListeners() {
-        getMainControlPanel().getBoardWidthSpinner().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent arg0) {                
-                getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);                
-                int width =  (int) getMainControlPanel().getBoardWidthSpinner().getValue();
-                int height = (int) getMainControlPanel().getBoardHeightSpinner().getValue();
-                getBoardSizeHandler().updateBoardSize(width, height);
-            }
-        });
-        
-        getMainControlPanel().getBoardHeightSpinner().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent arg0) {
-                int width =  (int) getMainControlPanel().getBoardWidthSpinner().getValue();
-                int height = (int) getMainControlPanel().getBoardHeightSpinner().getValue();
-                getBoardSizeHandler().updateBoardSize(width, height);
-            }
-        });
-        
-        getMainControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                getBoardRenderer().setDefaultBlockSize(getBoardRenderer().getBlockSize());
-                Rectangle bounds = getScrollPanel().getViewportRectangle();
-                bounds.x+=20;
-                bounds.y+=20;
-                getBoardSizeHandler().updateBoardSizeFromImageSize(bounds);
-            }
-        });
-        
         ItemListener lifeModeListener = new ItemListener() {  
             @Override
             public void itemStateChanged(ItemEvent e) {
