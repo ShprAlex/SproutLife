@@ -26,7 +26,6 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -37,9 +36,6 @@ import com.sproutlife.Settings;
 import com.sproutlife.action.ActionManager;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
-import com.sproutlife.model.step.GameStep.StepType;
-import com.sproutlife.model.step.GameStepEvent;
-import com.sproutlife.model.step.GameStepListener;
 import com.sproutlife.panel.gamepanel.ImageManager;
 import com.sproutlife.panel.gamepanel.ImageManager.LogoStyle;
 import com.sproutlife.panel.gamepanel.ScrollPanel;
@@ -249,44 +245,15 @@ public class PanelController {
         getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
                 if (getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
-                    getBoardSizeHandler().updateBoardSizeFromImageSize(new Dimension(viewportWidth, viewportHeight));
-                } 
-                                                
-            }
-        });
-        
-        getGameModel().setGameStepListener(new GameStepListener() {
-            @Override
-            public void stepPerformed(GameStepEvent event) {
-                if (event.getStepType() == StepType.STEP_BUNDLE) {
-                    getImageManager().repaintNewImage();
-                    
-                    if (getGameModel().getTime()%100==0) {
-                        SwingUtilities.invokeLater(new Runnable() {                            
-                            @Override
-                            public void run() {                                
-                                getStatsPanel().getStatsTextPane().setText(
-                                        getGameModel().getStats().getDisplayText());
-
-                                if (getGameModel().getGameThread().getIterations()>=2 &&
-                                        getGameModel().getGameThread().getAutoAdjust() &&
-                                        getGameModel().getTime()>5000) {
-                                    getGameToolbar().getSpeedSlider().setValue(1);
-                                    getGameModel().getGameThread().setAutoAdjust(false);
-                                }
-                                if (getGameModel().getTime()>=5000 && getGameModel().getTime()<=5200) {
-                                    getDisplayControlPanel().getChckbxCellLayer().setSelected(false);
-                                    getDisplayControlPanel().getChckbxGenomeLayer().setSelected(false);
-                                }
-                            }
-                        });
-                    }
+                    getBoardSizeHandler().updateBoardSizeFromImageSize(
+                            new Dimension(viewportWidth, viewportHeight));
                 }
             }
-        });                
-                                      
+        });
+
+        getGameModel().setGameStepListener(new DefaultGameStepListener(this));
     }
-    
+
     private void addToolbarListeners() {
         getGameToolbar().getStartPauseButton().setAction(
                 getActionManager().getPlayGameAction()); 
