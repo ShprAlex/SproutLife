@@ -46,7 +46,7 @@ public class HeadRenderer extends OrganismRenderer {
             oy = parent.y+((o.y-parent.y)*scale);
         }
 
-        g.fillRect(BLOCK_SIZE + (int) (BLOCK_SIZE*(ox-1)), BLOCK_SIZE + (int) (BLOCK_SIZE*(oy-1)), rectSize, rectSize);
+        g.fillRect((int) (BLOCK_SIZE*(ox-1)), (int) (BLOCK_SIZE*(oy-1)), rectSize, rectSize);
     }
 
     private Color getColor(Organism o) {

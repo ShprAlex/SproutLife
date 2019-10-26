@@ -16,8 +16,8 @@ public class BoardSizeHandler {
 
     public void updateBoardSizeFromImageSize(Rectangle r) {
         pc.getInteractionLock().writeLock().lock();
-        int boardWidth = (r.width-40)/pc.getBoardRenderer().getDefaultBlockSize()-2;
-        int boardHeight = (r.height-40)/pc.getBoardRenderer().getDefaultBlockSize()-2;
+        int boardWidth = (r.width-40)/pc.getBoardRenderer().getDefaultBlockSize();
+        int boardHeight = (r.height-40)/pc.getBoardRenderer().getDefaultBlockSize();
         int x = r.x/pc.getBoardRenderer().getDefaultBlockSize();
         int y = r.y/pc.getBoardRenderer().getDefaultBlockSize();
 
@@ -43,8 +43,8 @@ public class BoardSizeHandler {
     }    
     
     public void updateBoardSize(int width, int height) {
-        int displayWidth = (width+2)*pc.getBoardRenderer().getDefaultBlockSize()+40;
-        int displayHeight = (height+2)*pc.getBoardRenderer().getDefaultBlockSize()+40;
+        int displayWidth = (width)*pc.getBoardRenderer().getDefaultBlockSize()+40;
+        int displayHeight = (height)*pc.getBoardRenderer().getDefaultBlockSize()+40;
         updateBoardSizeFromImageSize(new Dimension(displayWidth,displayHeight));
     }
     

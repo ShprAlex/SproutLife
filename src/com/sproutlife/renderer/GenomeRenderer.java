@@ -99,8 +99,8 @@ public class GenomeRenderer extends OrganismRenderer {
             mbs = BLOCK_SIZE/4.25;
         }
 
-        int rx = BLOCK_SIZE + (int) (BLOCK_SIZE*(x+adjx))+(int)(mx*mbs)-dx;
-        int ry = BLOCK_SIZE + (int) (BLOCK_SIZE*(y+adjy))+(int)(my*mbs)-dy;
+        int rx = (int) (BLOCK_SIZE*(x+adjx))+(int)(mx*mbs)-dx;
+        int ry = (int) (BLOCK_SIZE*(y+adjy))+(int)(my*mbs)-dy;
         int rw = BLOCK_SIZE+dx*2;
         int rh = BLOCK_SIZE+dy*2;
 

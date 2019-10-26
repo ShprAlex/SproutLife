@@ -25,20 +25,20 @@ public class CellRenderer extends OrganismRenderer {
             for (Cell c: o.getCells()) {
                 if (c.isMarkedAsSeed() || c.getOrganism().getAge()<5) {
                     g.setColor(Color.black);
-                    g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x)-2, BLOCK_SIZE + (BLOCK_SIZE*c.y)-2, BLOCK_SIZE+4, BLOCK_SIZE+4);
+                    g.fillRect(BLOCK_SIZE*c.x-2, BLOCK_SIZE*c.y-2, BLOCK_SIZE+4, BLOCK_SIZE+4);
                 }
             }
             for (Cell c: o.getCells()) {
                 if (c.isMarkedAsSeed() || c.getOrganism().getAge()<5) {
                     g.setColor(Color.white);
-                    g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x)-1, BLOCK_SIZE + (BLOCK_SIZE*c.y)-1, BLOCK_SIZE+2, BLOCK_SIZE+2);
+                    g.fillRect(BLOCK_SIZE*c.x-1, BLOCK_SIZE*c.y-1, BLOCK_SIZE+2, BLOCK_SIZE+2);
                 }
             }
         }
 
         for (Cell c: o.getCells()) { 
             g.setColor(getColor(o));
-            g.fillRect(BLOCK_SIZE + (BLOCK_SIZE*c.x), BLOCK_SIZE + (BLOCK_SIZE*c.y), BLOCK_SIZE, BLOCK_SIZE);   
+            g.fillRect(BLOCK_SIZE*c.x, BLOCK_SIZE*c.y, BLOCK_SIZE, BLOCK_SIZE);
         }
     }
 
