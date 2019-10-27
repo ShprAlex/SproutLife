@@ -81,7 +81,6 @@ public class PanelController {
         addMainControlPanelListeners();
         addDisplayControlPanelListeners();
         addSettingsControlPanelListeners();
-        boardSizeHandler.addListeners();
 
         updateFromSettings();
     }
@@ -239,6 +238,8 @@ public class PanelController {
 
     public void addGeneralListeners() {
         getScrollPanel().enableMouseListeners();
+
+        getBoardSizeHandler().addListeners();
 
         getGameModel().setGameStepListener(new DefaultGameStepListener(this));
     }
