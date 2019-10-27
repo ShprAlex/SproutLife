@@ -229,7 +229,7 @@ public class Echosystem {
             o.setLocation(ol.x-bounds.x , ol.y-bounds.y);
         }
         for (Cell r : removeList) {
-            removeCell(r, false);
+            removeCell(r, true);
         }
         pruneEmptyOrganisms();
     }

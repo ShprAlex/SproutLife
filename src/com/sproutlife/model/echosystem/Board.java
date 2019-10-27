@@ -51,6 +51,9 @@ public class Board {
     }
 
     public void clearCell(int x, int y) {
+        if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight()) {
+            return;
+        }
         gameBoard[x][y] = null;
     }
 

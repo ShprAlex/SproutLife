@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.Box;
 
 public class MainControlPanel extends JPanel {
 
@@ -34,10 +35,14 @@ public class MainControlPanel extends JPanel {
     private JSpinner boardHeightSpinner;
     private JCheckBox autoSizeGridCheckbox;
     private JButton clipGridToViewButton;
-    private JLabel imageWidthHeightLabel;
     private JLabel lblSeedType;
     private JComboBox seedTypeComboBox;
     private JRadioButton rdbtnCompetitive2;
+    private JLabel lblImage;
+    private JLabel lblWidth_1;
+    private JLabel lblHeight_1;
+    private JSpinner imageWidthSpinner;
+    private JSpinner imageHeightSpinner;
 
 
     public MainControlPanel(PanelController panelController) {
@@ -54,9 +59,9 @@ public class MainControlPanel extends JPanel {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {10, 100, 100, 80, 10};
-        gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 31, 15, 0, 15, 0};
+        gridBagLayout.rowHeights = new int[]{20, 0, 15, 0, 0, 15, 0, 31, 0, 0, 31, 15, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
 
         JPanel lifeModePanel = new JPanel();
@@ -148,14 +153,6 @@ public class MainControlPanel extends JPanel {
         lifeModePanel.add(rdbtnCompetitive2, gbc_radioButton);
         lifeModeButtonGroup.add(rdbtnCompetitive2);
 
-        JLabel lblGrid = new JLabel("Grid");
-        GridBagConstraints gbc_lblGrid = new GridBagConstraints();
-        gbc_lblGrid.anchor = GridBagConstraints.WEST;
-        gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
-        gbc_lblGrid.gridx = 1;
-        gbc_lblGrid.gridy = 6;
-        add(lblGrid, gbc_lblGrid);
-
         JPanel panel = new JPanel();
         GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.gridwidth = 3;
@@ -166,77 +163,114 @@ public class MainControlPanel extends JPanel {
         add(panel, gbc_panel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{30, 40, 40};
-        gbl_panel.rowHeights = new int[]{23, 0, 0};
-        gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0};
-        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0};
+        gbl_panel.rowHeights = new int[]{0, 23, 0, 0, 0, 0, 0, 0};
+        gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0};
+        gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
         panel.setLayout(gbl_panel);
-
-        JLabel lblWidth = new JLabel("Width");
-        GridBagConstraints gbc_lblWidth = new GridBagConstraints();
-        gbc_lblWidth.anchor = GridBagConstraints.WEST;
-        gbc_lblWidth.insets = new Insets(0, 0, 5, 5);
-        gbc_lblWidth.gridx = 1;
-        gbc_lblWidth.gridy = 0;
-        panel.add(lblWidth, gbc_lblWidth);
-
-        boardWidthSpinner = new JSpinner();
-        GridBagConstraints gbc_boardWidthSpinner = new GridBagConstraints();
-        gbc_boardWidthSpinner.insets = new Insets(0, 0, 5, 0);
-        gbc_boardWidthSpinner.fill = GridBagConstraints.HORIZONTAL;
-        gbc_boardWidthSpinner.gridx = 2;
-        gbc_boardWidthSpinner.gridy = 0;
-        panel.add(boardWidthSpinner, gbc_boardWidthSpinner);
-
-        JLabel lblHeight = new JLabel("Height");
-        GridBagConstraints gbc_lblHeight = new GridBagConstraints();
-        gbc_lblHeight.anchor = GridBagConstraints.WEST;
-        gbc_lblHeight.insets = new Insets(0, 0, 5, 5);
-        gbc_lblHeight.gridx = 1;
-        gbc_lblHeight.gridy = 1;
-        panel.add(lblHeight, gbc_lblHeight);
-
-        boardHeightSpinner = new JSpinner();
-        GridBagConstraints gbc_boardHeightSpinner = new GridBagConstraints();
-        gbc_boardHeightSpinner.insets = new Insets(0, 0, 5, 0);
-        gbc_boardHeightSpinner.fill = GridBagConstraints.HORIZONTAL;
-        gbc_boardHeightSpinner.gridx = 2;
-        gbc_boardHeightSpinner.gridy = 1;
-        panel.add(boardHeightSpinner, gbc_boardHeightSpinner);
-
-        autoSizeGridCheckbox = new JCheckBox("Auto Size");
-        autoSizeGridCheckbox.setSelected(true);
-        GridBagConstraints gbc_autoSizeGridCheckbox = new GridBagConstraints();
-        gbc_autoSizeGridCheckbox.anchor = GridBagConstraints.WEST;
-        gbc_autoSizeGridCheckbox.insets = new Insets(0, 0, 0, 5);
-        gbc_autoSizeGridCheckbox.gridx = 1;
-        gbc_autoSizeGridCheckbox.gridy = 2;
-        panel.add(autoSizeGridCheckbox, gbc_autoSizeGridCheckbox);
-
-        clipGridToViewButton = new JButton("Clip to View");
-        clipGridToViewButton.setMargin(new Insets(2, 2, 2, 2));
-        GridBagConstraints gbc_clipGridToViewButton = new GridBagConstraints();
-        gbc_clipGridToViewButton.anchor = GridBagConstraints.EAST;
-        gbc_clipGridToViewButton.gridx = 2;
-        gbc_clipGridToViewButton.gridy = 2;
-        panel.add(clipGridToViewButton, gbc_clipGridToViewButton);
-
-        JLabel lblImage_1 = new JLabel("Image Size");
-        GridBagConstraints gbc_lblImage_1 = new GridBagConstraints();
-        gbc_lblImage_1.gridwidth = 2;
-        gbc_lblImage_1.anchor = GridBagConstraints.WEST;
-        gbc_lblImage_1.insets = new Insets(0, 0, 5, 5);
-        gbc_lblImage_1.gridx = 1;
-        gbc_lblImage_1.gridy = 9;
-        add(lblImage_1, gbc_lblImage_1);
-
-        imageWidthHeightLabel = new JLabel("100, 100");
-        imageWidthHeightLabel.setFont(imageWidthHeightLabel.getFont().deriveFont(Font.PLAIN));
-        GridBagConstraints gbc_imageWidthHeightLabel = new GridBagConstraints();
-        gbc_imageWidthHeightLabel.anchor = GridBagConstraints.EAST;
-        gbc_imageWidthHeightLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_imageWidthHeightLabel.gridx = 3;
-        gbc_imageWidthHeightLabel.gridy = 9;
-        add(imageWidthHeightLabel, gbc_imageWidthHeightLabel);
+                                
+                                        JLabel lblGrid = new JLabel("Grid");
+                                        GridBagConstraints gbc_lblGrid = new GridBagConstraints();
+                                        gbc_lblGrid.anchor = GridBagConstraints.WEST;
+                                        gbc_lblGrid.insets = new Insets(0, 0, 5, 5);
+                                        gbc_lblGrid.gridx = 0;
+                                        gbc_lblGrid.gridy = 0;
+                                        panel.add(lblGrid, gbc_lblGrid);
+                        
+                                JLabel lblWidth = new JLabel("Width");
+                                GridBagConstraints gbc_lblWidth = new GridBagConstraints();
+                                gbc_lblWidth.anchor = GridBagConstraints.WEST;
+                                gbc_lblWidth.insets = new Insets(0, 0, 5, 5);
+                                gbc_lblWidth.gridx = 1;
+                                gbc_lblWidth.gridy = 1;
+                                panel.add(lblWidth, gbc_lblWidth);
+                
+                        boardWidthSpinner = new JSpinner();
+                        boardWidthSpinner.setPreferredSize(new Dimension(100, 26));
+                        GridBagConstraints gbc_boardWidthSpinner = new GridBagConstraints();
+                        gbc_boardWidthSpinner.insets = new Insets(0, 0, 5, 0);
+                        gbc_boardWidthSpinner.fill = GridBagConstraints.HORIZONTAL;
+                        gbc_boardWidthSpinner.gridx = 2;
+                        gbc_boardWidthSpinner.gridy = 1;
+                        panel.add(boardWidthSpinner, gbc_boardWidthSpinner);
+                        
+                                JLabel lblHeight = new JLabel("Height");
+                                GridBagConstraints gbc_lblHeight = new GridBagConstraints();
+                                gbc_lblHeight.anchor = GridBagConstraints.WEST;
+                                gbc_lblHeight.insets = new Insets(0, 0, 5, 5);
+                                gbc_lblHeight.gridx = 1;
+                                gbc_lblHeight.gridy = 2;
+                                panel.add(lblHeight, gbc_lblHeight);
+                        
+                                boardHeightSpinner = new JSpinner();
+                                boardHeightSpinner.setPreferredSize(new Dimension(100, 26));
+                                GridBagConstraints gbc_boardHeightSpinner = new GridBagConstraints();
+                                gbc_boardHeightSpinner.insets = new Insets(0, 0, 5, 0);
+                                gbc_boardHeightSpinner.fill = GridBagConstraints.HORIZONTAL;
+                                gbc_boardHeightSpinner.gridx = 2;
+                                gbc_boardHeightSpinner.gridy = 2;
+                                panel.add(boardHeightSpinner, gbc_boardHeightSpinner);
+        
+        lblImage = new JLabel("Image");
+        GridBagConstraints gbc_lblImage = new GridBagConstraints();
+        gbc_lblImage.anchor = GridBagConstraints.WEST;
+        gbc_lblImage.insets = new Insets(0, 0, 5, 5);
+        gbc_lblImage.gridx = 0;
+        gbc_lblImage.gridy = 3;
+        panel.add(lblImage, gbc_lblImage);
+        
+        lblWidth_1 = new JLabel("Width");
+        GridBagConstraints gbc_lblWidth_1 = new GridBagConstraints();
+        gbc_lblWidth_1.anchor = GridBagConstraints.WEST;
+        gbc_lblWidth_1.insets = new Insets(0, 0, 5, 5);
+        gbc_lblWidth_1.gridx = 1;
+        gbc_lblWidth_1.gridy = 4;
+        panel.add(lblWidth_1, gbc_lblWidth_1);
+        
+        imageWidthSpinner = new JSpinner();
+        GridBagConstraints gbc_imageWidthSpinner = new GridBagConstraints();
+        gbc_imageWidthSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_imageWidthSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_imageWidthSpinner.gridx = 2;
+        gbc_imageWidthSpinner.gridy = 4;
+        panel.add(imageWidthSpinner, gbc_imageWidthSpinner);
+        imageWidthSpinner.setPreferredSize(new Dimension(100, 26));
+        
+        lblHeight_1 = new JLabel("Height");
+        GridBagConstraints gbc_lblHeight_1 = new GridBagConstraints();
+        gbc_lblHeight_1.anchor = GridBagConstraints.WEST;
+        gbc_lblHeight_1.insets = new Insets(0, 0, 5, 5);
+        gbc_lblHeight_1.gridx = 1;
+        gbc_lblHeight_1.gridy = 5;
+        panel.add(lblHeight_1, gbc_lblHeight_1);
+        
+        imageHeightSpinner = new JSpinner();
+        GridBagConstraints gbc_imageHeightSpinner = new GridBagConstraints();
+        gbc_imageHeightSpinner.fill = GridBagConstraints.HORIZONTAL;
+        gbc_imageHeightSpinner.insets = new Insets(0, 0, 5, 0);
+        gbc_imageHeightSpinner.gridx = 2;
+        gbc_imageHeightSpinner.gridy = 5;
+        panel.add(imageHeightSpinner, gbc_imageHeightSpinner);
+        imageHeightSpinner.setPreferredSize(new Dimension(100, 26));
+        
+                autoSizeGridCheckbox = new JCheckBox("Auto Size");
+                GridBagConstraints gbc_autoSizeGridCheckbox = new GridBagConstraints();
+                gbc_autoSizeGridCheckbox.anchor = GridBagConstraints.WEST;
+                gbc_autoSizeGridCheckbox.insets = new Insets(0, 0, 5, 5);
+                gbc_autoSizeGridCheckbox.gridx = 0;
+                gbc_autoSizeGridCheckbox.gridy = 6;
+                panel.add(autoSizeGridCheckbox, gbc_autoSizeGridCheckbox);
+                autoSizeGridCheckbox.setSelected(true);
+                
+                        clipGridToViewButton = new JButton("Clip to View");
+                        GridBagConstraints gbc_clipGridToViewButton = new GridBagConstraints();
+                        gbc_clipGridToViewButton.fill = GridBagConstraints.HORIZONTAL;
+                        gbc_clipGridToViewButton.gridwidth = 2;
+                        gbc_clipGridToViewButton.insets = new Insets(0, 0, 5, 0);
+                        gbc_clipGridToViewButton.gridx = 1;
+                        gbc_clipGridToViewButton.gridy = 6;
+                        panel.add(clipGridToViewButton, gbc_clipGridToViewButton);
+                        clipGridToViewButton.setPreferredSize(new Dimension(120, 29));
+                        clipGridToViewButton.setMargin(new Insets(2, 2, 2, 2));
 
     }
 
@@ -265,10 +299,13 @@ public class MainControlPanel extends JPanel {
     public JButton getClipGridToViewButton() {
         return clipGridToViewButton;
     }
-    public JLabel getImageWidthHeightLabel() {
-        return imageWidthHeightLabel;
-    }
     public JComboBox getSeedTypeComboBox() {
         return seedTypeComboBox;
+    }
+    public JSpinner getImageWidthSpinner() {
+        return imageWidthSpinner;
+    }
+    public JSpinner getImageHeightSpinner() {
+        return imageHeightSpinner;
     }
 }
