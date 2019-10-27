@@ -7,10 +7,10 @@
  *******************************************************************************/
 package com.sproutlife.renderer;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 
@@ -66,12 +66,7 @@ public class BoardRenderer {
         this.transform = new AffineTransform();        
     }
 
-    public void paint(Graphics2D g) {               
-
-        if (getZoom()!=1) {
-            g.setTransform(transform);
-        }
-
+    public void paint(Graphics2D g) {
         paintBackground(g);             
 
         if (getPaintHeadLayer()) {
@@ -86,7 +81,7 @@ public class BoardRenderer {
         if (getPaintGenomeLayer()) {
             paintLayer(g, getGenomeRenderer());
         }
-    }   
+    }
     
     public GameModel getGameModel() {
         return gameModel;
@@ -165,6 +160,10 @@ public class BoardRenderer {
     }
     
     public void setBlockSize(int blockSize) {
+        if (bounds!=null) {
+            bounds.width=(bounds.width-40)*blockSize/this.BLOCK_SIZE+40;
+            bounds.height=(bounds.height-40)*blockSize/this.BLOCK_SIZE+40;
+        }
         this.BLOCK_SIZE = blockSize;   
     }
     
@@ -180,21 +179,12 @@ public class BoardRenderer {
         this.visibleBounds = visibleBounds;
     }
     
-    public void setBounds(Dimension d) {
-        this.bounds = new Rectangle2D.Double(0,0,d.getWidth(),d.getHeight());
+    public void setBounds(Dimension2D d) {
+        this.bounds = new Rectangle2D.Double(-20,-20,d.getWidth(),d.getHeight());
     }
     
     public Rectangle2D.Double getRendererBounds() {
-        if (bounds==null) {
-            return null;
-        }
-        
-        double x = bounds.x - 20 * BLOCK_SIZE / getDefaultBlockSize();
-        double y = bounds.y - 20 * BLOCK_SIZE / getDefaultBlockSize();
-        double w = bounds.width * BLOCK_SIZE / getDefaultBlockSize();
-        double h = bounds.height * BLOCK_SIZE / getDefaultBlockSize();
-        
-        return new Rectangle2D.Double(x,y,w,h);        
+        return bounds;
     }
       
     public double getZoom() {
@@ -207,10 +197,11 @@ public class BoardRenderer {
 
     private void paintBackground(Graphics g) {      
         g.setColor(getColorModel().getBackgroundColor());
-        int x = (int) getRendererBounds().x;
-        int y = (int) getRendererBounds().y;
-        int w = (int) getRendererBounds().width;
-        int h = (int) getRendererBounds().height;
+        // paint beyond the bounds to avoid margin artifacts when saving images
+        int x = (int) getRendererBounds().x-1;
+        int y = (int) getRendererBounds().y-1;
+        int w = (int) getRendererBounds().width+1;
+        int h = (int) getRendererBounds().height+1;
         g.fillRect(x, y, w, h);
     }
 

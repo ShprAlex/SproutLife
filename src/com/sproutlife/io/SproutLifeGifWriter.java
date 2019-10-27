@@ -30,10 +30,11 @@ import com.sproutlife.model.step.GameStep.StepType;
 
 public class SproutLifeGifWriter {
     public static Runnable saveImage(File saveFile, PanelController controller) throws IOException {
-        int width = (int) controller.getBoardRenderer().getRendererBounds().getWidth();
+        double zoom = controller.getBoardRenderer().getZoom();
+        int width = (int) (controller.getBoardRenderer().getRendererBounds().getWidth()*zoom);
         width = Math.min(width,controller.getScrollPanel().getViewportSize().width);
-        int height = (int) controller.getBoardRenderer().getRendererBounds().getWidth();
-        height = Math.min(width,controller.getScrollPanel().getViewportSize().height);
+        int height = (int) (controller.getBoardRenderer().getRendererBounds().getHeight()*zoom);
+        height = Math.min(height,controller.getScrollPanel().getViewportSize().height);
         BufferedImage firstImage = controller.getImageManager().getCroppedExportImage(width, height);
 
         // create a new BufferedOutputStream with the last argument
@@ -52,11 +53,13 @@ public class SproutLifeGifWriter {
             @Override
             public void stepPerformed(GameStepEvent event) {
                 if (event.getStepType() == StepType.STEP_BUNDLE) {
+                    controller.getInteractionLock().readLock().lock();
                     BufferedImage nextImage = controller.getImageManager().getCroppedExportImage(fwidth, fheight);
                     try {
                         writer.writeToSequence(nextImage);
                     }
                     catch(IOException ex) {}
+                    controller.getInteractionLock().readLock().unlock();
                 }
             }
         };
@@ -67,6 +70,10 @@ public class SproutLifeGifWriter {
             @Override
             public void run() {
                 controller.getGameModel().getGameThread().removeGameStepListener(gifExportGsl);
+                try {
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException ex) {}
                 try {
                     writer.close();
                     output.close();

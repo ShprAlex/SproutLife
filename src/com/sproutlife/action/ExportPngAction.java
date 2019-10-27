@@ -8,6 +8,7 @@
 package com.sproutlife.action;
 
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,7 +82,12 @@ public class ExportPngAction extends AbstractAction {
             }
 
             try {
-                controller.getImageManager().saveImage(saveFile);
+                double zoom = controller.getBoardRenderer().getZoom();
+                int width = (int) (controller.getBoardRenderer().getRendererBounds().getWidth()*zoom);
+                width = Math.min(width,controller.getScrollPanel().getViewportSize().width);
+                int height = (int) (controller.getBoardRenderer().getRendererBounds().getHeight()*zoom);
+                height = Math.min(height,controller.getScrollPanel().getViewportSize().height);
+                controller.getImageManager().saveCroppedImage(saveFile,width, height);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(controller.getGameFrame(), "Image is too large, or nothing to draw");
             }

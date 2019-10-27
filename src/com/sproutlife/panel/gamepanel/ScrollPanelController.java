@@ -93,6 +93,9 @@ public class ScrollPanelController {
     }
     
     public Rectangle2D.Double getRendererRectangle(int pad) {
+        if (rendererBounds==null) {
+            return null;
+        }
         double x = (rendererBounds.getMinX()*getScalingZoomFactor()) - pad;
         double y = (rendererBounds.getMinY()*getScalingZoomFactor()) - pad;
         double width = (rendererBounds.getMaxX()*getScalingZoomFactor()) - x + pad;

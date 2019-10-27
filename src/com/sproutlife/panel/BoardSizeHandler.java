@@ -4,56 +4,42 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.sproutlife.panel.gamepanel.ScrollPanel.ViewportResizedListener;
+import com.sproutlife.renderer.Dimension2Double;
 
 public class BoardSizeHandler {
     PanelController pc;
     boolean updatingSize = false;
-    boolean updatingBoardSizeSpinner = false;
-    boolean updatingImageSizeSpinner = false;
-    
+    ChangeListener boardSizeSpinnerListener;
+    ChangeListener imageSizeSpinnerListener;
+
     public BoardSizeHandler(PanelController panelController) {
         this.pc = panelController;
     }
 
     public void addListeners() {
-        ChangeListener boardSizeSpinnerListener = new ChangeListener() {
+        boardSizeSpinnerListener = new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                if(!updatingSize) {
-                    pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);
-                }
-                if (updatingBoardSizeSpinner) {
-                    System.out.println("duplicate board spinner");
-                }
-                updatingBoardSizeSpinner = true;
-                int width =  (int) pc.getMainControlPanel().getBoardWidthSpinner().getValue();
+                pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);
+                int width = (int) pc.getMainControlPanel().getBoardWidthSpinner().getValue();
                 int height = (int) pc.getMainControlPanel().getBoardHeightSpinner().getValue();
                 updateBoardSize(width, height);
-                updatingBoardSizeSpinner = false;
             }
         };
-        
-        ChangeListener imageSizeSpinnerListener = new ChangeListener() {
+
+        imageSizeSpinnerListener = new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                if(!updatingSize) {
-                    pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);
-                }
-                if (updatingImageSizeSpinner) {
-                    System.out.println("duplicate image spinner");
-                }
-                updatingImageSizeSpinner = true;
+                pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);
                 int width =  (int) pc.getMainControlPanel().getImageWidthSpinner().getValue();
                 int height = (int) pc.getMainControlPanel().getImageHeightSpinner().getValue();
-                double zoom = pc.getBoardRenderer().getZoom();
-                width = (int) (width*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom);
-                height = (int) (height*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom);
                 updateBoardSizeFromImageSize(new Dimension(width, height));
-                updatingImageSizeSpinner = false;
             }
         };
 
@@ -61,12 +47,9 @@ public class BoardSizeHandler {
             public void viewportResized(int viewportWidth, int viewportHeight) {
                 if (pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
                     boolean autoSizeGrid = pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected();
-                    double zoom = pc.getBoardRenderer().getZoom();
-                    int width = (int) (viewportWidth*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom);
-                    int height = (int)(viewportHeight*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom);
                     if (autoSizeGrid) {
-                        updateBoardSizeFromImageSize(
-                                new Dimension(width, height));
+                        clipToView();
+                        //updateBoardSizeFromImageSize(new Dimension(viewportWidth, viewportHeight));
                     }
                 }
             }
@@ -79,21 +62,15 @@ public class BoardSizeHandler {
 
         pc.getMainControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                //int dbs = pc.getBoardRenderer().getDefaultBlockSize();
-                //pc.getBoardRenderer().setDefaultBlockSize(pc.getBoardRenderer().getBlockSize());
-                //Rectangle2D boundsD = pc.getScrollController().getRendererRectangle();//.getWidth()pc.getScrollPanel().getViewportRectangle();
-                //Rectangle bounds = new Rectangle((int) boundsD.getX(),(int) boundsD.getY(),(int) boundsD.getWidth(),(int) boundsD.getHeight());
-                Rectangle bounds = pc.getScrollPanel().getViewportRectangle();
-                double zoom = pc.getBoardRenderer().getZoom();
-                System.out.println(bounds.toString());
-                bounds.width=(int) (bounds.width*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom);
-                bounds.height=(int) (bounds.height*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom);
-                bounds.x=(int) (bounds.x*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom)+20;
-                bounds.y=(int) (bounds.y*pc.getBoardRenderer().getDefaultBlockSize()/pc.getBoardRenderer().getBlockSize()/zoom)+20;
-                //bounds.x+=20;
-                //bounds.y+=20;
-                updateBoardSizeFromImageSize(bounds);
-                //pc.getBoardRenderer().setDefaultBlockSize(dbs);
+                clipToView();
+            }
+        });
+
+        pc.getMainControlPanel().getAutoSizeGridCheckbox().addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if(pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
+                    clipToView();
+                }
             }
         });
     }
@@ -106,56 +83,107 @@ public class BoardSizeHandler {
         if (updatingSize) {
             return;
         }
+
         updatingSize = true;
         pc.getInteractionLock().writeLock().lock();
-
-        double blockSize = pc.getBoardRenderer().getDefaultBlockSize();
-        int boardWidth = (int)((r.width-40)/blockSize);
-        int boardHeight = (int)((r.height-40)/blockSize);
-        int x = (int)(r.x/blockSize);
-        int y = (int)(r.y/blockSize);
+        double zoom = pc.getBoardRenderer().getZoom();
+        double blockSize = pc.getBoardRenderer().getBlockSize();
+        int boardWidth = (int)((r.width/zoom-40)/blockSize);
+        int boardHeight = (int)((r.height/zoom-40)/blockSize);
+        int x = (int)(r.x/blockSize/zoom);
+        int y = (int)(r.y/blockSize/zoom);
 
         boardWidth=Math.max(1, boardWidth);
         boardHeight=Math.max(1, boardHeight);
         pc.getGameModel().getEchosystem().updateBoard(new Rectangle(x,y,boardWidth, boardHeight));
-        
-        pc.getBoardRenderer().setBounds(new Dimension(r.width, r.height));
-        
-        if (!updatingBoardSizeSpinner) {
-            pc.getMainControlPanel().getBoardWidthSpinner().setValue(boardWidth);
-            pc.getMainControlPanel().getBoardHeightSpinner().setValue(boardHeight);
-        }
-        //pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(autoSizeGrid);
 
+        pc.getBoardRenderer().setBounds(new Dimension2Double(r.width/zoom, r.height/zoom));
+
+        updateBoardSizeSpinners(boardWidth, boardHeight);
+        updateImageSizeSpinners(r.width, r.height);
         pc.getInteractionLock().writeLock().unlock();
 
         pc.getScrollController().updateScrollBars();
-        if (!updatingImageSizeSpinner) {
-            updateImageWidthHeightLabel();
-        }
-        
         pc.getImageManager().repaintNewImage();
         updatingSize = false;
     }    
     
     public void updateBoardSize(int width, int height) {
+        // we repeat most of the updateBoardSizeFromImageSize() logic in this function to avoid rounding errors.
         double zoom = pc.getBoardRenderer().getZoom();
-        int displayWidth = (int) ((width)*pc.getBoardRenderer().getDefaultBlockSize()+40);
-        int displayHeight = (int) ((height)*pc.getBoardRenderer().getDefaultBlockSize()+40);
-        //pc.getBoardRenderer().setBounds(new Dimension(displayWidth, displayHeight));
-        updateBoardSizeFromImageSize(new Dimension(displayWidth,displayHeight));
+        int displayWidth = (int) ((width)*pc.getBoardRenderer().getBlockSize()+40);
+        int displayHeight = (int) ((height)*pc.getBoardRenderer().getBlockSize()+40);
+
+        if (updatingSize) {
+            return;
+        }
+
+        updatingSize = true;
+        pc.getInteractionLock().writeLock().lock();
+
+        int boardWidth=Math.max(1, width);
+        int boardHeight=Math.max(1, height);
+        pc.getGameModel().getEchosystem().updateBoard(new Rectangle(0,0,boardWidth, boardHeight));
+        pc.getBoardRenderer().setBounds(new Dimension2Double(displayWidth, displayHeight));
+
+        updateBoardSizeSpinners(width, height);
+        updateImageSizeSpinners((int) (displayWidth*zoom), (int) (displayHeight*zoom));
+        pc.getInteractionLock().writeLock().unlock();
+
+        pc.getScrollController().updateScrollBars();
+        pc.getImageManager().repaintNewImage();
+        updatingSize = false;
     }
-    
-    public void updateImageWidthHeightLabel() {
-        //boolean updateWasInProgress = updatingSize;
-        //updatingSize = true;
-        int imageWidth = (int) pc.getScrollController().getRendererRectangle().getWidth();       
-        int imageHeight = (int) pc.getScrollController().getRendererRectangle().getHeight();
-        //imageWidth = Math.min(imageWidth, pc.getScrollPanel().getViewportSize().width);
-        //imageHeight = Math.min(imageHeight, pc.getScrollPanel().getViewportSize().height);
-        pc.getMainControlPanel().getImageWidthSpinner().setValue(imageWidth);
-        pc.getMainControlPanel().getImageHeightSpinner().setValue(imageHeight);
-        //updatingSize = updateWasInProgress;
-        //pc.getMainControlPanel().getImageWidthHeightLabel().setText(imageWidth+", "+imageHeight);
+
+    public void updateBoardSizeSpinners(int boardWidth, int boardHeight) {
+        pc.getMainControlPanel().getBoardWidthSpinner().removeChangeListener(boardSizeSpinnerListener);
+        pc.getMainControlPanel().getBoardHeightSpinner().removeChangeListener(boardSizeSpinnerListener);
+
+        pc.getMainControlPanel().getBoardWidthSpinner().setValue(boardWidth);
+        pc.getMainControlPanel().getBoardHeightSpinner().setValue(boardHeight);
+
+        pc.getMainControlPanel().getBoardWidthSpinner().addChangeListener(boardSizeSpinnerListener);
+        pc.getMainControlPanel().getBoardHeightSpinner().addChangeListener(boardSizeSpinnerListener);
+    }
+
+    public void updateImageSizeSpinners(int width, int height) {
+        pc.getMainControlPanel().getImageWidthSpinner().removeChangeListener(imageSizeSpinnerListener);
+        pc.getMainControlPanel().getImageHeightSpinner().removeChangeListener(imageSizeSpinnerListener);
+
+        pc.getMainControlPanel().getImageWidthSpinner().setValue(width);
+        pc.getMainControlPanel().getImageHeightSpinner().setValue(height);
+
+        pc.getMainControlPanel().getImageWidthSpinner().addChangeListener(imageSizeSpinnerListener);
+        pc.getMainControlPanel().getImageHeightSpinner().addChangeListener(imageSizeSpinnerListener);
+    }
+
+    public void updateZoomValue(int value) {
+        double zoom =1;
+        if (value >=0 ) {
+            zoom = Math.pow(1.2, value);
+            pc.getBoardRenderer().setBlockSize(6);
+        }
+        else {
+            switch (value) {
+                case -5 : pc.getBoardRenderer().setBlockSize(1); break;
+                case -4 : pc.getBoardRenderer().setBlockSize(2); break;
+                case -3 : pc.getBoardRenderer().setBlockSize(3); break;
+                case -2 : pc.getBoardRenderer().setBlockSize(4); break;
+                case -1 : pc.getBoardRenderer().setBlockSize(5); break;
+            }
+        }
+        pc.getBoardRenderer().setZoom(zoom);
+        pc.getScrollController().setScalingZoomFactor(zoom);
+        Rectangle2D bounds = pc.getScrollController().getRendererRectangle();
+        updateImageSizeSpinners((int)bounds.getWidth(), (int)bounds.getHeight());
+    }
+
+    private void clipToView() {
+        Rectangle bounds = pc.getScrollPanel().getViewportRectangle();
+        double zoom = pc.getBoardRenderer().getZoom();
+        System.out.println(bounds.toString());
+        bounds.x+=20*zoom;
+        bounds.y+=20*zoom;
+        updateBoardSizeFromImageSize(bounds);
     }
 }
