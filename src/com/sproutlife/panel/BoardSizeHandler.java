@@ -49,7 +49,6 @@ public class BoardSizeHandler {
                     boolean autoSizeGrid = pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected();
                     if (autoSizeGrid) {
                         clipToView();
-                        //updateBoardSizeFromImageSize(new Dimension(viewportWidth, viewportHeight));
                     }
                 }
             }
