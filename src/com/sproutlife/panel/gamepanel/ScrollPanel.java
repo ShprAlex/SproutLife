@@ -54,7 +54,6 @@ public class ScrollPanel extends JPanel {
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints layoutCons = new GridBagConstraints();
         setLayout(layout);
-        
         innerPanel = new JPanel() {
             public void paint(Graphics g) {
                 boolean gotLock = false;

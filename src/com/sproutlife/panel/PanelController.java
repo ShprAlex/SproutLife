@@ -216,8 +216,8 @@ public class PanelController {
         ToolTipManager.sharedInstance().setInitialDelay(0);
         gameFrame.setVisible(true);  
         getBoardRenderer().setDefaultBlockSize(3);
-        updateZoomValue(-3);
         getGameToolbar().getZoomSlider().setValue(-3);
+        getBoardSizeHandler().updateZoomValue(-3);
         getBoardSizeHandler().updateBoardSizeFromImageSize(getScrollPanel().getViewportSize());
         getImageManager().setBackgroundColor(new Color(160,160,160)); 
 
@@ -265,7 +265,7 @@ public class PanelController {
         getGameToolbar().getZoomSlider().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
-                updateZoomValue(value);
+                getBoardSizeHandler().updateZoomValue(value);
 
             }
         });
@@ -519,28 +519,5 @@ public class PanelController {
         }
         getGameModel().getGameThread().setSleepDelay(sleepDelay);
         getGameModel().getGameThread().setIterations(iterations);
-    }
-    
-    public void updateZoomValue(int value) {
-        
-        double zoom =1;
-        if (value >=0 ) {
-            zoom = Math.pow(1.2, value);
-            getBoardRenderer().setBlockSize(6);
-        }
-        else {
-            switch (value) {
-                case -5 : getBoardRenderer().setBlockSize(1); break;
-                case -4 : getBoardRenderer().setBlockSize(2); break;
-                case -3 : getBoardRenderer().setBlockSize(3); break;
-                case -2 : getBoardRenderer().setBlockSize(4); break;
-                case -1 : getBoardRenderer().setBlockSize(5); break;                        
-            }               
-        }
-
-        getBoardRenderer().setZoom(zoom);          
-        getScrollController().setScalingZoomFactor(zoom);
-
-        getBoardSizeHandler().updateImageWidthHeightLabel();
     }
 }
