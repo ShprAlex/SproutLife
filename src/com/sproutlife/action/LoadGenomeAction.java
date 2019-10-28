@@ -24,7 +24,7 @@ public class LoadGenomeAction extends AbstractAction {
 
     protected PanelController controller;
     private JFileChooser chooser = null;
-    static int kind = 0;
+    static public int kind = 0;
 
     public LoadGenomeAction(PanelController controller, String name) {
         super(name);
@@ -90,7 +90,7 @@ public class LoadGenomeAction extends AbstractAction {
                         ex.toString(),
                         JOptionPane.ERROR_MESSAGE);
             }
-            kind=(kind+1)%3;
+            kind=(kind+2)%3;
         }
     } 
 }

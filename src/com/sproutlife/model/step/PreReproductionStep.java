@@ -35,7 +35,7 @@ public class PreReproductionStep extends Step {
 
         if (getEchosystem().getOrganisms().size()<12) {
             SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
-            SproutStep.sproutRandomSeed(seedType, getEchosystem());
+            SproutStep.sproutRandomSeed(seedType, getEchosystem(), null);
         }
     }
 }

@@ -229,9 +229,17 @@ public class SproutStep extends Step {
         return true;
     }
 
-    public static Organism sproutRandomSeed(SeedType seedType, Echosystem echosystem) {
-        int x = (new Random()).nextInt(echosystem.getBoard().getWidth());
-        int y = (new Random()).nextInt(echosystem.getBoard().getHeight());
+    public static Organism sproutRandomSeed(SeedType seedType, Echosystem echosystem, Point location) {
+        int x;
+        int y;
+        if (location!=null) {
+            x = location.x;
+            y = location.y;
+        }
+        else {
+            x = (new Random()).nextInt(echosystem.getBoard().getWidth());
+            y = (new Random()).nextInt(echosystem.getBoard().getHeight());
+        }
 
         List<Seed> seedRotations = SeedFactory.getSeedRotations(seedType);
         Seed s = seedRotations.get((new Random()).nextInt(seedRotations.size()));

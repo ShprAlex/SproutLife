@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
@@ -137,8 +138,12 @@ public class GenomeIo {
                 genome.add(new Mutation(p, age, 0));
                 line = reader.readLine();
             }
+            int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
+            int x = (new Random()).nextInt(boardWidth/3);
+            int y = (new Random()).nextInt(gameModel.getEchosystem().getBoard().getHeight());
+            x+= kind*boardWidth/3;
 
-            Organism o = SproutStep.sproutRandomSeed(seedType, gameModel.getEchosystem());
+            Organism o = SproutStep.sproutRandomSeed(seedType, gameModel.getEchosystem(), new Point(x,y));
 
             if (o != null) {
                 o.setLifespan(lifespan);
