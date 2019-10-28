@@ -180,7 +180,6 @@ public class BoardSizeHandler {
     private void clipToView() {
         Rectangle bounds = pc.getScrollPanel().getViewportRectangle();
         double zoom = pc.getBoardRenderer().getZoom();
-        System.out.println(bounds.toString());
         bounds.x+=20*zoom;
         bounds.y+=20*zoom;
         updateBoardSizeFromImageSize(bounds);
