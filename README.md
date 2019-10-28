@@ -2,11 +2,11 @@
 
 Sprout Life is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. Sprout Life takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
-Enabling reproduction spontaneously leads to more advanced behaviors. Surviving organisms begin to compete for space and align in battle formations with their siblings. Game of Life is Turing complete, so there should be no limit to how complex the evolved behavior can get.
+Enabling reproduction spontaneously leads to more advanced behaviors. Surviving organisms begin to compete for space and align in battle formations with their siblings.
 
-For now you can watch evolution happen by running Sprout Life on your desktop. In future versions it could be fun to enable web-based competitions between organisms collected by multiple users.
+Watch evolution happen by running Sprout Life on your desktop. Save and load organism genomes and create battles between saved organisms.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2016-01-27.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2019-10-27e.gif)
 
 ### Compiling and Running
 
@@ -76,6 +76,8 @@ The initial excitement of developing Sprout Life was that it worked! Organisms d
 
 The direction towards smallness is not straight forward, and we can still learn a lot from how new abilities are introduced and propagate through the population. Overall though, the trend is to be simple, and simple is boring. Simple is also a fixed boundary beyond which progress isn't possible.
 
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-27t.gif)
+
 ### Overcoming simplicity - initial techniques to maintain complexity
 
 There are a few ways we can encourage our evolutionary model to maintain complexity so as to keep things interesting.
@@ -83,28 +85,6 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 - **Maturity to childbearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
-
-### Individual opportunity vs. collective stability - or - The tyranny of 3rd children
-
-We want to see drama unfold in the game, and 3rd children create drama. In a world populated by asexual reproduction, each organism only needs to only have one child to maintain the population. Having two children means that for a constant population one child must die. 
-
-By controlling energy incentives for having children, we can make having 3+ children a strong temptation. We can require a big energy investment to have the first two children, and little for each additional child. Organisms with three children will dominate because having more children means they spend less energy per child on average. 
-
-Organisms strive for order. Stable patterns arise quickly when organisms have only two children. Having 3 children, however, makes it harder to establish a stable pattern. Now two of the three children must die to maintain the status quo. That creates more permutations of possible outcomes. It's a harder environment for our evolving organisms to optimize. 3rd children benefit their parent, but everyone ends up tripping over them. This results in chaos, a less densely populated board, and a lower population. 
-
-So what's good for the individual can in some ways be bad for the community. In our world this is a frequent occurrence requiring government intervention. An extreme but relevant example is China's one child policy. Another parallel is curbing smoking. Competition forced bars to allow smoking, and regulation was necessary to improve the situation for the majority.
-
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-27t.gif)
-
-### Bigger bodies, bigger brains
-
-For evolution towards greater complexity, it should be the case that bigger is better than smaller. The best bigger organism should be superior to the best smaller organism. Bigger need not always be better, but a more advanced organism should be able to evolve by taking advantage of greater size. 
-
-Bigger organisms are able to have more mutations. Mutations correspond to coordinates within the boundaries of the organism. The greater its size the more room for mutation. More mutations means a longer genetic code (which simply lists mutations). The longer the genetic code, the more sophisticated the behavior that the organism can exhibit. 
-
-Patterns are programs not just machines. Skilled designers have created GOL patterns that perform complex tasks like [generating prime numbers](http://www.njohnston.ca/2009/08/generating-sequences-of-primes-in-conways-game-of-life/). Because of their calculating ability patterns act like programs, which means we are evolving brains and not just bodies.
-
-In essence being bigger gives an organism a bigger brain (which is also its body), and we want an environment where bigger brains win.
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-28f.gif)
 
