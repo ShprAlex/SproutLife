@@ -14,8 +14,8 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
+import com.sproutlife.Settings;
 import com.sproutlife.io.GenomeIo;
 import com.sproutlife.panel.PanelController;
 
@@ -81,6 +81,7 @@ public class LoadGenomeAction extends AbstractAction {
                 GenomeIo.loadGenome(loadFile, controller.getGameModel(), kind);
                 controller.updateFromSettings();
                 controller.getImageManager().repaintNewImage();
+                controller.getDisplayControlPanel().getChckbxAutoSplitColors().setSelected(false);
                 System.out.println("Loaded Orgs " + controller.getGameModel().getEchosystem().getOrganisms().size());
             }
             catch (IOException ex) {

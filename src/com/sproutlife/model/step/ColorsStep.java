@@ -10,6 +10,7 @@ package com.sproutlife.model.step;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 
@@ -21,7 +22,9 @@ public class ColorsStep extends Step {
     }
         
     public void perform() {
-        splitColors();
+        if (getSettings().getBoolean(Settings.AUTO_SPLIT_COLORS)) {
+            splitColors();
+        }
     }
     
     private void splitColors() {
@@ -31,11 +34,6 @@ public class ColorsStep extends Step {
         int kindCount[] = new int[3];
         for (Organism o : getEchosystem().getOrganisms()) {
             kindCount[o.getAttributes().kind]++;
-            /*
-            if (o.getKind()!=oneKind) {
-                isOneKind=false;
-            } 
-            */           
         }
 
         if (kindCount[0]==0 || kindCount[1]==0 || kindCount[2]==0) {     
@@ -52,26 +50,6 @@ public class ColorsStep extends Step {
             }              
             
             if (splitKind!=-1) {
-                /*
-                ArrayList<Integer> lifespans = new ArrayList<Integer>();
-                for (Organism o : getEchosystem().getOrganisms()) {                    
-                    if (o.getKind()==splitKind) {
-                        lifespans.add(getMutationCount(o));
-                    }                                        
-                }
-                Collections.sort( lifespans);
-                
-                int middleL = 0;
-                if (lifespans.size()>1) {                       
-                    middleL = lifespans.get(lifespans.size()/2);
-                }
-                for (Organism o : getEchosystem().getOrganisms()) {
-                    if (o.getKind()==splitKind) {                        
-                        o.getKind() = (getMutationCount(o)<=middleL)?splitKind : emptyKind ;                                                                           
-                    }
-                }
-                */
-                
                 ArrayList<Integer> xCoords = new ArrayList<Integer>();
                 for (Organism o : getEchosystem().getOrganisms()) {                    
                     if (o.getAttributes().kind==splitKind) {
@@ -94,13 +72,7 @@ public class ColorsStep extends Step {
                         }                       
                     }
                 }
-                
             }        
         }
     }
-    
-    private int getMutationCount(Organism o) {
-        return o.getGenome().getRecentMutations(getEchosystem().getTime()-1000,getEchosystem().getTime(),o.lifespan).size();
-    }
-
 }

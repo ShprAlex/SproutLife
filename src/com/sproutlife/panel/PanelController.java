@@ -353,6 +353,15 @@ public class PanelController {
             public void stateChanged(ChangeEvent arg0) {
                 int length = (int) ((JSpinner) arg0.getSource()).getValue();
                 getBoardRenderer().getTailRenderer().setTailLength(length);
+                getImageManager().repaintNewImage();
+            }
+        });
+
+        dcp.getChckbxAutoSplitColors().addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                boolean selected = getDisplayControlPanel().getChckbxAutoSplitColors().isSelected();
+                getSettings().set(Settings.AUTO_SPLIT_COLORS, selected);
             }
         });
         

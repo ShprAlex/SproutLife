@@ -42,6 +42,8 @@ public class DisplayControlPanel extends JPanel {
     private Component verticalStrut;
     private JSpinner spinnerTailLength;
     private Box horizontalBox_1;
+    private JCheckBox chckbxAutoSplitColors;
+    private Component verticalStrut_1;
 
 
 
@@ -59,17 +61,17 @@ public class DisplayControlPanel extends JPanel {
     public void buildPanel() {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] {10, 30, 100};
+        gridBagLayout.columnWidths = new int[] {10, 0, 30, 100};
         gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0};
-        gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0};
+        gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
         setLayout(gridBagLayout);
 
         lblDrawLayers = new JLabel("Draw Layers");
         GridBagConstraints gbc_lblDrawLayers = new GridBagConstraints();
         gbc_lblDrawLayers.anchor = GridBagConstraints.NORTHWEST;
         gbc_lblDrawLayers.insets = new Insets(0, 0, 5, 5);
-        gbc_lblDrawLayers.gridx = 1;
+        gbc_lblDrawLayers.gridx = 2;
         gbc_lblDrawLayers.gridy = 1;
         add(lblDrawLayers, gbc_lblDrawLayers);
 
@@ -79,7 +81,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_panel_2.anchor = GridBagConstraints.WEST;
         gbc_panel_2.insets = new Insets(0, 30, 5, 0);
         gbc_panel_2.fill = GridBagConstraints.VERTICAL;
-        gbc_panel_2.gridx = 1;
+        gbc_panel_2.gridx = 2;
         gbc_panel_2.gridy = 2;
         add(panel_2, gbc_panel_2);
         panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
@@ -123,17 +125,17 @@ public class DisplayControlPanel extends JPanel {
         gbc_lblBackground.gridwidth = 2;
         gbc_lblBackground.anchor = GridBagConstraints.NORTHWEST;
         gbc_lblBackground.insets = new Insets(0, 0, 5, 0);
-        gbc_lblBackground.gridx = 1;
+        gbc_lblBackground.gridx = 2;
         gbc_lblBackground.gridy = 4;
         add(lblBackground, gbc_lblBackground);
         
         panel = new JPanel();
+        panel.setMaximumSize(new Dimension(32767, 50));
         GridBagConstraints gbc_panel = new GridBagConstraints();
-        gbc_panel.fill = GridBagConstraints.VERTICAL;
-        gbc_panel.anchor = GridBagConstraints.WEST;
+        gbc_panel.anchor = GridBagConstraints.NORTHWEST;
         gbc_panel.gridwidth = 2;
         gbc_panel.insets = new Insets(0, 30, 5, 0);
-        gbc_panel.gridx = 1;
+        gbc_panel.gridx = 2;
         gbc_panel.gridy = 5;
         add(panel, gbc_panel);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -146,6 +148,23 @@ public class DisplayControlPanel extends JPanel {
         rdbtnBackgroundWhite = new JRadioButton("White");
         buttonGroupBackground.add(rdbtnBackgroundWhite);
         panel.add(rdbtnBackgroundWhite);
+        
+        verticalStrut_1 = Box.createVerticalStrut(20);
+        GridBagConstraints gbc_verticalStrut_1 = new GridBagConstraints();
+        gbc_verticalStrut_1.insets = new Insets(0, 0, 5, 5);
+        gbc_verticalStrut_1.gridx = 1;
+        gbc_verticalStrut_1.gridy = 6;
+        add(verticalStrut_1, gbc_verticalStrut_1);
+        
+        chckbxAutoSplitColors = new JCheckBox("Auto Split Colors");
+        chckbxAutoSplitColors.setSelected(true);
+        GridBagConstraints gbc_chckbxAutoSplitColors = new GridBagConstraints();
+        gbc_chckbxAutoSplitColors.anchor = GridBagConstraints.NORTHWEST;
+        gbc_chckbxAutoSplitColors.gridwidth = 3;
+        gbc_chckbxAutoSplitColors.insets = new Insets(0, 0, 5, 0);
+        gbc_chckbxAutoSplitColors.gridx = 1;
+        gbc_chckbxAutoSplitColors.gridy = 7;
+        add(chckbxAutoSplitColors, gbc_chckbxAutoSplitColors);
 
     }
 
@@ -172,5 +191,8 @@ public class DisplayControlPanel extends JPanel {
     }
     public JSpinner getSpinnerTailLength() {
         return spinnerTailLength;
+    }
+    public JCheckBox getChckbxAutoSplitColors() {
+        return chckbxAutoSplitColors;
     }
 }
