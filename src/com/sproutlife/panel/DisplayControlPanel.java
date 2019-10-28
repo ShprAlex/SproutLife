@@ -157,6 +157,7 @@ public class DisplayControlPanel extends JPanel {
         add(verticalStrut_1, gbc_verticalStrut_1);
         
         chckbxAutoSplitColors = new JCheckBox("Auto Split Colors");
+        chckbxAutoSplitColors.setToolTipText("<html>Split Color of Organism Group<br>when there are too many of that color.</html>");
         chckbxAutoSplitColors.setSelected(true);
         GridBagConstraints gbc_chckbxAutoSplitColors = new GridBagConstraints();
         gbc_chckbxAutoSplitColors.anchor = GridBagConstraints.NORTHWEST;
