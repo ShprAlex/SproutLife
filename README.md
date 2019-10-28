@@ -6,7 +6,7 @@ Enabling reproduction spontaneously leads to more advanced behaviors. Surviving 
 
 Watch evolution happen by running Sprout Life on your desktop. Save and load organism genomes and create battles between saved organisms.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife_2019-10-27e.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202019-10-27e.gif)
 
 ### Compiling and Running
 
