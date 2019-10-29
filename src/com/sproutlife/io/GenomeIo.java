@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -42,6 +43,7 @@ public class GenomeIo {
         int version = loadVersion(reader);
         reader.readLine();
         loadSettings(reader, gameModel);
+        clearColumn(gameModel, kind);
         loadOrganisms(reader, gameModel, kind);
         reader.close();
     }
@@ -109,6 +111,19 @@ public class GenomeIo {
             String k = kv[0];
             String v = kv[1];
             gameModel.getSettings().set(k, v);
+        }
+    }
+
+    public static void clearColumn(GameModel gameModel, int kind) {
+        Collection<Organism> organisms = new ArrayList<>(gameModel.getEchosystem().getOrganisms());
+        int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
+
+        int minX = kind*boardWidth/3;
+        int maxX = (kind+1)*boardWidth/3;
+        for (Organism o: organisms) {
+            if (o.x>=minX && o.x<=maxX) {
+                gameModel.getEchosystem().retireOrganism(o);
+            }
         }
     }
 
