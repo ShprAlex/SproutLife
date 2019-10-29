@@ -139,12 +139,7 @@ public class SproutStep extends Step {
                         for (Cell c : o.getCells()) {
                             Seed s = checkAndMarkSeed(c);
                             if (s!=null) {
-                                ArrayList<Seed> seedList = seeds.get(o);
-                                if (seedList == null) {
-                                    seedList = new  ArrayList<Seed>();
-                                    seeds.put(o,seedList);
-                                }
-                                seedList.add(s);
+                                seeds.get(o).add(s);
                             }
                         }
                     }
