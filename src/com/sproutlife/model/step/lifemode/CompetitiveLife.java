@@ -8,6 +8,9 @@
 package com.sproutlife.model.step.lifemode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
@@ -67,39 +70,59 @@ public class CompetitiveLife extends LifeMode {
     public void updateCells() {
         isStronglyCompetitive = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
 
-        ArrayList<Cell> bornCells = new ArrayList<Cell>();
-        ArrayList<Cell> deadCells = new ArrayList<Cell>();
-                              
-        for (int x=0; x<getBoard().getWidth(); x++) {
-            for (int y=0; y<getBoard().getHeight(); y++) {
-                Cell me = getBoard().getCell(x,y);
-                Cell result = null;
-                boolean wasBorn = false;
-                ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
+        List<Cell> bornCells = Collections.synchronizedList(new ArrayList<>());
+        List<Cell> deadCells = Collections.synchronizedList(new ArrayList<>());
 
-                if (getBoard().hasNeighbors(x,y)) {
-                    result = getBorn(neighbors,x,y);
-                    if (result!=null) {
-                        if(me==null || me.getOrganism()!=result.getOrganism()) {
-                            bornCells.add(result);
-                            wasBorn=true;
-                            getStats().born++;
-                            if (me!=null) {
-                                deadCells.add(me);
+        // Split updating cells into multiple threads for multi-core CPU processing
+        int PARTITION_SIZE = 50;
+        List<Thread> threads = new ArrayList<>();
+        for (int widthPartition=0; widthPartition<getBoard().getWidth();widthPartition+=PARTITION_SIZE) {
+            final int widthPartitionFinal = widthPartition;
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                    for (int x=widthPartitionFinal; x<getBoard().getWidth()&&x<widthPartitionFinal+PARTITION_SIZE; x++) {
+                        for (int y=0; y<getBoard().getHeight(); y++) {
+                            Cell me = getBoard().getCell(x,y);
+                            Cell result = null;
+                            boolean wasBorn = false;
+                            ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
+
+                            if (getBoard().hasNeighbors(x,y)) {
+                                result = getBorn(neighbors,x,y);
+                                if (result!=null) {
+                                    if(me==null || me.getOrganism()!=result.getOrganism()) {
+                                        bornCells.add(result);
+                                        wasBorn=true;
+                                        getStats().born++;
+                                        if (me!=null) {
+                                            deadCells.add(me);
+                                        }
+                                    }
+                                }
+                            }
+                            if (me!=null && !wasBorn){
+                                result = keepAlive(me,neighbors,x,y);
+                                if (result!=null) {
+                                    getStats().stayed++;
+                                }
+                                else {
+                                    deadCells.add(me);
+                                }
                             }
                         }
                     }
                 }
-                if (me!=null && !wasBorn){
-                    result = keepAlive(me,neighbors,x,y);
-                    if (result!=null) {
-                        getStats().stayed++;
-                    }
-                    else {
-                        deadCells.add(me);
-                    }
-                }           
+            });
+            t.start();
+            threads.add(t);
+        }
+        try {
+            for (Thread t : threads) {
+                t.join();
             }
+        }
+        catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
 
         //Remove cells before adding cells to avoid Organism having duplicate cells,

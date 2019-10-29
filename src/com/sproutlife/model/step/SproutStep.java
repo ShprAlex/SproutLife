@@ -119,25 +119,47 @@ public class SproutStep extends Step {
             
     private HashMap<Organism,ArrayList<Seed>> findSeeds() {
         
-        //Cell[][] gameBoard = board.getGameBoard();
+        List<Organism> organisms = new ArrayList<>(getEchosystem().getOrganisms());
 
         HashMap<Organism,ArrayList<Seed>> seeds = new HashMap<Organism,ArrayList<Seed>>();
+        // initialize the hash map so we don't need a synchronous way to add keys by multiple threads
+        for (Organism o : organisms) {
+            seeds.put(o,new ArrayList<>(5));
+        }
 
-        for (Organism o : getEchosystem().getOrganisms()) {
-           for (Cell c : o.getCells()) {                              
-
-                Seed s = checkAndMarkSeed(c);                              
-
-                if (s!=null) {
-                    
-                    ArrayList<Seed> seedList = seeds.get(o);
-                    if (seedList == null) {
-                        seedList = new  ArrayList<Seed>();
-                        seeds.put(o,seedList);                        
+        // Split finding seeds into multiple threads for multi-core CPU processing
+        int PARTITION_SIZE = 20;
+        List<Thread> threads = new ArrayList<>();
+        for (int orgPartition=0; orgPartition<organisms.size();orgPartition+=PARTITION_SIZE) {
+            final int orgPartitionFinal = orgPartition;
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                    for (int oi = orgPartitionFinal; oi<orgPartitionFinal+PARTITION_SIZE && oi<organisms.size();oi++) {
+                        Organism o = organisms.get(oi);
+                        for (Cell c : o.getCells()) {
+                            Seed s = checkAndMarkSeed(c);
+                            if (s!=null) {
+                                ArrayList<Seed> seedList = seeds.get(o);
+                                if (seedList == null) {
+                                    seedList = new  ArrayList<Seed>();
+                                    seeds.put(o,seedList);
+                                }
+                                seedList.add(s);
+                            }
+                        }
                     }
-                    seedList.add(s);                    
-                }                                         
+                }
+            });
+            t.start();
+            threads.add(t);
+        }
+        try {
+            for (Thread t : threads) {
+                t.join();
             }
+        }
+        catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
 
         return seeds;
