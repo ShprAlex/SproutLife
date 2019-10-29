@@ -26,11 +26,10 @@ You can compile and run Sprout Life with `Java 1.8`
 
 There are several reasons why Sprout Life is exciting:
 
-- **Learning from evolution** - Sprout Life aims to emulate the rise of biological complexity. We do this by defining an environment which maps simple genetic codes to expressive changes in behavior and compares their fitness. By imitating nature, and seeing where we fail and succeed, we can learn more about life and its mysteries.
 
-- **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives.
+- **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives. Organisms survive and compete by forming patterns, and in turn those patterns themselves compete and combine into more complex structures.
 
-- **A rich source of metaphor** - A better model of collective evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of new mutations, and the success of new ideas in the startup world. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed upon them by modelling the ebb and flow of evolution.
+- **A rich source of metaphor** - Evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of new mutations, and the success of new ideas in the startup world. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed upon them by modelling the ebb and flow of evolution.
 
 - **Made for speed** - Speed is of the essence in simulating evolution. The ideal is to have a beautiful story unfold in real time. Cellular automata are perfectly designed for rapid computation by computers. Getting the next state of the game is almost like adding together two binary numbers. This is what computers were made to do. With the computer as our vehicle, we can explore the evolving world of cellular automata and learn from our discoveries.
 
@@ -98,11 +97,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 - **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
  
-- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Even so, growth is slow. It can take 1,000 generations, which takes a 1 minute, for a change in organism size to occur. Growth is easier to achieve in organisms that are already big. Organisms that have become optimized to be small through the application of cooperative mode can resist growing larger even after competitive mode is on for a long time.
-
-- **Growth is exciting** - Really though, growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit. **_A glider gun used as a real gun to disable enemies?_** This is a real possibility, that I believe I've seen happen.
-
-- **Next steps after achieving growth** - [Small bigger biggest](https://github.com/ShprAlex/SproutLife/wiki/Small-Bigger-Biggest) - Having achieved growth we see the emergence of interesting behavior with cycles of 3 species engaged in rock-paper-scissors style competition. Please see the wiki for more details.
+- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit.
 
 ### Wiki & Documentation
 
