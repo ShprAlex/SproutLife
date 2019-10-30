@@ -44,7 +44,7 @@ public class Settings {
         set(Settings.MUTATION_RATE, 6); //0-10
 
         set(Settings.MAX_LIFESPAN, 75);
-        set(Settings.TARGET_LIFESPAN, 40);
+        set(Settings.TARGET_LIFESPAN, 37);
 
         set(Settings.CHILD_ONE_PARENT_AGE, 0);
         set(Settings.CHILD_TWO_PARENT_AGE, 0);
