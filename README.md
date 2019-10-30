@@ -27,7 +27,7 @@ You can compile and run Sprout Life with `Java 1.8`
 There are several reasons why Sprout Life is exciting:
 
 
-- **Collective behavior, not just individual fitness** - Collective behavior is the driver for evolution within Sprout Life. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives. Organisms survive and compete by forming patterns, and in turn those patterns themselves compete and combine into more complex structures.
+- **Collective behavior, not just individual fitness** - Sprout Life uniquely models the evolution of collective behavior. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives. Organisms survive and compete by forming patterns, and in turn those patterns themselves compete and combine into more complex structures.
 
 - **A rich source of metaphor** - Evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of new mutations, and the success of new ideas in the startup world. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed upon them by modelling the ebb and flow of evolution.
 
