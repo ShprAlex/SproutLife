@@ -41,7 +41,7 @@ public class DefaultGameStepListener implements GameStepListener{
             pc.getGameToolbar().getSpeedSlider().setValue(1);
             pc.getGameModel().getGameThread().setAutoAdjust(false);
         }
-        if (pc.getGameModel().getTime()>=5000 && pc.getGameModel().getTime()<=5200) {
+        if (pc.getGameModel().getTime()>=6000 && pc.getGameModel().getTime()<=6200) {
             pc.getDisplayControlPanel().getChckbxCellLayer().setSelected(false);
             pc.getDisplayControlPanel().getChckbxGenomeLayer().setSelected(false);
         }
