@@ -17,7 +17,7 @@ import com.sproutlife.SproutLife;
 
 
 public class GameFrame extends JFrame {
-    private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1080, 675);
+    private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1200, 720);
     private static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(300, 300);
 
     PanelController panelController;
