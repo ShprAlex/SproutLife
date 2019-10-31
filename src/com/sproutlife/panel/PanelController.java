@@ -20,6 +20,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
@@ -49,9 +50,8 @@ public class PanelController {
     JSplitPane splitPane;
     ActionManager actionManager;
  
-    MainControlPanel mainControlPanel;
     DisplayControlPanel displayControlPanel;
-    SettingsControlPanel settingsControlPanel;
+    RulesControlPanel settingsControlPanel;
     StatsPanel statsPanel;
     TipsPanel tipsPanel;
     JMenuBar gameMenu;
@@ -78,9 +78,8 @@ public class PanelController {
 
         addGeneralListeners();
         addToolbarListeners();
-        addMainControlPanelListeners();
         addDisplayControlPanelListeners();
-        addSettingsControlPanelListeners();
+        addRulesControlPanelListeners();
 
         updateFromSettings();
     }
@@ -127,15 +126,11 @@ public class PanelController {
     public GameFrame getGameFrame() {
         return gameFrame;
     }
-    
-    public MainControlPanel getMainControlPanel() {
-        return mainControlPanel;
-    }
-    
+
     /**
      * @return the settingsControlPanel
      */
-    public SettingsControlPanel getSettingsControlPanel() {
+    public RulesControlPanel getRulesControlPanel() {
         return settingsControlPanel;
     }
     
@@ -183,9 +178,8 @@ public class PanelController {
         gameToolbar = new GameToolbar(this);
         
         boardRenderer = new BoardRenderer(getGameModel());
-        mainControlPanel = new MainControlPanel(this);
         displayControlPanel = new DisplayControlPanel(this);
-        settingsControlPanel = new SettingsControlPanel(this);
+        settingsControlPanel = new RulesControlPanel(this);
         statsPanel = new StatsPanel(this);
         tipsPanel = new TipsPanel(this);
         ScrollPanel scrollPanel = getScrollPanel();
@@ -193,9 +187,8 @@ public class PanelController {
 
         JTabbedPane rightPane = new JTabbedPane();
         rightPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        rightPane.addTab("Main", mainControlPanel);
-        rightPane.addTab("Display", displayControlPanel);
-        rightPane.addTab("Settings", settingsControlPanel);
+        rightPane.addTab("Display", wrapInScrolPane(displayControlPanel));
+        rightPane.addTab("Rules", wrapInScrolPane(settingsControlPanel));
         rightPane.addTab("Stats", statsPanel);
         rightPane.addTab("Tips", tipsPanel);
 
@@ -210,6 +203,13 @@ public class PanelController {
         splitPane.setRightComponent(rightPane);
 
         gameFrame.add(splitPane);
+    }
+    
+    public JScrollPane wrapInScrolPane(JPanel p) {
+        JScrollPane sp = new JScrollPane(p);
+        sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sp.setBorder(null);
+        return sp;
     }
     
     private void initComponents() {
@@ -279,34 +279,6 @@ public class PanelController {
         });
     }
 
-    private void addMainControlPanelListeners() {
-        ItemListener lifeModeListener = new ItemListener() {  
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (getMainControlPanel().getRdbtnFriendly().isSelected()) {
-                    getSettings().set(Settings.LIFE_MODE, "friendly");
-                }
-                else if(getMainControlPanel().getRdbtnCompetitive1().isSelected()) {
-                    getSettings().set(Settings.LIFE_MODE, "competitive1");
-                }
-                else {
-                    getSettings().set(Settings.LIFE_MODE, "competitive2");
-                }
-            }                      
-        };
-        getMainControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
-        getMainControlPanel().getRdbtnCompetitive2().addItemListener(lifeModeListener);
-        getMainControlPanel().getRdbtnCompetitive1().addItemListener(lifeModeListener);
-        
-        getMainControlPanel().getSeedTypeComboBox().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               getSettings().set(Settings.SEED_TYPE, getMainControlPanel().getSeedTypeComboBox().getSelectedItem().toString());
-                
-            }
-        });        
-    }
-      
     public void addDisplayControlPanelListeners() {
         DisplayControlPanel dcp = getDisplayControlPanel();
         dcp.getChckbxCellLayer().addItemListener(new ItemListener() {
@@ -383,38 +355,64 @@ public class PanelController {
         dcp.getRdbtnBackgroundWhite().addItemListener(backgroundThemeListener);
     }
     
-    public void addSettingsControlPanelListeners() {
-        getSettingsControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
+    public void addRulesControlPanelListeners() {
+        ItemListener lifeModeListener = new ItemListener() {  
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (getRulesControlPanel().getRdbtnFriendly().isSelected()) {
+                    getSettings().set(Settings.LIFE_MODE, "friendly");
+                }
+                else if(getRulesControlPanel().getRdbtnCompetitive1().isSelected()) {
+                    getSettings().set(Settings.LIFE_MODE, "competitive1");
+                }
+                else {
+                    getSettings().set(Settings.LIFE_MODE, "competitive2");
+                }
+            }                      
+        };
+        getRulesControlPanel().getRdbtnFriendly().addItemListener(lifeModeListener);
+        getRulesControlPanel().getRdbtnCompetitive2().addItemListener(lifeModeListener);
+        getRulesControlPanel().getRdbtnCompetitive1().addItemListener(lifeModeListener);
+        
+        getRulesControlPanel().getSeedTypeComboBox().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               getSettings().set(Settings.SEED_TYPE, getRulesControlPanel().getSeedTypeComboBox().getSelectedItem().toString());
+                
+            }
+        });
+        
+        getRulesControlPanel().getMaxLifespanSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MAX_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getSettingsControlPanel().getTargetAgeSpinner().addChangeListener(new ChangeListener() {
+        getRulesControlPanel().getTargetAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.TARGET_LIFESPAN,((JSpinner) arg0.getSource()).getValue());
             }
         });
 
-        getSettingsControlPanel().getChildOneParentAgeSpinner().addChangeListener(new ChangeListener() {
+        getRulesControlPanel().getChildOneParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.CHILD_ONE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getSettingsControlPanel().getChildTwoParentAgeSpinner().addChangeListener(new ChangeListener() {
+        getRulesControlPanel().getChildTwoParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.CHILD_TWO_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getSettingsControlPanel().getChildThreeParentAgeSpinner().addChangeListener(new ChangeListener() {
+        getRulesControlPanel().getChildThreeParentAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.CHILD_THREE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getSettingsControlPanel().getMutationRateSpinner().addChangeListener(new ChangeListener() {
+        getRulesControlPanel().getMutationRateSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
                 getSettings().set(Settings.MUTATION_RATE,((JSpinner) arg0.getSource()).getValue());
             }
@@ -424,41 +422,41 @@ public class PanelController {
         ItemListener sproutModeListener = new ItemListener() {  
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (getSettingsControlPanel().getRdbtnVisual().isSelected()) {
+                if (getRulesControlPanel().getRdbtnVisual().isSelected()) {
                     getSettings().set(Settings.SPROUT_DELAYED_MODE, true);
                 }
-                else if(getSettingsControlPanel().getRdbtnFunctional().isSelected()) {
+                else if(getRulesControlPanel().getRdbtnFunctional().isSelected()) {
                     getSettings().set(Settings.SPROUT_DELAYED_MODE, false);
                 }
             }                      
         };        
-        getSettingsControlPanel().getRdbtnVisual().addItemListener(sproutModeListener);
-        getSettingsControlPanel().getRdbtnFunctional().addItemListener(sproutModeListener);      
+        getRulesControlPanel().getRdbtnVisual().addItemListener(sproutModeListener);
+        getRulesControlPanel().getRdbtnFunctional().addItemListener(sproutModeListener);      
     }
 
     public void updateFromSettings() {
-        getSettingsControlPanel().getMaxLifespanSpinner().setValue(
+        getRulesControlPanel().getMaxLifespanSpinner().setValue(
                 getSettings().getInt(Settings.MAX_LIFESPAN));
-        getSettingsControlPanel().getTargetAgeSpinner().setValue(
+        getRulesControlPanel().getTargetAgeSpinner().setValue(
                 getSettings().getInt(Settings.TARGET_LIFESPAN));
-        getSettingsControlPanel().getChildOneParentAgeSpinner().setValue(
+        getRulesControlPanel().getChildOneParentAgeSpinner().setValue(
                 getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE));
-        getSettingsControlPanel().getChildTwoParentAgeSpinner().setValue(
+        getRulesControlPanel().getChildTwoParentAgeSpinner().setValue(
                 getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE));
-        getSettingsControlPanel().getChildThreeParentAgeSpinner().setValue(
+        getRulesControlPanel().getChildThreeParentAgeSpinner().setValue(
                 getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
-        getSettingsControlPanel().getMutationRateSpinner().setValue(
+        getRulesControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
 
         switch (getSettings().getString(Settings.LIFE_MODE)) {
             case "friendly":
-                getMainControlPanel().getRdbtnFriendly().setSelected(true);
+                getRulesControlPanel().getRdbtnFriendly().setSelected(true);
                 break;
             case "competitive1":
-                getMainControlPanel().getRdbtnCompetitive1().setSelected(true);
+                getRulesControlPanel().getRdbtnCompetitive1().setSelected(true);
                 break;
             default:
-                getMainControlPanel().getRdbtnCompetitive2().setSelected(true);
+                getRulesControlPanel().getRdbtnCompetitive2().setSelected(true);
         }
 
         switch (getSettings().getString(Settings.BACKGROUND_THEME)) {
@@ -470,7 +468,7 @@ public class PanelController {
         }
 
         SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
-        JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getMainControlPanel().getSeedTypeComboBox();
+        JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getRulesControlPanel().getSeedTypeComboBox();
         if (seedType!=null) {
             seedCb.setSelectedItem(seedType);
         }
@@ -493,7 +491,7 @@ public class PanelController {
     }
     
     public void initSeedTypeComboBox() {
-        JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getMainControlPanel().getSeedTypeComboBox();
+        JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getRulesControlPanel().getSeedTypeComboBox();
         seedCb.addItem(SeedType.Bentline1_RPentomino);
         seedCb.addItem(SeedType.Bentline1m_RPentomino);        
         seedCb.addItem(SeedType.Bentline_U3x3);

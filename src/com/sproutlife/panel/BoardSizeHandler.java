@@ -27,26 +27,26 @@ public class BoardSizeHandler {
     public void addListeners() {
         boardSizeSpinnerListener = new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);
-                int width = (int) pc.getMainControlPanel().getBoardWidthSpinner().getValue();
-                int height = (int) pc.getMainControlPanel().getBoardHeightSpinner().getValue();
+                pc.getDisplayControlPanel().getAutoSizeGridCheckbox().setSelected(false);
+                int width = (int) pc.getDisplayControlPanel().getBoardWidthSpinner().getValue();
+                int height = (int) pc.getDisplayControlPanel().getBoardHeightSpinner().getValue();
                 updateBoardSize(width, height);
             }
         };
 
         imageSizeSpinnerListener = new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                pc.getMainControlPanel().getAutoSizeGridCheckbox().setSelected(false);
-                int width =  (int) pc.getMainControlPanel().getImageWidthSpinner().getValue();
-                int height = (int) pc.getMainControlPanel().getImageHeightSpinner().getValue();
+                pc.getDisplayControlPanel().getAutoSizeGridCheckbox().setSelected(false);
+                int width =  (int) pc.getDisplayControlPanel().getImageWidthSpinner().getValue();
+                int height = (int) pc.getDisplayControlPanel().getImageHeightSpinner().getValue();
                 updateBoardSizeFromImageSize(new Dimension(width, height));
             }
         };
 
         pc.getScrollPanel().addViewportResizedListener(new ViewportResizedListener() {
             public void viewportResized(int viewportWidth, int viewportHeight) {
-                if (pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
-                    boolean autoSizeGrid = pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected();
+                if (pc.getDisplayControlPanel().getAutoSizeGridCheckbox().isSelected()) {
+                    boolean autoSizeGrid = pc.getDisplayControlPanel().getAutoSizeGridCheckbox().isSelected();
                     if (autoSizeGrid) {
                         clipToView();
                     }
@@ -54,20 +54,20 @@ public class BoardSizeHandler {
             }
         });
 
-        pc.getMainControlPanel().getBoardWidthSpinner().addChangeListener(boardSizeSpinnerListener);
-        pc.getMainControlPanel().getBoardHeightSpinner().addChangeListener(boardSizeSpinnerListener);
-        pc.getMainControlPanel().getImageWidthSpinner().addChangeListener(imageSizeSpinnerListener);
-        pc.getMainControlPanel().getImageHeightSpinner().addChangeListener(imageSizeSpinnerListener);
+        pc.getDisplayControlPanel().getBoardWidthSpinner().addChangeListener(boardSizeSpinnerListener);
+        pc.getDisplayControlPanel().getBoardHeightSpinner().addChangeListener(boardSizeSpinnerListener);
+        pc.getDisplayControlPanel().getImageWidthSpinner().addChangeListener(imageSizeSpinnerListener);
+        pc.getDisplayControlPanel().getImageHeightSpinner().addChangeListener(imageSizeSpinnerListener);
 
-        pc.getMainControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
+        pc.getDisplayControlPanel().getClipGridToViewButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 clipToView();
             }
         });
 
-        pc.getMainControlPanel().getAutoSizeGridCheckbox().addItemListener(new ItemListener() {
+        pc.getDisplayControlPanel().getAutoSizeGridCheckbox().addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                if(pc.getMainControlPanel().getAutoSizeGridCheckbox().isSelected()) {
+                if(pc.getDisplayControlPanel().getAutoSizeGridCheckbox().isSelected()) {
                     clipToView();
                 }
             }
@@ -135,25 +135,25 @@ public class BoardSizeHandler {
     }
 
     public void updateBoardSizeSpinners(int boardWidth, int boardHeight) {
-        pc.getMainControlPanel().getBoardWidthSpinner().removeChangeListener(boardSizeSpinnerListener);
-        pc.getMainControlPanel().getBoardHeightSpinner().removeChangeListener(boardSizeSpinnerListener);
+        pc.getDisplayControlPanel().getBoardWidthSpinner().removeChangeListener(boardSizeSpinnerListener);
+        pc.getDisplayControlPanel().getBoardHeightSpinner().removeChangeListener(boardSizeSpinnerListener);
 
-        pc.getMainControlPanel().getBoardWidthSpinner().setValue(boardWidth);
-        pc.getMainControlPanel().getBoardHeightSpinner().setValue(boardHeight);
+        pc.getDisplayControlPanel().getBoardWidthSpinner().setValue(boardWidth);
+        pc.getDisplayControlPanel().getBoardHeightSpinner().setValue(boardHeight);
 
-        pc.getMainControlPanel().getBoardWidthSpinner().addChangeListener(boardSizeSpinnerListener);
-        pc.getMainControlPanel().getBoardHeightSpinner().addChangeListener(boardSizeSpinnerListener);
+        pc.getDisplayControlPanel().getBoardWidthSpinner().addChangeListener(boardSizeSpinnerListener);
+        pc.getDisplayControlPanel().getBoardHeightSpinner().addChangeListener(boardSizeSpinnerListener);
     }
 
     public void updateImageSizeSpinners(int width, int height) {
-        pc.getMainControlPanel().getImageWidthSpinner().removeChangeListener(imageSizeSpinnerListener);
-        pc.getMainControlPanel().getImageHeightSpinner().removeChangeListener(imageSizeSpinnerListener);
+        pc.getDisplayControlPanel().getImageWidthSpinner().removeChangeListener(imageSizeSpinnerListener);
+        pc.getDisplayControlPanel().getImageHeightSpinner().removeChangeListener(imageSizeSpinnerListener);
 
-        pc.getMainControlPanel().getImageWidthSpinner().setValue(width);
-        pc.getMainControlPanel().getImageHeightSpinner().setValue(height);
+        pc.getDisplayControlPanel().getImageWidthSpinner().setValue(width);
+        pc.getDisplayControlPanel().getImageHeightSpinner().setValue(height);
 
-        pc.getMainControlPanel().getImageWidthSpinner().addChangeListener(imageSizeSpinnerListener);
-        pc.getMainControlPanel().getImageHeightSpinner().addChangeListener(imageSizeSpinnerListener);
+        pc.getDisplayControlPanel().getImageWidthSpinner().addChangeListener(imageSizeSpinnerListener);
+        pc.getDisplayControlPanel().getImageHeightSpinner().addChangeListener(imageSizeSpinnerListener);
     }
 
     public void updateZoomValue(int value) {
