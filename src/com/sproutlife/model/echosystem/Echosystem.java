@@ -10,9 +10,12 @@ package com.sproutlife.model.echosystem;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashSet;
+import java.util.List;
 
 import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
@@ -26,8 +29,8 @@ import com.sproutlife.model.seed.Seed;
  */
 
 public class Echosystem {
-    HashSet<Organism> organisms;
-    HashSet<Organism> retiredOrganisms;
+    List<Organism> organisms;
+    Deque<Organism> retiredOrganisms;
 
     Board board;
 
@@ -39,8 +42,8 @@ public class Echosystem {
     public int typeCount = 0;
 
     public Echosystem(GameClock clock) {
-        this.organisms = new HashSet<Organism>();
-        this.retiredOrganisms = new HashSet<Organism>();
+        this.organisms = new ArrayList<Organism>();
+        this.retiredOrganisms = new ArrayDeque<Organism>();
         this.board = new Board();
         this.clock = clock;
 
@@ -52,7 +55,7 @@ public class Echosystem {
         return organisms;
     }
 
-    public Collection<Organism> getRetiredOrganisms() {
+    public Deque<Organism> getRetiredOrganisms() {
         return retiredOrganisms;
     }
 

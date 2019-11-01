@@ -42,7 +42,7 @@ public class GameStep extends Step {
     }
             
     
-    public void perform() {       
+    public void perform() {
         retireAndPruneStep.perform();   
         fireStepPerformed(StepType.PRUNE_STEP);
         
