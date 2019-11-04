@@ -10,11 +10,17 @@ Watch evolution happen by running Sprout Life on your desktop. Save and load org
 
 ### Compiling and Running
 
-[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/archive/v0.12.1.zip)
+[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/releases)
 
 You can compile and run Sprout Life with `Java 1.8`
 
-[Download Sprout Life](https://github.com/ShprAlex/SproutLife/archive/v0.12.1.zip) code and unzip the folder contents in a local directory.
+[Download Sprout Life](https://github.com/ShprAlex/SproutLife/releases) executable SproutLife.jar file, or the source code.
+
+Run `SproutLife.jar` by opening the file on your desktop, or using the following command line:
+
+ `java -jar -Xmx2g SproutLife.jar`
+
+**Compile and Run:**
 
 [Download maven](https://maven.apache.org/download.cgi) and follow the [maven installation instructions](https://maven.apache.org/install.html)
 
