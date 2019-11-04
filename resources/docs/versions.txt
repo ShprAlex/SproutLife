@@ -20,3 +20,21 @@ Added text-based genome visualization to Stats panel, will switch to graphics la
 
 Cleanup of resources
 Switch major app version down to 0 from 1
+
+0.13.0
+
+Saving + Loading Genome
+
+0.14.0
+
+Dark background theme
+Zoom + Speed sliders moved to toolbar
+Gui for controlling tail length
+Animate organism being born as gradual transition from parent birth location to avoid flicker
+Clip to view clips visible zoomed in rectangle
+
+0.15.0
+
+improved competitive formula
+reorganized GUI panels
+use multiple threads to take advantage of multi-core parallel processing
