@@ -21,8 +21,7 @@ import com.sproutlife.renderer.colors.DefaultColorModel;
 
 public class BoardRenderer {
     
-    private int BLOCK_SIZE;  
-    private int defaultBlockSize = 3;
+    private int BLOCK_SIZE = 3;
 
     private GameModel gameModel;
     private ColorModel colorModel;
@@ -46,10 +45,7 @@ public class BoardRenderer {
     private double zoom = 1;      
 
     public BoardRenderer(GameModel gameModel) {
-        
-        this.BLOCK_SIZE = this.defaultBlockSize;
         this.gameModel = gameModel;
-
         this.colorModel = new DefaultColorModel();
 
         this.cellRenderer = new CellRenderer(gameModel, this);
@@ -166,15 +162,7 @@ public class BoardRenderer {
         }
         this.BLOCK_SIZE = blockSize;   
     }
-    
-    public int getDefaultBlockSize() {
-        return defaultBlockSize;
-    }
-    
-    public void setDefaultBlockSize(int defaultBlockSize) {
-        this.defaultBlockSize = defaultBlockSize;
-    }
-    
+
     public void updateVisibleRenderers(Rectangle2D.Double visibleBounds) {
         this.visibleBounds = visibleBounds;
     }

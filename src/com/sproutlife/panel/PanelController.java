@@ -214,12 +214,11 @@ public class PanelController {
     
     private void initComponents() {
         ToolTipManager.sharedInstance().setInitialDelay(0);
-        gameFrame.setVisible(true);  
-        getBoardRenderer().setDefaultBlockSize(3);
-        getGameToolbar().getZoomSlider().setValue(-3);
-        getBoardSizeHandler().updateZoomValue(-3);
+        gameFrame.setVisible(true);
+        getGameToolbar().getZoomSlider().setValue(-4);
+        getBoardSizeHandler().updateZoomValue(-4);
         getBoardSizeHandler().updateBoardSizeFromImageSize(getScrollPanel().getViewportSize());
-        getImageManager().setBackgroundColor(new Color(160,160,160)); 
+        getImageManager().setBackgroundColor(new Color(160,160,160));
 
         initSeedTypeComboBox();
 
