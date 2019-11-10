@@ -28,7 +28,11 @@ public class TailRenderer extends OrganismRenderer {
     public void render(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
         Organism parent = o.getParent();
-        ((Graphics2D) g).setStroke(new BasicStroke(BLOCK_SIZE * 4 / 5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        int strokeWidth = BLOCK_SIZE * 4 / 5;
+        if (BLOCK_SIZE == 2) {
+            strokeWidth = 2;
+        }
+        ((Graphics2D) g).setStroke(new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
         if (parent==null) {
             return;

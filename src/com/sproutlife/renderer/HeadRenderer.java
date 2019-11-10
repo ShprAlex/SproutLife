@@ -21,7 +21,7 @@ public class HeadRenderer extends OrganismRenderer {
 
     public void render(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
-        int rectSize = BLOCK_SIZE*3;
+        int rectSize = BLOCK_SIZE*5/2;
         g.setColor(getColor(o));
         double ox = o.x;
         double oy = o.y;
