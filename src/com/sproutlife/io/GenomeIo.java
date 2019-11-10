@@ -11,7 +11,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.sproutlife.Settings;
@@ -65,7 +67,7 @@ public class GenomeIo {
         for (int i = 0; i < saveOrgCount; i++) {
             Organism o = orgList.get(i);
             writer.println();
-            writer.println(o.lifespan);
+            writer.println("lifespan : "+o.lifespan);
             for (int age = 0; age <= o.lifespan; age++) {
                 if (o.getGenome() == null || o.getGenome().getMutations(age) == null) {
                     continue;
@@ -145,13 +147,14 @@ public class GenomeIo {
         int orgCount = Integer.valueOf(line.split(" : ")[1]);
         reader.readLine();
         for (int oi = 0; oi < orgCount; oi++) {
-            line = reader.readLine();
-            int lifespan = Integer.valueOf(line.trim());
-            List<Mutation> genome = loadOrganismGenome(reader);
+            Map<String, String> attributes = new HashMap<>();
+            String followingLine = loadOrganismAttributes(reader, attributes);
+
+            List<Mutation> genome = loadOrganismGenome(reader, followingLine);
             Organism o = addOrganismToBoard(gameModel, colorKind);
 
             if (o != null) {
-                o.setLifespan(lifespan);
+                setOrganismAttributes(o, attributes);
                 o.getAttributes().colorKind = colorKind;
                 Genome g = o.getGenome();
                 for (Mutation m : genome) {
@@ -161,9 +164,42 @@ public class GenomeIo {
         }
     }
 
-    private static List<Mutation> loadOrganismGenome(BufferedReader reader) throws IOException {
-        List<Mutation> genome = new ArrayList<>();
+    private static String loadOrganismAttributes(BufferedReader reader, Map<String, String> attributes) throws IOException {
         String line = reader.readLine();
+        if (line == null || line.trim().equals("") || (line.contains(",") && !line.contains(":"))) {
+            return line;
+        }
+        if (!line.contains(":")) { // for backward compatibility
+            String lifespan = line.trim();
+            attributes.put("lifespan", lifespan);
+            return reader.readLine();
+        }
+        while (line.contains(":")) {
+            String [] kv = line.split(":");
+            attributes.put(kv[0].trim(), kv[1].trim());
+            line = reader.readLine();
+        }
+        // return the last line we read
+        return line;
+    }
+
+    private static void setOrganismAttributes(Organism o, Map<String, String> attributes) {
+        for (String key: attributes.keySet()) {
+            String value = attributes.get(key);
+            try {
+                switch (key) {
+                    case "lifespan": o.setLifespan(Integer.parseInt(value)); break;
+                }
+            }
+            catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private static List<Mutation> loadOrganismGenome(BufferedReader reader, String firstLine) throws IOException {
+        List<Mutation> genome = new ArrayList<>();
+        String line = firstLine;
         while (line != null && !line.equals("")) {
             String[] tokens = line.split(",");
             Point p = new Point(Integer.valueOf(tokens[1].trim()), Integer.valueOf(tokens[2].trim()));
