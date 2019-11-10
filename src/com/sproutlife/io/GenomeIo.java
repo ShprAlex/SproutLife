@@ -41,7 +41,6 @@ public class GenomeIo {
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader reader = new BufferedReader(isr);
         int version = loadVersion(reader);
-        reader.readLine();
         loadSettings(reader, gameModel);
         clearColumn(gameModel, colorKind);
         loadOrganisms(reader, gameModel, colorKind);
@@ -79,27 +78,33 @@ public class GenomeIo {
         }
     }
 
-    public static int loadVersion(BufferedReader reader) throws IOException {
-        while (true) {
-            String line = reader.readLine();
-            if (line == null) {
-                return -1;
-            }
-            if (line.startsWith("V")) {
-                try {
-                    return Integer.parseInt(line.substring(1));
-                } catch (NumberFormatException ex) {
-                    // keep reading until we get a number or end of file;
-                }
-                ;
-            }
+    private static int loadVersion(BufferedReader reader) throws IOException {
+        String line = reader.readLine();
+        while (line != null && !line.startsWith("V")) {
+            line = reader.readLine();
         }
-
+        if (line == null || !line.startsWith("V")) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(line.substring(1));
+        } catch (NumberFormatException ex) {
+            return -1;
+        }
     }
 
-    public static void loadSettings(BufferedReader reader, GameModel gameModel) throws IOException {
+    private static void loadSettings(BufferedReader reader, GameModel gameModel) throws IOException {
+        String line = reader.readLine();
+        while (line != null && (!line.contains(":") || line.trim().equalsIgnoreCase("settings"))) {
+            line = reader.readLine();
+        }
+        if (line == null) {
+            return;
+        }
+        if (line.trim().equalsIgnoreCase("settings")) {
+            line = reader.readLine();
+        }
         while (true) {
-            String line = reader.readLine();
             if (line == null || line.trim().isEmpty()) {
                 return;
             }
@@ -111,10 +116,11 @@ public class GenomeIo {
             String k = kv[0];
             String v = kv[1];
             gameModel.getSettings().set(k, v);
+            line = reader.readLine();
         }
     }
 
-    public static void clearColumn(GameModel gameModel, int colorKind) {
+    private static void clearColumn(GameModel gameModel, int colorKind) {
         Collection<Organism> organisms = new ArrayList<>(gameModel.getEchosystem().getOrganisms());
         int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
 
@@ -127,10 +133,7 @@ public class GenomeIo {
         }
     }
 
-    public static void loadOrganisms(BufferedReader reader, GameModel gameModel, int colorKind) throws IOException {
-        String seedTypeName = gameModel.getSettings().getString(Settings.SEED_TYPE);
-        SeedType seedType = SeedType.get(seedTypeName);
-
+    private static void loadOrganisms(BufferedReader reader, GameModel gameModel, int colorKind) throws IOException {
         String line = reader.readLine();
         while (line != null && !line.startsWith("Saved Organisms")) {
             line = reader.readLine();
@@ -144,21 +147,8 @@ public class GenomeIo {
         for (int oi = 0; oi < orgCount; oi++) {
             line = reader.readLine();
             int lifespan = Integer.valueOf(line.trim());
-            line = reader.readLine();
-            List<Mutation> genome = new ArrayList<>();
-            while (line != null && !line.equals("")) {
-                String[] tokens = line.split(",");
-                Point p = new Point(Integer.valueOf(tokens[1].trim()), Integer.valueOf(tokens[2].trim()));
-                int age = Integer.valueOf(tokens[0].trim());
-                genome.add(new Mutation(p, age, 0));
-                line = reader.readLine();
-            }
-            int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
-            int x = (new Random()).nextInt(boardWidth/3);
-            int y = (new Random()).nextInt(gameModel.getEchosystem().getBoard().getHeight());
-            x+= colorKind*boardWidth/3;
-
-            Organism o = SproutStep.sproutRandomSeed(seedType, gameModel.getEchosystem(), new Point(x,y));
+            List<Mutation> genome = loadOrganismGenome(reader);
+            Organism o = addOrganismToBoard(gameModel, colorKind);
 
             if (o != null) {
                 o.setLifespan(lifespan);
@@ -169,5 +159,31 @@ public class GenomeIo {
                 }
             }
         }
+    }
+
+    private static List<Mutation> loadOrganismGenome(BufferedReader reader) throws IOException {
+        List<Mutation> genome = new ArrayList<>();
+        String line = reader.readLine();
+        while (line != null && !line.equals("")) {
+            String[] tokens = line.split(",");
+            Point p = new Point(Integer.valueOf(tokens[1].trim()), Integer.valueOf(tokens[2].trim()));
+            int age = Integer.valueOf(tokens[0].trim());
+            genome.add(new Mutation(p, age, 0));
+            line = reader.readLine();
+        }
+        return genome;
+    }
+
+    private static Organism addOrganismToBoard(GameModel gameModel, int colorKind) {
+        String seedTypeName = gameModel.getSettings().getString(Settings.SEED_TYPE);
+        SeedType seedType = SeedType.get(seedTypeName);
+
+        int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
+        int x = (new Random()).nextInt(boardWidth/3);
+        int y = (new Random()).nextInt(gameModel.getEchosystem().getBoard().getHeight());
+        x+= colorKind*boardWidth/3;
+
+        Organism o = SproutStep.sproutRandomSeed(seedType, gameModel.getEchosystem(), new Point(x,y));
+        return o;
     }
 }
