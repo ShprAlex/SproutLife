@@ -68,7 +68,7 @@ public class ColorsStep extends Step {
 
     private void joinColor(int fromKind, int toKind) {
         for (Organism o : getEchosystem().getOrganisms()) {
-            if (o.getAttributes().colorKind==fromKind) {
+            if (o.getAttributes().colorKind == fromKind) {
                 o.getAttributes().colorKind=toKind;
             }
         }
