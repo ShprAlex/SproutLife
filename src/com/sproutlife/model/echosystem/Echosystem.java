@@ -136,7 +136,7 @@ public class Echosystem {
     /*
      * Create a cell but don't add it
      */
-    public Cell createCell(int x, int y, ArrayList<Cell> parents) {
+    public Cell createCell(int x, int y, List<Cell> parents) {
         return parents.get(0).getOrganism().createCell(x, y, parents);
     }
 

@@ -9,6 +9,7 @@ package com.sproutlife.model.echosystem;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Cell keeps track its coordinates and which organism it belongs to.
@@ -33,7 +34,7 @@ public class Cell extends Point {
         this.markedAsSeed = false;
     }
 
-    public Cell(int x, int y, ArrayList<Cell> surrounding) {
+    public Cell(int x, int y, List<Cell> surrounding) {
         this(x, y, surrounding.get(0).getOrganism());
     }
 

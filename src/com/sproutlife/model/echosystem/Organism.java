@@ -10,8 +10,7 @@ package com.sproutlife.model.echosystem;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.List;
 
 import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
@@ -29,7 +28,7 @@ import com.sproutlife.model.seed.Seed;
 
 public class Organism {
     private int id;
-    private HashSet<Cell> cells;
+    private ArrayList<Cell> cells;
     private Organism parent;
     private ArrayList<Organism> children;
     private Genome genome;
@@ -53,7 +52,6 @@ public class Organism {
     private OrgAttributes attributes;
             
     public Organism(int id, GameClock clock, int x, int y, Organism parent, Seed seed) {
-        
         this.id = id;
         this.clock = clock;
         this.born = clock.getTime();
@@ -62,7 +60,7 @@ public class Organism {
         this.setLocation(x, y);
         this.seed = seed;
         this.genome = new Genome();
-        this.cells = new HashSet<Cell>();        
+        this.cells = new ArrayList<Cell>();
         this.timeOfDeath = -1;  
         this.attributes = new OrgAttributes(this);
    
@@ -176,11 +174,11 @@ public class Organism {
         }
         return adjustOffsets;        
     } 
-    
-    public Set<Cell> getCells() {
+
+    public List<Cell> getCells() {
         return cells;
     }
-    
+
     public Cell addCell(int x, int y) {
         Cell c = new Cell(x, y, this);
         addCell(c);
@@ -203,22 +201,13 @@ public class Organism {
      * @param parents - the parents of the cell
      * @return Create but don't add the cell
      */    
-    public Cell createCell(int x, int y, ArrayList<Cell> parents) {
+    public Cell createCell(int x, int y, List<Cell> parents) {
         //Potentially check that parents are same type as organism;
         Cell c = new Cell(x, y, parents);
         //cells.add(c);
         return c;
     }
-    
-    public boolean containsCell(int x, int y) {
-        for (Cell c: cells) {
-            if (c.x ==x && c.y==y) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
+
     public Cell getCell(int x, int y) {
         for (Cell c: cells) {
             if (c.x ==x && c.y==y) {
@@ -232,15 +221,7 @@ public class Organism {
     public boolean removeCell(Cell c) {        
         return cells.remove(c);            
     }
-    
-    public boolean removeCell(int x, int y) {
-        Cell c = getCell(x,y);
-        if (c!=null) {
-            return removeCell(c);
-        }
-        return false;           
-    }
-    
+
     /* 
      * @return the number of cells an organism has
      */
