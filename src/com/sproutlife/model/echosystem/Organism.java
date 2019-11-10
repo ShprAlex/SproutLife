@@ -198,13 +198,10 @@ public class Organism {
      * Create cell but don't add it;
      * @param x - the x coordinate of the cell
      * @param y - the y coordinate of the cell
-     * @param parents - the parents of the cell
      * @return Create but don't add the cell
      */    
-    public Cell createCell(int x, int y, List<Cell> parents) {
-        //Potentially check that parents are same type as organism;
-        Cell c = new Cell(x, y, parents);
-        //cells.add(c);
+    public Cell createCell(int x, int y) {
+        Cell c = new Cell(x, y, this);
         return c;
     }
 

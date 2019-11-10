@@ -34,10 +34,6 @@ public class Cell extends Point {
         this.markedAsSeed = false;
     }
 
-    public Cell(int x, int y, List<Cell> surrounding) {
-        this(x, y, surrounding.get(0).getOrganism());
-    }
-
     public boolean isMarkedAsSeed() {
         return markedAsSeed;
     }

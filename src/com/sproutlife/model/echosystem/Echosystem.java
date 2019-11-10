@@ -136,12 +136,11 @@ public class Echosystem {
     /*
      * Create a cell but don't add it
      */
-    public Cell createCell(int x, int y, List<Cell> parents) {
-        return parents.get(0).getOrganism().createCell(x, y, parents);
+    public Cell createCell(int x, int y, Organism o) {
+        return o.createCell(x, y);
     }
 
     public void removeCell(int x, int y) {
-
         Cell c = getBoard().getCell(x, y);
         if (c != null) {
             removeCell(c);

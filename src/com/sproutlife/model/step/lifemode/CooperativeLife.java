@@ -99,7 +99,7 @@ public class CooperativeLife extends LifeMode {
             }
         }
         if (singleOrg) {
-            Cell bornCell = getEchosystem().createCell(x, y, neighbors);
+            Cell bornCell = getEchosystem().createCell(x, y, checkSingleOrg);
             return bornCell;
         }
         return null;

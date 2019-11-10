@@ -47,13 +47,18 @@ public class CompetitiveLife extends LifeMode {
     }
 
     private void updateCompetitiveScore(Organism o) {
-        if (!isStronglyCompetitive || o.getParent()==null) {
-            o.getAttributes().competitiveScore = o.getAttributes().cellSum;
+        Organism p = o.getParent();
+        if (p==null) {
+            o.getAttributes().competitiveScore = (int) o.getAttributes().territoryProduct;
+            return;
+        }
+
+        if (!isStronglyCompetitive ) {
+            o.getAttributes().competitiveScore = (int) p.getAttributes().territoryProduct;
         }
         else {
             int pl = calculateSingleChildPathLength(o);
-            Organism p = o.getParent();
-            int siblingScore = (p != null ? p.getChildren().size() : 1);
+            int siblingScore = p.getChildren().size();
             if (pl>6) {
                 siblingScore+=1;
             }
@@ -90,7 +95,7 @@ public class CompetitiveLife extends LifeMode {
                             if (getBoard().hasNeighbors(x,y)) {
                                 result = getBorn(neighbors,x,y);
                                 if (result!=null) {
-                                    if(me==null || me.getOrganism()!=result.getOrganism()) {
+                                    if(me==null || getCompare(result, me)>0) {
                                         bornCells.add(result);
                                         wasBorn=true;
                                         getStats().born++;
@@ -168,19 +173,22 @@ public class CompetitiveLife extends LifeMode {
             return null;
         }
 
-        if (neighbors.size()!=3 ) {
-            return null;
-        }
-
-        Organism checkSingleOrg = neighbors.get(0).getOrganism();
-        
-        //Quick check to see if all neighbors are from the same organism
-        for (Cell cell : neighbors) {
-            if (cell.getOrganism() != checkSingleOrg) {
+        Cell maxCell = Collections.max(neighbors, (c1,c2)->(int) getCompare(c1, c2));
+        int count = 0;
+        for (Cell c : neighbors) {
+            if (c.getOrganism()==maxCell.getOrganism()) {
+                count+=1;
+            }
+            else if (getCompare(maxCell, c) == 0) {
+                // different organisms with same competitive score
                 return null;
             }
         }
-        Cell bornCell = getEchosystem().createCell(x,y,neighbors);
+        if (count!=3) {
+            return null;
+        }
+
+        Cell bornCell = getEchosystem().createCell(x, y, maxCell.getOrganism());
 
         for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
             if (neighbor.getOrganism()!=bornCell.getOrganism() && neighbor.getOrganism()!=bornCell.getOrganism().getParent()
