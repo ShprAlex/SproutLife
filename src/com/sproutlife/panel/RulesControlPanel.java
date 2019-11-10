@@ -123,11 +123,8 @@ public class RulesControlPanel extends JPanel {
         gbl_lifeModePanel.rowWeights = new double[]{0.0, 0.0, 0.0};
         lifeModePanel.setLayout(gbl_lifeModePanel);
 
-        rdbtnFriendly = new JRadioButton("Friendly");
-        rdbtnFriendly.setToolTipText("<html>"+
-                "Collisions are independent of<br>"+
-                "organism size.<br>"+ 
-                "</html>");
+        rdbtnFriendly = new JRadioButton("Naive");
+        rdbtnFriendly.setToolTipText("<html>Collisions are independent of<br>organism size.</html>");
         rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnFriendly = new GridBagConstraints();
         gbc_rdbtnFriendly.anchor = GridBagConstraints.WEST;
@@ -137,13 +134,8 @@ public class RulesControlPanel extends JPanel {
         lifeModePanel.add(rdbtnFriendly, gbc_rdbtnFriendly);
         lifeModeButtonGroup.add(rdbtnFriendly);
 
-        rdbtnCompetitive1 = new JRadioButton("Competitive1");
-        rdbtnCompetitive1.setToolTipText("<html>"+
-                "Bigger organisms destroy cells<br>"+
-                "from smaller organisms based<br>"+
-                "on the current size of both<br>"+
-                "(weakly competitive)"+
-                "</html>");
+        rdbtnCompetitive1 = new JRadioButton("Competitive Basic");
+        rdbtnCompetitive1.setToolTipText("<html>Bigger organisms win collisions.</html>");
         rdbtnCompetitive1.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnCompetitive = new GridBagConstraints();
         gbc_rdbtnCompetitive.insets = new Insets(0, 0, 5, 0);
@@ -153,13 +145,8 @@ public class RulesControlPanel extends JPanel {
         lifeModePanel.add(rdbtnCompetitive1, gbc_rdbtnCompetitive);
         lifeModeButtonGroup.add(rdbtnCompetitive1);
 
-        rdbtnCompetitive2 = new JRadioButton("Competitive2");
-        rdbtnCompetitive2.setToolTipText("<html>"+
-                "Bigger organisms destroy cells<br>"+
-                "from smaller organisms based<br>"+
-                "on the size of their parents<br>"+
-                "(strongly competitive)"+
-                "</html>");
+        rdbtnCompetitive2 = new JRadioButton("Competitive Advanced");
+        rdbtnCompetitive2.setToolTipText("<html>Organisms win based on size<br>and non-branching paths formed by<br>parents with only one child.</html>");
         rdbtnCompetitive2.setAlignmentX(1.0f);
         GridBagConstraints gbc_radioButton = new GridBagConstraints();
         gbc_radioButton.anchor = GridBagConstraints.WEST;
