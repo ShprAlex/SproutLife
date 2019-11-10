@@ -52,8 +52,12 @@ public class GenomeIo {
     private static void saveSettings(PrintWriter writer, GameModel gameModel) {
         Settings s = gameModel.getSettings();
         writer.println(Settings.SEED_TYPE + " : " + s.getString(Settings.SEED_TYPE));
+        writer.println(Settings.LIFE_MODE + " : " + s.getString(Settings.LIFE_MODE));
         writer.println(Settings.MAX_LIFESPAN + " : " + s.getInt(Settings.MAX_LIFESPAN));
         writer.println(Settings.TARGET_LIFESPAN + " : " + s.getInt(Settings.TARGET_LIFESPAN));
+        writer.println(Settings.CHILD_ONE_PARENT_AGE + " : " + s.getInt(Settings.CHILD_ONE_PARENT_AGE));
+        writer.println(Settings.MUTATION_RATE + " : " + s.getInt(Settings.MUTATION_RATE));
+        writer.println(Settings.SPROUT_DELAYED_MODE + " : " + s.getBoolean(Settings.SPROUT_DELAYED_MODE));
     }
 
     private static void saveOrganisms(PrintWriter writer, GameModel gameModel) throws IOException {

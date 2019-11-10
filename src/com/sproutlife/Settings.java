@@ -15,12 +15,12 @@ public class Settings {
     HashMap<String, Object> settings;
 
     public static String SEED_TYPE = "seedType";
-    public static String LIFE_MODE = "lifeMode";
+    public static String LIFE_MODE = "competitiveMode";
     public static String MUTATION_ENABLED = "mutationEnabled";
     public static String MUTATION_RATE = "mutationRate";
     public static String MAX_LIFESPAN = "maxLifespan";
     public static String TARGET_LIFESPAN = "targetLifespan";
-    public static String CHILD_ONE_PARENT_AGE = "childOneParentAge";
+    public static String CHILD_ONE_PARENT_AGE = "minAgeToHaveChildren";
     public static String CHILD_TWO_PARENT_AGE = "childTwoParentAge";
     public static String CHILD_THREE_PARENT_AGE = "childThreeParentAge";
     //Determines whether seeds are sprouted immediately upon detection,

@@ -471,6 +471,13 @@ public class PanelController {
         if (seedType!=null) {
             seedCb.setSelectedItem(seedType);
         }
+
+        if (getSettings().getBoolean(Settings.SPROUT_DELAYED_MODE)) {
+            getRulesControlPanel().getRdbtnVisual().setSelected(true);
+        }
+        else {
+            getRulesControlPanel().getRdbtnFunctional().setSelected(true);
+        }
     }
     
     public void setPlayGame(boolean playGame) {
