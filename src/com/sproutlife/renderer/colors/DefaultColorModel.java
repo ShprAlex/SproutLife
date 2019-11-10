@@ -42,7 +42,7 @@ public class DefaultColorModel implements ColorModel {
             switch (o.getAttributes().kind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(grayC-10, 255, grayC-10);
-                case 2: return new Color(grayC, grayC ,255);
+                case 2: return new Color(grayC-10, grayC+10 ,255);
             }
         }
         return null;
@@ -51,7 +51,7 @@ public class DefaultColorModel implements ColorModel {
     @Override
     public Color getHeadColor(Organism o) {
         if (getBackgroundTheme() == BackgroundTheme.white) {
-            int grayC = 120;
+            int grayC = 80;
             switch (o.getAttributes().kind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(0, 230, 0);
@@ -63,7 +63,7 @@ public class DefaultColorModel implements ColorModel {
             switch (o.getAttributes().kind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(0, 230, 0);
-                case 2: return new Color(grayC, grayC, 255);
+                case 2: return new Color(grayC-10, grayC+10, 255);
             }
         }
         return null; 
