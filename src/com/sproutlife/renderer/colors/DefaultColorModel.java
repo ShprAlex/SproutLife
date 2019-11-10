@@ -31,7 +31,7 @@ public class DefaultColorModel implements ColorModel {
     public Color getCellColor(Organism o) {
         if (getBackgroundTheme() == BackgroundTheme.white) {
             int grayC = 140;
-            switch (o.getAttributes().kind) {
+            switch (o.getAttributes().colorKind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(grayC-80, 255, grayC-80);
                 case 2: return new Color(grayC, grayC ,255);
@@ -39,7 +39,7 @@ public class DefaultColorModel implements ColorModel {
         }
         else {
             int grayC = 100;
-            switch (o.getAttributes().kind) {
+            switch (o.getAttributes().colorKind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(grayC-10, 255, grayC-10);
                 case 2: return new Color(grayC-10, grayC+10 ,255);
@@ -52,7 +52,7 @@ public class DefaultColorModel implements ColorModel {
     public Color getHeadColor(Organism o) {
         if (getBackgroundTheme() == BackgroundTheme.white) {
             int grayC = 80;
-            switch (o.getAttributes().kind) {
+            switch (o.getAttributes().colorKind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(0, 230, 0);
                 case 2: return new Color(grayC, grayC, 255);
@@ -60,7 +60,7 @@ public class DefaultColorModel implements ColorModel {
         }
         else {
             int grayC = 80;
-            switch (o.getAttributes().kind) {
+            switch (o.getAttributes().colorKind) {
                 case 0: return new Color(255, grayC, grayC);
                 case 1: return new Color(0, 230, 0);
                 case 2: return new Color(grayC-10, grayC+10, 255);
@@ -77,7 +77,7 @@ public class DefaultColorModel implements ColorModel {
     @Override
     public Color getGenomeBackgroundColor(Organism o) {
         int grayC = 210;
-        switch (o.getAttributes().kind) {
+        switch (o.getAttributes().colorKind) {
             case 0: return new Color(255, grayC-10, grayC-10);
             case 1: return new Color(grayC, 255, grayC);
             case 2: return new Color(grayC, grayC,255);

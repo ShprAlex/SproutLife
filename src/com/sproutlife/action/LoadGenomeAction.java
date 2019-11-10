@@ -24,7 +24,7 @@ public class LoadGenomeAction extends AbstractAction {
 
     protected PanelController controller;
     private JFileChooser chooser = null;
-    static public int kind = 0;
+    static public int colorKind = 0;
 
     public LoadGenomeAction(PanelController controller, String name) {
         super(name);
@@ -78,7 +78,7 @@ public class LoadGenomeAction extends AbstractAction {
                 }
             }
             try {
-                GenomeIo.loadGenome(loadFile, controller.getGameModel(), kind);
+                GenomeIo.loadGenome(loadFile, controller.getGameModel(), colorKind);
                 controller.updateFromSettings();
                 controller.getImageManager().repaintNewImage();
                 controller.getDisplayControlPanel().getChckbxAutoSplitColors().setSelected(false);
@@ -91,7 +91,7 @@ public class LoadGenomeAction extends AbstractAction {
                         ex.toString(),
                         JOptionPane.ERROR_MESSAGE);
             }
-            kind=(kind+2)%3;
+            colorKind=(colorKind+2)%3;
         }
     } 
 }

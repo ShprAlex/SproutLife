@@ -39,6 +39,6 @@ public class ResetGameAction extends AbstractAction {
         }
         controller.getInteractionLock().writeLock().unlock();
         controller.getImageManager().repaintNewImage();      
-        LoadGenomeAction.kind = 0;
+        LoadGenomeAction.colorKind = 0;
     }        
 }

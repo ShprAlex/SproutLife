@@ -36,15 +36,15 @@ public class GenomeIo {
         writer.close();
     }
 
-    public static void loadGenome(File file, GameModel gameModel, int kind) throws IOException {
+    public static void loadGenome(File file, GameModel gameModel, int colorKind) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader reader = new BufferedReader(isr);
         int version = loadVersion(reader);
         reader.readLine();
         loadSettings(reader, gameModel);
-        clearColumn(gameModel, kind);
-        loadOrganisms(reader, gameModel, kind);
+        clearColumn(gameModel, colorKind);
+        loadOrganisms(reader, gameModel, colorKind);
         reader.close();
     }
 
@@ -114,12 +114,12 @@ public class GenomeIo {
         }
     }
 
-    public static void clearColumn(GameModel gameModel, int kind) {
+    public static void clearColumn(GameModel gameModel, int colorKind) {
         Collection<Organism> organisms = new ArrayList<>(gameModel.getEchosystem().getOrganisms());
         int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
 
-        int minX = kind*boardWidth/3;
-        int maxX = (kind+1)*boardWidth/3;
+        int minX = colorKind*boardWidth/3;
+        int maxX = (colorKind+1)*boardWidth/3;
         for (Organism o: organisms) {
             if (o.x>=minX && o.x<=maxX) {
                 gameModel.getEchosystem().retireOrganism(o);
@@ -127,7 +127,7 @@ public class GenomeIo {
         }
     }
 
-    public static void loadOrganisms(BufferedReader reader, GameModel gameModel, int kind) throws IOException {
+    public static void loadOrganisms(BufferedReader reader, GameModel gameModel, int colorKind) throws IOException {
         String seedTypeName = gameModel.getSettings().getString(Settings.SEED_TYPE);
         SeedType seedType = SeedType.get(seedTypeName);
 
@@ -156,13 +156,13 @@ public class GenomeIo {
             int boardWidth = gameModel.getEchosystem().getBoard().getWidth();
             int x = (new Random()).nextInt(boardWidth/3);
             int y = (new Random()).nextInt(gameModel.getEchosystem().getBoard().getHeight());
-            x+= kind*boardWidth/3;
+            x+= colorKind*boardWidth/3;
 
             Organism o = SproutStep.sproutRandomSeed(seedType, gameModel.getEchosystem(), new Point(x,y));
 
             if (o != null) {
                 o.setLifespan(lifespan);
-                o.getAttributes().kind = kind;
+                o.getAttributes().colorKind = colorKind;
                 Genome g = o.getGenome();
                 for (Mutation m : genome) {
                     g.addMutation(m);

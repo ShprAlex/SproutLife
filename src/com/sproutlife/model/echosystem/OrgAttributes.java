@@ -20,10 +20,7 @@ import java.util.Random;
  *
  */
 public class OrgAttributes {
-
-    // TODO: Kind is mostly used for color, should probably be refactored
-    // outside of the organism class.
-    public int kind = 0;
+    public int colorKind = 0;
 
     // territory is used to track all visited points
     public HashSet<Point> territory;
@@ -45,11 +42,11 @@ public class OrgAttributes {
 
         Organism parent = o.getParent();
         if (parent==null) {
-            this.kind = (new Random()).nextInt(3); //kind = 0;
+            this.colorKind = (new Random()).nextInt(3);
             this.birthOrder = 0;
         }
         else {
-            this.kind = parent.getAttributes().kind;
+            this.colorKind = parent.getAttributes().colorKind;
             this.parentAgeAtBirth = parent.getAge();
             this.birthOrder = parent.getChildren().size();
         }
