@@ -16,6 +16,7 @@ import java.util.Collection;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.renderer.colors.AngleColorModel;
 import com.sproutlife.renderer.colors.ColorModel;
 import com.sproutlife.renderer.colors.DefaultColorModel;
 
@@ -46,7 +47,7 @@ public class BoardRenderer {
 
     public BoardRenderer(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.colorModel = new DefaultColorModel();
+        this.colorModel = new AngleColorModel();
 
         this.cellRenderer = new CellRenderer(gameModel, this);
         this.headRenderer = new HeadRenderer(gameModel, this);
