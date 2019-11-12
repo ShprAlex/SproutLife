@@ -123,7 +123,7 @@ public class RulesControlPanel extends JPanel {
         gbl_lifeModePanel.rowWeights = new double[]{0.0, 0.0, 0.0};
         lifeModePanel.setLayout(gbl_lifeModePanel);
 
-        rdbtnFriendly = new JRadioButton("Naive");
+        rdbtnFriendly = new JRadioButton("Basic");
         rdbtnFriendly.setToolTipText("<html>Collisions are independent of<br>organism size.</html>");
         rdbtnFriendly.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnFriendly = new GridBagConstraints();
@@ -134,7 +134,7 @@ public class RulesControlPanel extends JPanel {
         lifeModePanel.add(rdbtnFriendly, gbc_rdbtnFriendly);
         lifeModeButtonGroup.add(rdbtnFriendly);
 
-        rdbtnCompetitive1 = new JRadioButton("Competitive Basic");
+        rdbtnCompetitive1 = new JRadioButton("Competitive1 Easy");
         rdbtnCompetitive1.setToolTipText("<html>Bigger organisms win collisions.</html>");
         rdbtnCompetitive1.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnCompetitive = new GridBagConstraints();
@@ -145,7 +145,7 @@ public class RulesControlPanel extends JPanel {
         lifeModePanel.add(rdbtnCompetitive1, gbc_rdbtnCompetitive);
         lifeModeButtonGroup.add(rdbtnCompetitive1);
 
-        rdbtnCompetitive2 = new JRadioButton("Competitive Advanced");
+        rdbtnCompetitive2 = new JRadioButton("Competitive2 Hard");
         rdbtnCompetitive2.setToolTipText("<html>Organisms win based on size<br>and non-branching paths formed by<br>parents with only one child.</html>");
         rdbtnCompetitive2.setAlignmentX(1.0f);
         GridBagConstraints gbc_radioButton = new GridBagConstraints();
