@@ -349,9 +349,30 @@ public class PanelController {
                 getImageManager().repaintNewImage();
             }
         };
-
         dcp.getRdbtnBackgroundBlack().addItemListener(backgroundThemeListener);
         dcp.getRdbtnBackgroundWhite().addItemListener(backgroundThemeListener);
+
+        ItemListener colorModeListener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (dcp.getRdbtnMultiColorMode().isSelected()) {
+                    getSettings().set(Settings.COLOR_MODEL, "AngleColorModel");
+                } else {
+                    getSettings().set(Settings.COLOR_MODEL, "SplitColorModel");
+                }
+                getImageManager().repaintNewImage();
+            }
+        };
+        dcp.getRdbtnMultiColorMode().addItemListener(colorModeListener);
+        dcp.getRdbtnTriColorMode().addItemListener(colorModeListener);
+
+        dcp.getSpinnerPrimaryHue().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                int hue = (int) ((JSpinner) arg0.getSource()).getValue()*60;
+                getSettings().set(Settings.PRIMARY_HUE_DEGREES, hue);
+                getImageManager().repaintNewImage();
+            }
+        });
     }
     
     public void addRulesControlPanelListeners() {
@@ -447,6 +468,9 @@ public class PanelController {
         getRulesControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
 
+        getDisplayControlPanel().getSpinnerPrimaryHue().setValue(
+                getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60);
+
         switch (getSettings().getString(Settings.LIFE_MODE)) {
             case "friendly":
                 getRulesControlPanel().getRdbtnFriendly().setSelected(true);
@@ -464,6 +488,14 @@ public class PanelController {
                 break;
             default:
                 getDisplayControlPanel().getRdbtnBackgroundBlack().setSelected(true);
+        }
+
+        switch (getSettings().getString(Settings.COLOR_MODEL)) {
+            case "AngleColorModel":
+                getDisplayControlPanel().getRdbtnMultiColorMode().setSelected(true);
+                break;
+            default:
+                getDisplayControlPanel().getRdbtnTriColorMode().setSelected(true);
         }
 
         SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));

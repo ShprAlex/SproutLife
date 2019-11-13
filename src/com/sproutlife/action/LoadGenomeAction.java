@@ -79,6 +79,7 @@ public class LoadGenomeAction extends AbstractAction {
             }
             try {
                 GenomeIo.loadGenome(loadFile, controller.getGameModel(), colorKind);
+                controller.getSettings().set(Settings.COLOR_MODEL, "SplitColorModel");
                 controller.updateFromSettings();
                 controller.getImageManager().repaintNewImage();
                 controller.getDisplayControlPanel().getChckbxAutoSplitColors().setSelected(false);

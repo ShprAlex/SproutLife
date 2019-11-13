@@ -10,24 +10,33 @@ package com.sproutlife.renderer.colors;
 import java.awt.Color;
 
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 
-public interface ColorModel {
+public abstract class ColorModel {
     public static enum BackgroundTheme {
         black,
         white;
     }
 
-    public BackgroundTheme getBackgroundTheme();
+    BackgroundTheme backgroundTheme = BackgroundTheme.black;
 
-    public void setBackgroundTheme(BackgroundTheme t);
+    public BackgroundTheme getBackgroundTheme() {
+        return backgroundTheme;
+    }
 
-    public Color getBackgroundColor();
+    public void setBackgroundTheme(BackgroundTheme t) {
+        this.backgroundTheme = t;
+    }
 
-    public Color getCellColor(Organism o);
+    public void setAttribute(String attribute, Object value) {};
 
-    public Color getHeadColor(Organism o);
+    public abstract Color getBackgroundColor();
 
-    public Color getTailColor(Organism o);
+    public abstract Color getCellColor(Organism o);
 
-    public Color getGenomeBackgroundColor(Organism o);
+    public abstract Color getHeadColor(Organism o);
+
+    public abstract Color getTailColor(Organism o);
+
+    public abstract Color getGenomeBackgroundColor(Organism o);
 }

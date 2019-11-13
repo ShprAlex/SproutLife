@@ -14,10 +14,13 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 
+import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.renderer.colors.AngleColorModel;
 import com.sproutlife.renderer.colors.ColorModel;
-import com.sproutlife.renderer.colors.DefaultColorModel;
+import com.sproutlife.renderer.colors.SplitColorModel;
+import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 
 public class BoardRenderer {
     
@@ -46,7 +49,6 @@ public class BoardRenderer {
 
     public BoardRenderer(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.colorModel = new DefaultColorModel();
 
         this.cellRenderer = new CellRenderer(gameModel, this);
         this.headRenderer = new HeadRenderer(gameModel, this);
@@ -63,6 +65,8 @@ public class BoardRenderer {
     }
 
     public void paint(Graphics2D g) {
+        updateColorModel();
+
         paintBackground(g);             
 
         if (getPaintHeadLayer()) {
@@ -82,7 +86,7 @@ public class BoardRenderer {
     public GameModel getGameModel() {
         return gameModel;
     }       
-    
+
     public ColorModel getColorModel() {
 		return colorModel;
 	}
@@ -197,6 +201,27 @@ public class BoardRenderer {
         Collection<Organism> orgs = getGameModel().getEchosystem().getOrganisms();
         for (Organism o : orgs) {
             renderer.render(g, o);
+        }
+    }
+
+    private void updateColorModel() {
+        String colorModelName = getGameModel().getSettings().getString(Settings.COLOR_MODEL);
+        if (colorModelName.equals("AngleColorModel")) {
+            if (this.colorModel == null || !(this.colorModel instanceof AngleColorModel)) {
+                this.colorModel = new AngleColorModel();
+            }
+            colorModel.setAttribute("primaryHue", gameModel.getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60);
+        }
+        if (colorModelName.equals("SplitColorModel")) {
+            if (this.colorModel == null || !(this.colorModel instanceof SplitColorModel)) {
+                this.colorModel = new SplitColorModel();
+            }
+        }
+        if (getGameModel().getSettings().getString(Settings.BACKGROUND_THEME).equals("black")) {
+            this.colorModel.setBackgroundTheme(BackgroundTheme.black);
+        }
+        else {
+            this.colorModel.setBackgroundTheme(BackgroundTheme.white);
         }
     }
 }

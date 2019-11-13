@@ -69,7 +69,7 @@ public class ColorsStep extends Step {
     private void joinColor(int fromKind, int toKind) {
         for (Organism o : getEchosystem().getOrganisms()) {
             if (o.getAttributes().colorKind == fromKind) {
-                o.getAttributes().colorKind=toKind;
+                updateOrganismColor(o, toKind);
             }
         }
     }
@@ -89,9 +89,19 @@ public class ColorsStep extends Step {
             if (o.getAttributes().colorKind==splitKind) {
                 if ((avgX > getBoard().getWidth()/2 && o.x > avgX) ||
                         (avgX <= getBoard().getWidth()/2 && o.x < avgX)) {
-                    o.getAttributes().colorKind = emptyKind;
+                    updateOrganismColor(o, emptyKind);
                 }
             }
+        }
+    }
+
+    private void updateOrganismColor(Organism o, int colorKind) {
+        // we update the colorKind for all ancestors, because some ancestors get rendered as tail
+        o.getAttributes().colorKind = colorKind;
+        Organism p = o.getParent();
+        while (p!=null) {
+            p.getAttributes().colorKind=colorKind;
+            p = p.getParent();
         }
     }
 }

@@ -27,7 +27,9 @@ public class Settings {
     //Or a step later so seed cells can be displayed before the sprout is.
     public static String SPROUT_DELAYED_MODE = "sproutDelayedMode";
     public static String BACKGROUND_THEME = "backgroundTheme";
+    public static String COLOR_MODEL = "colorModel";
     public static String AUTO_SPLIT_COLORS = "autoSplitColors";
+    public static String PRIMARY_HUE_DEGREES = "primaryHueDegrees";
 
 
     public Settings() {
@@ -53,14 +55,16 @@ public class Settings {
         set(Settings.SPROUT_DELAYED_MODE, false);
         set(Settings.AUTO_SPLIT_COLORS, true);
 
+        set(Settings.COLOR_MODEL, "AngleColorModel");
         set(Settings.BACKGROUND_THEME, "black");
+        set(Settings.PRIMARY_HUE_DEGREES, 0);
 
     }
 
     public void set(String s, Object o) {
         Object previous = settings.get(s);
 
-        // for loading settings, cast loaded values based on class of default values
+        // for loading settings from file, cast loaded values based on class of default values
         if (previous!=null && o instanceof String) {
             if (previous instanceof Integer) {
                 o = Integer.valueOf((String) o);

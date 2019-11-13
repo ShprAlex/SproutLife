@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.renderer.colors.AngleColorModel;
 
 public class TailRenderer extends OrganismRenderer {
     int tailLength = 9;
@@ -28,10 +29,8 @@ public class TailRenderer extends OrganismRenderer {
     public void render(Graphics2D g, Organism o) {
         int BLOCK_SIZE = getBlockSize();
         Organism parent = o.getParent();
-        int strokeWidth = BLOCK_SIZE * 4 / 5;
-        if (BLOCK_SIZE == 2) {
-            strokeWidth = 2;
-        }
+        int strokeWidth = BLOCK_SIZE;
+
         ((Graphics2D) g).setStroke(new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
         if (parent==null) {
@@ -64,6 +63,7 @@ public class TailRenderer extends OrganismRenderer {
         parent = parent.getParent();
 
         for (int tl = 1; tl<tailLength && parent!=null; tl++) {
+            g.setColor(getColor(o));
             drawLine(g, o.x, o.y, parent.x, parent.y);
             o = parent;
             parent = parent.getParent();
