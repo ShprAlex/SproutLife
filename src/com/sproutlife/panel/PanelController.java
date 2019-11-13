@@ -349,9 +349,22 @@ public class PanelController {
                 getImageManager().repaintNewImage();
             }
         };
-
         dcp.getRdbtnBackgroundBlack().addItemListener(backgroundThemeListener);
         dcp.getRdbtnBackgroundWhite().addItemListener(backgroundThemeListener);
+
+        ItemListener colorModeListener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (dcp.getRdbtnMultiColorMode().isSelected()) {
+                    getSettings().set(Settings.COLOR_MODEL, "AngleColorModel");
+                } else {
+                    getSettings().set(Settings.COLOR_MODEL, "SplitColorModel");
+                }
+                getImageManager().repaintNewImage();
+            }
+        };
+        dcp.getRdbtnMultiColorMode().addItemListener(colorModeListener);
+        dcp.getRdbtnTriColorMode().addItemListener(colorModeListener);
     }
     
     public void addRulesControlPanelListeners() {

@@ -20,6 +20,7 @@ import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.renderer.colors.AngleColorModel;
 import com.sproutlife.renderer.colors.ColorModel;
 import com.sproutlife.renderer.colors.SplitColorModel;
+import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 
 public class BoardRenderer {
     
@@ -98,6 +99,12 @@ public class BoardRenderer {
             if (this.colorModel == null || !(this.colorModel instanceof SplitColorModel)) {
                 this.colorModel = new SplitColorModel();
             }
+        }
+        if (getGameModel().getSettings().getString(Settings.BACKGROUND_THEME).equals("black")) {
+            this.colorModel.setBackgroundTheme(BackgroundTheme.black);
+        }
+        else {
+            this.colorModel.setBackgroundTheme(BackgroundTheme.white);
         }
     }
 
