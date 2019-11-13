@@ -4,17 +4,15 @@ import java.awt.Color;
 
 import com.sproutlife.model.echosystem.Organism;
 
-public class AngleColorModel implements ColorModel {
-    BackgroundTheme backgroundTheme = BackgroundTheme.black;
+public class AngleColorModel extends ColorModel {
+    private float primaryHue = 0f;
+    private float hueRangeMultiplier = 200;
 
     @Override
-    public BackgroundTheme getBackgroundTheme() {
-        return backgroundTheme;
-    }
-
-    @Override
-    public void setBackgroundTheme(BackgroundTheme t) {
-        this.backgroundTheme = t;
+    public void setAttribute(String attribute, Object value) {
+        if (attribute.equals("primaryHue")) {
+            primaryHue = ((int) value%6)/6f;
+        }
     }
 
     @Override
@@ -29,22 +27,22 @@ public class AngleColorModel implements ColorModel {
 
     @Override
     public Color getCellColor(Organism o) {
-        Color c = null;
         if (getBackgroundTheme() == BackgroundTheme.white) {
-            int grayC = 140;
-            c =  new Color(grayC-80, 255, grayC-80);
+            return getColor(o, primaryHue, 0.7f, 1f);
         }
         else {
-            int grayC = 100;
-            c =  new Color(grayC-10, 255, grayC-10);
+            return getColor(o, primaryHue, 0.6f, 1f);
         }
-        return hsvRotate(c, o);
     }
 
     @Override
     public Color getHeadColor(Organism o) {
-        Color c = new Color(0, 230, 0);
-        return hsvRotate(c, o);
+        if (getBackgroundTheme() == BackgroundTheme.white) {
+            return getColor(o, primaryHue, 1f, 0.8f);
+        }
+        else {
+            return getColor(o, primaryHue, 0.8f, 1f);
+        }
     }
 
     @Override
@@ -54,27 +52,24 @@ public class AngleColorModel implements ColorModel {
 
     @Override
     public Color getGenomeBackgroundColor(Organism o) {
-        int grayC = 210;
-        Color c = new Color(grayC, 255, grayC);
-        return hsvRotate(c, o);
+        return getColor(o, primaryHue, 0.2f, 1f);
     }
 
-    private Color hsvRotate(Color c, Organism o) {
-        if(o.getParent()==null) {
+    private Color getColor(Organism o, float h, float s, float br) {
+        if(o.getParent()==null || o.getParent().getParent()==null) {
             float rand = (float) ((o.x+o.y)%100/100.0);
             return new Color(Color.HSBtoRGB(rand, 0.5f, 1f));
         }
+
         float ro = getRotation(o);
         float rp = getRotation(o.getParent());
 
-        float[] hsbVals = new float[3];
-        Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), hsbVals);
-        Color c1 = new Color(Color.HSBtoRGB(hsbVals[0]+ro, hsbVals[1], hsbVals[2]));
-        Color c2 = new Color(Color.HSBtoRGB(hsbVals[0]+rp, hsbVals[1], hsbVals[2]));
+        Color c1 = new Color(Color.HSBtoRGB(h+ro, s, br));
+        Color c2 = new Color(Color.HSBtoRGB(h+rp, s, br));
 
-        int r = (c1.getRed()+c2.getRed())/2;
-        int g = (c1.getGreen()+c2.getGreen())/2;
-        int b = (c1.getBlue()+c2.getBlue())/2;
+        int r = (c1.getRed()*3+c2.getRed()*2)/5;
+        int g = (c1.getGreen()*3+c2.getGreen()*2)/5;
+        int b = (c1.getBlue()*3+c2.getBlue()*2)/5;
 
         return new Color(r,g,b);
     }
@@ -103,10 +98,14 @@ public class AngleColorModel implements ColorModel {
             dy2/=dist2;
         }
         double dp = dx1*dx2+dy1*dy2;
-        float ro = (float) (Math.acos(dp)/Math.PI);
+        //normalized DP should never be more than 1, but sometimes floating point errors occur.
+        if (dp>1 || dp<-1) {
+           return 0;
+        }
+        float ro = (float) (Math.acos(dp)/Math.PI/2);
         if (ro>0.5) {
             ro = -1+ro;
         }
-        return ro;
+        return ro*(hueRangeMultiplier/100f);
     }
 }

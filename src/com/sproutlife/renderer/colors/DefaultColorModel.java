@@ -4,18 +4,7 @@ import java.awt.Color;
 
 import com.sproutlife.model.echosystem.Organism;
 
-public class DefaultColorModel implements ColorModel {
-    BackgroundTheme backgroundTheme = BackgroundTheme.black;
-
-    @Override
-    public BackgroundTheme getBackgroundTheme() {
-        return backgroundTheme;
-    }
-
-    @Override
-    public void setBackgroundTheme(BackgroundTheme t) {
-        this.backgroundTheme = t;
-    }
+public class DefaultColorModel extends ColorModel {
 
     @Override
     public Color getBackgroundColor() {
