@@ -479,6 +479,14 @@ public class PanelController {
                 getDisplayControlPanel().getRdbtnBackgroundBlack().setSelected(true);
         }
 
+        switch (getSettings().getString(Settings.COLOR_MODEL)) {
+            case "AngleColorModel":
+                getDisplayControlPanel().getRdbtnMultiColorMode().setSelected(true);
+                break;
+            default:
+                getDisplayControlPanel().getRdbtnTriColorMode().setSelected(true);
+        }
+
         SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
         JComboBox<SeedType> seedCb = (JComboBox<SeedType>) getRulesControlPanel().getSeedTypeComboBox();
         if (seedType!=null) {
