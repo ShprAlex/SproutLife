@@ -19,7 +19,7 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.renderer.colors.AngleColorModel;
 import com.sproutlife.renderer.colors.ColorModel;
-import com.sproutlife.renderer.colors.DefaultColorModel;
+import com.sproutlife.renderer.colors.SplitColorModel;
 
 public class BoardRenderer {
     
@@ -95,8 +95,8 @@ public class BoardRenderer {
             colorModel.setAttribute("primaryHue", gameModel.getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60);
         }
         if (colorModelName.equals("SplitColorModel")) {
-            if (this.colorModel == null || !(this.colorModel instanceof DefaultColorModel)) {
-                this.colorModel = new DefaultColorModel();
+            if (this.colorModel == null || !(this.colorModel instanceof SplitColorModel)) {
+                this.colorModel = new SplitColorModel();
             }
         }
     }
