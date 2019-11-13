@@ -58,6 +58,7 @@ public class GenomeIo {
         writer.println(Settings.CHILD_ONE_PARENT_AGE + " : " + s.getInt(Settings.CHILD_ONE_PARENT_AGE));
         writer.println(Settings.MUTATION_RATE + " : " + s.getInt(Settings.MUTATION_RATE));
         writer.println(Settings.SPROUT_DELAYED_MODE + " : " + s.getBoolean(Settings.SPROUT_DELAYED_MODE));
+        writer.println(Settings.PRIMARY_HUE_DEGREES + " : " + s.getInt(Settings.PRIMARY_HUE_DEGREES));
     }
 
     private static void saveOrganisms(PrintWriter writer, GameModel gameModel) throws IOException {
