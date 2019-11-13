@@ -365,6 +365,14 @@ public class PanelController {
         };
         dcp.getRdbtnMultiColorMode().addItemListener(colorModeListener);
         dcp.getRdbtnTriColorMode().addItemListener(colorModeListener);
+
+        dcp.getSpinnerPrimaryHue().addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent arg0) {
+                int hue = (int) ((JSpinner) arg0.getSource()).getValue()*60;
+                getSettings().set(Settings.PRIMARY_HUE_DEGREES, hue);
+                getImageManager().repaintNewImage();
+            }
+        });
     }
     
     public void addRulesControlPanelListeners() {
@@ -459,6 +467,9 @@ public class PanelController {
                 getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
         getRulesControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
+
+        getDisplayControlPanel().getSpinnerPrimaryHue().setValue(
+                getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60);
 
         switch (getSettings().getString(Settings.LIFE_MODE)) {
             case "friendly":

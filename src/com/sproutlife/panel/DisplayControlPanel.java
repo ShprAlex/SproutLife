@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class DisplayControlPanel extends JPanel {
@@ -57,6 +58,10 @@ public class DisplayControlPanel extends JPanel {
     private JRadioButton rdbtnMultiColorMode;
     private JRadioButton rdbtnTriColorMode;
     private final ButtonGroup buttonGroupColorMode = new ButtonGroup();
+    private JPanel panel_1;
+    private JLabel lblColorScheme;
+    private JSpinner spinnerPrimaryHue;
+    private Component horizontalStrut_1;
 
 
     public DisplayControlPanel(PanelController panelController) {
@@ -73,9 +78,9 @@ public class DisplayControlPanel extends JPanel {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {10, 10, 30, 100};
-        gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
         setLayout(gridBagLayout);
 
         lblDrawLayers = new JLabel("Draw Layers");
@@ -183,6 +188,29 @@ public class DisplayControlPanel extends JPanel {
         gbc_rdbtnMultiColorMode.gridy = 6;
         add(rdbtnMultiColorMode, gbc_rdbtnMultiColorMode);
 
+        panel_1 = new JPanel();
+        GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+        gbc_panel_1.anchor = GridBagConstraints.NORTH;
+        gbc_panel_1.gridwidth = 3;
+        gbc_panel_1.insets = new Insets(0, 60, 5, 5);
+        gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
+        gbc_panel_1.gridx = 2;
+        gbc_panel_1.gridy = 7;
+        add(panel_1, gbc_panel_1);
+        panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+
+        lblColorScheme = new JLabel("Primary Hue");
+        panel_1.add(lblColorScheme);
+
+        horizontalStrut_1 = Box.createHorizontalStrut(20);
+        panel_1.add(horizontalStrut_1);
+
+        spinnerPrimaryHue = new JSpinner();
+        spinnerPrimaryHue.setMaximumSize(new Dimension(50, 32767));
+        SpinnerModel primaryHueModel = new SpinnerNumberModel(0, 0, 5, 1);
+        spinnerPrimaryHue.setModel(primaryHueModel);
+        panel_1.add(spinnerPrimaryHue);
+
         rdbtnTriColorMode = new JRadioButton("Tri Color Mode");
         buttonGroupColorMode.add(rdbtnTriColorMode);
         GridBagConstraints gbc_rdbtnTriColorMode = new GridBagConstraints();
@@ -190,7 +218,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_rdbtnTriColorMode.gridwidth = 2;
         gbc_rdbtnTriColorMode.insets = new Insets(0, 30, 5, 5);
         gbc_rdbtnTriColorMode.gridx = 2;
-        gbc_rdbtnTriColorMode.gridy = 7;
+        gbc_rdbtnTriColorMode.gridy = 8;
         add(rdbtnTriColorMode, gbc_rdbtnTriColorMode);
 
         chckbxAutoSplitColors = new JCheckBox("Auto Split Colors");
@@ -199,7 +227,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_chckbxAutoSplitColors.gridwidth = 3;
         gbc_chckbxAutoSplitColors.insets = new Insets(0, 60, 5, 5);
         gbc_chckbxAutoSplitColors.gridx = 2;
-        gbc_chckbxAutoSplitColors.gridy = 8;
+        gbc_chckbxAutoSplitColors.gridy = 9;
         add(chckbxAutoSplitColors, gbc_chckbxAutoSplitColors);
         chckbxAutoSplitColors.setToolTipText("<html>Split Color of Organism Group<br>when there are too many of that color.</html>");
         chckbxAutoSplitColors.setSelected(true);
@@ -209,7 +237,7 @@ public class DisplayControlPanel extends JPanel {
         GridBagConstraints gbc_verticalStrut_2 = new GridBagConstraints();
         gbc_verticalStrut_2.insets = new Insets(0, 0, 5, 5);
         gbc_verticalStrut_2.gridx = 2;
-        gbc_verticalStrut_2.gridy = 9;
+        gbc_verticalStrut_2.gridy = 10;
         add(verticalStrut_2, gbc_verticalStrut_2);
 
 
@@ -219,7 +247,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_sizePanel.gridwidth = 3;
         gbc_sizePanel.fill = GridBagConstraints.BOTH;
         gbc_sizePanel.gridx = 2;
-        gbc_sizePanel.gridy = 10;
+        gbc_sizePanel.gridy = 11;
         add(sizePanel, gbc_sizePanel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{30, 40, 40};
@@ -352,5 +380,8 @@ public class DisplayControlPanel extends JPanel {
     }
     public JRadioButton getRdbtnTriColorMode() {
         return rdbtnTriColorMode;
+    }
+    public JSpinner getSpinnerPrimaryHue() {
+        return spinnerPrimaryHue;
     }
 }
