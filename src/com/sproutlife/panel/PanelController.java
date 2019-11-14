@@ -470,10 +470,6 @@ public class PanelController {
                 getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
         getRulesControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
-
-        int cs = 1 + getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60 +
-                (getSettings().getInt(Settings.HUE_RANGE)/100-1)%2*6;
-        System.out.println("cs "+cs);
         getDisplayControlPanel().getSpinnerColorScheme().setValue(
                 1 + getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60 +
                 (getSettings().getInt(Settings.HUE_RANGE)/100-1)%2*6);
