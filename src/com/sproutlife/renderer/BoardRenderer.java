@@ -211,6 +211,7 @@ public class BoardRenderer {
                 this.colorModel = new AngleColorModel();
             }
             colorModel.setAttribute("primaryHue", gameModel.getSettings().getInt(Settings.PRIMARY_HUE_DEGREES));
+            colorModel.setAttribute("hueRange", gameModel.getSettings().getInt(Settings.HUE_RANGE));
         }
         if (colorModelName.equals("SplitColorModel")) {
             if (this.colorModel == null || !(this.colorModel instanceof SplitColorModel)) {

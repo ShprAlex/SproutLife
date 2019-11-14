@@ -6,15 +6,15 @@ import com.sproutlife.model.echosystem.Organism;
 
 public class AngleColorModel extends ColorModel {
     private float primaryHue = 0f;
-    private float hueRangeMultiplier = 100;
+    private float hueRange = 100;
 
     @Override
     public void setAttribute(String attribute, Object value) {
         if (attribute.equals("primaryHue")) {
             primaryHue = ((int) value)/360f;
         }
-        if (attribute.equals("hueRangeMultiplier")) {
-            hueRangeMultiplier = (int) value;
+        if (attribute.equals("hueRange")) {
+            hueRange = (int) value;
         }
     }
 
@@ -112,7 +112,7 @@ public class AngleColorModel extends ColorModel {
         if (ro>0.5) {
             ro = ro-1;
         }
-        return ro*(hueRangeMultiplier/100f);
+        return ro*(hueRange/100f);
     }
 
     private Color getRandomColor(Organism o) {

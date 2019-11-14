@@ -59,8 +59,7 @@ public class DisplayControlPanel extends JPanel {
     private JRadioButton rdbtnTriColorMode;
     private final ButtonGroup buttonGroupColorMode = new ButtonGroup();
     private JPanel panel_1;
-    private JLabel lblColorScheme;
-    private JSpinner spinnerPrimaryHue;
+    private JSpinner spinnerColorScheme;
     private Component horizontalStrut_1;
 
 
@@ -199,17 +198,17 @@ public class DisplayControlPanel extends JPanel {
         add(panel_1, gbc_panel_1);
         panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 
-        lblColorScheme = new JLabel("Primary Hue");
+        JLabel lblColorScheme = new JLabel("Color Scheme");
         panel_1.add(lblColorScheme);
 
         horizontalStrut_1 = Box.createHorizontalStrut(20);
         panel_1.add(horizontalStrut_1);
 
-        spinnerPrimaryHue = new JSpinner();
-        spinnerPrimaryHue.setMaximumSize(new Dimension(50, 32767));
-        SpinnerModel primaryHueModel = new SpinnerNumberModel(0, 0, 5, 1);
-        spinnerPrimaryHue.setModel(primaryHueModel);
-        panel_1.add(spinnerPrimaryHue);
+        spinnerColorScheme = new JSpinner();
+        spinnerColorScheme.setMaximumSize(new Dimension(50, 32767));
+        SpinnerModel primaryHueModel = new SpinnerNumberModel(1, 1, 12, 1);
+        spinnerColorScheme.setModel(primaryHueModel);
+        panel_1.add(spinnerColorScheme);
 
         rdbtnTriColorMode = new JRadioButton("Tri Color Mode");
         buttonGroupColorMode.add(rdbtnTriColorMode);
@@ -381,7 +380,7 @@ public class DisplayControlPanel extends JPanel {
     public JRadioButton getRdbtnTriColorMode() {
         return rdbtnTriColorMode;
     }
-    public JSpinner getSpinnerPrimaryHue() {
-        return spinnerPrimaryHue;
+    public JSpinner getSpinnerColorScheme() {
+        return spinnerColorScheme;
     }
 }

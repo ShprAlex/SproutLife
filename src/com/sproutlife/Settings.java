@@ -30,6 +30,7 @@ public class Settings {
     public static String COLOR_MODEL = "colorModel";
     public static String AUTO_SPLIT_COLORS = "autoSplitColors";
     public static String PRIMARY_HUE_DEGREES = "primaryHueDegrees";
+    public static String HUE_RANGE = "hueRange";
 
 
     public Settings() {
@@ -58,7 +59,7 @@ public class Settings {
         set(Settings.COLOR_MODEL, "AngleColorModel");
         set(Settings.BACKGROUND_THEME, "black");
         set(Settings.PRIMARY_HUE_DEGREES, 0);
-
+        set(Settings.HUE_RANGE, 100);
     }
 
     public void set(String s, Object o) {

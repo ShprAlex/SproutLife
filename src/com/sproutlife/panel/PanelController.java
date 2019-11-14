@@ -366,10 +366,13 @@ public class PanelController {
         dcp.getRdbtnMultiColorMode().addItemListener(colorModeListener);
         dcp.getRdbtnTriColorMode().addItemListener(colorModeListener);
 
-        dcp.getSpinnerPrimaryHue().addChangeListener(new ChangeListener() {
+        dcp.getSpinnerColorScheme().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                int hue = (int) ((JSpinner) arg0.getSource()).getValue()*60;
+                int value = (int) ((JSpinner) arg0.getSource()).getValue();
+                int hue = (value-1)%6*60;
+                int hueRange = ((value-1)/6)*100+100;
                 getSettings().set(Settings.PRIMARY_HUE_DEGREES, hue);
+                getSettings().set(Settings.HUE_RANGE, hueRange);
                 getImageManager().repaintNewImage();
             }
         });
@@ -468,8 +471,12 @@ public class PanelController {
         getRulesControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
 
-        getDisplayControlPanel().getSpinnerPrimaryHue().setValue(
-                getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60);
+        int cs = 1 + getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60 +
+                (getSettings().getInt(Settings.HUE_RANGE)/100-1)%2*6;
+        System.out.println("cs "+cs);
+        getDisplayControlPanel().getSpinnerColorScheme().setValue(
+                1 + getSettings().getInt(Settings.PRIMARY_HUE_DEGREES)/60 +
+                (getSettings().getInt(Settings.HUE_RANGE)/100-1)%2*6);
 
         switch (getSettings().getString(Settings.LIFE_MODE)) {
             case "friendly":
