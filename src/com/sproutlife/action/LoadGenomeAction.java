@@ -86,9 +86,9 @@ public class LoadGenomeAction extends AbstractAction {
                     // we switch to the tri-color "splitColor" mode so they can watch them compete
                     controller.getDisplayControlPanel().getChckbxAutoSplitColors().setSelected(false);
                     controller.getSettings().set(Settings.COLOR_MODEL, "SplitColorModel");
-                    controller.updateFromSettings();
                 }
 
+                controller.updateFromSettings();
                 controller.getImageManager().repaintNewImage();
                 System.out.println("Loaded Orgs " + controller.getGameModel().getEchosystem().getOrganisms().size());
             }
