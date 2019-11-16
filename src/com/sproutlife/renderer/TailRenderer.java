@@ -57,10 +57,9 @@ public class TailRenderer extends OrganismRenderer {
             double ox = parent.x+((o.x-parent.x)*scale);
             double oy = parent.y+((o.y-parent.y)*scale);
             drawLine(g, ox, oy, parent.x, parent.y);
+            o = parent;
+            parent = parent.getParent();
         }
-
-        o = parent;
-        parent = parent.getParent();
 
         for (int tl = 1; tl<tailLength && parent!=null; tl++) {
             g.setColor(getColor(o));
