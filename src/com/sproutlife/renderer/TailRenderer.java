@@ -44,6 +44,7 @@ public class TailRenderer extends OrganismRenderer {
         }
 
         g.setColor(getColor(o));
+        int tl=0;
         if (o.isAlive()) {
             int paab = o.getAttributes().parentAgeAtBirth;
             if (parent.getParent()!=null) {
@@ -59,13 +60,15 @@ public class TailRenderer extends OrganismRenderer {
             drawLine(g, ox, oy, parent.x, parent.y);
             o = parent;
             parent = parent.getParent();
+            tl=1;
         }
 
-        for (int tl = 1; tl<tailLength && parent!=null; tl++) {
+        while (tl<tailLength && parent!=null) {
             g.setColor(getColor(o));
             drawLine(g, o.x, o.y, parent.x, parent.y);
             o = parent;
             parent = parent.getParent();
+            tl++;
         }
     }
 
