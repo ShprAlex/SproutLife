@@ -10,7 +10,7 @@ Watch evolution happen by running Sprout Life on your desktop. Save and load org
 
 ### Compiling and Running
 
-[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/readme/download.png)](https://github.com/ShprAlex/SproutLife/releases)
+[![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/download.png)](https://github.com/ShprAlex/SproutLife/releases)
 
 You can compile and run Sprout Life with `Java 1.8`
 
