@@ -63,7 +63,7 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
 
 - **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed. We do this by random chance during an organism’s life. Mutations have to be beneficial across all conditions. For example a first child and a second child are born at different times with different surrounding cell configurations. In our case they both follow the same genetic blueprint, even though it's tempting to take birth order into account.
 
-![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-29zb.gif) 
+![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-29zb.gif)
 
 - **Visualizing the Genome** - A lucky accident resulted in a beautiful way to display an organism's genome. The eyes, triangles and paw-print patterns in the GIFs are actually direct representations of an organism's recent mutations. Mutations have (x,y) coordinates, and correspond to the same space as the organism. The lucky accident was shrinking the dimensions of those mutations, causing them to appear bunched together in the center of the organism rather than spread out over the affected cells. All the organism's mutations across different time points are displayed simultaneously. The logo-like patterns have a deep connection with the organisms behavior, they roughly outline the shape the organism will have during its life.
  
