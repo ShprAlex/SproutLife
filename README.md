@@ -6,7 +6,7 @@ Enabling reproduction spontaneously leads to more advanced behaviors. Surviving 
 
 Watch evolution happen by running Sprout Life on your desktop. Save and load organism genomes and create battles between saved organisms.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202019-10-27e.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-10-27e.gif)
 
 ### Compiling and Running
 
@@ -43,7 +43,7 @@ There are several reasons why Sprout Life is exciting:
 
 A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
 
-![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/master/readme/SeedSproutIllustration.png)
+![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/gallery/SeedSproutIllustration.png)
 
 - **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state. [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) uses the term "dead" cells to refer to empty coordinates. Sprout Life simply considers this as empty space.
 
@@ -55,7 +55,7 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
 
 - **Reproduction** - A seed from a parent sprouts to become a new child organism. We know the identity of the parent for each child. Thus we can support inheritance, where genes pass down from parent to child. For now every organism has a single parent. Sexual reproduction can also easily be added as a result of contact between a parent and other organisms.
 
-![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutAnimation.gif)
+![Sprout Animation](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutAnimation.gif)
 
 - **Self imposed lifespan** - It turns out that having old organisms self-destruct is beneficial to their children. Removing all of a parent's cells from the board creates more room for its children and descendants to grow. New organisms develop in a predictable pattern allowing stability to arise, whereas older organisms get damaged by collision and mutation. It was exciting to discover that letting organisms control their own lifespan does not lead to run-away growth. Organisms often prefer to be small. The maximum lifespan is encoded as an integer value that can mutate from generation to generation.
 
@@ -69,7 +69,7 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
  
 - **Rotation and Reflection** - It's important to keep track of which way the R-Pentomino, or potentially other sprout pattern, was facing when the organism was born. There are 8 ways to rotate a pattern, 4 rotations and 2 mirror images for most patterns. The (x,y) coordinates for mutations must be rotated relative to how the seed pattern was oriented. It's also good to let the parent organism determine which direction the sprouted child is facing. A 2x2 block seed presents us with a tricky dilemma in that we don't know which way it's facing. We can resolve this issue by checking which way the parent was facing when it was born, and combining this with whether the seed is above, below, left, right, or otherwise oriented relative to the parent. Combining these two we can have the child born facing a direction relative to how the parent was facing when it was born.
  
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-29a.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-29a.gif)
 
 ### Evolution - a race to the bottom?
 
@@ -79,7 +79,7 @@ The initial excitement of developing Sprout Life was that it worked! Organisms d
 
 The direction towards smallness is not straight forward, and we can still learn a lot from how new abilities are introduced and propagate through the population. Overall though, the trend is to be simple, and simple is boring. Simple is also a fixed boundary beyond which progress isn't possible.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-27t.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-27t.gif)
 
 ### Overcoming simplicity - initial techniques to maintain complexity
 
@@ -89,7 +89,7 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/master/readme/SproutLife%202016-01-28f.gif)
+![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-28f.gif)
 
 ### Competitive Collision Mode - finally achieving growth
 
