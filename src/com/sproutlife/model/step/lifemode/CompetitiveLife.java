@@ -18,7 +18,7 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class CompetitiveLife extends LifeMode {
-    private boolean isStronglyCompetitive = false;
+    private boolean isCompetitive2 = false;
     
     public CompetitiveLife(GameModel gameModel) {
         super(gameModel);
@@ -53,16 +53,11 @@ public class CompetitiveLife extends LifeMode {
             return;
         }
 
-        if (!isStronglyCompetitive ) {
-            o.getAttributes().competitiveScore = (int) p.getAttributes().territoryProduct;
+        if (isCompetitive2 ) {
+            o.getAttributes().competitiveScore = (int) (p.getAttributes().territoryProduct / p.getChildren().size());
         }
         else {
-            int pl = calculateSingleChildPathLength(o);
-            int siblingScore = p.getChildren().size();
-            if (pl>6) {
-                siblingScore+=1;
-            }
-            o.getAttributes().competitiveScore = (int) (p.getAttributes().territoryProduct / siblingScore);
+            o.getAttributes().competitiveScore = (int) p.getAttributes().territoryProduct;
         }
     }
 
@@ -73,7 +68,7 @@ public class CompetitiveLife extends LifeMode {
     }
 
     public void updateCells() {
-        isStronglyCompetitive = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
+        isCompetitive2 = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
 
         List<Cell> bornCells = Collections.synchronizedList(new ArrayList<>());
         List<Cell> deadCells = Collections.synchronizedList(new ArrayList<>());
@@ -198,19 +193,5 @@ public class CompetitiveLife extends LifeMode {
         }
 
         return bornCell;
-    }
-
-    private int calculateSingleChildPathLength(Organism o) {
-        Organism p = o.getParent();
-        if (p==null || p.getChildren().size()>1) {
-            return 0;
-        }
-        if (!p.isAlive()) {
-            if (o.getAttributes().singleChildPathLength == 0) {
-                o.getAttributes().singleChildPathLength = 1 + calculateSingleChildPathLength(p);
-            }
-            return o.getAttributes().singleChildPathLength;
-        }
-        return 1+calculateSingleChildPathLength(p);
     }
 }

@@ -34,8 +34,6 @@ public class OrgAttributes {
     public int birthOrder;
     public int collisionCount=0;
 
-    public int singleChildPathLength=0;
-
     public OrgAttributes(Organism o) {
         this.territory = new HashSet<Point>();        
         this.maxCells = 0;
