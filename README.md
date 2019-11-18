@@ -26,4 +26,4 @@
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-11-13%20peacock%20swirls.gif)
 
-### Page 1, [Page  2](https://github.com/ShprAlex/SproutLife/blob/master/gallery/README_PAGE2.md), [Page  3](https://github.com/ShprAlex/SproutLife/blob/master/gallery/README_PAGE3.md)
+### Page 1, [Page  2](https://github.com/ShprAlex/SproutLife/blob/gallery/README_PAGE2.md), [Page  3](https://github.com/ShprAlex/SproutLife/blob/gallery/README_PAGE3.md)

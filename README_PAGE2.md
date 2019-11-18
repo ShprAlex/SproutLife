@@ -24,4 +24,4 @@
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-11-11%20flower%20bees.gif)
 
-### [Page  1](https://github.com/ShprAlex/SproutLife/blob/master/gallery/README.md), Page 2, [Page  3](https://github.com/ShprAlex/SproutLife/blob/master/gallery/README_PAGE3.md)
+### [Page  1](https://github.com/ShprAlex/SproutLife/blob/gallery/README.md), Page 2, [Page  3](https://github.com/ShprAlex/SproutLife/blob/gallery/README_PAGE3.md)

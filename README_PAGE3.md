@@ -28,4 +28,4 @@
 
 ![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutAnimation.gif)
 
-### [Page  1](https://github.com/ShprAlex/SproutLife/blob/master/gallery/README.md), [Page  2](https://github.com/ShprAlex/SproutLife/blob/master/gallery/README_PAGE2.md), Page 3
+### [Page  1](https://github.com/ShprAlex/SproutLife/blob/gallery/README.md), [Page  2](https://github.com/ShprAlex/SproutLife/blob/gallery/README_PAGE2.md), Page 3
