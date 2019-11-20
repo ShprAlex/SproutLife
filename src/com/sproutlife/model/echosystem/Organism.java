@@ -69,7 +69,6 @@ public class Organism {
             this.genome = parent.getGenome().clone();
             this.lifespan = parent.lifespan;
         }
-        this.genome.setSeed(this.seed);        
     }
     
     public int getId() {
@@ -104,7 +103,6 @@ public class Organism {
     
     public void setSeed(Seed seed) {
         this.seed = seed;
-        this.genome.setSeed(seed);
     }
     
     public Seed getSeed() {
@@ -154,26 +152,6 @@ public class Organism {
     public Genome getGenome() {
         return genome;
     }
-    
-    public Mutation addMutation(int x, int y) {      
-        return getGenome().addMutation(x, y, getAge(), clock.getTime());        
-    }   
-    
-    public ArrayList<Point> getMutationPoints(int time) {
-        ArrayList<Point> adjustOffsets = 
-                getGenome().getMutationPoints(time);
-        
-        if (adjustOffsets==null) {
-            return null;
-        }
-        for (Point p : adjustOffsets) {
-            
-            p.x += getLocation().x;
-            p.y += getLocation().y;
-
-        }
-        return adjustOffsets;        
-    } 
 
     public List<Cell> getCells() {
         return cells;

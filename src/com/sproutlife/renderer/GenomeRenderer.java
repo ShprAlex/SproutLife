@@ -11,9 +11,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.model.utils.MutationUtils;
 
 public class GenomeRenderer extends OrganismRenderer {
 
@@ -116,7 +118,7 @@ public class GenomeRenderer extends OrganismRenderer {
     ArrayList<Point> getFilteredMutationPoints(Organism o) {
         ArrayList<Point> filteredMutationPoints = new ArrayList<Point>();
         for (int age = 0;age<40;age++) {
-            ArrayList<Point> mutationPoints = o.getGenome().getMutationPoints(age);
+            List<Point> mutationPoints = MutationUtils.getMutationPointsAtAge(o, age);
             int timeLimit = 15000;
 
             for (int i = 0;i<mutationPoints.size();i++) {

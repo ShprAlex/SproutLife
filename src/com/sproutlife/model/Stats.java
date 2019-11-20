@@ -17,6 +17,7 @@ import java.util.Iterator;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.model.utils.MutationUtils;
 
 public class Stats {
     GameModel gameModel;
@@ -434,7 +435,7 @@ public class Stats {
         for (Organism o: getEchosystem().getOrganisms()) {
             int fromTime = getEchosystem().getTime()-fromAge;
             int toTime = getEchosystem().getTime()-toAge;
-            for(Mutation m: o.getGenome().getRecentMutations(fromTime, toTime, o.lifespan)) {
+            for(Mutation m: MutationUtils.getRecentMutations(o, fromTime, toTime, o.lifespan)) {
                 recentMutations.add(m);
                 Integer mCount = totalRM.get(m);
                 if (mCount==null) {
@@ -678,7 +679,7 @@ public class Stats {
 
             int toTime = getEchosystem().getTime();
 
-            Collection<Mutation> mutations = o.getGenome().getRecentMutations(0, toTime, 100);
+            Collection<Mutation> mutations = MutationUtils.getRecentMutations(o, 0, toTime, 100);
             mutationSum +=mutations.size();
             for (Mutation m : mutations) { 
                 Integer freq = mutationFreq.get(m);

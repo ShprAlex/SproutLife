@@ -10,6 +10,7 @@ package com.sproutlife.model.step;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import com.sproutlife.Settings;
@@ -18,6 +19,7 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Genome;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.model.utils.MutationUtils;
 
 public class MutationStep extends Step {
     GameModel gameModel;    
@@ -40,7 +42,7 @@ public class MutationStep extends Step {
            
            int age = o.getAge();
                       
-           ArrayList<Point> mutationPoints =  o.getMutationPoints(age);
+           List<Point> mutationPoints =  MutationUtils.getOffsetMutationPointsAtAge(o, age);
            
            if (mutationPoints == null) {
                continue;
@@ -138,7 +140,7 @@ public class MutationStep extends Step {
         int x = c.x - org.x;
         int y = c.y - org.y;
 
-        Mutation m = org.addMutation(x, y);
+        Mutation m = MutationUtils.addMutation(org, x, y);
 
         for (Organism childOrg : org.getChildren()) {
             //Pretend the parent had this mutation when giving birth to it's children
@@ -155,13 +157,13 @@ public class MutationStep extends Step {
         Genome g = org.getGenome();
         int age = org.getAge();
 
-        if(g.getMutationCount(age)==0) {
+        if(g.getMutationCountAtAge(age)==0) {
             // if the organism doesn't have any mutations at the age it is now,
             // do nothing
             return false;
         }
 
-        int indexAtAge = random.nextInt(g.getMutationCount(age));
+        int indexAtAge = random.nextInt(g.getMutationCountAtAge(age));
         Mutation removeM = g.getMutation(age, indexAtAge);
         g.removeMutation(removeM);
         for (Organism childOrg : org.getChildren()) {
