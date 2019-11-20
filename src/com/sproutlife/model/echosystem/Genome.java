@@ -76,10 +76,10 @@ public class Genome {
     }
 
     public void setMutationsAtAge(int age, List<Mutation> mutationsAtAge) {
-        while (this.genome.size()<=age) {
-            this.genome.add(null);
+        while (genome.size()<=age) {
+            genome.add(null);
         }
-        this.genome.set(age, mutationsAtAge);
+        genome.set(age, mutationsAtAge);
     }
 
     public ArrayList<Point> getMutationPoints(int organismAge) {
@@ -89,7 +89,6 @@ public class Genome {
         List<Mutation> unRotated = getMutationsAtAge(organismAge);
         if (unRotated == null || unRotated.isEmpty()) {
             unRotated = new ArrayList<Mutation>();
-            //setMutationsAtAge(organismAge, unRotated);
         }
         ArrayList<Point> mutationPoints = new ArrayList<Point>(unRotated.size());
         for (Mutation m : unRotated) {
@@ -104,7 +103,7 @@ public class Genome {
         if (mutationsAtAge == null) {
             return null;
         }
-        return genome.get(age).get(mutationIndex);
+        return mutationsAtAge.get(mutationIndex);
     }
 
     public void addMutation(Mutation m) {
