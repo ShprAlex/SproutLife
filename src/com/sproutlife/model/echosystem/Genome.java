@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import com.sproutlife.model.rotations.Rotations;
 import com.sproutlife.model.seed.Seed;
@@ -25,26 +26,27 @@ import com.sproutlife.model.seed.Seed;
 public class Genome {
     
     // map of age -> list of mutations at age
-    HashMap<Integer, ArrayList<Mutation>> mutations;
+    List<List<Mutation>> genome;
     Seed seed;
 
     public Genome() {
-        this.mutations = new HashMap<Integer, ArrayList<Mutation>>();
+        this.genome = new ArrayList<>();
     }
 
-    public Genome(HashMap<Integer, ArrayList<Mutation>> mutations) {
-        this.mutations = new HashMap<Integer, ArrayList<Mutation>>();
-
+    public Genome(List<List<Mutation>> sourceMutations) {
+        this.genome = new ArrayList<>();
         // Clone mutations
-        for (Integer age : mutations.keySet()) {
-            ArrayList<Mutation> cloneList = new ArrayList<Mutation>(
-                    mutations.get(age));
-            this.mutations.put(age, cloneList);
+        for (int age = 0; age < sourceMutations.size(); age++) {
+            List<Mutation> sourceMutationsAtAge = sourceMutations.get(age);
+            ArrayList<Mutation> cloneList = sourceMutationsAtAge != null
+                    ? new ArrayList<Mutation>(sourceMutations.get(age))
+                    : null;
+            setMutationsAtAge(age, cloneList);
         }
     }
 
     public Genome clone() {
-        return new Genome(this.mutations);
+        return new Genome(this.genome);
     }
 
     /*
@@ -59,11 +61,35 @@ public class Genome {
         return seed;
     }
 
+    public int getMutationCount(int age) {
+        if (age >= genome.size() || genome.get(age) == null) {
+            return 0;
+        }
+        return genome.get(age).size();
+    }
+
+    public List<Mutation> getMutationsAtAge(int age) {
+        if (age >= genome.size()) {
+            return null;
+        }
+        return genome.get(age);
+    }
+
+    public void setMutationsAtAge(int age, List<Mutation> mutationsAtAge) {
+        while (this.genome.size()<=age) {
+            this.genome.add(null);
+        }
+        this.genome.set(age, mutationsAtAge);
+    }
+
     public ArrayList<Point> getMutationPoints(int organismAge) {
-        ArrayList<Mutation> unRotated = mutations.get(organismAge);
+        if (organismAge >= genome.size()) {
+            return new ArrayList<Point>();
+        }
+        List<Mutation> unRotated = getMutationsAtAge(organismAge);
         if (unRotated == null || unRotated.isEmpty()) {
             unRotated = new ArrayList<Mutation>();
-            mutations.put(organismAge, unRotated);
+            //setMutationsAtAge(organismAge, unRotated);
         }
         ArrayList<Point> mutationPoints = new ArrayList<Point>(unRotated.size());
         for (Mutation m : unRotated) {
@@ -73,26 +99,19 @@ public class Genome {
         return mutationPoints;
     }
 
-    public int getMutationCount(int age) {
-        if (mutations.get(age) == null) {
-            return 0;
-        }
-        return mutations.get(age).size();
-    }
-
-    public ArrayList<Mutation> getMutations(int organismAge) {
-        return mutations.get(organismAge);
-    }
-
     public Mutation getMutation(int age, int mutationIndex) {
-        return mutations.get(age).get(mutationIndex);
+        List<Mutation> mutationsAtAge = getMutationsAtAge(age);
+        if (mutationsAtAge == null) {
+            return null;
+        }
+        return genome.get(age).get(mutationIndex);
     }
 
     public void addMutation(Mutation m) {
-        ArrayList<Mutation> mutationsAtAge = mutations.get(m.getOrganismAge());
+        List<Mutation> mutationsAtAge = getMutationsAtAge(m.getOrganismAge());
         if (mutationsAtAge == null) {
             mutationsAtAge = new ArrayList<Mutation>();
-            mutations.put(m.getOrganismAge(), mutationsAtAge);
+            setMutationsAtAge(m.getOrganismAge(), mutationsAtAge);
         }
         mutationsAtAge.add(m);
     }
@@ -105,17 +124,19 @@ public class Genome {
     }
 
     public boolean removeMutation(Mutation m) {
-        ArrayList<Mutation> mutationsAtAge = mutations.get(m.getOrganismAge());
+        List<Mutation> mutationsAtAge = getMutationsAtAge(m.getOrganismAge());
         if (mutationsAtAge != null) {
             return mutationsAtAge.remove(m);
         }
         return false;
     }
 
-    public Collection<Mutation> getRecentMutations(int fromTime, int toTime,
-            int maxAge) {
+    public Collection<Mutation> getRecentMutations(int fromTime, int toTime, int maxAge) {
         HashSet<Mutation> recentMutations = new HashSet<Mutation>();
-        for (ArrayList<Mutation> mu : mutations.values()) {
+        for (List<Mutation> mu : genome) {
+            if (mu == null) {
+                continue;
+            }
             for (Mutation m : mu) {
                 if (m.getGameTime() >= fromTime && m.getGameTime() <= toTime
                         && m.getOrganismAge() <= maxAge) {

@@ -116,7 +116,7 @@ public class GenomeRenderer extends OrganismRenderer {
     ArrayList<Point> getFilteredMutationPoints(Organism o) {
         ArrayList<Point> filteredMutationPoints = new ArrayList<Point>();
         for (int age = 0;age<40;age++) {
-            ArrayList<Point> mutationPoints = o.getGenome().getMutationPoints( age);
+            ArrayList<Point> mutationPoints = o.getGenome().getMutationPoints(age);
             int timeLimit = 15000;
 
             for (int i = 0;i<mutationPoints.size();i++) {

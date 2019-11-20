@@ -93,7 +93,7 @@ public class GameMenu extends JMenuBar implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean enabled = getGameModel().getSettings().getBoolean(Settings.MUTATION_ENABLED);               
-                getGameModel().set(Settings.MUTATION_ENABLED,!enabled);
+                getGameModel().getSettings().set(Settings.MUTATION_ENABLED,!enabled);
                 enabled=!enabled;
                 if (enabled) {
                     this.putValue(NAME, "Disable Mutations");                    

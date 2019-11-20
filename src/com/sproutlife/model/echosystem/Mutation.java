@@ -47,8 +47,8 @@ public class Mutation extends Object {
     }
     
     @Override
-    public boolean equals(Object arg2) {
-        Mutation m2 = (Mutation) arg2;
+    public boolean equals(Object obj) {
+        Mutation m2 = (Mutation) obj;
         return getLocation().equals(m2.getLocation()) && getOrganismAge()==m2.getOrganismAge();
     }
 }
