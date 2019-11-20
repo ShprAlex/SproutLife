@@ -228,40 +228,5 @@ public class Organism {
     
     public boolean equals(Organism o) {
         return this.id == o.id;
-    }    
-    
-    private HashSet<Organism> getAncestorsAndMe(Organism o, int dist) {
-        HashSet<Organism> ancestors = new HashSet<Organism>();        
-        for (int d=0;d<=dist;d++) {
-            if (o!=null) {
-                ancestors.add(o);
-                o = o.getParent();
-            }
-            else {
-                break;
-            }
-        }
-        return ancestors;
     }
-    
-    /*
-     * @param o2 - check if organism #2 is in my family
-     * 
-     * @param dist - degrees of separation, TODO: for now it's actually 2x
-     * degrees of separation and should be refactored.
-     * 
-     * @return return true if we are related
-     */
-    public boolean isFamily(Organism o2, int dist) {
-        
-        HashSet<Organism> myAncestors = getAncestorsAndMe(this, dist);
-        HashSet<Organism> otherAncestors = getAncestorsAndMe(o2, dist);
-        for (Organism o :myAncestors) {
-            if (otherAncestors.contains(o)) {
-                return true;
-            }
-        }
-        return false;        
-    }
-    
 }
