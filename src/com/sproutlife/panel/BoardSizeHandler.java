@@ -11,6 +11,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.sproutlife.model.utils.EchosystemUtils;
 import com.sproutlife.panel.gamepanel.ScrollPanel.ViewportResizedListener;
 import com.sproutlife.renderer.Dimension2Double;
 
@@ -94,7 +95,7 @@ public class BoardSizeHandler {
 
         boardWidth=Math.max(1, boardWidth);
         boardHeight=Math.max(1, boardHeight);
-        pc.getGameModel().getEchosystem().updateBoardBounds(new Rectangle(x,y,boardWidth, boardHeight));
+        EchosystemUtils.updateBoardBounds(pc.getGameModel().getEchosystem(), new Rectangle(x,y,boardWidth, boardHeight));
 
         pc.getBoardRenderer().setBounds(new Dimension2Double(r.width/zoom, r.height/zoom));
 
@@ -122,7 +123,7 @@ public class BoardSizeHandler {
 
         int boardWidth=Math.max(1, width);
         int boardHeight=Math.max(1, height);
-        pc.getGameModel().getEchosystem().updateBoardBounds(new Rectangle(0,0,boardWidth, boardHeight));
+        EchosystemUtils.updateBoardBounds(pc.getGameModel().getEchosystem(), new Rectangle(0,0,boardWidth, boardHeight));
         pc.getBoardRenderer().setBounds(new Dimension2Double(displayWidth, displayHeight));
 
         updateBoardSizeSpinners(width, height);

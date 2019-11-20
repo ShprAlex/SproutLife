@@ -14,6 +14,7 @@ import com.sproutlife.model.echosystem.Board;
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.step.GameStep;
 import com.sproutlife.model.step.GameStepListener;
+import com.sproutlife.model.utils.EchosystemUtils;
 
 /**
  * GameModel contains the game state
@@ -76,7 +77,7 @@ public class GameModel {
 
     public void resetGame() {
         getEchosystem().resetCells();
-        getEchosystem().pruneEmptyOrganisms();
+        EchosystemUtils.pruneEmptyOrganisms(getEchosystem());
         getEchosystem().clearRetiredOrgs();
         getStats().reset();
         getClock().reset();

@@ -98,7 +98,7 @@ public class Echosystem {
         return removeCell(c, true);
     }
 
-    private boolean removeCell(Cell c, boolean updateBoard) {
+    public boolean removeCell(Cell c, boolean updateBoard) {
         if (c == null) {
             return false;
         }
@@ -196,75 +196,6 @@ public class Echosystem {
 
     public void removeRetired(Organism o) {
         retiredOrganisms.remove(o);
-    }
-
-    public void updateBoardBounds(Rectangle bounds) {
-        getBoard().setSize(new Dimension(bounds.width, bounds.height));
-
-        getBoard().resetBoard();
-
-        ArrayList<Cell> removeList = new ArrayList<Cell>(0);
-
-        for (Organism o : getOrganisms()) {
-            Point ol = o.getLocation();
-            o.setLocation(ol.x-bounds.x , ol.y-bounds.y);
-            for (Cell current : o.getCells()) {
-                if (current.x < bounds.x || current.x >= getBoard().getWidth()+bounds.x
-                        || current.y < bounds.y || current.y >= getBoard().getHeight()+bounds.y) {
-                    removeList.add(current);
-                }
-                else {
-                    Point cl = current.getLocation();
-                    current.setLocation(new Point(cl.x-bounds.x, cl.y-bounds.y));
-                    getBoard().setCell(current);
-                }
-            }
-        }
-        for (Organism o : getRetiredOrganisms()) {
-            Point ol = o.getLocation();
-            o.setLocation(ol.x-bounds.x , ol.y-bounds.y);
-        }
-        for (Cell r : removeList) {
-            removeCell(r, true);
-        }
-        pruneEmptyOrganisms();
-    }
-
-    /*
-     * Make sure the all cells on the board are contained within organisms, and
-     * that all cells in organisms are on the board.
-     * 
-     * @return if the board isn't consistent with organisms, return false
-     */
-    public boolean validateBoard() {
-        for (Organism o : getOrganisms()) {
-            for (Cell current : o.getCells()) {
-                if (getBoard().getCell(current.x, current.y) != current) {
-                    return false;
-                }
-            }
-        }
-        for (int i = 0; i < getBoard().getWidth(); i++) {
-            for (int j = 0; j < getBoard().getHeight(); j++) {
-                Cell c = getBoard().getCell(i, j);
-                if (c != null && c.getOrganism().getCell(c.x, c.y) != c) {
-                    return false;
-                }
-
-            }
-        }
-
-        return true;
-    }
-
-    public void pruneEmptyOrganisms() {
-        HashSet<Organism> pruneOrgs = new HashSet<Organism>();
-        pruneOrgs.addAll(getOrganisms());
-        for (Organism org : pruneOrgs) {
-            if (org.getCells().size() == 0) {
-                retireOrganism(org);
-            }
-        }
     }
 
     public void clearRetiredOrgs() {

@@ -14,6 +14,7 @@ import java.util.List;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
+import com.sproutlife.model.utils.EchosystemUtils;
 
 public class RetireAndPruneStep extends Step {
     GameModel gameModel;    
@@ -52,7 +53,7 @@ public class RetireAndPruneStep extends Step {
     }       
     
     public void pruneEmptyOrganisms() {
-        getEchosystem().pruneEmptyOrganisms();       
+        EchosystemUtils.pruneEmptyOrganisms(getEchosystem());
     }
     
     public void pruneParentTree() {
