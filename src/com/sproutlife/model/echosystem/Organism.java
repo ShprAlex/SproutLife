@@ -248,9 +248,8 @@ public class Organism {
         this.timeOfDeath = timeOfDeath;
     }
     
-    public boolean equals(Organism t) {
-        // TODO Auto-generated method stub
-        return this.id == t.id;
+    public boolean equals(Organism o) {
+        return this.id == o.id;
     }    
     
     private HashSet<Organism> getAncestorsAndMe(Organism o, int dist) {

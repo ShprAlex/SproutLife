@@ -35,7 +35,7 @@ public class DefaultGameStepListener implements GameStepListener{
         // when the user presses the start button we do some things on a "timer" to
         // automatically update certain settings.
 
-        if (pc.getGameModel().getGameThread().getIterations()>=2 &&
+        if (pc.getGameModel().getGameThread().getIterationsPerEvent()>=2 &&
                 pc.getGameModel().getGameThread().getAutoAdjust() &&
                 pc.getGameModel().getTime()>5000) {
             pc.getGameToolbar().getSpeedSlider().setValue(1);

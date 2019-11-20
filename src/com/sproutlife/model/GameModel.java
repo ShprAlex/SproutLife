@@ -21,17 +21,11 @@ import com.sproutlife.model.step.GameStepListener;
  * @author Alex Shapiro
  */
 public class GameModel {
-
     private Echosystem echosystem;
-
     private GameClock clock;
-
     private GameStep gameStep;
-
     private GameThread gameThread;
-
     private Settings settings;
-
     private Stats stats;
 
     public GameModel(Settings settings, ReentrantReadWriteLock interactionLock) {
@@ -41,11 +35,6 @@ public class GameModel {
         gameStep = new GameStep(this);
         gameThread = new GameThread(this, interactionLock);
         stats = new Stats(this);
-    }
-
-    public void performGameStep() {
-        incrementTime();
-        gameStep.perform();
     }
 
     public Echosystem getEchosystem() {
@@ -60,25 +49,6 @@ public class GameModel {
         return clock.getTime();
     }
 
-    public GameClock getClock() {
-        return clock;
-    }
-
-    private void incrementTime() {
-        clock.increment();
-    }
-
-    /**
-     * Resets current game.
-     */
-    public void resetGame() {
-        getEchosystem().resetCells();
-        getEchosystem().pruneEmptyOrganisms();
-        getEchosystem().clearRetiredOrgs();
-        getStats().reset();
-        getClock().reset();
-    }
-
     public Stats getStats() {
         return stats;
     }
@@ -87,34 +57,44 @@ public class GameModel {
         return settings;
     }
 
-    public void setPlayGame(boolean playGame) {
-        gameThread.setPlayGame(playGame);
-    }
-
     public GameThread getGameThread() {
         return gameThread;
     }
 
-    /**
-     * Checks whether or not a game is played.
-     *
-     * @return boolean value.
-     */
-    public boolean getPlayGame() {
-        return gameThread.getPlayGame();
+    private GameClock getClock() {
+        return clock;
+    }
+
+    private void incrementTime() {
+        clock.increment();
+    }
+
+    public void performGameStep() {
+        incrementTime();
+        gameStep.perform();
+    }
+
+    public void resetGame() {
+        getEchosystem().resetCells();
+        getEchosystem().pruneEmptyOrganisms();
+        getEchosystem().clearRetiredOrgs();
+        getStats().reset();
+        getClock().reset();
+    }
+
+    public void setPlayGame(boolean playGame) {
+        gameThread.setPlayGame(playGame);
+    }
+
+    public boolean isPlaying() {
+        return gameThread.isPlaying();
     }
 
     public void setGameStepListener(GameStepListener l) {
         if (gameThread == null) {
             return;
         }
-
         gameThread.addGameStepListener(l);
         gameStep.setGameStepListener(l);
     }
-
-    public void set(String key, Object value) {
-        getSettings().set(key, value);
-    }
-
 }

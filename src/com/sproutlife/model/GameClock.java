@@ -13,37 +13,20 @@ package com.sproutlife.model;
  * @author Alex Shapiro
  */
 public class GameClock {
-    /**
-     * Discrete time internal counter.
-     */
     private int time;
 
-    /**
-     * Construction without parameters.
-     */
     public GameClock() {
         time = 0;
     }
 
-    /**
-     * Time getter.
-     * 
-     * @return Discrete time value.
-     */
     public int getTime() {
         return time;
     }
 
-    /**
-     * Increments discrete time value.
-     */
     void increment() {
         time++;
     }
 
-    /**
-     * Resets discrete time value.
-     */
     void reset() {
         this.time = 0;
     }

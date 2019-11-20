@@ -26,7 +26,7 @@ public class GameThread {
     ReentrantReadWriteLock interactionLock;
 
     int sleepDelay;
-    int iterations;
+    int iterationsPerEvent;
 
     boolean superSlowIntro;
     boolean slowIntro;
@@ -39,7 +39,7 @@ public class GameThread {
         
         this.autoAdjust = true;
         this.sleepDelay = 0;
-        this.iterations = 1;
+        this.iterationsPerEvent = 1;
         
         superSlowIntro = false;
         slowIntro = true;
@@ -56,7 +56,7 @@ public class GameThread {
         }
     }    
 
-    public boolean getPlayGame() {
+    public boolean isPlaying() {
         return playGame;
     }
 
@@ -72,8 +72,8 @@ public class GameThread {
         this.sleepDelay = sleepDelay;
     }
 
-    public void setIterations(int iterations) {
-        this.iterations = iterations;
+    public void setIterationsPerEvent(int iterationsPerEvent) {
+        this.iterationsPerEvent = iterationsPerEvent;
     }
 
     public void addGameStepListener(GameStepListener gameStepListener) {
@@ -118,54 +118,38 @@ public class GameThread {
         
     }
 
-    
-    public int getIterations() {
+    public int getIterationsPerEvent() {
         if (!autoAdjust) {
-            return this.iterations;
+            return this.iterationsPerEvent;
         }
-        int iterations = 1;
-        
-        if(getGameModel().getEchosystem().getOrganisms().size()>120) {
-            iterations =2;
-        }
-        
-        if(getGameModel().getEchosystem().getOrganisms().size()>180) {
-            iterations =4;
-        }
+        int autoIterations = 1;
 
-        if (getGameModel().getEchosystem().getOrganisms().size()>240) {
-            iterations = 8;
+        if (getGameModel().getEchosystem().getOrganisms().size() > 120) {
+            autoIterations = 2;
         }
-                
-        return iterations;
+        if (getGameModel().getEchosystem().getOrganisms().size() > 180) {
+            autoIterations = 4;
+        }
+        if (getGameModel().getEchosystem().getOrganisms().size() > 240) {
+            autoIterations = 8;
+        }
+        return autoIterations;
     }
     
     private class InnerGameThread extends Thread {
         public void run() {
-
             while (playGame) {
-
                 try {
+                    interactionLock.writeLock().lock();
+                    getGameModel().performGameStep();
+                    interactionLock.writeLock().unlock();
 
-                    //synchronized (getGameModel().getEchosystem()) {
-                        interactionLock.writeLock().lock();
-                        getGameModel().performGameStep();
-                        interactionLock.writeLock().unlock();
-                        
-                    //}
-                    
-                    int iterations = getIterations();
-
-                    if (getGameModel().getTime() % iterations == 0) {
-
+                    int iterationsPerEvent = getIterationsPerEvent();
+                    if (getGameModel().getTime() % iterationsPerEvent == 0) {
                         fireStepBundlePerformed();
-                        
                         int sleep = Math.max(1, getSleepDelay());                        
- 
                         //Painting is glitchy if sleepDelay is less than 1;
-
                         Thread.sleep(sleep);
-
                     }
                 }
                 catch (InterruptedException ex) {}

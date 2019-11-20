@@ -21,9 +21,8 @@ import com.sproutlife.model.GameClock;
 import com.sproutlife.model.seed.Seed;
 
 /**
- * The Echosystem keeps track of all our organisms. It manages the Board,
- * which knows which cells are neighbors. It has a reference to a clock which
- * lets us know how old rganisms are and when they were born.
+ * The Echosystem keeps track of all our organisms, living and recently retired.
+ * It also manages the Board.
  * 
  * @author Alex Shapiro
  */
@@ -39,7 +38,7 @@ public class Echosystem {
 
     GameClock clock;
 
-    public int typeCount = 0;
+    public int sequentialOrganismId = 0;
 
     public Echosystem(GameClock clock) {
         this.organisms = new ArrayList<Organism>();
@@ -115,9 +114,6 @@ public class Echosystem {
     }
 
     public Cell addCell(int x, int y, Organism org) {
-        // if (x==getBoard().getWidth()/2 && !liftBarrier) {
-        // return null;
-        // }
         Cell c = org.addCell(x, y);
         if (c != null) {
             getBoard().setCell(c);
@@ -164,13 +160,11 @@ public class Echosystem {
     }
 
     public Organism createOrganism(int x, int y, Organism parent, Seed seed) {
-        typeCount++;
-        //
-        Organism newOrg = new Organism(typeCount, getClock(), x, y, parent,
-                seed);
+        sequentialOrganismId++;
+
+        Organism newOrg = new Organism(sequentialOrganismId, getClock(), x, y, parent, seed);
         if (parent == null) {
-            newOrg.setLifespan(getDefaultOrgLifespan());// +(new
-                                                        // Random()).nextInt(3));
+            newOrg.setLifespan(getDefaultOrgLifespan());
         }
 
         organisms.add(newOrg);
@@ -204,7 +198,7 @@ public class Echosystem {
         retiredOrganisms.remove(o);
     }
 
-    public void updateBoard(Rectangle bounds) {
+    public void updateBoardBounds(Rectangle bounds) {
         getBoard().setSize(new Dimension(bounds.width, bounds.height));
 
         getBoard().resetBoard();

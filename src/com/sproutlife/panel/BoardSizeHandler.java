@@ -94,7 +94,7 @@ public class BoardSizeHandler {
 
         boardWidth=Math.max(1, boardWidth);
         boardHeight=Math.max(1, boardHeight);
-        pc.getGameModel().getEchosystem().updateBoard(new Rectangle(x,y,boardWidth, boardHeight));
+        pc.getGameModel().getEchosystem().updateBoardBounds(new Rectangle(x,y,boardWidth, boardHeight));
 
         pc.getBoardRenderer().setBounds(new Dimension2Double(r.width/zoom, r.height/zoom));
 
@@ -122,7 +122,7 @@ public class BoardSizeHandler {
 
         int boardWidth=Math.max(1, width);
         int boardHeight=Math.max(1, height);
-        pc.getGameModel().getEchosystem().updateBoard(new Rectangle(0,0,boardWidth, boardHeight));
+        pc.getGameModel().getEchosystem().updateBoardBounds(new Rectangle(0,0,boardWidth, boardHeight));
         pc.getBoardRenderer().setBounds(new Dimension2Double(displayWidth, displayHeight));
 
         updateBoardSizeSpinners(width, height);

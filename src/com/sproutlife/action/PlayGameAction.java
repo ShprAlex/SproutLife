@@ -35,7 +35,7 @@ public class PlayGameAction extends AbstractAction {
     
         
     public void actionPerformed(ActionEvent e) {
-        setPlayGame(!controller.getGameModel().getPlayGame());
+        setPlayGame(!controller.getGameModel().isPlaying());
     } 
     
     public void setPlayGame(boolean playGame) {

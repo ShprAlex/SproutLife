@@ -566,6 +566,6 @@ public class PanelController {
             case 5 : iterations = 32; break;          
         }
         getGameModel().getGameThread().setSleepDelay(sleepDelay);
-        getGameModel().getGameThread().setIterations(iterations);
+        getGameModel().getGameThread().setIterationsPerEvent(iterations);
     }
 }
