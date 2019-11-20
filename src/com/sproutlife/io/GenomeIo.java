@@ -75,10 +75,10 @@ public class GenomeIo {
             writer.println();
             writer.println("lifespan : "+o.lifespan);
             for (int age = 0; age <= o.lifespan; age++) {
-                if (o.getGenome() == null || o.getGenome().getMutations(age) == null) {
+                if (o.getGenome() == null || o.getGenome().getMutationsAtAge(age) == null) {
                     continue;
                 }
-                for (Mutation m : o.getGenome().getMutations(age)) {
+                for (Mutation m : o.getGenome().getMutationsAtAge(age)) {
                     Point p = m.getLocation();
                     writer.println(age + ", " + p.x + ", " + p.y);
                 }
