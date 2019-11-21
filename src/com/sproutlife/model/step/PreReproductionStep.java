@@ -10,6 +10,7 @@ package com.sproutlife.model.step;
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
+import com.sproutlife.model.utils.SproutUtils;
 
 /*
  * PreReproductionStep at the beginning of the game, or after we reset.
@@ -35,7 +36,7 @@ public class PreReproductionStep extends Step {
 
         if (getEchosystem().getOrganisms().size()<12) {
             SeedType seedType = SeedType.get(getSettings().getString(Settings.SEED_TYPE));
-            SproutStep.sproutRandomSeed(seedType, getEchosystem(), null);
+            SproutUtils.sproutRandomSeed(seedType, getEchosystem(), null);
         }
     }
 }

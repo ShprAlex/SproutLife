@@ -23,6 +23,7 @@ import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.step.SproutStep;
+import com.sproutlife.model.utils.SproutUtils;
 
 public class GenomeIo {
     public static int VERSION = 0;
@@ -225,7 +226,7 @@ public class GenomeIo {
         int y = (new Random()).nextInt(gameModel.getEchosystem().getBoard().getHeight());
         x+= colorKind*boardWidth/3;
 
-        Organism o = SproutStep.sproutRandomSeed(seedType, gameModel.getEchosystem(), new Point(x,y));
+        Organism o = SproutUtils.sproutRandomSeed(seedType, gameModel.getEchosystem(), new Point(x,y));
         return o;
     }
 }
