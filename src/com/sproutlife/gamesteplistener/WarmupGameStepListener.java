@@ -57,9 +57,9 @@ public class WarmupGameStepListener implements GameStepListener{
                 updateGameThread();
             }
             if (pc.getGameModel().getTime()%100==0) {
-                SwingUtilities.invokeLater(new Runnable() {                            
+                SwingUtilities.invokeLater(new Runnable() {
                     @Override
-                    public void run() {                                
+                    public void run() {
                         doWarmup();
                     }
                 });
