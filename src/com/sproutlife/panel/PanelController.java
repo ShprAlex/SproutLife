@@ -239,8 +239,6 @@ public class PanelController {
         getScrollPanel().enableMouseListeners();
 
         getBoardSizeHandler().addListeners();
-
-        getGameModel().setGameStepListener(new DefaultGameStepListener(this));
     }
 
     private void addToolbarListeners() {
@@ -548,8 +546,6 @@ public class PanelController {
     }
         
     public void updateSpeedValue(int value) {
-        getGameModel().getGameThread().setAutoAdjust(false);
-   
         int sleepDelay = 1;
         int iterations = 1;
         switch (value) {

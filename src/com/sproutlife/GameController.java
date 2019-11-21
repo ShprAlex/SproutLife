@@ -9,6 +9,8 @@ package com.sproutlife;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import com.sproutlife.gamesteplistener.DefaultGameStepListener;
+import com.sproutlife.gamesteplistener.WarmupGameStepListener;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.panel.PanelController;
 
@@ -23,6 +25,8 @@ public class GameController {
         interactionLock = new ReentrantReadWriteLock();
         gameModel = new GameModel(settings, interactionLock);
         panelController = new PanelController(this);
+        getGameModel().getGameThread().addGameStepListener(new DefaultGameStepListener(panelController));
+        getGameModel().getGameThread().addGameStepListener(new WarmupGameStepListener(panelController));
     }
 
     public GameModel getGameModel() {

@@ -28,21 +28,13 @@ public class GameThread {
     int sleepDelay;
     int iterationsPerEvent;
 
-    boolean superSlowIntro;
-    boolean slowIntro;
-    boolean autoAdjust;
-
     public GameThread(GameModel gameModel, ReentrantReadWriteLock interactionLock) {     
         this.gameModel = gameModel;
         this.gameStepListeners = new ArrayList<>();
         this.interactionLock = interactionLock;
         
-        this.autoAdjust = true;
         this.sleepDelay = 0;
         this.iterationsPerEvent = 1;
-        
-        superSlowIntro = false;
-        slowIntro = true;
     }
 
     private GameModel getGameModel() {
@@ -60,16 +52,16 @@ public class GameThread {
         return playGame;
     }
 
-    public void setAutoAdjust(boolean autoAdjust) {
-        this.autoAdjust = autoAdjust;
-    }
-
-    public boolean getAutoAdjust() {
-        return autoAdjust;
+    public int getSleepDelay() {
+        return sleepDelay;
     }
 
     public void setSleepDelay(int sleepDelay) {
         this.sleepDelay = sleepDelay;
+    }
+
+    public int getIterationsPerEvent() {
+        return iterationsPerEvent;
     }
 
     public void setIterationsPerEvent(int iterationsPerEvent) {
@@ -91,51 +83,6 @@ public class GameThread {
         }       
     }
 
-    private int getSleepDelay() {
-        if (!autoAdjust) {
-            return sleepDelay;
-        }
-        int sleep = 1;
-       
-        if (superSlowIntro) {
-            if (getGameModel().getTime()<100 ) {
-                sleep = 800 - (int) (Math.log10(getGameModel().getTime()/13.0+1)*800) ;
-            }
-            else {
-                sleep = Math.max(1, 40-(int) Math.sqrt(getGameModel().getTime()/4));
-            }
-        }       
-
-        if (slowIntro && !superSlowIntro) {                    
-            if (getGameModel().getTime()<2000 ) {
-                sleep = 10;
-            }
-            else if (getGameModel().getTime()<4000 ) {
-                sleep = 8;
-            }
-        }
-        return sleep;
-        
-    }
-
-    public int getIterationsPerEvent() {
-        if (!autoAdjust) {
-            return this.iterationsPerEvent;
-        }
-        int autoIterations = 1;
-
-        if (getGameModel().getEchosystem().getOrganisms().size() > 120) {
-            autoIterations = 2;
-        }
-        if (getGameModel().getEchosystem().getOrganisms().size() > 180) {
-            autoIterations = 4;
-        }
-        if (getGameModel().getEchosystem().getOrganisms().size() > 240) {
-            autoIterations = 8;
-        }
-        return autoIterations;
-    }
-    
     private class InnerGameThread extends Thread {
         public void run() {
             while (playGame) {
