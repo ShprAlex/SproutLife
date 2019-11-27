@@ -68,11 +68,16 @@ public class WarmupGameStepListener implements GameStepListener{
     }
 
     private void doWarmup() {
-        if (isAutoAdjustSpeed() && pc.getGameModel().getGameThread().getIterationsPerEvent()>=2 && pc.getGameModel().getTime()>5000) {
-            pc.getGameToolbar().getSpeedSlider().setValue(1);
+        if (isAutoAdjustSpeed() && pc.getGameModel().getTime()>5000) {
+            switch (getIterationsPerEvent()) {
+                case 1: pc.getGameToolbar().getSpeedSlider().setValue(0); break;
+                case 2: pc.getGameToolbar().getSpeedSlider().setValue(1); break;
+                case 4: pc.getGameToolbar().getSpeedSlider().setValue(2); break;
+                case 8: pc.getGameToolbar().getSpeedSlider().setValue(4); break;
+            };
             setAutoAdjustSpeed(false);
         }
-        if (isAutoAdjustDisplayLayers() && pc.getGameModel().getTime()>=6000 && pc.getGameModel().getTime()<=6200) {
+        if (isAutoAdjustDisplayLayers() && pc.getGameModel().getTime()>=6000) {
             pc.getDisplayControlPanel().getChckbxCellLayer().setSelected(false);
             pc.getDisplayControlPanel().getChckbxGenomeLayer().setSelected(false);
             setAutoAdjustDisplayLayers(false);
