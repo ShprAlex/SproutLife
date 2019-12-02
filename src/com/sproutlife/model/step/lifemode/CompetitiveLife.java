@@ -53,12 +53,20 @@ public class CompetitiveLife extends LifeMode {
             return;
         }
 
-        if (isCompetitive2 ) {
-            o.getAttributes().competitiveScore = (int) (p.getAttributes().territoryProduct / p.getChildren().size());
+        int cs = (int) p.getAttributes().territoryProduct;
+        if(isCompetitive2) {
+            while (p.getChildren().size()==1) {
+                p=p.getParent();
+                if (p!=null) {
+                    // include the first ancestor with child count > 1
+                    cs = (int) Math.max(cs, p.getAttributes().territoryProduct);
+                }
+                else {
+                    break;
+                }
+            }
         }
-        else {
-            o.getAttributes().competitiveScore = (int) p.getAttributes().territoryProduct;
-        }
+        o.getAttributes().competitiveScore = cs;
     }
 
     public double getCompare(Cell c1, Cell c2) {
@@ -149,17 +157,18 @@ public class CompetitiveLife extends LifeMode {
         }
 
         if ((friendCount == 2 || friendCount==3)) {
-            for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
-                if (neighbor.getOrganism()!=me.getOrganism() && neighbor.getOrganism()!=me.getOrganism().getParent()
-                        && getCompare(me, neighbor)<0) {
-                    me.getOrganism().getAttributes().collisionCount++;
-                    return null;
+            if(!isCompetitive2) {
+                for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
+                    if (neighbor.getOrganism()!=me.getOrganism() && neighbor.getOrganism()!=me.getOrganism().getParent()
+                            && getCompare(me, neighbor)<0) {
+                        me.getOrganism().getAttributes().collisionCount++;
+                        return null;
+                    }
                 }
             }
             me.age+=1;
             return me;
         }
-
         return null;
     }
 
@@ -184,14 +193,14 @@ public class CompetitiveLife extends LifeMode {
         }
 
         Cell bornCell = getEchosystem().createCell(x, y, maxCell.getOrganism());
-
-        for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
-            if (neighbor.getOrganism()!=bornCell.getOrganism() && neighbor.getOrganism()!=bornCell.getOrganism().getParent()
-                    && getCompare(bornCell, neighbor)<0) {
-                return null;
+        if(!isCompetitive2) {
+            for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
+                if (neighbor.getOrganism()!=bornCell.getOrganism() && neighbor.getOrganism()!=bornCell.getOrganism().getParent()
+                        && getCompare(bornCell, neighbor)<0) {
+                    return null;
+                }
             }
         }
-
         return bornCell;
     }
 }
