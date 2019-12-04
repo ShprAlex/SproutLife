@@ -87,7 +87,11 @@ public class CompetitiveLife extends LifeMode {
             final int partitionStartFinal = partitionStart;
             Thread t = new Thread(new Runnable() {
                 public void run() {
-                    updateCells(partitionStartFinal, PARTITION_WIDTH, bornCells, deadCells);
+                    for (int x=partitionStartFinal; x < getBoard().getWidth() && x < partitionStartFinal+PARTITION_WIDTH; x++) {
+                        for (int y=0; y<getBoard().getHeight(); y++) {
+                            updateCell(x, y, bornCells, deadCells);
+                        }
+                    }
                 }
             });
             t.start();
@@ -112,33 +116,29 @@ public class CompetitiveLife extends LifeMode {
         }
     }
 
-    private void updateCells(final int partitionStart, int partitionWidth, List<Cell> bornCells, List<Cell> deadCells) {
-        for (int x=partitionStart; x < getBoard().getWidth() && x < partitionStart+partitionWidth; x++) {
-            for (int y=0; y<getBoard().getHeight(); y++) {
-                Cell c = getBoard().getCell(x,y);
-                Cell bc = null;
-                boolean wasBorn = false;
-                ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
+    private void updateCell(int x, int y, List<Cell> bornCells, List<Cell> deadCells) {
+        Cell c = getBoard().getCell(x,y);
+        Cell bc = null;
+        boolean wasBorn = false;
+        ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
 
-                if (getBoard().hasNeighbors(x,y)) {
-                    bc = getBorn(neighbors,x,y);
-                    if (bc!=null && (c==null || getCompare(bc, c)>0)) {
-                        bornCells.add(bc);
-                        wasBorn=true;
-                        getStats().born++;
-                        if (c!=null) {
-                            deadCells.add(c);
-                        }
-                    }
+        if (neighbors.size()>=3) {
+            bc = getBorn(neighbors,x,y);
+            if (bc!=null && (c==null || getCompare(bc, c)>0)) {
+                bornCells.add(bc);
+                wasBorn=true;
+                getStats().born++;
+                if (c!=null) {
+                    deadCells.add(c);
                 }
-                if (c!=null && !wasBorn){
-                    if (!keepAlive(c,neighbors,x,y)) {
-                        deadCells.add(c);
-                    }
-                    else {
-                        getStats().stayed++;
-                    }
-                }
+            }
+        }
+        if (c!=null && !wasBorn){
+            if (!keepAlive(c,neighbors,x,y)) {
+                deadCells.add(c);
+            }
+            else {
+                getStats().stayed++;
             }
         }
     }
