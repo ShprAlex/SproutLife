@@ -18,8 +18,6 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class CompetitiveLife extends ParallelLife {
-    private boolean isCompetitive2 = false;
-    
     public CompetitiveLife(GameModel gameModel) {
         super(gameModel);
     }
