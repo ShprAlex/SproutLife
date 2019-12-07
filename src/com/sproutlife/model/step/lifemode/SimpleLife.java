@@ -9,14 +9,15 @@ package com.sproutlife.model.step.lifemode;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
-public class CooperativeLife extends LifeMode {
+public class SimpleLife extends LifeMode {
 
-    public CooperativeLife(GameModel gameModel) {
+    public SimpleLife(GameModel gameModel) {
         super(gameModel);
     }
 
@@ -39,29 +40,12 @@ public class CooperativeLife extends LifeMode {
 
         for (int x = 0; x < getBoard().getWidth(); x++) {
             for (int y = 0; y < getBoard().getHeight(); y++) {
-                Cell c = getBoard().getCell(x, y);
-                if (c == null) {
-                    if (getBoard().hasNeighbors(x, y)) {
-                        ArrayList<Cell> neighbors = getBoard().getNeighbors(x, y);
-                        Cell bc = getBorn(neighbors, x, y);
-                        if (bc != null) {
-                            bornCells.add(bc);
-                            getStats().born++;
-                        }
-                    }
-                } else {
-                    ArrayList<Cell> neighbors = getBoard().getNeighbors(x, y);
-                    if (!keepAlive(c, neighbors, x, y)) {
-                        deadCells.add(c);
-                    } else {
-                        getStats().stayed++;
-                    }
-                }
+                updateCell(x, y, bornCells, deadCells);
             }
         }
 
         // Remove cells before adding cells to avoid Organism having duplicate cells,
-        // Orgs don't do Contains checks for speed
+        // Orgs don't do contains() checks for speed
         for (Cell c : deadCells) {
             getEchosystem().removeCell(c);
         }
@@ -69,7 +53,28 @@ public class CooperativeLife extends LifeMode {
             getEchosystem().addCell(c);
         }
     }
-    
+
+    protected void updateCell(int x, int y, List<Cell> bornCells, List<Cell> deadCells) {
+        Cell c = getBoard().getCell(x,y);
+        ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
+
+        if (c == null) {
+            if (neighbors.size()>=3) {
+                Cell bc = getBorn(neighbors, x, y);
+                if (bc != null) {
+                    bornCells.add(bc);
+                    getStats().born++;
+                }
+            }
+        } else {
+            if (!keepAlive(c, neighbors, x, y)) {
+                deadCells.add(c);
+            } else {
+                getStats().stayed++;
+            }
+        }
+    }
+
     public boolean keepAlive(Cell c, Collection<Cell> neighbors, int x, int y) {
         if ((neighbors.size() == 2 || neighbors.size() == 3)) {
             c.age += 1;

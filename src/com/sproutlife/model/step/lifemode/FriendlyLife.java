@@ -12,7 +12,7 @@ import java.util.Collection;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 
-public class FriendlyLife extends CooperativeLife {
+public class FriendlyLife extends ParallelLife {
 
     public FriendlyLife(GameModel gameModel) {
         super(gameModel);        
@@ -25,7 +25,7 @@ public class FriendlyLife extends CooperativeLife {
                 sameOrgCount++;
             }
         }
-        if (sameOrgCount >=1 &&(neighbors.size() == 2 || neighbors.size()==3)) {
+        if (sameOrgCount >=1 && (neighbors.size() == 2 || neighbors.size()==3)) {
             c.age+=1;
             return true;
         }
