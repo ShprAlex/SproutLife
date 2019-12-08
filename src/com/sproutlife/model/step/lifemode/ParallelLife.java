@@ -18,6 +18,7 @@ import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
 public class ParallelLife extends SimpleLife {
+    int PARTITION_WIDTH = 50;
     
     public ParallelLife(GameModel gameModel) {
         super(gameModel);
@@ -28,7 +29,6 @@ public class ParallelLife extends SimpleLife {
         List<Cell> deadCells = Collections.synchronizedList(new ArrayList<>());
 
         // Split updating cells into multiple threads for multi-core CPU processing
-        int PARTITION_WIDTH = 50;
         List<Thread> threads = new ArrayList<>();
         for (int partitionStart=0; partitionStart < getBoard().getWidth(); partitionStart+=PARTITION_WIDTH) {
             final int partitionStartFinal = partitionStart;

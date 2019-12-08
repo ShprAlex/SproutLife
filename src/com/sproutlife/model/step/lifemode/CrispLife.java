@@ -28,12 +28,6 @@ public class CrispLife extends CompetitiveLife {
         o.getAttributes().competitiveScore = (int) p.getAttributes().territoryProduct;
     }
 
-    public double getCompare(Cell c1, Cell c2) {
-        Organism o1 = c1.getOrganism();
-        Organism o2 = c2.getOrganism();
-        return o1.getAttributes().competitiveScore - o2.getAttributes().competitiveScore;
-    }
-
     public boolean keepAlive(Cell c, Collection<Cell> neighbors, int x, int y) {
         if (!super.keepAlive(c, neighbors, x, y)) {
             return false;

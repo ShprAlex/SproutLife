@@ -30,7 +30,7 @@ public class SimpleLife extends LifeMode {
         for (Organism o: getEchosystem().getOrganisms()) {
             o.getAttributes().maxCells = Math.max(o.getCells().size(), o.getAttributes().maxCells);
             o.getAttributes().cellSum += o.getCells().size();
-            o.getAttributes().competitiveScore = o.getAttributes().cellSum ;
+            o.getAttributes().competitiveScore = o.getAttributes().cellSum;
         }
     }
 
