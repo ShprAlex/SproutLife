@@ -22,7 +22,12 @@ public class WildLife extends CompetitiveLife {
             return;
         }
 
-        int cs = (int) p.getAttributes().territoryProduct;
+        int cs = (int) Math.max(p.getAttributes().territoryProduct, o.getAttributes().territoryProduct);
+
+        // We create a "wild" tradeoff between reproducing and being competitive
+        // by giving organisms who are an only-child a greater competitive score.
+        // this tradeoff creates more alternatives and thus greater complexity,
+        // with an added bonus that encouraging fewer children tends to limit chaos.
         while (p.getChildren().size()==1) {
             p=p.getParent();
             if (p!=null) {
