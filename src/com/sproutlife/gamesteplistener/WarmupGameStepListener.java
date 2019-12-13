@@ -73,7 +73,7 @@ public class WarmupGameStepListener implements GameStepListener{
                 case 1: pc.getGameToolbar().getSpeedSlider().setValue(0); break;
                 case 2: pc.getGameToolbar().getSpeedSlider().setValue(1); break;
                 case 4: pc.getGameToolbar().getSpeedSlider().setValue(2); break;
-                case 8: pc.getGameToolbar().getSpeedSlider().setValue(4); break;
+                case 8: pc.getGameToolbar().getSpeedSlider().setValue(3); break;
             };
             setAutoAdjustSpeed(false);
         }
