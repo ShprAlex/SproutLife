@@ -90,19 +90,15 @@ public class SimpleLife extends LifeMode {
         if (neighbors.size() != 3) {
             return null;
         }
-        // Quick check to see if all neighbors are from the same organism
+        // Check to see if all neighbors are from the same organism
         Organism checkSingleOrg = neighbors.iterator().next().getOrganism();
-        boolean singleOrg = true;
         for (Cell cell : neighbors) {
             if (cell.getOrganism() != checkSingleOrg) {
-                singleOrg = false;
-                break;
+                return null;
             }
         }
-        if (singleOrg) {
-            Cell bornCell = getEchosystem().createCell(x, y, checkSingleOrg);
-            return bornCell;
-        }
-        return null;
+
+        Cell bornCell = getEchosystem().createCell(x, y, checkSingleOrg);
+        return bornCell;
     }
 }
