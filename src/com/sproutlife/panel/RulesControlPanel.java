@@ -145,7 +145,7 @@ public class RulesControlPanel extends JPanel {
         lifeModePanel.add(rdbtnCompetitive1, gbc_rdbtnCompetitive);
         lifeModeButtonGroup.add(rdbtnCompetitive1);
 
-        rdbtnCompetitive2 = new JRadioButton("Competitive2 Gooey");
+        rdbtnCompetitive2 = new JRadioButton("Competitive2 Wild");
         rdbtnCompetitive2.setToolTipText("<html>Organisms win based on size<br>and non-branching paths formed by<br>parents with only one child.</html>");
         rdbtnCompetitive2.setAlignmentX(1.0f);
         GridBagConstraints gbc_radioButton = new GridBagConstraints();

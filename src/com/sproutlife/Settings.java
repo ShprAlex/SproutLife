@@ -41,7 +41,7 @@ public class Settings {
     public void initSettings() {
         set(Settings.SEED_TYPE, SeedType.Bentline1_RPentomino.toString());
 
-        set(Settings.LIFE_MODE, "competitive1");
+        set(Settings.LIFE_MODE, "competitive2");
 
         set(Settings.MUTATION_ENABLED, true);
         set(Settings.MUTATION_RATE, 6); //0-10
