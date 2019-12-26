@@ -96,6 +96,5 @@ public class GameModel {
             return;
         }
         gameThread.addGameStepListener(l);
-        gameStep.setGameStepListener(l);
     }
 }
