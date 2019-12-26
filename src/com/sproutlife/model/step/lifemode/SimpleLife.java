@@ -8,14 +8,16 @@
 package com.sproutlife.model.step.lifemode;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
-public class CooperativeLife extends LifeMode {
+public class SimpleLife extends LifeMode {
 
-    public CooperativeLife(GameModel gameModel) {
+    public SimpleLife(GameModel gameModel) {
         super(gameModel);
     }
 
@@ -28,7 +30,7 @@ public class CooperativeLife extends LifeMode {
         for (Organism o: getEchosystem().getOrganisms()) {
             o.getAttributes().maxCells = Math.max(o.getCells().size(), o.getAttributes().maxCells);
             o.getAttributes().cellSum += o.getCells().size();
-            o.getAttributes().competitiveScore = o.getAttributes().cellSum ;
+            o.getAttributes().competitiveScore = o.getAttributes().cellSum;
         }
     }
 
@@ -38,34 +40,12 @@ public class CooperativeLife extends LifeMode {
 
         for (int x = 0; x < getBoard().getWidth(); x++) {
             for (int y = 0; y < getBoard().getHeight(); y++) {
-
-                Cell me = getBoard().getCell(x, y);
-
-                if (me == null) {
-                    if (getBoard().hasNeighbors(x, y)) {
-                        ArrayList<Cell> neighbors = getBoard().getNeighbors(x, y);
-
-                        Cell result = getBorn(neighbors, x, y);
-
-                        if (result != null) {
-                            bornCells.add(result);
-                            getStats().born++;
-                        }
-                    }
-                } else {
-                    ArrayList<Cell> neighbors = getBoard().getNeighbors(x, y);
-                    Cell result = keepAlive(me, neighbors, x, y);
-                    if (result != null) {
-                        getStats().stayed++;
-                    } else {
-                        deadCells.add(me);
-                    }
-                }
+                updateCell(x, y, bornCells, deadCells);
             }
         }
 
         // Remove cells before adding cells to avoid Organism having duplicate cells,
-        // Orgs don't do Contains checks for speed
+        // Orgs don't do contains() checks for speed
         for (Cell c : deadCells) {
             getEchosystem().removeCell(c);
         }
@@ -73,35 +53,52 @@ public class CooperativeLife extends LifeMode {
             getEchosystem().addCell(c);
         }
     }
-    
-    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
-        if ((neighbors.size() == 2 || neighbors.size() == 3)) {
-            me.age += 1;
-            return me;
+
+    protected void updateCell(int x, int y, List<Cell> bornCells, List<Cell> deadCells) {
+        Cell c = getBoard().getCell(x,y);
+        ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
+
+        if (c == null) {
+            if (neighbors.size()>=3) {
+                Cell bc = getBorn(neighbors, x, y);
+                if (bc != null) {
+                    bornCells.add(bc);
+                    getStats().born++;
+                }
+            }
+        } else {
+            if (!keepAlive(c, neighbors, x, y)) {
+                deadCells.add(c);
+            } else {
+                getStats().stayed++;
+            }
         }
-        return null;
     }
 
-    public Cell getBorn(ArrayList<Cell> neighbors, int x, int y) {
+    public boolean keepAlive(Cell c, Collection<Cell> neighbors, int x, int y) {
+        if ((neighbors.size() == 2 || neighbors.size() == 3)) {
+            c.age += 1;
+            return true;
+        }
+        return false;
+    }
+
+    public Cell getBorn(Collection<Cell> neighbors, int x, int y) {
         if (x < 0 || x > getBoard().getWidth() - 1 || y < 0 || y > getBoard().getHeight() - 1) {
             return null;
         }
         if (neighbors.size() != 3) {
             return null;
         }
-        // Quick check to see if all neighbors are from the same organism
-        Organism checkSingleOrg = neighbors.get(0).getOrganism();
-        boolean singleOrg = true;
+        // Check to see if all neighbors are from the same organism
+        Organism checkSingleOrg = neighbors.iterator().next().getOrganism();
         for (Cell cell : neighbors) {
             if (cell.getOrganism() != checkSingleOrg) {
-                singleOrg = false;
-                break;
+                return null;
             }
         }
-        if (singleOrg) {
-            Cell bornCell = getEchosystem().createCell(x, y, checkSingleOrg);
-            return bornCell;
-        }
-        return null;
+
+        Cell bornCell = getEchosystem().createCell(x, y, checkSingleOrg);
+        return bornCell;
     }
 }

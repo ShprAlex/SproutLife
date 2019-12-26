@@ -7,34 +7,28 @@
  *******************************************************************************/
 package com.sproutlife.model.step.lifemode;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 
-public class FriendlyLife extends CooperativeLife {
-    
+public class FriendlyLife extends ParallelLife {
+
     public FriendlyLife(GameModel gameModel) {
         super(gameModel);        
     }
-    
-    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
 
-        int friendCount = 0;
-
+    public boolean keepAlive(Cell c, Collection<Cell> neighbors, int x, int y) {
+        int sameOrgCount = 0;
         for (Cell neighbor : neighbors) {            
-            if (me.getOrganism()==neighbor.getOrganism()) {
-                friendCount++;
-            }                
+            if (c.getOrganism()==neighbor.getOrganism()) {
+                sameOrgCount++;
+            }
         }
-        if (friendCount>=1&&(neighbors.size() == 2 || neighbors.size()==3)) { 
-            me.age+=1;                
-            return me;
-
+        if (sameOrgCount >=1 && (neighbors.size() == 2 || neighbors.size()==3)) {
+            c.age+=1;
+            return true;
         }
-
-        return null;
-
+        return false;
     }
-
 }

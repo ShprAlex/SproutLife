@@ -134,7 +134,7 @@ public class RulesControlPanel extends JPanel {
         lifeModePanel.add(rdbtnFriendly, gbc_rdbtnFriendly);
         lifeModeButtonGroup.add(rdbtnFriendly);
 
-        rdbtnCompetitive1 = new JRadioButton("Competitive1 Crispy");
+        rdbtnCompetitive1 = new JRadioButton("Competitive1 Crisp");
         rdbtnCompetitive1.setToolTipText("<html>Bigger organisms win collisions.</html>");
         rdbtnCompetitive1.setAlignmentX(Component.RIGHT_ALIGNMENT);
         GridBagConstraints gbc_rdbtnCompetitive = new GridBagConstraints();

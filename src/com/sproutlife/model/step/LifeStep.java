@@ -7,30 +7,29 @@
  *******************************************************************************/
 package com.sproutlife.model.step;
 
-import java.util.ArrayList;
-
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
-import com.sproutlife.model.echosystem.Cell;
-import com.sproutlife.model.echosystem.Organism;
-import com.sproutlife.model.step.lifemode.CompetitiveLife;
-import com.sproutlife.model.step.lifemode.CooperativeLife;
+import com.sproutlife.model.step.lifemode.CrispLife;
 import com.sproutlife.model.step.lifemode.FriendlyLife;
 import com.sproutlife.model.step.lifemode.LifeMode;
+import com.sproutlife.model.step.lifemode.SimpleLife;
+import com.sproutlife.model.step.lifemode.WildLife;
 
 public class LifeStep extends Step {
-    LifeMode cooperativeLife;
+    LifeMode simpleLife;
     LifeMode friendlyLife;
-    LifeMode competitiveLife;
+    LifeMode crispLife;
+    LifeMode wildLife;
     LifeMode lifeMode;
 
     public LifeStep(GameModel gameModel) {
         super(gameModel); 
-        cooperativeLife = new CooperativeLife(gameModel);
+        simpleLife = new SimpleLife(gameModel);
         friendlyLife = new FriendlyLife(gameModel);
-        competitiveLife = new CompetitiveLife(gameModel);
+        crispLife = new CrispLife(gameModel);
+        wildLife = new WildLife(gameModel);
         
-        lifeMode = friendlyLife;
+        lifeMode = simpleLife;
     }
 
     public void perform() {
@@ -47,21 +46,22 @@ public class LifeStep extends Step {
         if("friendly".equals(getSettings().getString(Settings.LIFE_MODE))) {
             this.lifeMode = friendlyLife;
         }
-        else if("cooperative".equals(getSettings().getString(Settings.LIFE_MODE))) {
-            this.lifeMode = cooperativeLife;
+        else if("competitive1".equals(getSettings().getString(Settings.LIFE_MODE))) {
+            this.lifeMode = crispLife;
+        }
+        else if("competitive2".equals(getSettings().getString(Settings.LIFE_MODE))) {
+            this.lifeMode = wildLife;
         }
         else {
-            // we use competitiveLife for both competitive1 and competitive2
-            this.lifeMode = competitiveLife;
+            this.lifeMode = simpleLife;
         }
     }
 
     private void initStats() {
-        getStats().born =0;
-        getStats().die1 =0;
-        getStats().die2 =0;
+        getStats().born = 0;
+        getStats().die1 = 0;
+        getStats().die2 = 0;
         getStats().stayed = 0;
         getStats().gridSize = getBoard().getWidth()*getBoard().getHeight();    
     }
-    
 }

@@ -8,25 +8,18 @@
 package com.sproutlife.model.step.lifemode;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Cell;
 import com.sproutlife.model.echosystem.Organism;
 
-public class CompetitiveLife extends LifeMode {
-    private boolean isCompetitive2 = false;
-    
+public class CompetitiveLife extends ParallelLife {
     public CompetitiveLife(GameModel gameModel) {
         super(gameModel);
-    }
-
-    public void perform() {
-        updateMetrics();
-        updateCells();
     }
 
     public void updateMetrics() {
@@ -46,141 +39,73 @@ public class CompetitiveLife extends LifeMode {
         }
     }
 
-    private void updateCompetitiveScore(Organism o) {
-        Organism p = o.getParent();
-        if (p==null) {
-            o.getAttributes().competitiveScore = (int) o.getAttributes().territoryProduct;
-            return;
-        }
-
-        int cs = (int) p.getAttributes().territoryProduct;
-        if(isCompetitive2) {
-            while (p.getChildren().size()==1) {
-                p=p.getParent();
-                if (p!=null) {
-                    // include the first ancestor with child count > 1
-                    cs = (int) Math.max(cs, p.getAttributes().territoryProduct);
-                }
-                else {
-                    break;
-                }
-            }
-        }
-        o.getAttributes().competitiveScore = cs;
+    protected void updateCompetitiveScore(Organism o) {
+        o.getAttributes().competitiveScore = (int) o.getAttributes().territoryProduct;
+        return;
     }
 
-    public double getCompare(Cell c1, Cell c2) {
+    protected double getCompare(Cell c1, Cell c2) {
         Organism o1 = c1.getOrganism();
         Organism o2 = c2.getOrganism();
         return o1.getAttributes().competitiveScore - o2.getAttributes().competitiveScore;
     }
 
-    public void updateCells() {
-        isCompetitive2 = "competitive2".equals(getSettings().getString(Settings.LIFE_MODE));
+    protected void updateCell(int x, int y, List<Cell> bornCells, List<Cell> deadCells) {
+        Cell c = getBoard().getCell(x,y);
+        Cell bc = null;
+        boolean wasBorn = false;
+        ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
 
-        List<Cell> bornCells = Collections.synchronizedList(new ArrayList<>());
-        List<Cell> deadCells = Collections.synchronizedList(new ArrayList<>());
-
-        // Split updating cells into multiple threads for multi-core CPU processing
-        int PARTITION_SIZE = 50;
-        List<Thread> threads = new ArrayList<>();
-        for (int widthPartition=0; widthPartition<getBoard().getWidth();widthPartition+=PARTITION_SIZE) {
-            final int widthPartitionFinal = widthPartition;
-            Thread t = new Thread(new Runnable() {
-                public void run() {
-                    for (int x=widthPartitionFinal; x<getBoard().getWidth()&&x<widthPartitionFinal+PARTITION_SIZE; x++) {
-                        for (int y=0; y<getBoard().getHeight(); y++) {
-                            Cell me = getBoard().getCell(x,y);
-                            Cell result = null;
-                            boolean wasBorn = false;
-                            ArrayList<Cell> neighbors = getBoard().getNeighbors(x,y);
-
-                            if (getBoard().hasNeighbors(x,y)) {
-                                result = getBorn(neighbors,x,y);
-                                if (result!=null) {
-                                    if(me==null || getCompare(result, me)>0) {
-                                        bornCells.add(result);
-                                        wasBorn=true;
-                                        getStats().born++;
-                                        if (me!=null) {
-                                            deadCells.add(me);
-                                        }
-                                    }
-                                }
-                            }
-                            if (me!=null && !wasBorn){
-                                result = keepAlive(me,neighbors,x,y);
-                                if (result!=null) {
-                                    getStats().stayed++;
-                                }
-                                else {
-                                    deadCells.add(me);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            t.start();
-            threads.add(t);
-        }
-        try {
-            for (Thread t : threads) {
-                t.join();
-            }
-        }
-        catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-
-        //Remove cells before adding cells to avoid Organism having duplicate cells,
-        //Orgs don't do Contains checks for speed
-        for (Cell c: deadCells) {
-            getEchosystem().removeCell(c);            
-        }
-        for (Cell c: bornCells) {
-            getEchosystem().addCell(c);
-        }
-    } 
-
-    public Cell keepAlive(Cell me, ArrayList<Cell> neighbors, int x, int y) {
-        int friendCount = 0;
-
-        for (Cell neighbor : neighbors) {            
-            if (me.getOrganism() == neighbor.getOrganism()) {
-                friendCount++;
-            }
-            else if (getCompare(me, neighbor)<0) {
-                me.getOrganism().getAttributes().collisionCount++;
-                return null;
-            }
-        }
-
-        if ((friendCount == 2 || friendCount==3)) {
-            if(!isCompetitive2) {
-                for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
-                    if (neighbor.getOrganism()!=me.getOrganism() && neighbor.getOrganism()!=me.getOrganism().getParent()
-                            && getCompare(me, neighbor)<0) {
-                        me.getOrganism().getAttributes().collisionCount++;
-                        return null;
-                    }
+        if (neighbors.size()>=3) {
+            bc = getBorn(neighbors,x,y);
+            if (bc!=null && (c==null || getCompare(bc, c)>0)) {
+                bornCells.add(bc);
+                wasBorn=true;
+                getStats().born++;
+                if (c!=null) {
+                    deadCells.add(c);
                 }
             }
-            me.age+=1;
-            return me;
         }
-        return null;
+        if (c!=null && !wasBorn){
+            if (!keepAlive(c,neighbors,x,y)) {
+                deadCells.add(c);
+            }
+            else {
+                getStats().stayed++;
+            }
+        }
     }
 
-    public Cell getBorn(ArrayList<Cell> neighbors, int x, int y) {
-        if (x<0||x>getBoard().getWidth()-1||y<0||y>getBoard().getHeight()-1) {
+    public boolean keepAlive(Cell c, Collection<Cell> neighbors, int x, int y) {
+        int sameOrgCount = 0;
+
+        for (Cell neighbor : neighbors) {            
+            if (c.getOrganism() == neighbor.getOrganism()) {
+                sameOrgCount++;
+            }
+            else if (getCompare(c, neighbor)<0) {
+                c.getOrganism().getAttributes().collisionCount++;
+                return false;
+            }
+        }
+
+        if ((sameOrgCount == 2 || sameOrgCount==3)) {
+            c.age+=1;
+            return true;
+        }
+        return false;
+    }
+
+    public Cell getBorn(Collection<Cell> neighbors, int x, int y) {
+        if (x < 0 || x > getBoard().getWidth()-1 || y < 0 || y > getBoard().getHeight()-1) {
             return null;
         }
 
         Cell maxCell = Collections.max(neighbors, (c1,c2)->(int) getCompare(c1, c2));
         int count = 0;
         for (Cell c : neighbors) {
-            if (c.getOrganism()==maxCell.getOrganism()) {
+            if (c.getOrganism() == maxCell.getOrganism()) {
                 count+=1;
             }
             else if (getCompare(maxCell, c) == 0) {
@@ -193,14 +118,6 @@ public class CompetitiveLife extends LifeMode {
         }
 
         Cell bornCell = getEchosystem().createCell(x, y, maxCell.getOrganism());
-        if(!isCompetitive2) {
-            for (Cell neighbor : getBoard().getExtra12Neighbors(x, y)) {
-                if (neighbor.getOrganism()!=bornCell.getOrganism() && neighbor.getOrganism()!=bornCell.getOrganism().getParent()
-                        && getCompare(bornCell, neighbor)<0) {
-                    return null;
-                }
-            }
-        }
         return bornCell;
     }
 }
