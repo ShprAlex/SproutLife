@@ -88,8 +88,8 @@ public class BoardRenderer {
     }       
 
     public ColorModel getColorModel() {
-		return colorModel;
-	}
+        return colorModel;
+    }
 
     public CellRenderer getCellRenderer() {
         return cellRenderer;
