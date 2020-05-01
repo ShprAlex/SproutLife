@@ -7,12 +7,9 @@
  *******************************************************************************/
 package com.sproutlife.model;
 
-import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Mutation;
@@ -63,12 +60,6 @@ public class Stats {
 
     public int mutationCount;
     public int mutationMiss;
-
-    public int infectedCount =0;
-
-    public int[] childEnergy = new int[300];
-    public int[] sproutNumber = new int[300];
-
 
     public Stats(GameModel gameModel) {
         this.gameModel = gameModel;        
@@ -355,67 +346,8 @@ public class Stats {
         }
         */
     }
-    
-    public void printChildEnergy() {
-        printHistogram();
 
-        System.out.print(" Avg Life " + avgMaxLifespan);
-        int allEnergy = 0;                     
-        int childSum = 0;
-        for (int i=0;i<5;i++) {
-            childSum +=sproutNumber[i];
-        }
-        if (childSum>0) {
-            System.out.print(" AVC: "+avgMaxLifespan*getEchosystem().getOrganisms().size()/childSum);
-        }
-        System.out.print(" RM count: "+getRecentMutationCount(getEchosystem().getTime(),5000));
-        System.out.print(" CE:");
-        for (int i=0;i<4;i++) {
-            if (sproutNumber[i]== 0 ) {
-                System.out.print(" 0");
-                continue;
-            }
-
-            int e = childEnergy[i]*10/sproutNumber[i];
-            if (i>0 && sproutNumber[i-1]>0 ) {
-                e-=(childEnergy[i-1]*10/sproutNumber[i-1]);
-            }
-            if(i==0) {
-                allEnergy+=e;
-            }
-            else {
-                if (sproutNumber[0]>0) {
-                    allEnergy+=e*sproutNumber[i]/sproutNumber[0];
-                }
-            }
-            //childEnergy[0]*10/sproutNumber[0];
-            //childEnergy[1]*10/sproutNumber[0]
-            //childEnergy[0]*10*sproutNumber[1]/sproutNumber[0]/sproutNumber[0];
-
-            //childEnergy[0]*10;
-            //childEnergy[1]*10]
-            //childEnergy[0]*10*sproutNumber[1]/sproutNumber[0];
-
-
-            System.out.print(" "+e);
-        }
-        
-        System.out.print(" All Energy2: "+allEnergy);
-
-        System.out.print(" Ratios: ");
-        if (sproutNumber[0]>0) {
-            System.out.print(" "+sproutNumber[1]*1000/sproutNumber[0]);
-            System.out.print(" "+sproutNumber[2]*1000/sproutNumber[0]);
-            System.out.print(" "+sproutNumber[3]*1000/sproutNumber[0]);
-        }        
-
-        System.out.println();
-        childEnergy = new int[20];
-        sproutNumber = new int[20];
-    }    
-    
-    public void printMutations() {              
-        
+    public void printMutations() {
         System.out.print(getTime() + " Org count "+getEchosystem().getOrganisms().size());
         System.out.print(" Avg Life  " + avgMaxLifespan);
         System.out.print(" RM count: "+getRecentMutationCount(10000,1000));
@@ -427,7 +359,7 @@ public class Stats {
         mutationCount=0;
         mutationMiss=0;
     }
-    
+
     private int getRecentMutationCount(int fromAge, int toAge) {
         HashSet<Mutation> recentMutations = new HashSet<Mutation>();
         HashMap<Mutation,Integer> totalRM = new HashMap<Mutation,Integer>();

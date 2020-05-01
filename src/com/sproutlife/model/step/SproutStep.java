@@ -79,7 +79,6 @@ public class SproutStep extends Step {
     }
 
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {
-        
         for (Organism o: seeds.keySet()) {
             if(!o.isAlive()) {
                 continue;
@@ -91,33 +90,22 @@ public class SproutStep extends Step {
             }
 
             for (Seed s : seedList) {
-               Point seedOnPosition = s.getSeedOnPosition();
-                
-               Cell c = getBoard().getCell(seedOnPosition);
-               
-               if (c==null && !isSproutDelayedMode) {
-                   //Should almost never happen, only if seeds overlapped.
-                   continue;
-               }
-               
-               SproutUtils.sproutSeed(s, o, getEchosystem());
-               
-               // update stats
-               int childCount = o.getChildren().size()-1;
-               if(childCount>=0&&getTime()>100&&childCount<20) { //sproutSeed() above may have failed
-                   getStats().childEnergy[childCount]+=o.getAge();
-                   getStats().sproutNumber[childCount]++;
-               }
+                Point seedOnPosition = s.getSeedOnPosition();
 
-               
+                Cell c = getBoard().getCell(seedOnPosition);
+
+                if (c==null && !isSproutDelayedMode) {
+                    //Should almost never happen, only if seeds overlapped.
+                    continue;
+                }
+
+                SproutUtils.sproutSeed(s, o, getEchosystem());
             }
         }
     }
             
     private HashMap<Organism,ArrayList<Seed>> findSeeds() {
-        
         List<Organism> organisms = new ArrayList<>(getEchosystem().getOrganisms());
-
         HashMap<Organism,ArrayList<Seed>> seeds = new HashMap<Organism,ArrayList<Seed>>();
         // initialize the hash map so we don't need a synchronous way to add keys by multiple threads
         for (Organism o : organisms) {
@@ -155,7 +143,6 @@ public class SproutStep extends Step {
         }
 
         return seeds;
-
     }          
 
     private Seed checkAndMarkSeed(Cell topLeftCell) {
