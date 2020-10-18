@@ -38,3 +38,8 @@ Clip to view clips visible zoomed in rectangle
 improved competitive formula
 reorganized GUI panels
 use multiple threads to take advantage of multi-core parallel processing
+
+0.15.1
+
+Updated logo to SproutLife.org
+Use least prevalent color when loading new genome.

@@ -24,7 +24,6 @@ public class LoadGenomeAction extends AbstractAction {
 
     protected PanelController controller;
     private JFileChooser chooser = null;
-    static public int colorKind = 0;
 
     public LoadGenomeAction(PanelController controller, String name) {
         super(name);
@@ -78,16 +77,14 @@ public class LoadGenomeAction extends AbstractAction {
                 }
             }
             try {
-                GenomeIo.loadGenome(loadFile, controller.getGameModel(), colorKind);
-                if (colorKind>=1) {
+                if (controller.getGameModel().getEchosystem().getOrganisms().size()>15) {
                     // Kind of a hack for now.
-                    // colorKind is set to 0 when a user resets, and incremented after they load.
-                    // When colorKind is 1 or more that means the user loaded a second or third genome, so
-                    // we switch to the tri-color "splitColor" mode so they can watch them compete
+                    // When getOrganisms().size() is 15 or more that means the user loaded a second or third genome, so
+                    // we switch to tri-color aka. split-color mode so they can watch them compete
                     controller.getDisplayControlPanel().getChckbxAutoSplitColors().setSelected(false);
                     controller.getSettings().set(Settings.COLOR_MODEL, "SplitColorModel");
                 }
-
+                GenomeIo.loadGenome(loadFile, controller.getGameModel());
                 controller.updateFromSettings();
                 controller.getImageManager().repaintNewImage();
                 System.out.println("Loaded Orgs " + controller.getGameModel().getEchosystem().getOrganisms().size());
@@ -99,7 +96,6 @@ public class LoadGenomeAction extends AbstractAction {
                         ex.toString(),
                         JOptionPane.ERROR_MESSAGE);
             }
-            colorKind=(colorKind+2)%3;
         }
     } 
 }

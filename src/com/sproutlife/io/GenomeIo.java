@@ -39,12 +39,13 @@ public class GenomeIo {
         writer.close();
     }
 
-    public static void loadGenome(File file, GameModel gameModel, int colorKind) throws IOException {
+    public static void loadGenome(File file, GameModel gameModel) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader reader = new BufferedReader(isr);
         int version = loadVersion(reader);
         loadSettings(reader, gameModel);
+        int colorKind = getLeastPrevalentColor(gameModel);
         clearColumn(gameModel, colorKind);
         loadOrganisms(reader, gameModel, colorKind);
         reader.close();
@@ -127,6 +128,18 @@ public class GenomeIo {
             gameModel.getSettings().set(k, v);
             line = reader.readLine();
         }
+    }
+
+    private static int getLeastPrevalentColor(GameModel gameModel) {
+        HashMap<Integer, Integer> colorStats = new HashMap<>(3);
+        for (int i=0;i<3;i++) {
+            colorStats.put(i, 0);
+        }
+        for (Organism o: gameModel.getEchosystem().getOrganisms()) {
+            Integer k = o.getAttributes().colorKind;
+            colorStats.put(k, colorStats.get(k)+1);
+        }
+        return colorStats.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().orElse(null).getKey();
     }
 
     private static void clearColumn(GameModel gameModel, int colorKind) {

@@ -38,7 +38,6 @@ public class ResetGameAction extends AbstractAction {
             controller.getGameToolbar().getStartPauseButton().getAction().putValue(NAME, "Start");
         }
         controller.getInteractionLock().writeLock().unlock();
-        controller.getImageManager().repaintNewImage();      
-        LoadGenomeAction.colorKind = 0;
+        controller.getImageManager().repaintNewImage();
     }        
 }
