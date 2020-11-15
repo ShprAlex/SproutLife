@@ -25,7 +25,7 @@ public class GameStep extends Step {
     MutationStep mutationStep;
     PreReproductionStep preReproductionStep;
     RetireAndPruneStep retireAndPruneStep;
-    ColorsStep colorsStep;
+    BattleColorStep colorsStep;
        
     public GameStep(GameModel gameModel) {
         super(gameModel);        
@@ -35,7 +35,7 @@ public class GameStep extends Step {
         mutationStep = new MutationStep(gameModel);
         preReproductionStep = new PreReproductionStep(gameModel);
         retireAndPruneStep = new RetireAndPruneStep(gameModel);
-        colorsStep = new ColorsStep(gameModel);
+        colorsStep = new BattleColorStep(gameModel);
     }
             
     

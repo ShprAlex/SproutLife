@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.sproutlife.model.echosystem.Organism;
 
-public class SplitColorModel extends ColorModel {
+public class BattleColorModel extends ColorModel {
 
     @Override
     public Color getBackgroundColor() {

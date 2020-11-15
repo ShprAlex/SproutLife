@@ -19,7 +19,7 @@ import com.sproutlife.model.GameModel;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.renderer.colors.AngleColorModel;
 import com.sproutlife.renderer.colors.ColorModel;
-import com.sproutlife.renderer.colors.SplitColorModel;
+import com.sproutlife.renderer.colors.BattleColorModel;
 import com.sproutlife.renderer.colors.ColorModel.BackgroundTheme;
 
 public class BoardRenderer {
@@ -214,8 +214,8 @@ public class BoardRenderer {
             colorModel.setAttribute("hueRange", gameModel.getSettings().getInt(Settings.HUE_RANGE));
         }
         if (colorModelName.equals("SplitColorModel")) {
-            if (this.colorModel == null || !(this.colorModel instanceof SplitColorModel)) {
-                this.colorModel = new SplitColorModel();
+            if (this.colorModel == null || !(this.colorModel instanceof BattleColorModel)) {
+                this.colorModel = new BattleColorModel();
             }
         }
         if (getGameModel().getSettings().getString(Settings.BACKGROUND_THEME).equals("black")) {

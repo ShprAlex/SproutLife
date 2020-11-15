@@ -15,14 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import com.sproutlife.Settings;
 import com.sproutlife.model.GameModel;
+import com.sproutlife.model.echosystem.Echosystem;
 import com.sproutlife.model.echosystem.Genome;
 import com.sproutlife.model.echosystem.Mutation;
 import com.sproutlife.model.echosystem.Organism;
 import com.sproutlife.model.seed.SeedFactory.SeedType;
 import com.sproutlife.model.step.SproutStep;
+import com.sproutlife.model.utils.BattleColorUtils;
 import com.sproutlife.model.utils.SproutUtils;
 
 public class GenomeIo {
@@ -45,9 +48,9 @@ public class GenomeIo {
         BufferedReader reader = new BufferedReader(isr);
         int version = loadVersion(reader);
         loadSettings(reader, gameModel);
-        int colorKind = getLeastPrevalentColor(gameModel);
-        clearColumn(gameModel, colorKind);
-        loadOrganisms(reader, gameModel, colorKind);
+
+        int least_color_kind = getAndClearLeastPrevalentColor(gameModel);
+        loadOrganisms(reader, gameModel, least_color_kind);
         reader.close();
     }
 
@@ -130,16 +133,19 @@ public class GenomeIo {
         }
     }
 
-    private static int getLeastPrevalentColor(GameModel gameModel) {
-        HashMap<Integer, Integer> colorStats = new HashMap<>(3);
-        for (int i=0;i<3;i++) {
-            colorStats.put(i, 0);
+    private static int getAndClearLeastPrevalentColor(GameModel gameModel) {
+        Echosystem echosystem = gameModel.getEchosystem();
+        ArrayList<Entry<Integer, Integer>> colorCounts = BattleColorUtils.getColorCounts(gameModel.getEchosystem());
+        Entry<Integer, Integer> least_color_entry = colorCounts.get(0);
+        Entry<Integer, Integer> second_least_color_entry = colorCounts.get(1);
+        BattleColorUtils.joinColor(echosystem, least_color_entry.getKey(), second_least_color_entry.getKey());
+        int most_color_kind = colorCounts.get(BattleColorUtils.COLOR_COUNT-1).getKey();
+        int least_color_kind = least_color_entry.getKey();
+        if (second_least_color_entry.getValue()==0) {
+            least_color_kind = most_color_kind == 0 ? 2 : 0;
         }
-        for (Organism o: gameModel.getEchosystem().getOrganisms()) {
-            Integer k = o.getAttributes().colorKind;
-            colorStats.put(k, colorStats.get(k)+1);
-        }
-        return colorStats.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().orElse(null).getKey();
+        clearColumn(gameModel, least_color_kind);
+        return least_color_kind;
     }
 
     private static void clearColumn(GameModel gameModel, int colorKind) {

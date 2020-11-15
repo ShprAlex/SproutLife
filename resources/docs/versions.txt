@@ -47,3 +47,5 @@ Use least prevalent color when loading new genome.
 0.15.2
 
 Simplified mutation step
+Cleaned up color assignment when loading genome + renamed Tri Color Mode -> Battle Color Mode
+

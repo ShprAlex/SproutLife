@@ -210,7 +210,7 @@ public class DisplayControlPanel extends JPanel {
         spinnerColorScheme.setModel(primaryHueModel);
         panel_1.add(spinnerColorScheme);
 
-        rdbtnTriColorMode = new JRadioButton("Tri Color Mode");
+        rdbtnTriColorMode = new JRadioButton("Battle Color Mode");
         buttonGroupColorMode.add(rdbtnTriColorMode);
         GridBagConstraints gbc_rdbtnTriColorMode = new GridBagConstraints();
         gbc_rdbtnTriColorMode.anchor = GridBagConstraints.NORTHWEST;
