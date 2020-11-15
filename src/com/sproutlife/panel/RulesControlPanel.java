@@ -253,7 +253,7 @@ public class RulesControlPanel extends JPanel {
         gbc_childThreeEnergySpinner.gridy = 13;
         add(childThreeParentAgeSpinner, gbc_childThreeEnergySpinner);
 
-        lblMutationRate = new JLabel("Mutation Rate (0-10)");
+        lblMutationRate = new JLabel("Mutation Rate (0-100)");
         GridBagConstraints gbc_lblMutationRate = new GridBagConstraints();
         gbc_lblMutationRate.anchor = GridBagConstraints.WEST;
         gbc_lblMutationRate.insets = new Insets(0, 0, 5, 5);
@@ -262,7 +262,9 @@ public class RulesControlPanel extends JPanel {
         add(lblMutationRate, gbc_lblMutationRate);
 
         mutationRateSpinner = new JSpinner();
-        mutationRateSpinner.setModel(new SpinnerNumberModel(5, 0, 10, 1));
+        mutationRateSpinner.setModel(new SpinnerNumberModel(5, 0, 100, 1));
+        mutationRateSpinner.setToolTipText("<html>Mutations are like radiation. A high<br>"
+                + "mutation rate is hard to survive, so<br>best to keep it below 10.</html>");
         GridBagConstraints gbc_mutationRateSpinner = new GridBagConstraints();
         gbc_mutationRateSpinner.fill = GridBagConstraints.HORIZONTAL;
         gbc_mutationRateSpinner.insets = new Insets(0, 0, 5, 0);

@@ -43,3 +43,7 @@ use multiple threads to take advantage of multi-core parallel processing
 
 Updated logo to SproutLife.org
 Use least prevalent color when loading new genome.
+
+0.15.2
+
+Simplified mutation step
