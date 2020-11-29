@@ -257,6 +257,9 @@ public class PanelController {
         getGameToolbar().getResetButton().setAction(
                 getActionManager().getResetGameAction());
 
+        getGameToolbar().getReloadButton().setAction(
+                getActionManager().getReloadAction());
+
         getGameToolbar().getGifStopRecordingButton().setAction(getActionManager().getExportGifAction());
 
         getGameToolbar().getZoomSlider().addChangeListener(new ChangeListener() {
@@ -271,7 +274,6 @@ public class PanelController {
             public void stateChanged(ChangeEvent e) {
                 int value = ((JSlider) e.getSource()).getValue();
                 updateSpeedValue(value);
-
             }
         });
     }

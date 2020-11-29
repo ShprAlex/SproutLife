@@ -7,6 +7,9 @@
  *******************************************************************************/
 package com.sproutlife;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.sproutlife.gamesteplistener.DefaultGameStepListener;
@@ -19,11 +22,13 @@ public class GameController {
     private PanelController panelController;
     private Settings settings;
     protected ReentrantReadWriteLock interactionLock;
+    private ArrayList<File> loadedFiles;
 
     public GameController() {
         settings = new Settings();
         interactionLock = new ReentrantReadWriteLock();
         gameModel = new GameModel(settings, interactionLock);
+        loadedFiles = new ArrayList<>();
         panelController = new PanelController(this);
         getGameModel().getGameThread().addGameStepListener(new DefaultGameStepListener(panelController));
         getGameModel().getGameThread().addGameStepListener(new WarmupGameStepListener(panelController));
@@ -39,5 +44,17 @@ public class GameController {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public List<File> getLoadedFiles() {
+        return this.loadedFiles;
+    }
+
+    public void clearLoadedFiles() {
+        this.loadedFiles = new ArrayList<>();
+    }
+
+    public void addLoadedFile(File file) {
+        this.loadedFiles.add(file);
     }
 }

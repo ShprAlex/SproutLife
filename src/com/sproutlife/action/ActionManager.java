@@ -15,18 +15,17 @@ import com.sproutlife.panel.PanelController;
  */
 public class ActionManager {
     private PanelController controller;
-    
+
     private PlayGameAction playGameAction;
     private ResetGameAction resetGameAction;
+    private ReloadAction reloadAction;
     private ExportGifAction exportGifAction;
+    private LoadGenomeAction loadGenomeAction;
 
     public ActionManager(PanelController controller) {
         this.controller = controller;
     }
 
-    /**
-     * @return the playGameAction
-     */
     public PlayGameAction getPlayGameAction() {
         if (playGameAction == null) {
             playGameAction = new PlayGameAction(controller);
@@ -34,14 +33,18 @@ public class ActionManager {
         return playGameAction;
     }
 
-    /**
-     * @return the resetGameAction
-     */
     public ResetGameAction getResetGameAction() {
         if (resetGameAction == null) {
             resetGameAction = new ResetGameAction(controller);
-        }        
+        }
         return resetGameAction;
+    }
+
+    public ReloadAction getReloadAction() {
+        if (reloadAction == null) {
+            reloadAction = new ReloadAction(controller);
+        }
+        return reloadAction;
     }
 
     public ExportGifAction getExportGifAction() {
@@ -51,4 +54,10 @@ public class ActionManager {
         return exportGifAction;
     }
 
+    public LoadGenomeAction getLoadGenomeAction() {
+        if (loadGenomeAction == null) {
+            loadGenomeAction = new LoadGenomeAction(controller);
+        }
+        return loadGenomeAction;
+    }
 }

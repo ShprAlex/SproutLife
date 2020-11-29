@@ -88,6 +88,8 @@ public class LoadGenomeAction extends AbstractAction {
                 controller.updateFromSettings();
                 controller.getImageManager().repaintNewImage();
                 System.out.println("Loaded Orgs " + controller.getGameModel().getEchosystem().getOrganisms().size());
+                controller.getGameController().addLoadedFile(loadFile);
+                controller.getActionManager().getReloadAction().setEnabled(true);
             }
             catch (IOException ex) {
                 ex.printStackTrace();

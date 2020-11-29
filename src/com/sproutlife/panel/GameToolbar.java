@@ -16,8 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class GameToolbar extends JPanel {
 
@@ -29,8 +27,8 @@ public class GameToolbar extends JPanel {
     private Component horizontalStrut_1;
     private JButton stepButton;
     private JButton resetButton;
+    private JButton reloadButton;
     private JButton gifStopRecordingButton;
-
 
     public GameToolbar(PanelController panelController) {
         setMinimumSize(new Dimension(220, 0));
@@ -38,6 +36,7 @@ public class GameToolbar extends JPanel {
         this.panelController = panelController;
         buildPanel();
     }
+
     /**
      * Create the panel.
      */
@@ -49,7 +48,6 @@ public class GameToolbar extends JPanel {
 
         JLabel lblZoom = new JLabel("Zoom");
         add(lblZoom);
-        //lblZoom.setMinimumSize(new Dimension(100, 14));
 
         zoomSlider = new JSlider();
         zoomSlider.setPreferredSize(new Dimension(100, 29));
@@ -87,6 +85,10 @@ public class GameToolbar extends JPanel {
         resetButton.setPreferredSize(new Dimension(80, 29));
         add(resetButton);
 
+        reloadButton = new JButton("Reload");
+        reloadButton.setPreferredSize(new Dimension(80, 29));
+        add(reloadButton);
+
         horizontalStrut_1 = Box.createHorizontalStrut(20);
         add(horizontalStrut_1);
 
@@ -107,12 +109,19 @@ public class GameToolbar extends JPanel {
     public JSlider getSpeedSlider() {
         return speedSlider;
     }
+
     public JButton getStepButton() {
         return stepButton;
     }
+
     public JButton getResetButton() {
         return resetButton;
     }
+
+    public JButton getReloadButton() {
+        return reloadButton;
+    }
+
     public JButton getGifStopRecordingButton() {
         return gifStopRecordingButton;
     }
