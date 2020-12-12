@@ -30,7 +30,7 @@ public class GameFrame extends JFrame {
 
     private void initFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Sprout Life - Evolving Game of Life - V " + SproutLife.getAppVersion());
+        setTitle("SproutLife - Evolving Game of Life - V " + SproutLife.getAppVersion());
 
         setSize(DEFAULT_WINDOW_SIZE);
         setMinimumSize(MINIMUM_WINDOW_SIZE);

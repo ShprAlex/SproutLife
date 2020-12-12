@@ -52,9 +52,20 @@ public class GameController {
 
     public void clearLoadedFiles() {
         this.loadedFiles = new ArrayList<>();
+
+        panelController.getGameFrame().setTitle("SproutLife - Evolving Game of Life - V " + SproutLife.getAppVersion());
     }
 
     public void addLoadedFile(File file) {
         this.loadedFiles.add(file);
+
+        String title = "SproutLife - ";
+        for (int i = 0; i < this.loadedFiles.size(); i++) {
+            if (i > 0) {
+                title += ", ";
+            }
+            title += this.loadedFiles.get(i).getName();
+        }
+        panelController.getGameFrame().setTitle(title);
     }
 }
