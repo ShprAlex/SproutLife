@@ -61,7 +61,8 @@ public class GameMenu extends JMenuBar implements ActionListener {
         exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(this);
         fileMenu.add(new SaveGenomeAction(controller));
-        fileMenu.add(controller.getActionManager().getLoadGenomeAction());
+        fileMenu.add(controller.getActionManager().getLoadNewGenomeAction());
+        fileMenu.add(controller.getActionManager().getLoadAdditionalGenomeAction());
         fileMenu.add(new ExportPngAction(controller));
         fileMenu.add(controller.getActionManager().getExportGifAction());
         fileMenu.add(new JSeparator());

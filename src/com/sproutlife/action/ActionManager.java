@@ -20,7 +20,8 @@ public class ActionManager {
     private ResetGameAction resetGameAction;
     private ReloadAction reloadAction;
     private ExportGifAction exportGifAction;
-    private LoadGenomeAction loadGenomeAction;
+    private LoadGenomeAction loadNewGenomeAction;
+    private LoadGenomeAction loadAdditionalGenomeAction;
 
     public ActionManager(PanelController controller) {
         this.controller = controller;
@@ -54,10 +55,17 @@ public class ActionManager {
         return exportGifAction;
     }
 
-    public LoadGenomeAction getLoadGenomeAction() {
-        if (loadGenomeAction == null) {
-            loadGenomeAction = new LoadGenomeAction(controller);
+    public LoadGenomeAction getLoadNewGenomeAction() {
+        if (loadNewGenomeAction == null) {
+            loadNewGenomeAction = new LoadGenomeAction(controller, true);
         }
-        return loadGenomeAction;
+        return loadNewGenomeAction;
+    }
+
+    public LoadGenomeAction getLoadAdditionalGenomeAction() {
+        if (loadAdditionalGenomeAction == null) {
+            loadAdditionalGenomeAction = new LoadGenomeAction(controller, false);
+        }
+        return loadAdditionalGenomeAction;
     }
 }

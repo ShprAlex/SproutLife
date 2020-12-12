@@ -21,69 +21,60 @@ import com.sproutlife.panel.PanelController;
 
 @SuppressWarnings("serial")
 public class ExportGifAction extends AbstractAction {
-    
+
     protected PanelController controller;
     protected String defaultFileName = "SproutLife";
-    
-    private JFileChooser chooser = null;
+
     private Runnable stopRecordingCallback = null;
-    
+
     public ExportGifAction(PanelController controller, String name) {
         super(name);
         this.controller = controller;
-        
+
     }
-    
+
     public ExportGifAction(PanelController controller) {
         this(controller, "Save Gif");
     }
-    
-    public void setDefaultFileName(String defaultFileName) {
-        this.defaultFileName=defaultFileName;
-        if (chooser!=null) {
-            chooser.setSelectedFile(new File(defaultFileName));
-        }
-    }
-    
-    public void initChooser() {
-        if (chooser!=null) return;
-        chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        chooser.setAcceptAllFileFilterUsed(false);
+
+    public JFileChooser getFileChooser() {
+        JFileChooser fileChooser = controller.getFileChooser();
         String date = new SimpleDateFormat(" yyyy-MM-dd").format(new Date());
-        defaultFileName+=date+".gif";
-        chooser.setSelectedFile(new File(defaultFileName));
-        chooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+        if (fileChooser.getSelectedFile() == null
+                || !fileChooser.getSelectedFile().getName().toLowerCase().endsWith("gif")) {
+            fileChooser.setSelectedFile(new File(defaultFileName + date + ".gif"));
+        }
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
             public boolean accept(File f) {
-                return f.getName().toLowerCase().endsWith(".gif")
-                        || f.isDirectory();
+                return f.getName().toLowerCase().endsWith(".gif") || f.isDirectory();
             }
 
             public String getDescription() {
                 return "gif files (*.gif)";
             }
         });
+        return fileChooser;
     }
-    
+
     public void actionPerformed(ActionEvent e) {
-        if (stopRecordingCallback!=null) {
+        if (stopRecordingCallback != null) {
             stopRecordingCallback.run();
-            stopRecordingCallback=null;
+            stopRecordingCallback = null;
             this.putValue(NAME, "Save Gif");
             controller.getGameToolbar().getGifStopRecordingButton().setVisible(false);
             return;
         }
 
-        initChooser();
+        JFileChooser fileChooser = getFileChooser();
         controller.getScrollController().updateScrollBars();
         controller.setPlayGame(false);
 
-        int returnVal = chooser.showSaveDialog(controller.getGameFrame());
+        int returnVal = fileChooser.showSaveDialog(controller.getGameFrame());
         if (returnVal != JFileChooser.APPROVE_OPTION) {
             return;
         }
 
-        File saveFile = chooser.getSelectedFile();
+        File saveFile = fileChooser.getSelectedFile();
         String fileName = saveFile.getName();
         if (fileName.indexOf(".") < 0) {
             try {

@@ -49,3 +49,8 @@ Use least prevalent color when loading new genome.
 Simplified mutation step
 Cleaned up color assignment when loading genome + renamed Tri Color Mode -> Battle Color Mode
 
+0.16.0
+
+Added Reload action.
+Split out LoadNewGenomeAction, LoadAdditionalGenomeAction
+

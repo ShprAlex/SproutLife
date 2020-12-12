@@ -13,11 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -57,6 +59,8 @@ public class PanelController {
     JMenuBar gameMenu;
     GameToolbar gameToolbar;
     BoardRenderer boardRenderer;
+
+    JFileChooser fileChooser;
         
     ScrollPanelController scrollController;
     ImageManager imageManager;
@@ -127,6 +131,15 @@ public class PanelController {
         return gameFrame;
     }
 
+    public JFileChooser getFileChooser() {
+        if (fileChooser == null) {
+            fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            fileChooser.setAcceptAllFileFilterUsed(false);
+        }
+        return fileChooser;
+    }
+
     /**
      * @return the settingsControlPanel
      */
@@ -187,8 +200,8 @@ public class PanelController {
 
         JTabbedPane rightPane = new JTabbedPane();
         rightPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        rightPane.addTab("Display", wrapInScrolPane(displayControlPanel));
-        rightPane.addTab("Rules", wrapInScrolPane(settingsControlPanel));
+        rightPane.addTab("Display", wrapInScrollPane(displayControlPanel));
+        rightPane.addTab("Rules", wrapInScrollPane(settingsControlPanel));
         rightPane.addTab("Stats", statsPanel);
         rightPane.addTab("Tips", tipsPanel);
 
@@ -205,13 +218,13 @@ public class PanelController {
         gameFrame.add(splitPane);
     }
     
-    public JScrollPane wrapInScrolPane(JPanel p) {
+    public JScrollPane wrapInScrollPane(JPanel p) {
         JScrollPane sp = new JScrollPane(p);
         sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         sp.setBorder(null);
         return sp;
     }
-    
+
     private void initComponents() {
         ToolTipManager.sharedInstance().setInitialDelay(0);
         gameFrame.setVisible(true);

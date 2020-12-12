@@ -23,64 +23,51 @@ import com.sproutlife.panel.PanelController;
 public class LoadGenomeAction extends AbstractAction {
 
     protected PanelController controller;
-    private JFileChooser chooser = null;
+    private boolean resetBeforeLoading = true;
 
     public LoadGenomeAction(PanelController controller, String name) {
         super(name);
         this.controller = controller;
     }
 
-    public LoadGenomeAction(PanelController controller) {
-        this(controller, "Load Genome");
+    public LoadGenomeAction(PanelController controller, boolean resetBeforeLoading) {
+        this(controller, resetBeforeLoading ? "Load New Genome" : "Load Additional Genome");
+        this.resetBeforeLoading = resetBeforeLoading;
     }
 
-    public void initChooser() {
-        File cd = null;
-        if (chooser!=null) {
-            cd = chooser.getCurrentDirectory();
-        }
-        chooser = new JFileChooser();
-        if (cd==null) {
-            chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        }
-        else {
-            chooser.setCurrentDirectory(cd);
-        }
-        chooser.setAcceptAllFileFilterUsed(false);
+    public JFileChooser getFileChooser() {
+        JFileChooser fileChooser = controller.getFileChooser();
 
-        chooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
             public boolean accept(File f) {
-                return f.getName().toLowerCase().endsWith(".txt")
-                        || f.isDirectory();
+                return f.getName().toLowerCase().endsWith(".txt") || f.isDirectory();
             }
 
             public String getDescription() {
                 return "txt files (*.txt)";
             }
         });
+
+        return fileChooser;
     }
 
     public void actionPerformed(ActionEvent e) {
-        initChooser();
+        JFileChooser fileChooser = getFileChooser();
         controller.setPlayGame(false);
-        int returnVal = chooser.showOpenDialog(controller.getGameFrame());
+        int returnVal = fileChooser.showOpenDialog(controller.getGameFrame());
         File loadFile;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            loadFile = chooser.getSelectedFile();
-            String fileName = loadFile.getName();
-            if (fileName.indexOf(".") < 0) {
-                try {
-                    String filePath = loadFile.getPath();
-                    loadFile = new File(filePath + ".txt");
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
+            loadFile = fileChooser.getSelectedFile();
             try {
-                if (controller.getGameModel().getEchosystem().getOrganisms().size()>15) {
+                if (resetBeforeLoading) {
+                    controller.getGameModel().resetGame();
+                    controller.getGameController().clearLoadedFiles();
+                    controller.getActionManager().getReloadAction().setEnabled(false);
+                } else if (controller.getGameModel().getEchosystem().getOrganisms().size() > 15) {
                     // Kind of a hack for now.
-                    // When getOrganisms().size() is 15 or more that means the user loaded a second or third genome, so
-                    // we switch to tri-color aka. split-color mode so they can watch them compete
+                    // When getOrganisms().size() is 15 or more that means the user loaded a second
+                    // or third genome, so we switch to tri-color aka. split-color mode so they can
+                    // watch them compete
                     controller.getDisplayControlPanel().getChckbxAutoSplitColors().setSelected(false);
                     controller.getSettings().set(Settings.COLOR_MODEL, "SplitColorModel");
                 }
@@ -90,14 +77,11 @@ public class LoadGenomeAction extends AbstractAction {
                 System.out.println("Loaded Orgs " + controller.getGameModel().getEchosystem().getOrganisms().size());
                 controller.getGameController().addLoadedFile(loadFile);
                 controller.getActionManager().getReloadAction().setEnabled(true);
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(controller.getGameFrame(),
-                        "Load Error",
-                        ex.toString(),
+                JOptionPane.showMessageDialog(controller.getGameFrame(), "Load Error", ex.toString(),
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-    } 
+    }
 }
