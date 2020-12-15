@@ -74,6 +74,9 @@ public class SaveGenomeAction extends AbstractAction {
                 JOptionPane.showMessageDialog(controller.getGameFrame(), "Save Error", "Error saving genome",
                         JOptionPane.ERROR_MESSAGE);
             }
+            controller.getGameController().clearLoadedFiles();
+            controller.getGameController().addLoadedFile(saveFile);
+            controller.getActionManager().getReloadAction().setEnabled(true);
         }
     }
 }
