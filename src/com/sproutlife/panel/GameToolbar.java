@@ -81,13 +81,13 @@ public class GameToolbar extends JPanel {
         stepButton.setPreferredSize(new Dimension(80, 29));
         add(stepButton);
 
-        resetButton = new JButton("Reset");
-        resetButton.setPreferredSize(new Dimension(80, 29));
-        add(resetButton);
-
         reloadButton = new JButton("Reload");
         reloadButton.setPreferredSize(new Dimension(80, 29));
         add(reloadButton);
+
+        resetButton = new JButton("Reset");
+        resetButton.setPreferredSize(new Dimension(80, 29));
+        add(resetButton);
 
         horizontalStrut_1 = Box.createHorizontalStrut(20);
         add(horizontalStrut_1);
