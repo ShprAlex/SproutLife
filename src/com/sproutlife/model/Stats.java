@@ -78,7 +78,7 @@ public class Stats {
     }
     
     public String getDisplayText() {
-        final String HEADER_ROW = "<html><body style='font-family:ariel'>";        
+        final String HEADER_ROW = "<html><body style='font-family:ariel;'>";
         final String START_TABLE = "<table width='100%' cellspacing='0' cellpadding='0'>";
         final String END_TABLE = "</table>";
         final String BLANK_ROW = "<tr style='height:5px;'></tr>";
@@ -107,7 +107,7 @@ public class Stats {
         text += buildDisplayRow("Avg Current Life Cell Sum: ",String.format("%.0f", avgCellSum));        
         text += buildDisplayRowBold("Avg Competitive Score: ",String.format("%.0f", avgCompetitiveScore));
         text += buildDisplayRow("% Child born at parent age histogram: ");
-        text += buildParentAgeAtBirthHistogram("_");
+        text += buildParentAgeAtBirthHistogram();
         text += BLANK_ROW;        
         text += buildDisplayRowBold("Average Mutation #: ",String.format("%.1f", avgTotalMutations)); 
         text += buildDisplayRowBold("Mutation Diversity: ",String.format("%.1f", mutationDiversity*10));        
@@ -208,30 +208,37 @@ public class Stats {
 
     }
 
-    private String buildParentAgeAtBirthHistogram(String delimiter) {
-        String text = "";
-        
+    private String buildParentAgeAtBirthHistogram() {
         String mutationHist = "";
-        for (int t=0;t<75;t++) {
+        for (int t = 0; t < 80; t++) {
             double v = parentAgeAtBirthHist[t];
-
-            if (v<1) {
-                mutationHist+=" "+"__";
-            }
-            else {
-                mutationHist+=" ";
-                if (v+0.5<10) {
-                    mutationHist+=delimiter;
+            if (v < 1) {
+                mutationHist += " " + "__";
+            } else {
+                mutationHist += " ";
+                if (v + 0.5 < 10) {
+                    mutationHist += "_"; // prepend underscore to single digit values
                 }
-                
-                mutationHist+=String.format("%.0f",v);
-                
+                mutationHist += String.format("%.0f", v);
+            }
+            if ((t + 1) % 10 == 0) {
+                mutationHist += "<br/>";
             }
         }
-        text += buildDisplayRow(mutationHist);
-    
-        return text;
+        return buildDisplayRow("<span style='font-family:monospace; font-size:10px'>" + mutationHist + "</span>");
+    }
 
+    private String buildParentAgeAtBirthHistogramForLog() {
+        String mutationHist = "";
+        for (int t = 0; t < 80; t++) {
+            double v = parentAgeAtBirthHist[t];
+
+            if (v + 0.5 < 10) {
+                mutationHist += " ";
+            }
+            mutationHist += String.format(" %.0f", v);
+        }
+        return mutationHist;
     }
 
     public void updateSmoothedPopulation() {
@@ -673,16 +680,18 @@ public class Stats {
 
     public void logStats() {
         if(getEchosystem().getTime()%2000==0) {
-            System.out.print(getTime() + " M Speed1: "+(int)mutationSpeed);
-            System.out.print(" MDiversity: "+(int)(mutationDiversity*10));
-            System.out.print(" MAge: "+(int)(avgMutationAge*10));
-            System.out.print(" MDAgeDiff: "+(int)((mutationDiversityAge-avgMutationAge)*10));
-            System.out.print(" Pop density "+String.format("%.1f",smoothedPopDensity));
-            System.out.print(" Avg Life  " + (int) avgMaxLifespan);
-            System.out.print(" Comp Score " + (int) avgCompetitiveScore);
-            System.out.print(" MutationCount " + String.format("%.1f",avgTotalMutations));
-            System.out.print(" "+buildParentAgeAtBirthHistogram(" "));
-            System.out.println();
+            String logStr = "";
+            logStr += String.format("%1$8s",getTime());
+            logStr += " M Speed1: " + String.format("%1$3s", (int) mutationSpeed);
+            logStr += " MDiversity: " + String.format("%1$3s", (int) (mutationDiversity * 10));
+            logStr += " MAge: " + String.format("%1$3s", (int) (avgMutationAge * 10));
+            logStr += " MDAgeDiff: " + String.format("%1$3s", (int) ((mutationDiversityAge - avgMutationAge) * 10));
+            logStr += " Pop density: " + String.format("%5.1f", smoothedPopDensity);
+            logStr += " Avg Life: " + String.format("%1$3s", (int) avgMaxLifespan);
+            logStr += " Comp Score: " + String.format("%1$5s", (int) avgCompetitiveScore);
+            logStr += " MutationCount: " + String.format("%5.1f", avgTotalMutations);
+            logStr += " Childbirth Age Hist: " + buildParentAgeAtBirthHistogramForLog();
+            System.out.println(logStr);
         }
     }
 
