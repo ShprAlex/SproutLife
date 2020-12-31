@@ -230,7 +230,7 @@ public class Stats {
 
     private String buildParentAgeAtBirthHistogramForLog() {
         String mutationHist = "";
-        for (int t = 0; t < 80; t++) {
+        for (int t = 0; t < 75; t++) {
             double v = parentAgeAtBirthHist[t];
 
             if (v + 0.5 < 10) {
@@ -679,18 +679,18 @@ public class Stats {
     }
 
     public void logStats() {
-        if(getEchosystem().getTime()%2000==0) {
+        if (getEchosystem().getTime() % 2000 == 0) {
             String logStr = "";
-            logStr += String.format("%1$8s",getTime());
-            logStr += " M Speed1: " + String.format("%1$3s", (int) mutationSpeed);
+            logStr += "Time: " + String.format("%1$8s", getTime());
+            logStr += " MSpeed: " + String.format("%1$4s", (int) mutationSpeed);
             logStr += " MDiversity: " + String.format("%1$3s", (int) (mutationDiversity * 10));
             logStr += " MAge: " + String.format("%1$3s", (int) (avgMutationAge * 10));
             logStr += " MDAgeDiff: " + String.format("%1$3s", (int) ((mutationDiversityAge - avgMutationAge) * 10));
-            logStr += " Pop density: " + String.format("%5.1f", smoothedPopDensity);
-            logStr += " Avg Life: " + String.format("%1$3s", (int) avgMaxLifespan);
-            logStr += " Comp Score: " + String.format("%1$5s", (int) avgCompetitiveScore);
+            logStr += " PopDensity: " + String.format("%5.1f", smoothedPopDensity);
+            logStr += " AvgLife: " + String.format("%1$3s", (int) avgMaxLifespan);
+            logStr += " CompScore: " + String.format("%1$5s", (int) avgCompetitiveScore);
             logStr += " MutationCount: " + String.format("%5.1f", avgTotalMutations);
-            logStr += " Childbirth Age Hist: " + buildParentAgeAtBirthHistogramForLog();
+            logStr += " ChildbirthAgeHg: " + buildParentAgeAtBirthHistogramForLog();
             System.out.println(logStr);
         }
     }
