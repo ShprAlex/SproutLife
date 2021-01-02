@@ -684,8 +684,9 @@ public class Stats {
             logStr += "Time: " + String.format("%1$8s", getTime());
             logStr += " MSpeed: " + String.format("%1$4s", (int) mutationSpeed);
             logStr += " MDiversity: " + String.format("%1$3s", (int) (mutationDiversity * 10));
-            logStr += " MAge: " + String.format("%1$3s", (int) (avgMutationAge * 10));
-            logStr += " MDAgeDiff: " + String.format("%1$3s", (int) ((mutationDiversityAge - avgMutationAge) * 10));
+            logStr += " OneChildPct: " +  String.format("%4.1f", (childNumberPercent[0]-childNumberPercent[1]));
+            logStr += " TwoChildrenPct: " + String.format("%4.1f", (childNumberPercent[1]-childNumberPercent[2]));
+            logStr += " ThreeChildrenPct: " + String.format("%4.1f", (childNumberPercent[2]-childNumberPercent[3]+childNumberPercent[4]));
             logStr += " PopDensity: " + String.format("%5.1f", smoothedPopDensity);
             logStr += " AvgLife: " + String.format("%1$3s", (int) avgMaxLifespan);
             logStr += " CompScore: " + String.format("%1$5s", (int) avgCompetitiveScore);

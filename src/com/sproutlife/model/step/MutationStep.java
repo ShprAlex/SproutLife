@@ -142,7 +142,7 @@ public class MutationStep extends Step {
         }
 
         int createMutationCount = getSettings().getInt(Settings.MUTATION_RATE);
-        createMutationCount *= Math.min(createMutationCount, getBoard().getWidth() * getBoard().getHeight() / 10000);
+        createMutationCount = createMutationCount * getBoard().getWidth() * getBoard().getHeight() / 10000;
         for (int repeat = 0; repeat < createMutationCount; repeat++) {
             int x = random.nextInt(getEchosystem().getBoard().getWidth());
             int y = random.nextInt(getEchosystem().getBoard().getHeight());
