@@ -264,7 +264,7 @@ public class RulesControlPanel extends JPanel {
         mutationRateSpinner = new JSpinner();
         mutationRateSpinner.setModel(new SpinnerNumberModel(5, 0, 100, 1));
         mutationRateSpinner.setToolTipText("<html>Mutations are like radiation. A high<br>"
-                + "mutation rate is hard to survive, so<br>best to keep it below 10.</html>");
+                + "mutation rate is hard to survive.</html>");
         GridBagConstraints gbc_mutationRateSpinner = new GridBagConstraints();
         gbc_mutationRateSpinner.fill = GridBagConstraints.HORIZONTAL;
         gbc_mutationRateSpinner.insets = new Insets(0, 0, 5, 0);

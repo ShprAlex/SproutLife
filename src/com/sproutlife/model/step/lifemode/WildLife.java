@@ -21,7 +21,6 @@ public class WildLife extends CompetitiveLife {
             super.updateCompetitiveScore(o);
             return;
         }
-
         int cs = (int) Math.max(p.getAttributes().territoryProduct, o.getAttributes().territoryProduct);
 
         // We create a "wild" tradeoff between reproducing and being competitive

@@ -98,9 +98,8 @@ public class MutationStep extends Step {
         Mutation m = MutationUtils.addMutation(org, x, y);
 
         for (Organism childOrg : org.getChildren()) {
-            // Pretend the parent had this mutation when giving birth to it's children. It's
-            // ok because the children are not yet old enough to have
-            // encountered this mutation.
+            // Pretend the parent had this mutation when giving birth to it's children. It's ok
+            // because the children are not yet old enough to have encountered this mutation.
             childOrg.getGenome().addMutation(m);
         }
     }
@@ -112,6 +111,14 @@ public class MutationStep extends Step {
         Genome g = org.getGenome();
         int age = org.getAge();
 
+        // if the lifespan has decreased, but there are still mutations at an age above the lifespan,
+        // we want to occasionally remove some of those as well.
+        if (g.getAgeRange()>org.lifespan) {
+            if(random.nextInt(5)==0) {
+                age = org.lifespan+1+random.nextInt(g.getAgeRange()-org.lifespan);
+            }
+        }
+
         if (g.getMutationCountAtAge(age) == 0) {
             // if the organism doesn't have any mutations at the age it is now,
             // do nothing
@@ -122,10 +129,9 @@ public class MutationStep extends Step {
         Mutation removeM = g.getMutation(age, indexAtAge);
         g.removeMutation(removeM);
         for (Organism childOrg : org.getChildren()) {
-            // Pretend the parent didn't have this mutation when giving birth to it's
-            // children. It's ok because the children are not yet old enough to have
-            // encountered this
-            // mutation.
+            // Pretend the parent didn't have this mutation when giving birth to it's children (i.e.
+            // pretend it did had the change of removing the mutation) It's ok because the children
+            // are not yet old enough to have encountered this mutation.
             childOrg.getGenome().removeMutation(removeM);
         }
 

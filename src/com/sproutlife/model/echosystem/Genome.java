@@ -42,7 +42,11 @@ public class Genome {
     }
 
     public int getAgeRange() {
-        return genome.size();
+        int i = genome.size() - 1;
+        while (i >= 0 && getMutationCountAtAge(i)==0) {
+            i--;
+        }
+        return i + 1;
     }
 
     public int getMutationCountAtAge(int age) {
