@@ -60,7 +60,7 @@ public class GenomeIo {
         writer.println(Settings.LIFE_MODE + " : " + s.getString(Settings.LIFE_MODE));
         writer.println(Settings.MAX_LIFESPAN + " : " + s.getInt(Settings.MAX_LIFESPAN));
         writer.println(Settings.TARGET_LIFESPAN + " : " + s.getInt(Settings.TARGET_LIFESPAN));
-        writer.println(Settings.CHILD_ONE_PARENT_AGE + " : " + s.getInt(Settings.CHILD_ONE_PARENT_AGE));
+        writer.println(Settings.MIN_CHILDBEARING_AGE + " : " + s.getInt(Settings.MIN_CHILDBEARING_AGE));
         writer.println(Settings.MUTATION_RATE + " : " + s.getInt(Settings.MUTATION_RATE));
         writer.println(Settings.SPROUT_DELAYED_MODE + " : " + s.getBoolean(Settings.SPROUT_DELAYED_MODE));
         writer.println(Settings.PRIMARY_HUE_DEGREES + " : " + s.getInt(Settings.PRIMARY_HUE_DEGREES));

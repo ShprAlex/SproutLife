@@ -430,23 +430,12 @@ public class PanelController {
             }
         });
 
-        getRulesControlPanel().getChildOneParentAgeSpinner().addChangeListener(new ChangeListener() {
+        getRulesControlPanel().getMinChildbearingAgeSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
-                getSettings().set(Settings.CHILD_ONE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
+                getSettings().set(Settings.MIN_CHILDBEARING_AGE,((JSpinner) arg0.getSource()).getValue());
             }
         });
         
-        getRulesControlPanel().getChildTwoParentAgeSpinner().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent arg0) {
-                getSettings().set(Settings.CHILD_TWO_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
-            }
-        });
-        
-        getRulesControlPanel().getChildThreeParentAgeSpinner().addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent arg0) {
-                getSettings().set(Settings.CHILD_THREE_PARENT_AGE,((JSpinner) arg0.getSource()).getValue());
-            }
-        });
         
         getRulesControlPanel().getMutationRateSpinner().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent arg0) {
@@ -475,12 +464,8 @@ public class PanelController {
                 getSettings().getInt(Settings.MAX_LIFESPAN));
         getRulesControlPanel().getTargetAgeSpinner().setValue(
                 getSettings().getInt(Settings.TARGET_LIFESPAN));
-        getRulesControlPanel().getChildOneParentAgeSpinner().setValue(
-                getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE));
-        getRulesControlPanel().getChildTwoParentAgeSpinner().setValue(
-                getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE));
-        getRulesControlPanel().getChildThreeParentAgeSpinner().setValue(
-                getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE));
+        getRulesControlPanel().getMinChildbearingAgeSpinner().setValue(
+                getSettings().getInt(Settings.MIN_CHILDBEARING_AGE));
         getRulesControlPanel().getMutationRateSpinner().setValue(
                 getSettings().getInt(Settings.MUTATION_RATE));
         getDisplayControlPanel().getSpinnerColorScheme().setValue(

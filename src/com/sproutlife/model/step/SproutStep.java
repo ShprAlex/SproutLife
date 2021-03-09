@@ -54,28 +54,8 @@ public class SproutStep extends Step {
         }
     }
 
-    public int getMinParentAge(Organism org, int childNumber) {
-        switch (childNumber) {
-            case 1: return getSettings().getInt(Settings.CHILD_ONE_PARENT_AGE);
-            case 2: return getSettings().getInt(Settings.CHILD_TWO_PARENT_AGE);
-            case 3: return getSettings().getInt(Settings.CHILD_THREE_PARENT_AGE);
-            default: return 0;
-        }
-    }
-
     public boolean checkMinAgeToHaveChildren(Organism org, int seedCount) {
-        int childNumberToBe = seedCount;
-        if (org.getChildren()!=null) {
-            childNumberToBe += org.getChildren().size();
-        }
-
-        // for loop in case user set min age for 1 child > min age for 2 children
-        for (int n = 1; n <= childNumberToBe && n <=3; n++) {
-            if (org.getAge()+1<getMinParentAge(org,n)) {
-                return false;
-            }
-        }
-        return true;
+        return org.getAge()>=getSettings().getInt(Settings.MIN_CHILDBEARING_AGE);
     }
 
     private void sproutSeeds(HashMap<Organism,ArrayList<Seed>> seeds) {

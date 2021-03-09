@@ -210,7 +210,7 @@ public class Stats {
 
     private String buildParentAgeAtBirthHistogram() {
         String mutationHist = "";
-        for (int t = 0; t < 80; t++) {
+        for (int t = 1; t <= 80; t++) {
             double v = parentAgeAtBirthHist[t];
             if (v < 1) {
                 mutationHist += " " + "__";
@@ -221,7 +221,7 @@ public class Stats {
                 }
                 mutationHist += String.format("%.0f", v);
             }
-            if ((t + 1) % 10 == 0) {
+            if (t % 10 == 0) {
                 mutationHist += "<br/>";
             }
         }

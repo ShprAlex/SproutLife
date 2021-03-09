@@ -33,7 +33,7 @@ public class RetireAndPruneStep extends Step {
     public void retireOrganisms() {
         List<Organism> organisms = new ArrayList<>(getOrganisms());
         for (Organism o : organisms) {
-            if (o.getAge()>=Math.min(o.lifespan,getSettings().getInt(Settings.MAX_LIFESPAN))) {
+            if (o.getAge()>Math.min(o.lifespan,getSettings().getInt(Settings.MAX_LIFESPAN))) {
                 getEchosystem().retireOrganism(o);
             }
         }

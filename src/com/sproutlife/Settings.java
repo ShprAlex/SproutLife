@@ -20,7 +20,7 @@ public class Settings {
     public static String MUTATION_RATE = "mutationRate";
     public static String MAX_LIFESPAN = "maxLifespan";
     public static String TARGET_LIFESPAN = "targetLifespan";
-    public static String CHILD_ONE_PARENT_AGE = "minAgeToHaveChildren";
+    public static String MIN_CHILDBEARING_AGE = "minAgeToHaveChildren";
     public static String CHILD_TWO_PARENT_AGE = "childTwoParentAge";
     public static String CHILD_THREE_PARENT_AGE = "childThreeParentAge";
     //Determines whether seeds are sprouted immediately upon detection,
@@ -44,14 +44,12 @@ public class Settings {
         set(Settings.LIFE_MODE, "competitive1");
 
         set(Settings.MUTATION_ENABLED, true);
-        set(Settings.MUTATION_RATE, 5); //0-10
+        set(Settings.MUTATION_RATE, 5); //0-100
 
         set(Settings.MAX_LIFESPAN, 75);
         set(Settings.TARGET_LIFESPAN, 37);
 
-        set(Settings.CHILD_ONE_PARENT_AGE, 0);
-        set(Settings.CHILD_TWO_PARENT_AGE, 0);
-        set(Settings.CHILD_THREE_PARENT_AGE, 0);
+        set(Settings.MIN_CHILDBEARING_AGE, 0);
 
         set(Settings.SPROUT_DELAYED_MODE, false);
         set(Settings.AUTO_SPLIT_COLORS, true);
