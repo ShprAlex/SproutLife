@@ -44,7 +44,7 @@ public class Settings {
         set(Settings.LIFE_MODE, "competitive1");
 
         set(Settings.MUTATION_ENABLED, true);
-        set(Settings.MUTATION_RATE, 6); //0-10
+        set(Settings.MUTATION_RATE, 5); //0-10
 
         set(Settings.MAX_LIFESPAN, 75);
         set(Settings.TARGET_LIFESPAN, 37);
