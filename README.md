@@ -1,10 +1,10 @@
 # SproutLife
 
-SproutLife is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. SproutLife takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
+SproutLife simulates the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. SproutLife takes this emergence a step further by defining organism that mutate and reproduce.
 
-Enabling reproduction spontaneously leads to more advanced behaviors. Surviving organisms begin to compete for space and align in battle formations with their siblings.
+Enabling reproduction sets in motion a world that's both alien and familiar. Organisms begin to compete for space to survive and align in battle formations with their siblings.
 
-Watch evolution happen by running SproutLife on your desktop. Save and load organism genomes and create battles between saved organisms.
+Run SproutLife of your desktop to see evolution in action. Observe the intricate geometric patterns that form, or dive deep to explore the data about how individual and collective fitness interact.
 
 ![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-10-27e.gif)
 
