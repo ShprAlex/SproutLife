@@ -1,20 +1,20 @@
-# Sprout Life
+# SproutLife
 
-Sprout Life is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. Sprout Life takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
+SproutLife is a model for the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. SproutLife takes this emergence a step further, creating patterns that reproduce, mutate, and evolve.
 
 Enabling reproduction spontaneously leads to more advanced behaviors. Surviving organisms begin to compete for space and align in battle formations with their siblings.
 
-Watch evolution happen by running Sprout Life on your desktop. Save and load organism genomes and create battles between saved organisms.
+Watch evolution happen by running SproutLife on your desktop. Save and load organism genomes and create battles between saved organisms.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-10-27e.gif)
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-10-27e.gif)
 
 ### Compiling and Running
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/download.png)](https://github.com/ShprAlex/SproutLife/releases)
 
-You can compile and run Sprout Life with `Java 1.8`
+You can compile and run SproutLife with `Java 1.8`
 
-[Download Sprout Life](https://github.com/ShprAlex/SproutLife/releases) executable SproutLife.jar file, or the source code.
+[Download SproutLife](https://github.com/ShprAlex/SproutLife/releases) executable SproutLife.jar file, or the source code.
 
 Run `SproutLife.jar` by opening the file on your desktop, or using the following command line:
 
@@ -30,10 +30,10 @@ Run `SproutLife.jar` by opening the file on your desktop, or using the following
 
 ### Motivation
 
-There are several reasons why Sprout Life is exciting:
+There are several reasons why SproutLife is exciting:
 
 
-- **Collective behavior, not just individual fitness** - Sprout Life uniquely models the evolution of collective behavior. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives. Organisms survive and compete by forming patterns, and in turn those patterns themselves compete and combine into more complex structures.
+- **Collective behavior, not just individual fitness** - SproutLife uniquely models the evolution of collective behavior. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives. Organisms survive and compete by forming patterns, and in turn those patterns themselves compete and combine into more complex structures.
 
 - **A rich source of metaphor** - Evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of new mutations, and the success of new ideas in the startup world. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed upon them by modelling the ebb and flow of evolution.
 
@@ -41,11 +41,11 @@ There are several reasons why Sprout Life is exciting:
 
 ### Seeds that Sprout - the key idea
 
-A slight change to the rules of GOL allows organisms in Sprout Life to reproduce, mutate, and evolve.
+A slight change to the rules of GOL allows organisms in SproutLife to reproduce, mutate, and evolve.
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife/blob/gallery/SeedSproutIllustration.png)
 
-- **Cell** - Cells in Sprout Life are only considered as cells if the are in the "alive" state. [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) uses the term "dead" cells to refer to empty coordinates. Sprout Life simply considers this as empty space.
+- **Cell** - Cells in SproutLife are only considered as cells if the are in the "alive" state. [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) uses the term "dead" cells to refer to empty coordinates. SproutLife simply considers this as empty space.
 
 - **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. Other small patterns work just as well, and better in some cases.
 
@@ -69,17 +69,17 @@ A slight change to the rules of GOL allows organisms in Sprout Life to reproduce
  
 - **Rotation and Reflection** - It's important to keep track of which way the R-Pentomino, or potentially other sprout pattern, was facing when the organism was born. There are 8 ways to rotate a pattern, 4 rotations and 2 mirror images for most patterns. The (x,y) coordinates for mutations must be rotated relative to how the seed pattern was oriented. It's also good to let the parent organism determine which direction the sprouted child is facing. A 2x2 block seed presents us with a tricky dilemma in that we don't know which way it's facing. We can resolve this issue by checking which way the parent was facing when it was born, and combining this with whether the seed is above, below, left, right, or otherwise oriented relative to the parent. Combining these two we can have the child born facing a direction relative to how the parent was facing when it was born.
  
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-29a.gif)
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-29a.gif)
 
 ### Evolution - a race to the bottom?
 
-The initial excitement of developing Sprout Life was that it worked! Organisms do arise, reproduce, and mutate to improve themselves. But what can we see about the direction that evolution seems to take?
+The initial excitement of developing SproutLife was that it worked! Organisms do arise, reproduce, and mutate to improve themselves. But what can we see about the direction that evolution seems to take?
 
 - **Organisms want to be small** - It turns out that the basic implementation creates organisms that want to be smaller. Organisms start big and clumsy, and figure out a way to get small and efficient. As they get smaller, organisms are able to reproduce more quickly and increase their population within the grid.
 
 The direction towards smallness is not straight forward, and we can still learn a lot from how new abilities are introduced and propagate through the population. Overall though, the trend is to be simple, and simple is boring. Simple is also a fixed boundary beyond which progress isn't possible.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-27t.gif)
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-27t.gif)
 
 ### Overcoming simplicity - initial techniques to maintain complexity
 
@@ -89,7 +89,7 @@ There are a few ways we can encourage our evolutionary model to maintain complex
 
 - **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
 
-![Sprout Life](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-28f.gif)
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-28f.gif)
 
 ### Competitive Collision Mode - finally achieving growth
 
@@ -105,7 +105,7 @@ In pursuit of bigger, more sophisticated organisms it seems natural to let bigge
 
 ### Wiki & Documentation
 
-* [Sprout Life Wiki](https://github.com/ShprAlex/SproutLife/wiki) - For more details and documentation please see the Wiki!
+* [SproutLife Wiki](https://github.com/ShprAlex/SproutLife/wiki) - For more details and documentation please see the Wiki!
 
 
 
