@@ -54,3 +54,6 @@ Cleaned up color assignment when loading genome + renamed Tri Color Mode -> Batt
 Added Reload action.
 Split out LoadNewGenomeAction, LoadAdditionalGenomeAction
 
+0.17.0
+
+Updated Readme.

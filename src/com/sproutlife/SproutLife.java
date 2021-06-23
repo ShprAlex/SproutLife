@@ -9,7 +9,7 @@ package com.sproutlife;
 
 public class SproutLife {
     private static final int    appMajorVersion    = 0;
-    private static final int    appMinorVersion    = 16;
+    private static final int    appMinorVersion    = 17;
     private static final int    appRevision        = 0;
 
     public static int getAppMajorVersion() {
