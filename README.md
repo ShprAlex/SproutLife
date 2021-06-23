@@ -1,12 +1,10 @@
 # SproutLife
 
-SproutLife simulates the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike patterns emerge from simple rules. SproutLife takes this emergence a step further by defining organism that mutate and reproduce.
+SproutLife simulates the evolution of complex life. It extends Conway’s Game of Life, which is famous for having lifelike behavior arise from simple rules. SproutLife takes this emergence a step further defining organisms that mutate and reproduce.
 
-Enabling reproduction sets in motion a world that's both alien and familiar. Organisms begin to compete for space to survive and align in battle formations with their siblings.
+Run SproutLife on your desktop to see evolution in action. Observe the intricate geometric patterns that form, or dive deep to explore the data about how individual competition and collective fitness interact.
 
-Run SproutLife of your desktop to see evolution in action. Observe the intricate geometric patterns that form, or dive deep to explore the data about how individual and collective fitness interact.
-
-![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-10-27e.gif)
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-11-13%20zig%20swimmers.gif)
 
 ### Compiling and Running
 
@@ -28,16 +26,19 @@ Run `SproutLife.jar` by opening the file on your desktop, or using the following
 
 `mvn exec:java` to run the application
 
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-10-27e.gif)
+
 ### Motivation
 
-There are several reasons why SproutLife is exciting:
+The inspiration for SproutLife was to create an open ended genome with unlimited potential for evolution.
 
+The initial success was that this was possible.
 
-- **Collective behavior, not just individual fitness** - SproutLife uniquely models the evolution of collective behavior. Cellular automata patterns are fragile and sensitive to disruption. In order for an organism to succeed it needs to be a good neighbor to its offspring, parents, and relatives. Organisms survive and compete by forming patterns, and in turn those patterns themselves compete and combine into more complex structures.
+Anticlimactically, it turns out that an open ended genome in a turing complete environment does not lead to some kind of transcendent evolutionary product. The solutions that emerge are still limited by the simple problems they are tasked with.
 
-- **A rich source of metaphor** - Evolution is a rich source of metaphor. Beyond biology, there are strong parallels between the success of new mutations, and the success of new ideas in the startup world. Potentially even phenomena like political revolutions or the boom and bust cycles of the stock market can have light shed upon them by modelling the ebb and flow of evolution.
+It is the evolutionary journey, rather than a specific destination where SproutLife can be most informative. It can be used to study the role that disruption plays as a threat to stability and a necessity for progress.
 
-- **Made for speed** - Speed is of the essence in simulating evolution. The ideal is to have a beautiful story unfold in real time. Cellular automata are perfectly designed for rapid computation by computers. Getting the next state of the game is almost like adding together two binary numbers. This is what computers were made to do. With the computer as our vehicle, we can explore the evolving world of cellular automata and learn from our discoveries.
+In particular, the process of "collapse" is an interesting topic for investigation. From Covid to the popping of stock market bubbles, political upheaval, and even global warming we are surrounded by real and potential falling of the established order. SproutLife also exhibits this kind of behavior and can let us understand how to quantify and perhaps predict it.
 
 ### Seeds that Sprout - the key idea
 
@@ -81,31 +82,18 @@ The direction towards smallness is not straight forward, and we can still learn 
 
 ![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-27t.gif)
 
-### Overcoming simplicity - initial techniques to maintain complexity
-
-There are a few ways we can encourage our evolutionary model to maintain complexity so as to keep things interesting.
-
-- **Maturity to childbearing adulthood** - We can add a parameter that says that an organism can't reproduce until it hits a certain age. Age is measured in terms of the number of cycles of GOL. For instance, we can say that an organism can't have children until 20 cycles have passed. This ensures that the organisms has grown and survived during that time. Bigger organisms means more opportunity to have beneficial mutations that create interesting behavior.
-
-- **Time between children** - We can also set a number for how much time must pass after an organism has one child before it can have another. We can control how many children an organism can have at one time. We can also control how much energy must be invested for each seed to sprout. Energy can be a function of age, size, or some other combination.
-
-![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202016-01-28f.gif)
-
 ### Competitive Collision Mode - finally achieving growth
 
 In pursuit of bigger, more sophisticated organisms it seems natural to let bigger organisms win [collisions](https://github.com/ShprAlex/SproutLife/wiki/Collisions). [Bigger organisms](https://github.com/ShprAlex/SproutLife/wiki/Competitive-Mode) should come out undamaged and carrying on with reproduction, while smaller organisms have some cells destroyed and may be unable to procreate.
 
-- **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors. Similarly for birth, to be born in an empty space, a cell needs to have exactly 3 would be friends, with other neighbors being ignored as long as the cell being born belongs to the biggest organism adjacent to the space.
+- **Competitive mode - survival of the biggest** - Competitive mode maintains the basic [B3/S23](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) rule of GOL with the following difference. A cell survives if it has exactly 2 or 3 friends (with "friends" defined above). A cell survives more than 3 neighbors, as long as its organism is the biggest one of all the neighbors. If the cell has 2 friends and a neighbor from a bigger organism it dies, even though it has a total or 3 neighbors.
 
-- **Biggest among more than 8 neighbors** - Checking more than 8 neighbors to see if the cell belong to the biggest organism gives an extra bonus to the winner, and an extra penalty to the loser. For a greater effect we check a 5x5 square around each cell to see if a bigger organism occupies one of the 25 cells. If it does then the cell dies or isn't born.
+- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on.
 
-- **Respecting relatives** - In competitive mode, cells do not compete with related organisms. A relationship as distant as first cousins (organisms that share a grandparent) will not destroy the cells of the other even if their size metrics differ.
- 
-- **Finally growth, slow growth** - With all these measures in place, we finally get a noticeable impact when competitive collision mode is turned on. Growth is exciting. Evolution towards growth is open ended. There is no limit to how large an organism can be, and no limit to the range of behavior it can exhibit.
+![SproutLife](https://github.com/ShprAlex/SproutLife/blob/gallery/SproutLife%202019-11-14%20blue%20luminescence.gif)
 
-### Wiki & Documentation
+### Next Steps
 
-* [SproutLife Wiki](https://github.com/ShprAlex/SproutLife/wiki) - For more details and documentation please see the Wiki!
+This Readme document is still a work in progress. Having spent time experimenting with and improving SproutLife, it turns out that some wild dreams about it have been grounded, while also getting an appreciation of where it can be useful. A more lifelike simulation is itself an achievement. Getting closer to modeling how real life behaves allows us to better appreciate the balances of life as it is. More updates coming soon.
 
-
-
+[See more animations in the gallery](https://github.com/ShprAlex/SproutLife/tree/master/gallery)
