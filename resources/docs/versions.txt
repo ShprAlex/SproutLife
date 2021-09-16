@@ -57,3 +57,6 @@ Split out LoadNewGenomeAction, LoadAdditionalGenomeAction
 0.17.0
 
 Updated Readme.
+
+1.0.0
+Updated genome version to V1, and bumped application version to 1.0.0

@@ -29,7 +29,7 @@ import com.sproutlife.model.utils.BattleColorUtils;
 import com.sproutlife.model.utils.SproutUtils;
 
 public class GenomeIo {
-    public static int VERSION = 0;
+    public static int VERSION = 1;
 
     public static void saveGenome(File file, GameModel gameModel) throws IOException {
         PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -46,7 +46,7 @@ public class GenomeIo {
         FileInputStream fis = new FileInputStream(file);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader reader = new BufferedReader(isr);
-        int version = loadVersion(reader);
+        int version = loadVersion(reader); // eventually this will be used for backward compatibility
         loadSettings(reader, gameModel);
 
         int least_color_kind = getAndClearLeastPrevalentColor(gameModel);
