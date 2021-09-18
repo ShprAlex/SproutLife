@@ -122,6 +122,6 @@ SproutLife is an open source project. Everyone is encouraged to contribute and e
 
 - **Stable, unstable, and diverse ecosystems** - Like simple 1d cellular automata, SproutLife ecosystems can exhibit stable, chaotic, and diverse end states. What are the conditions where only a single dominant species will ever emerge? When will every generation look unpredictable despite reproduction? Is there an analogy between the bifurcation of a logistic function and the emergence of multiple species?
 
-![SproutLife](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutLife%202020-04-03%20spaceship.gif)
+![SproutLife](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutLife%202021-01-03%20slow%20bugs.gif)
 
-[See more animations and genomes in the gallery](https://github.com/ShprAlex/SproutLife-Genome-Gallery/)
+[See more animations and genomes in the SproutLife Gallery](https://github.com/ShprAlex/SproutLife-Gallery/)
