@@ -46,18 +46,8 @@ public class TailRenderer extends OrganismRenderer {
         g.setColor(getColor(o));
         int tl=0;
         if (o.isAlive()) {
-            int paab = o.getAttributes().parentAgeAtBirth;
-            if (parent.getParent()!=null) {
-                // average of parent and grandparent age of having child.
-                paab = (paab + o.getParent().getAttributes().parentAgeAtBirth)/2;
-            }
-            double scale = 1.0*Math.min(o.getAge(),paab)/paab;
-            if (o.getChildren().size()>0) {
-                scale = 1;
-            }
-            double ox = parent.x+((o.x-parent.x)*scale);
-            double oy = parent.y+((o.y-parent.y)*scale);
-            drawLine(g, ox, oy, parent.x, parent.y);
+            Point2Double scaledLocation = RendererUtils.getScaleTowardsBirthLocation(o);
+            drawLine(g, scaledLocation.getX(), scaledLocation.getY(), parent.x, parent.y);
             o = parent;
             parent = parent.getParent();
             tl=1;

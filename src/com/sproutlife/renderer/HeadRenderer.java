@@ -33,17 +33,9 @@ public class HeadRenderer extends OrganismRenderer {
 
         Organism parent = o.getParent();
         if (parent!=null) {
-            int paab = o.getAttributes().parentAgeAtBirth;
-            if (parent.getParent()!=null) {
-                // average of parent and grandparent age of having child.
-                paab = (paab + o.getParent().getAttributes().parentAgeAtBirth)/2;
-            }
-            double scale = 1.0*Math.min(o.getAge(),paab)/paab;
-            if (o.getChildren().size()>0) {
-                scale = 1;
-            }
-            ox = parent.x+((o.x-parent.x)*scale);
-            oy = parent.y+((o.y-parent.y)*scale);
+            Point2Double scaledLocation = RendererUtils.getScaleTowardsBirthLocation(o);
+            ox = scaledLocation.getX();
+            oy = scaledLocation.getY();
         }
 
         g.fillRect((int) (BLOCK_SIZE*(ox-1)), (int) (BLOCK_SIZE*(oy-1)), rectSize, rectSize);

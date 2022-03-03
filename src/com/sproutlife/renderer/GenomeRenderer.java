@@ -38,17 +38,9 @@ public class GenomeRenderer extends OrganismRenderer {
         double adjy = 0;
         Organism parent = o.getParent();
         if (parent!=null) {
-            int paab = o.getAttributes().parentAgeAtBirth;
-            if (parent.getParent()!=null) {
-                // average of parent and grandparent age of having child.
-                paab = (paab + o.getParent().getAttributes().parentAgeAtBirth)/2;
-            }
-            double scale = 1.0*Math.min(o.getAge(),paab)/paab;
-            if (o.getChildren().size()>0) {
-                scale = 1;
-            }
-            adjx = parent.x+((o.x-parent.x)*scale)-o.x;
-            adjy = parent.y+((o.y-parent.y)*scale)-o.y;
+            Point2Double scaledLocation = RendererUtils.getScaleTowardsBirthLocation(o);
+            adjx = scaledLocation.getX()-o.x;
+            adjy = scaledLocation.getY()-o.y;
         }
 
         //Paint light background under black mutation points

@@ -8,8 +8,9 @@
 package com.sproutlife.renderer;
 
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import com.sproutlife.model.echosystem.Organism;
 
 public class RendererUtils {
     
@@ -62,4 +63,27 @@ public class RendererUtils {
         return previewImageRectangle;
     }
     
+    /*
+     * Once an organism is born we don't draw it at that location right away but instead we
+     * smoothly animate it from it's parent birth location it it's birth location.
+     *
+     * @return a Point2Double location scaled between the organism's location and it's parent location
+     *
+     */
+    public static Point2Double getScaleTowardsBirthLocation(Organism o) {
+        Organism parent = o.getParent();
+        if (parent==null || o.getChildren().size()>0) {
+            //return 1;
+        }
+        int paab = o.getAttributes().parentAgeAtBirth;
+        if (parent.getParent()!=null) {
+            // min of parent and grandparent age of having child.
+            paab = (paab + parent.getAttributes().parentAgeAtBirth)/2;
+        }
+        double scale = Math.min(o.getAge(),paab)/(double) paab;
+        double x = parent.x+((o.x-parent.x)*scale);
+        double y = parent.y+((o.y-parent.y)*scale);
+        return new Point2Double(x,y);
+    }
+
 }
