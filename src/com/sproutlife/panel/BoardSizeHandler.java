@@ -89,7 +89,7 @@ public class BoardSizeHandler {
         double zoom = pc.getBoardRenderer().getZoom();
         double blockSize = pc.getBoardRenderer().getBlockSize();
         int boardWidth = (int)((r.width/zoom-40)/blockSize);
-        int boardHeight = (int)((r.height/zoom-40)/blockSize);
+        int boardHeight = (int)((r.height/zoom-50)/blockSize);
         int x = (int)(r.x/blockSize/zoom);
         int y = (int)(r.y/blockSize/zoom);
 
@@ -112,7 +112,7 @@ public class BoardSizeHandler {
         // we repeat most of the updateBoardSizeFromImageSize() logic in this function to avoid rounding errors.
         double zoom = pc.getBoardRenderer().getZoom();
         int displayWidth = (int) ((width)*pc.getBoardRenderer().getBlockSize()+40);
-        int displayHeight = (int) ((height)*pc.getBoardRenderer().getBlockSize()+40);
+        int displayHeight = (int) ((height)*pc.getBoardRenderer().getBlockSize()+50);
 
         if (updatingSize) {
             return;

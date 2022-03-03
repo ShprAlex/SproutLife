@@ -38,6 +38,10 @@ public class GameController {
         return gameModel;
     }
 
+    public PanelController getPanelController() {
+        return panelController;
+    }
+
     public ReentrantReadWriteLock getInteractionLock() {
         return interactionLock;
     }

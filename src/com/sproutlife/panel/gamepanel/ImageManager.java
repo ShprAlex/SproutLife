@@ -144,15 +144,18 @@ public class ImageManager {
            
             g2.setTransform(transform);
             panelController.getBoardRenderer().paint(g2);
-            paintMessage(image);           
-            
+            // Currently when the application is running the logoImage is null, but when a
+            // png/gif is being exported, the logoImage is set.
+            if (logoImage==null) {
+                paintMessage(image);
+            }
             g2.setTransform(new AffineTransform());
             if ( logoImage != null ) {
                 // draw the logo in the bottom right corner
                 g2.setTransform(new AffineTransform());
                 g2.drawImage(logoImage,
                              image.getWidth(null)-logoImage.getWidth(null),
-                             image.getHeight(null)-logoImage.getHeight(null),
+                             image.getHeight(null)-logoImage.getHeight(null)-5,
                              null);
             }
         }
@@ -530,21 +533,23 @@ public class ImageManager {
     }
     
     public void paintMessage(Image image) {
-        if (getMessage()==null) return;
+        String message = getMessage();
+        if (message==null) return;
         Graphics2D g2 = (Graphics2D)image.getGraphics();
-        g2.setColor(new Color(255,0,0,100));        
+        g2.setColor(new Color(224,224,224));
         RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
              RenderingHints.VALUE_ANTIALIAS_ON);
-        rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
         g2.setRenderingHints(rh);
                 
-        g2.setFont(new Font("Arial",Font.PLAIN,40));
-        int len = getMessage().length()/2;
-        g2.drawString(getMessage(),image.getWidth(null)/2-len*18,image.getHeight(null)/2-20);
+        g2.setFont(new Font("Courier",Font.PLAIN,15));
+
+        int left = Math.max(15, image.getWidth(null)/2-360);
+        g2.drawString(message, left,image.getHeight(null)-10);
     }
 
     public String getMessage() {
-        return message;
+        return this.panelController.getGameModel().getStats().getStatsSummary();
     }
 
     public void setMessage(String message) {

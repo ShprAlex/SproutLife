@@ -33,7 +33,7 @@ public class Stats {
     double avgSize = 0;
     double avgMaxSize = 0;
     double avgCellSum = 0;
-    double avgCompetitiveScore = 0;
+    public double avgCompetitiveScore = 0;
     double[] avgCellsAtAge = new double[300];
 
     double avgChildNumber = 0;
@@ -66,6 +66,9 @@ public class Stats {
     }
 
     public void reset() {
+        smoothedPopulation = 0;
+        avgCompetitiveScore = 0;
+        avgTotalMutations = 0;
       
     }
     
@@ -244,7 +247,7 @@ public class Stats {
     public void updateSmoothedPopulation() {
         int population = getEchosystem().getOrganisms().size();
         
-        smoothedPopulation = (smoothedPopulation*999+population)/1000;
+        smoothedPopulation = (smoothedPopulation*99+population)/100;
         
         //We expect the actual population to once in a while be within 10% of the smoothed population
         //If it's not, something changed, so reset the smoothed population to the actual population
@@ -676,6 +679,15 @@ public class Stats {
         if( mutationDiversity>0) {
             mutationDiversityAge/= mutationDiversity;
         }
+    }
+
+    public String getStatsSummary() {
+        String summary = "";
+        summary += "Game Time: " + String.format("%-8s", getTime()/100*100);
+        summary += " Population: " + String.format("%-5.0f", smoothedPopulation);
+        summary += " Avg Comp Score: " + String.format("%-5s", (int) avgCompetitiveScore);
+        summary += " Avg Genome Size: " + String.format("%-5.1f", avgTotalMutations);
+        return summary;
     }
 
     public void logStats() {
