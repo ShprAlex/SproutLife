@@ -36,9 +36,6 @@ public class DisplayControlPanel extends JPanel {
     private JLabel lblDrawLayers;
     private JCheckBox chckbxOutlineSeeds;
     private JLabel lblColors;
-    private JPanel panel;
-    private JRadioButton rdbtnBackgroundWhite;
-    private JRadioButton rdbtnBackgroundBlack;
     private final ButtonGroup buttonGroupBackground = new ButtonGroup();
     private Component verticalStrut;
     private JSpinner spinnerTailLength;
@@ -54,13 +51,13 @@ public class DisplayControlPanel extends JPanel {
     private JSpinner imageHeightSpinner;
     private Component verticalStrut_2;
     private Component horizontalStrut;
-    private JLabel labelBackground;
     private JRadioButton rdbtnMultiColorMode;
     private JRadioButton rdbtnTriColorMode;
     private final ButtonGroup buttonGroupColorMode = new ButtonGroup();
     private JPanel panel_1;
     private JSpinner spinnerColorScheme;
     private Component horizontalStrut_1;
+    private JCheckBox statisticsBarCheckbox;
 
 
     public DisplayControlPanel(PanelController panelController) {
@@ -77,9 +74,9 @@ public class DisplayControlPanel extends JPanel {
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] {10, 10, 30, 100};
-        gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
         setLayout(gridBagLayout);
 
         lblDrawLayers = new JLabel("Draw Layers");
@@ -134,6 +131,10 @@ public class DisplayControlPanel extends JPanel {
 
         chckbxOutlineSeeds = new JCheckBox("Outline Seeds & Young");
         panel_2.add(chckbxOutlineSeeds);
+        
+        statisticsBarCheckbox = new JCheckBox("Statistics Bar");
+        statisticsBarCheckbox.setSelected(true);
+        panel_2.add(statisticsBarCheckbox);
 
         verticalStrut = Box.createVerticalStrut(20);
         verticalStrut.setPreferredSize(new Dimension(0, 10));
@@ -152,30 +153,6 @@ public class DisplayControlPanel extends JPanel {
         gbc_lblColors.gridy = 4;
         add(lblColors, gbc_lblColors);
 
-        panel = new JPanel();
-        panel.setMaximumSize(new Dimension(32767, 50));
-        GridBagConstraints gbc_panel = new GridBagConstraints();
-        gbc_panel.anchor = GridBagConstraints.NORTHWEST;
-        gbc_panel.gridwidth = 4;
-        gbc_panel.insets = new Insets(0, 30, 5, 0);
-        gbc_panel.gridx = 2;
-        gbc_panel.gridy = 5;
-        add(panel, gbc_panel);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-
-        labelBackground = new JLabel("Background");
-        panel.add(labelBackground);
-
-        rdbtnBackgroundBlack = new JRadioButton("Black");
-        rdbtnBackgroundBlack.setMargin(new Insets(1, 5, 0, 1));
-        buttonGroupBackground.add(rdbtnBackgroundBlack);
-        rdbtnBackgroundBlack.setSelected(true);
-        panel.add(rdbtnBackgroundBlack);
-
-        rdbtnBackgroundWhite = new JRadioButton("White");
-        buttonGroupBackground.add(rdbtnBackgroundWhite);
-        panel.add(rdbtnBackgroundWhite);
-
         rdbtnMultiColorMode = new JRadioButton("Multi Color Mode");
         rdbtnMultiColorMode.setSelected(true);
         buttonGroupColorMode.add(rdbtnMultiColorMode);
@@ -184,7 +161,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_rdbtnMultiColorMode.gridwidth = 2;
         gbc_rdbtnMultiColorMode.insets = new Insets(0, 30, 5, 5);
         gbc_rdbtnMultiColorMode.gridx = 2;
-        gbc_rdbtnMultiColorMode.gridy = 6;
+        gbc_rdbtnMultiColorMode.gridy = 5;
         add(rdbtnMultiColorMode, gbc_rdbtnMultiColorMode);
 
         panel_1 = new JPanel();
@@ -194,7 +171,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_panel_1.insets = new Insets(0, 60, 5, 5);
         gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
         gbc_panel_1.gridx = 2;
-        gbc_panel_1.gridy = 7;
+        gbc_panel_1.gridy = 6;
         add(panel_1, gbc_panel_1);
         panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 
@@ -217,7 +194,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_rdbtnTriColorMode.gridwidth = 2;
         gbc_rdbtnTriColorMode.insets = new Insets(0, 30, 5, 5);
         gbc_rdbtnTriColorMode.gridx = 2;
-        gbc_rdbtnTriColorMode.gridy = 8;
+        gbc_rdbtnTriColorMode.gridy = 7;
         add(rdbtnTriColorMode, gbc_rdbtnTriColorMode);
 
         chckbxAutoSplitColors = new JCheckBox("Auto Split Colors");
@@ -226,7 +203,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_chckbxAutoSplitColors.gridwidth = 3;
         gbc_chckbxAutoSplitColors.insets = new Insets(0, 60, 5, 5);
         gbc_chckbxAutoSplitColors.gridx = 2;
-        gbc_chckbxAutoSplitColors.gridy = 9;
+        gbc_chckbxAutoSplitColors.gridy = 8;
         add(chckbxAutoSplitColors, gbc_chckbxAutoSplitColors);
         chckbxAutoSplitColors.setToolTipText("<html>Split Color of Organism Group<br>when there are too many of that color.</html>");
         chckbxAutoSplitColors.setSelected(true);
@@ -236,7 +213,7 @@ public class DisplayControlPanel extends JPanel {
         GridBagConstraints gbc_verticalStrut_2 = new GridBagConstraints();
         gbc_verticalStrut_2.insets = new Insets(0, 0, 5, 5);
         gbc_verticalStrut_2.gridx = 2;
-        gbc_verticalStrut_2.gridy = 10;
+        gbc_verticalStrut_2.gridy = 9;
         add(verticalStrut_2, gbc_verticalStrut_2);
 
 
@@ -246,7 +223,7 @@ public class DisplayControlPanel extends JPanel {
         gbc_sizePanel.gridwidth = 3;
         gbc_sizePanel.fill = GridBagConstraints.BOTH;
         gbc_sizePanel.gridx = 2;
-        gbc_sizePanel.gridy = 11;
+        gbc_sizePanel.gridy = 10;
         add(sizePanel, gbc_sizePanel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{30, 40, 40};
@@ -344,12 +321,6 @@ public class DisplayControlPanel extends JPanel {
     public JCheckBox getChckbxOutlineSeeds() {
         return chckbxOutlineSeeds;
     }
-    public JRadioButton getRdbtnBackgroundBlack() {
-        return rdbtnBackgroundBlack;
-    }
-    public JRadioButton getRdbtnBackgroundWhite() {
-        return rdbtnBackgroundWhite;
-    }
     public JSpinner getSpinnerTailLength() {
         return spinnerTailLength;
     }
@@ -382,5 +353,8 @@ public class DisplayControlPanel extends JPanel {
     }
     public JSpinner getSpinnerColorScheme() {
         return spinnerColorScheme;
+    }
+    public JCheckBox getStatisticsBarCheckbox() {
+        return statisticsBarCheckbox;
     }
 }

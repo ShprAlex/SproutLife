@@ -348,22 +348,13 @@ public class PanelController {
                 getSettings().set(Settings.AUTO_SPLIT_COLORS, selected);
             }
         });
-        
-        ItemListener backgroundThemeListener = new ItemListener() {
+
+        dcp.getStatisticsBarCheckbox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (dcp.getRdbtnBackgroundWhite().isSelected()) {
-                    getSettings().set(Settings.BACKGROUND_THEME, "white");
-                    getBoardRenderer().getColorModel().setBackgroundTheme(BackgroundTheme.white);
-                } else {
-                    getSettings().set(Settings.BACKGROUND_THEME, "black");
-                    getBoardRenderer().getColorModel().setBackgroundTheme(BackgroundTheme.black);
-                }
                 getImageManager().repaintNewImage();
             }
-        };
-        dcp.getRdbtnBackgroundBlack().addItemListener(backgroundThemeListener);
-        dcp.getRdbtnBackgroundWhite().addItemListener(backgroundThemeListener);
+        });
 
         ItemListener colorModeListener = new ItemListener() {
             @Override
@@ -481,14 +472,6 @@ public class PanelController {
                 break;
             default:
                 getRulesControlPanel().getRdbtnCompetitive2().setSelected(true);
-        }
-
-        switch (getSettings().getString(Settings.BACKGROUND_THEME)) {
-            case "white":
-                getDisplayControlPanel().getRdbtnBackgroundWhite().setSelected(true);
-                break;
-            default:
-                getDisplayControlPanel().getRdbtnBackgroundBlack().setSelected(true);
         }
 
         switch (getSettings().getString(Settings.COLOR_MODEL)) {

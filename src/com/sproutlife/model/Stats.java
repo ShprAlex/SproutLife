@@ -246,23 +246,14 @@ public class Stats {
 
     public void updateSmoothedPopulation() {
         int population = getEchosystem().getOrganisms().size();
-        
-        smoothedPopulation = (smoothedPopulation*99+population)/100;
-        
-        //We expect the actual population to once in a while be within 10% of the smoothed population
-        //If it's not, something changed, so reset the smoothed population to the actual population
-        if (population>0 && Math.abs(smoothedPopulation/ population - 1)>0.1) {
-            this.smoothedResetTimer++;
+        if (population<100) {
+            smoothedPopulation = (smoothedPopulation*99+population)/100;
         }
         else {
-            smoothedResetTimer=0;
+            // extra smooth
+            smoothedPopulation = (smoothedPopulation*999+population)/1000;
         }
-        if (smoothedResetTimer>100) {
-            smoothedPopulation = (smoothedPopulation*9+population)/10;
-            //smoothedPopulation = population;
-            //smoothedResetTimer = 0;
-        }
-            
+
         smoothedPopDensity = smoothedPopulation*10000/gameModel.getBoard().getHeight()/gameModel.getBoard().getWidth();
         
     }

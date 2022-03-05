@@ -549,7 +549,10 @@ public class ImageManager {
     }
 
     public String getMessage() {
-        return this.panelController.getGameModel().getStats().getStatsSummary();
+        if (this.panelController.getDisplayControlPanel().getStatisticsBarCheckbox().isSelected()) {
+            return this.panelController.getGameModel().getStats().getStatsSummary();
+        }
+        return null;
     }
 
     public void setMessage(String message) {
