@@ -59,4 +59,11 @@ Split out LoadNewGenomeAction, LoadAdditionalGenomeAction
 Updated Readme.
 
 1.0.0
+
 Updated genome version to V1, and bumped application version to 1.0.0
+
+1.1.0
+
+Improved/simplified WildLife mode
+Cleaned up renderers with getScaleTowardsBirthLocation helper
+Display statistics bar at the bottom of game screen.
