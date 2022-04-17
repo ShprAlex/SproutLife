@@ -10,6 +10,8 @@ Run SproutLife on your desktop to see evolution in action. Observe the intricate
 
 [![Download and Run](https://github.com/ShprAlex/SproutLife/blob/master/resources/images/download.png)](https://github.com/ShprAlex/SproutLife/releases)
 
+**Download and Run:**
+
 You can download and run SproutLife with `Java 1.8`
 
 [Download SproutLife](https://github.com/ShprAlex/SproutLife/releases) executable SproutLife.jar file, or the source code.
@@ -30,39 +32,35 @@ Run `SproutLife.jar` by opening the file on your desktop, or using the following
 
 ## Motivation
 
-The inspiration for SproutLife was to create an open ended genome with unlimited potential for evolution.
+The inspiration for SproutLife was to create an open ended genome on top of the Turing-complete foundation of Conway's Game of Life. The initial success was that this was possible. After much experimentation it also seems likely that SproutLife can generate truly complex, hierarchical, and even multicellular structures.
 
-The initial success was that this was possible.
+Simulating artificial life is exciting because it may show us something about life's advances, but it may be more useful for studying life's flaws. In particular, the process of "collapse" is an interesting topic for investigation.
 
-Anticlimactically, it turns out that an open ended genome in a turing complete environment does not automatically lead to some kind of transcendent evolutionary product. The solutions that emerge are still limited by the simple problems they are tasked with.
-
-It is the evolutionary journey, rather than a specific destination where SproutLife can be most informative.
-
-In particular, the process of "collapse" is an interesting topic for investigation. From Covid to the popping of stock market bubbles, political upheaval, and even global warming we are surrounded by real and potential falling of the established order. SproutLife also exhibits this kind of behavior and can let us understand how to quantify and perhaps predict it.
+From Covid to the popping of stock market bubbles, political upheaval, and even global warming we are surrounded by real and potential disasters caused by living agents. SproutLife also exhibits this kind of behavior and may help us understand how to quantify and perhaps predict it.
 
 ## Seeds that Sprout - the key idea
 
-A slight change to the rules of GOL allows organisms in SproutLife to reproduce, mutate, and evolve.
+A slight change to the rules of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) allows organisms in SproutLife to reproduce, mutate, and evolve.
 
 ![Seed Sprout Illustration](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SeedSproutIllustration.png)
 
-- **Cell** - Cells in SproutLife are only considered as cells if the are in the "alive" state. [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) uses the term "dead" cells to refer to empty coordinates. SproutLife simply considers this as empty space.
+- **Cell** - Cells in SproutLife are coordinates on a grid that are in the "alive" state. GOL uses the term "dead" cells to refer to empty coordinates. SproutLife simply considers this as empty space.
 
-- **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced during a typical game. Other small patterns work just as well, and better in some cases.
+- **Seed** - A seed is a collection of cells that we replace with a new cells. A static 2x2 block pattern is a natural choice for a seed, because lots of these blocks are produced in GOL. Other small patterns work just as well, and better in some cases.
 
 - **Sprout** - A sprout is a pattern that replaces a seed. An [R-Pentomino](https://www.youtube.com/watch?v=bTPN3spiq1I) is a natural choice for a sprout pattern because it is small and produces a lot of growth.
 
 - **Organism** - An organism is a collection of cells. Organisms begin their life as a sprout, and every cell that grows from this pattern becomes part of the organism. Collisions between cells of different organisms will be discussed later.
 
-- **Reproduction** - A seed from a parent sprouts to become a new child organism. We know the identity of the parent for each child. Thus we can support inheritance, where genes pass down from parent to child. For now every organism has a single parent. Sexual reproduction can also easily be added as a result of contact between a parent and other organisms.
+- **Reproduction** - A seed from a parent sprouts to become a new child organism. Thus we know the identity of the parent for each child. This enables implementing inheritance, where genes pass down from parent to child. For now every organism has a single parent, meaning that reproduction is asexual, but there are relevant ways to implement sexual reproduction as well.
 
 ![Sprout Animation](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutAnimation.gif)
 
-- **Self imposed lifespan** - It turns out that having old organisms self-destruct is beneficial to their children. Removing all of a parent's cells from the board creates more room for its children and descendants to grow. New organisms develop in a predictable pattern allowing stability to arise, whereas older organisms get damaged by collision and mutation. It was exciting to discover that letting organisms control their own lifespan does not lead to run-away growth. Organisms often prefer to be small. The maximum lifespan is encoded as an integer value that can mutate from generation to generation.
+- **Self imposed lifespan** - It turns out that having old organisms self-destruct is beneficial to their children. Removing all of a parent's cells from the board creates more room for its children and descendants to grow. New organisms develop in a predictable pattern allowing stability to arise, whereas older organisms get damaged by collision and mutation. It was exciting to discover that letting organisms control their own lifespan does not lead to run-away growth. Organisms naturally prefer to be small. The maximum lifespan is encoded as an integer value that can mutate from generation to generation.
 
-- **Mutation** - There are lots of ways to implement a genetic code and mutation. An option that works well, is to have mutations be a pair of (x,y) coordinates, and a time value ((x,y),t) for each coordinate. If at age t, an organism has a mutation ((x,y),t) and it has a living cell at coordinates (x,y) then that cell is killed. Turning off a cell changes how the organism grows from that point.
+- **Genes** - There are lots of ways to implement a genes and mutation. An option that works well, is to have genes be a pair of (x,y) coordinates, and a time value ((x,y),t) for each coordinate. If at age t, an organism has a gene ((x,y),t) and it has a living cell at coordinates (x,y) then that cell is killed. Turning off a cell changes how the organism grows from that point.
 
-- **Genome** - A collection of mutations make up an organism's genome. Mutations can be added to the organism's genome, or existing mutations removed. We do this by random chance during an organism’s life. Mutations have to be beneficial across all conditions. For example a first child and a second child are born at different times with different surrounding cell configurations. In our case they both follow the same genetic blueprint, even though it's tempting to take birth order into account.
+- **Genome and Mutation** - A collection of genes make up an organism's genome. Mutations can add genes to the organism's genome, or existing genes can be removed. We do this by random chance during an organism’s life. All children inherit and follow the same genome even though they are born at different times with different surrounding cell configurations.
 
 ![Sprout Animation](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutLife%202016-01-29zb.gif)
 
@@ -94,34 +92,34 @@ A long series of experiments led to the development of a competitive collision m
 
 ![SproutLife](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutLife%202019-11-14%20blue%20luminescence.gif)
 
-## Next Steps
+## Hierarchical organization - A theory about what's possible
 
-SproutLife is an open source project. Everyone is encouraged to contribute and explore these next steps.
+What kind of behavior can a simple 2D cellular-automata based simulation generate? Surprisingly even such a basic setup can potentially produce multicellular life.
 
-### Game Design
+The forces in SproutLife are simple. Each organism has a competitive score and some 2D growth/reproduction pattern. Those patterns may be be stable, or they may have multiple phases where the competitive score alternates across generations. An organism strain with a high competitive score on average can have an Achilles heel where it loses to another strain with a low but consistent average competitive score.
 
-- **Cell Walls** - It would be interesting to see the rise of cell walls and the resulting ratcheting of attack and defense dynamics. So far this is something that's proved elusive. Perhaps an improved collision rule that's more sophisticated than just having the biggest organism win would incentivize cell wall formation.
+Rock-paper-scissors type nontransitive comparisons where 3 organism strains [swirl around as they eat each other](https://www.youtube.com/watch?v=TvZI6Xc0J1Y) is nothing new. SproutLife already exhibits this kind of behavior, which comes from the prior mentioned property that organisms with a higher score can loose to those with a lower one.
 
-- **Music / Sonification** - The regular timing patterns of organisms being born can naturally map to notes. The organism frequently synchronize, and it would make sense for simple ratios to exist in their birth cycles as well. It would be fun to add a way to let users listen, not just see what's going on.
-
-- **Stats and Charts** - Things as simple as average lifespan over time become interesting when one examines multi-species ecosystems and the complex rebirth patterns of individual organisms. The current rudimentary statistics panel could be greatly expanded to display all this information.
-
-- **Sex and Viruses** - The current simulation only has asexual reproduction. It would be interesting to study the effects of enabling gene transfer. There could be different rules about when gene transfer is allowed. Organisms could even have individual criteria for accepting gene transfer that could also evolve, so we can see if that reflects biological patterns.
+There is however an evolutionary leap that only a 2D (or higher) spatially embedded cellular automata model can take -- a step that goes beyond the rock-paper-scissors cycle and leads to the formation of symbiotic hierarchical structures.
 
 ![SproutLife](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutLife%202019-12-01%20octopolis5.gif)
 
-### Areas for Investigation
+## Hierarchical organization - Islands
 
-- **Speed of evolution vs. board size** - Do organisms on bigger boards evolve faster? Do we see the same patterns as with evolution on continents vs. isolated islands? Does the "breakout rooms" approach of periods of isolation followed by coming together lead to the fastest evolution of all?
+Take a system of 3 organisms where the 1st strongest can defeat the 2nd, the 2nd can defeat the 3rd, and the 3rd can defeat the 1st. For instance think of people, cats, and mice, where people are in danger from mouse infestations. There is a way for the 1st type of organism to minimize the effects of the 3rd; and that is for the 1st type of organism to form multiple disjoint islands within the protective cover of the 2nd.
 
-- **Mutation resistance** - SproutLife makes it easy to see the evolution of mutation resistance where organisms that initially don't survive high mutation rates can evolve to tolerate it if the mutation rate is gradually increased. High mutation rates naturally lead to smaller organisms with smaller genomes, but even so these organisms eventually can find ways to get big. What can we learn about survival in high mutation environments?
+The formation of islands of 1st strongest organisms within the 2nd weaker ones requires some kind of evolved self-restraint on the part of the 1st organisms where they don't completely destroy the 2nd. It is not a stable balance whereby mutations will always cause the 1st organisms to lose self control and annihilate the 2nd ones, however the balance is maintained by the 3rd type or organism which will kill off continuous regions of 1st type of organism that emerge beyond the 2nd layer.
 
-- **Spotting fads vs. revolutions** - The simulation shows how greedy strategies come and go while truly advantageous developments ultimately succeed. Can we distinguish between the two? How long into the emergence of a new trend does it take to say whether it will succeed of fail.
+Furthermore, symbiotic islands of a 1st and 2nd organisms can defeat a 4th kind of organism that's weaker than the 1st but stronger than the 2nd. When the 4th organism strain breaches the 2nd organism type to touch an island of the 1st type, the 1st organism strain can spread and destroy all of the 4th.
 
-- **Competition and collapse** - A theory is that radical mutations don't just happen. Usually new mutants have disadvantages as well as advantages and it takes time for them to evolve away their rough edges. This means that existing organisms can block radical new mutations by staying in sync and not giving space for new mutations to develop. However as dominant organisms compete with one another they create cracks for new mutants to take hold. Is this true? What about when a small, fast reproducing organisms emerge, does their existence create a balanced external threat that prevents big organisms from competing with each other? When does the system tip too far so that the big organisms collapse and small ones take over, and when does this cycle ultimately lead to stable or unstable end states.
+If symbiotic island structures can have a competitive advantage over single organism structures, then it's also possible that the islands themselves will form internal islands of their own. That is because islands are also competing against each other, and can also evolve rock-paper-scissors relationships eventually leading to collaboration and hierarchies. Thus ultimately the simulation will produce deeper nesting with concentric island hierarchies engaging in both internal and external competition.
 
-- **Stable, unstable, and diverse ecosystems** - Like simple 1d cellular automata, SproutLife ecosystems can exhibit stable, chaotic, and diverse end states. What are the conditions where only a single dominant species will ever emerge? When will every generation look unpredictable despite reproduction? Is there an analogy between the bifurcation of a logistic function and the emergence of multiple species?
+SproutLife seems to have all the ingredients to exhibit this kind of [symbiogenesis](https://en.wikipedia.org/wiki/Symbiogenesis). It may simply be a matter of running the simulation for longer on a larger grid for systems of islands to emerge and be detected and recorded.
 
 ![SproutLife](https://github.com/ShprAlex/SproutLife-Gallery/blob/master/ShprAlex/SproutLife%202021-01-03%20slow%20bugs.gif)
+
+It's likely that the evolution of nested symbiotic hierarchies is a foundational concept for the mathematics of life. A more elaborate real world physics model could present life with greater challenges and opportunities resulting in the sensory, metabolic, and motile functions we admire. However perhaps even a stripped down 2D physics engine can still produce structures and behaviors we find familiar, that in complexity (though not in purpose) are are as advanced as what we see in the world around us.
+
+[Check out the SproutLife playlist on youtube](https://www.youtube.com/watch?v=H2tXsnzVTaw&list=PLX8XVhHfSZ0tWGyDDoFEOEiCmmhkKYLDf)
 
 [See more animations and genomes in the SproutLife Gallery](https://github.com/ShprAlex/SproutLife-Gallery/)
