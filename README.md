@@ -34,9 +34,9 @@ Run `SproutLife.jar` by opening the file on your desktop, or using the following
 
 The inspiration for SproutLife was to create an open ended genome on top of the Turing-complete foundation of Conway's Game of Life. The initial success was that this was possible. After much experimentation it also seems likely that SproutLife can generate truly complex, hierarchical, and even multicellular structures.
 
-Simulating artificial life is exciting because it may show us something about life's advances, but it may be more useful for studying life's flaws. In particular, the process of "collapse" is an interesting topic for investigation.
+Simulating artificial life is exciting because it may show us something about life's advances, and it may also be useful for studying life's flaws.
 
-From Covid to the popping of stock market bubbles, political upheaval, and even global warming we are surrounded by real and potential disasters caused by living agents. SproutLife also exhibits this kind of behavior and may help us understand how to quantify and perhaps predict it.
+From new the emergence of Covid, to new technologies, and new political ideologies we are immersed in the ups and downs of trends caused by evolving living agents. SproutLife also exhibits this kind of behavior and may help us understand how to quantify and perhaps predict it.
 
 ## Seeds that Sprout - the key idea
 
